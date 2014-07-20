@@ -1,4 +1,3 @@
-
 local cmd = {}
 
 function command_get_list()
@@ -220,6 +219,153 @@ function cmd.spawn(me,txt,owner,p)
 	return "spawn:= Error pos=%s lvid=%s gvid=%s",p,lvid,gvid
 end
 
+-- collectgarbage
+function cmd.collectgarbage(me,txt,owner,p)
+	local wrd = first_word(me,txt,owner,"[full|count|step]")
+	if not (wrd) then return end
+
+	if (wrd == "full") then
+		local before = collectgarbage("count")
+		collectgarbage()
+		local after = collectgarbage("count")
+		return "collectgarbage:= |before|=>"..before.." |after|=> "..after
+	elseif (wrd == "count") then
+		local count = collectgarbage("count")
+		return "collectgarbage:= "..count
+	elseif (wrd == "step") then
+		wrd = ""
+		local _strt, _end = string.find(txt,"%d+")
+		if (_strt and _end) then
+			wrd = string.sub(txt,_strt, _end)
+			wrd = string.lower(wrd)
+			local amt = wrd and wrd ~= "" and tonumber(wrd) or 0
+			if (amt) then
+				xrs_debug_tools.STEP = amt
+			end
+		end
+	else
+		return "collectgarbage:= wrong argument passed."
+	end
+end
+
+
+local function parse_waypoint(pathname, wpflags, wpname, owner)
+
+	local rslt = {}
+
+	rslt.flags = wpflags
+
+	local at
+	if string.find(wpname, "|", at, true) == nil then
+		return rslt
+	end
+
+	--[[
+	file = io.open("axr_debug_log.txt","a+")
+	if (file) then
+		file:write(alun_utils.sr("[%s] %s", pathname, wpname).."\n")
+		file:close()
+	end
+	--]]
+
+	local par_num
+	local fld
+	local val
+
+	par_num = 1
+	for param in string.gfind(wpname, "([%w%+~_\\%=%{%}%s%!%-%,%*]+)|*") do
+		if par_num == 1 then
+			-- continue
+		else
+			if param == "" then
+				owner:SendOutput("path '%s': waypoint '%s': syntax error in waypoint name", pathname, wpname)
+				alun_utils.printf("path '%s': waypoint '%s': syntax error in waypoint name", pathname, wpname)
+			else
+				local t_pos = string.find(param, "=", 1, true)
+				if (t_pos) then
+					fld = string.sub(param, 1,t_pos - 1)
+					if not (fld and fld ~= "") then
+						owner:SendOutput("path '%s': waypoint '%s': syntax error while parsing the param '%s': no field specified",pathname, wpname, param)
+						alun_utils.printf("path '%s': waypoint '%s': syntax error while parsing the param '%s': no field specified",pathname, wpname, param)
+					else
+						val = string.sub(param, t_pos + 1)
+						if not (val and val ~= "") then
+							val = "true"
+						end
+
+						if fld == "a" then
+							rslt[fld] = xr_logic.parse_condlist(db.actor, "waypoint_data", "anim_state", val)
+
+							if not (state_lib.states[val]) then
+								owner:SendOutput("path '%s': waypoint '%s': not a valid state_lib anim  %s", pathname, wpname,val)
+								alun_utils.printf("path '%s': waypoint '%s': not a valid state_lib anim %s", pathname, wpname,val)
+							end
+						else
+							rslt[fld] = val
+						end
+					end
+				else
+					owner:SendOutput("path '%s': waypoint '%s': syntax error in waypoint name", pathname, wpname)
+					alun_utils.printf("path '%s': waypoint '%s': syntax error in waypoint name", pathname, wpname)
+				end
+			end
+		end
+		par_num = par_num + 1
+	end
+	return rslt
+end
+
+
+function cmd.waypoint(me,txt,owner,p)
+	local wrd = first_word(me,txt,owner,"[checkall | checklevel]")
+	if not (wrd) then return end
+
+	if not (wrd == "checkall" or wrd == "checklevel") then
+		return "waypoint:= invalid argument. Type waypoint help for a list of subcommands"
+	end
+
+	local npc = alun_utils.get_nearest_stalker("cam")
+	if not (npc) then
+		return "waypoint:= need NPC to validate waypoints, no nearest stalker found."
+	end
+
+	local path_jobs = {"surge","collector","walker","patrol","guard","sniper","camper","sleep"}
+
+	local smart,gname,name,ptr,cnt,i,vec
+
+	local sim = alife()
+	local actor_level = wrd == "checklevel" and sim:level_name(game_graph():vertex(sim:actor().m_game_vertex_id):level_id())
+
+	for i=1,65534 do
+		smart = sim:object(i)
+		if (smart and smart:clsid() == clsid.smart_terrain) and (wrd == "checkall" or actor_level) then
+			gname = smart:name()
+			for index,job in ipairs(path_jobs) do
+				i = 1
+				while level.patrol_path_exists(job == "sleep" and gname.."_"..job.."_"..i or gname.."_"..job.."_"..i.."_walk") do
+					name = job == "sleep" and gname.."_"..job.."_"..i or gname.."_"..job.."_"..i.."_walk"
+					ptr = patrol(name)
+					if (ptr) then
+						cnt = ptr:count()
+						for n=0,cnt-1 do
+							if not ( (wrd == "checklevel" and alun_utils.accessible(npc,ptr:level_vertex_id(n))) or (ptr:level_vertex_id(n) < 4294967295) ) then
+								owner:SendOutput("path %s p%s:%s does not have valid level_vertex_id",name,n,ptr:name(n))
+								alun_utils.printf("path %s p%s:%s does not have valid level_vertex_id",name,n,ptr:name(n))
+							end
+							parse_waypoint(name,ptr:flags(n),ptr:name(n),owner)
+						end
+					end
+					i = i + 1
+				end
+			end
+		end
+	end
+
+	return "waypoint: successfully checked all gulag job paths."
+end
+
+
+
 -- SURGE
 function cmd.surge(me,txt,owner,p)
 	local wrd = first_word(me,txt,owner,"[start|stop]")
@@ -257,6 +403,7 @@ function cmd.psi_storm(me,txt,owner,p)
 		return "psi_storm:= wrong argument passed."
 	end
 end
+
 
 -- Fallout
 function cmd.fallout(me,txt,owner,p)
@@ -416,7 +563,7 @@ function cmd.teleport(me,txt,owner,p)
 
 		who = alife():object(who_id)
 		if not (who) then
-			return "teleport := Wrong arugument given or object doesn't exist. who:<%s>",who_id
+			return "teleport := Wrong argument given or object doesn't exist. who:<%s>",who_id
 		end
 	end
 
@@ -454,14 +601,18 @@ function cmd.teleport(me,txt,owner,p)
 	end
 
 	if (who and to_pos) then
-		local object = level.object_by_id(who.id)
 		if (db.actor:id() == who.id) then
-			object:set_actor_position(to_pos)
+			db.actor:set_actor_position(to_pos)
 		else
-			object:set_npc_position(to_pos)
+			local object = level.object_by_id(who.id)
+			if not (object) then 
+				who.position = to_pos
+			else
+				object:set_npc_position(to_pos)
+			end
 		end
 		local pos = string.format("%0.3f, %0.3f, %0.3f",to_pos.x,to_pos.y,to_pos.z)
-		return "teleport:= %s teleported to pos:%s",object.character_name and object:character_name() or object:name(),pos
+		return "teleport:= %s teleported to pos:%s",who:name(),pos
 	end
 end
 
@@ -485,10 +636,10 @@ function cmd.wound(me,txt,owner,p)
 
 	if (vo) then
 		local h = hit()
-		h.power = 0
+		h.power = vo.health - 0.05
 		h.direction = vo:direction()
 		h.bone = "bip01_spine"
-		h.draftsman = db.actor
+		h.draftsman = vo
 		h.impulse = 0
 		h.type = hit.wound
 		vo:hit(h)
@@ -666,13 +817,19 @@ function cmd.offset(me,txt,owner,p)
 			if (pr) then
 				return "offset:= position(%s,%s,%s)",pr.x,pr.y,pr.z
 			end
+		else
+			return "offset:= type offset get help"
 		end
 	end
 
 end
 
 function get_position_offset(npc,o)
-	local sec = o:section()
+	local sec = o and type(o.section) == "function" and o:section()
+	if not (sec) then
+		return
+	end
+
 	local attach_bone_name = alun_utils.read_from_ini(nil,sec,"attach_bone_name","string",nil)
 	if not (attach_bone_name) then
 		return
@@ -821,7 +978,7 @@ end
 -- weather
 local weather_list
 function cmd.weather(me,txt,owner,p)
-	local wrd = first_word(me,txt,owner,"[list <page> | <weather_name> ]")
+	local wrd,rest = first_word(me,txt,owner,"[list <page> | <weather_name> ]")
 	if not (wrd) then return end
 
 	if (wrd == "list") then
@@ -861,22 +1018,17 @@ function cmd.weather(me,txt,owner,p)
 			return "weather:= Invaild page"
 		end
 
-		owner:SendOutput("weather:= Weathers List [%s of %s]",page,page_count)
-
 		table.sort(weather_list)
 
-		local ind, out
-		for i=1,sz do
-			ind = (page*sz - sz) + i
-			out = ind > 0 and weather_list[ind] or " "
-			owner:SendOutput(out)
-		end
+		owner:SendOutput("weather:= Weathers List [%s of %s]",page,page_count)
+		owner:SendOutputList(weather_list,sz-(page*sz),sz-1)
+
 		return
+	elseif (wrd == "set") then
+		level.set_weather(rest,true)
+		return "weather:= weather set to " .. rest
 	end
-
-	level.set_weather(txt,true)
-
-	return "weather:= weather set"
+	return "weather: type weather help for a list of commands. Exclude .ltx when setting weather"
 end
 
 -- time
@@ -897,13 +1049,45 @@ function cmd.money(me,txt,owner,p)
 	if not (wrd) then return end
 	local amt = tonumber(wrd) or 1000
 	db.actor:give_money(amt)
-	return "money:= gave actor "..amt.." RU."
+	return "money:= gave actor "..amt.." RU. You dirty cheater, I'm going to find you and cut your legs off!"
 end
 
 -- level
+REMOVE_ME_LC = nil
 function cmd.level(me,txt,owner,p)
-	local wrd = first_word(me,txt,owner,"<name>")
+	local wrd = first_word(me,txt,owner,"<name> | [list]")
 	if not (wrd) then return end
+
+	if (wrd == "list") then
+
+		wrd = ""
+		local _strt, _end = string.find(txt,"%d+")
+		if (_strt and _end) then
+			wrd = string.sub(txt,_strt, _end)
+			wrd = string.lower(wrd)
+		end
+		local page = wrd ~= "" and tonumber(wrd) or 1
+
+		local levels = alun_utils.collect_section(game_ini(),"level_maps_single")
+
+		local sz = owner.console_size
+		local list_sz = 0
+		for k,v in pairs(levels) do
+			list_sz = list_sz + 1
+		end
+
+		local page_count = math.ceil(list_sz/sz)
+
+		if (page > page_count) then
+			return "level:= Invaild page"
+		end
+
+		owner:SendOutput("level:= list of available levels by name [%s of %s]",page,page_count)
+		owner:SendOutputList(levels,sz-(page*sz),sz-1)
+
+		return
+	end
+
 	local levels = { 	["zaton_jupiter"] = {467.306884765625,55.5276184082031,12.9044094085693},
 						["zaton_pripyat"] = {467.206878662109,55.5276184082031,3.20440793037415},
 						["jupiter_zaton"] = {-7.12386798858643,14.484338760376,154.085464477539},
@@ -918,6 +1102,49 @@ function cmd.level(me,txt,owner,p)
 	if (levels[level_name.."_"..wrd]) then
 		db.actor:set_actor_position(vector():set(levels[level_name.."_"..wrd][1],levels[level_name.."_"..wrd][2],levels[level_name.."_"..wrd][3]))
 		return "level:= teleporting player from "..level_name.." to "..wrd
+	end
+
+	local sim = alife()
+	local gg = game_graph()
+	local level,lvid,pos,se_obj,data
+
+	for gvid=0, 3832 do
+		if gg:valid_vertex_id(gvid) then
+			vertex = gg:vertex(gvid)
+			level = sim:level_name(vertex:level_id())
+			if (level == wrd) then
+				se_obj = sim:create("level_changer",db.actor:position(),db.actor:level_vertex_id(),db.actor:game_vertex_id())
+				if (se_obj) then
+					lvid = vertex:level_vertex_id()
+					pos = vertex:level_point()
+
+					data = stpk_utils.get_level_changer_data(se_obj)
+					data.dest_game_vertex_id = gvid
+					data.dest_level_vertex_id = lvid
+					data.dest_position = pos
+					data.dest_direction = vector():set(0,0,0)
+					data.dest_level_name = level
+					data.silent_mode = 1
+					data.shape_count = 1
+					data.shape_type[1] = 0
+					data.center[1] = vector():set(0,0,0)
+					data.radius[1] = 5
+					data.v1[1] = vector():set(5,0,0)
+					data.v2[1] = vector():set(0,2,0)
+					data.v3[1] = vector():set(0,0,5)
+					data.v4[1] = vector():set(0,0,0)
+					data.restrictor_type = 3
+					data.hint = "level_changer_invitation"
+
+					stpk_utils.set_level_changer_data(data,se_obj)
+
+					REMOVE_ME_LC = se_obj.id
+					return "level:= level changer successfully created at your position from"..level_name.." to "..wrd
+				end
+			end
+		else
+			break
+		end
 	end
 
 	return "level:= there is no level changer between "..level_name.." and "..wrd
@@ -944,45 +1171,55 @@ function cmd.game_graph(me,txt,owner,p)
 		local gg = game_graph()
 		local vertex, level_name, lvid, pos, se_obj
 		local sim = alife()
-		for gvid=0, 1033 do
-			if (gg:valid_vertex_id(gvid)) then
-				vertex = gg:vertex(gvid)
-				level_name = alife():level_name(vertex:level_id())
-				lvid = vertex:level_vertex_id()
-				pos = vertex:level_point()
+		local gvid = 0
+		local lgvid = 0
+		local level = level
+		while gg:valid_vertex_id(gvid) do
+			vertex = gg:vertex(gvid)
+			level_name = alife():level_name(vertex:level_id())
+			lvid = vertex:level_vertex_id()
+			pos = vertex:level_point()
 
-				se_obj = sim:create("medkit", pos, lvid, gvid)
-				level.map_add_object_spot_ser(se_obj.id, "treasure", level_name.." Gvid:"..gvid)
+			se_obj = sim:create("medkit", pos, lvid, gvid)
+			level.map_add_object_spot_ser(se_obj.id, "treasure", level_name.." Gvid:"..gvid)
+
+			if (level_name == level.name()) then
+				lgvid = lgvid + 1
 			end
+			gvid = gvid + 1
 		end
+		return "game_graph:= spots created. There are "..lgvid.." in "..level.name().." and "..gvid.." total."
 	elseif (wrd == "near") then
 		local gg = game_graph()
 		local vertex, level_name, lvid, pos
 		local near_lvid, near_dist, near_gvid, dist
-		for gvid=0, 1033 do
-			if (gg:valid_vertex_id(gvid)) then
-				vertex = gg:vertex(gvid)
-				level_name = alife():level_name(vertex:level_id())
-				if (level_name == level.name()) then
-					pos = vertex:level_point()
+		local gvid = 0
+		local lgvid = 0
+		local level = level
+		while gg:valid_vertex_id(gvid) do
+			vertex = gg:vertex(gvid)
+			level_name = alife():level_name(vertex:level_id())
+			if (level_name == level.name()) then
+				pos = vertex:level_point()
 
-					dist = db.actor:position():distance_to_sqr(pos)
+				dist = db.actor:position():distance_to_sqr(pos)
 
-					if not (near_dist) then
-						near_gvid = gvid
-						near_dist = dist
-					end
-
-					if (dist < near_dist) then
-						near_gvid = gvid
-						near_dist = dist
-					end
+				if not (near_dist) then
+					near_gvid = gvid
+					near_dist = dist
 				end
+
+				if (dist < near_dist) then
+					near_gvid = gvid
+					near_dist = dist
+				end
+				lgvid = lgvid + 1
 			end
+			gvid = gvid + 1
 		end
-		return "game_graph:= nearest gvid = " .. near_gvid .. " [dist = " .. near_dist .. "]"
+		return "game_graph:= nearest gvid = " .. near_gvid .. " [dist = " .. near_dist .. "] There are "..lgvid.." in "..level.name().." and "..gvid.." total."
 	end
-	return "game_graph:= spots created"
+	return "game_graph:= type game_graph help for list of commands"
 end
 
 -- item

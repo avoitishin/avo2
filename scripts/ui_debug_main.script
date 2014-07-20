@@ -4,6 +4,31 @@
 Copyright (C) 2012 Alundaio
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License-]]
 --]]
+
+------------------------------------------------------------
+-- List box
+------------------------------------------------------------
+class "set_list_text" (CUIListBoxItem)
+function set_list_text:__init(height) super(height)
+--[[
+	self.name					= self:GetTextItem()
+	self.name:SetWndRect		(Frect():set(0,0,300,22))
+	self:SetTextColor			(GetARGB(255, 210, 210, 210))
+	self.name:SetFont			(GetFontLetterica18Russian())
+	self.name:SetWndSize		(vector2():set(400,height))
+	self.name:SetEllipsis		(true)
+]]
+	self.sect					= self:GetTextItem()
+	self.sect:SetWndRect		(Frect():set(0,0,300,22))
+	self:SetTextColor			(GetARGB(255, 216, 186, 140))
+	self.sect:SetFont			(GetFontLetterica18Russian())
+	self.sect:SetWndSize		(vector2():set(400,height))
+	self.sect:SetEllipsis		(true)
+end
+
+------------------------------------------------------------
+-- MAIN DEBUG UI
+------------------------------------------------------------
 class "debug_ui" (CUIScriptWnd)
 function debug_ui:__init(owner,binds) super()
 	self.owner = owner
@@ -13,11 +38,13 @@ function debug_ui:__init(owner,binds) super()
 	self:InitControls()
 	self:InitCallBacks()
 	self.tab:SetActiveTab("spawner")
-	self:SendOutput("xrs_debug_tools version 1.7      [Type help for a list of commands]")
+	self:SendOutput("Alundaio's xrs_debug_tools version 2.1      [Type help for a list of commands]")
 	self.console_relay = false
 end
 
-function debug_ui:__finalize() end
+function debug_ui:__finalize()
+
+end
 
 function debug_ui:InitControls()
 	self:SetWndRect				(Frect():set(0,0,1024,768))
@@ -120,6 +147,11 @@ function debug_ui:InitCallBacks()
 	self:AddCallback("btn_revert", ui_events.BUTTON_CLICKED, self.OnBtnRevertLogic, self)
 	self:AddCallback("btn_reload", ui_events.BUTTON_CLICKED, self.OnBtnReloadIni, self)
 	self:AddCallback("console_input", ui_events.EDIT_TEXT_COMMIT, self.OnConsoleInput, self)
+
+	--- Spawner Tab
+	self:AddCallback("list_sections", ui_events.LIST_ITEM_SELECT,		 self.OnSelectSectionList,		self)
+	self:AddCallback("list_window",	  ui_events.WINDOW_LBUTTON_DB_CLICK, self.OnButton_create_clicked,	self)
+    --self:AddCallback("btn_create",	  ui_events.BUTTON_CLICKED,          self.OnButton_create_clicked,	self)
 end
 
 function debug_ui:OnConsoleInput()
@@ -214,12 +246,15 @@ function debug_ui:SendOutput(txt,...)
 	end
 
 	local i = 0
+	local out = txt
 	local p = {...}
-	local function sr(a)
-		i = i + 1
-		return tostring(p[i])
+	if (#p > 0) then
+		local function sr(a)
+			i = i + 1
+			return tostring(p[i])
+		end
+		out = string.gsub(txt,"%%s",sr)
 	end
-	local out = string.gsub(txt,"%%s",sr)
 
 	for n=1,#self.txt_console-1,1 do
 		local s = self.txt_console[n+1]:GetText()
@@ -229,6 +264,29 @@ function debug_ui:SendOutput(txt,...)
 
 	if (self.console_relay) then
 		alun_utils.printf("Debug Console: %s",out)
+	end
+end
+
+function debug_ui:SendOutputList(list,start,finish)
+	if not (list and not empty(list)) then
+		return
+	end
+
+	local count = 1
+	local i = 1
+	local size = #self.txt_console
+	for k,v in pairs(list) do
+		if (start and count >= start) then
+			if (i < (finish or size)) then
+				self:SendOutput(tostring(v))
+				i = i + 1
+			else
+				self:SendOutput(tostring(v))
+				return
+			end
+		else
+			count = count + 1
+		end
 	end
 end
 
@@ -257,7 +315,7 @@ function debug_ui:OnBtnSwitchDistance()
 		local a = alife()
 		local old = a:switch_distance()
 		local amt = tonumber(txt)
-		alun_utils.debug_write("%s %s ",old,amt)
+		--alun_utils.debug_write("%s %s ",old,amt)
 		a:switch_distance(amt)
 		self:SendOutput("Switch Distance changed from %s to %s.",old,amt)
 	end
@@ -274,12 +332,13 @@ function debug_ui:OnBtnSetLogic()
 		return
 	end
 	local id = self.fld_id:GetText()
+	id = id and tonumber(id)
 	local scheme = utils.get_scheme_by_section(section)
 	local logic = self.fld_logic:GetText()
 	local ini_filename = self.fld_filename:GetText()
 
 	if (id and scheme and section and ini_filename) then
-		local obj = db.storage[tonumber(id)] and db.storage[tonumber(id)].object
+		local obj = db.storage[id] and db.storage[id].object or level.object_by_id(id)
 		if (obj) then
 			axr_logic.set_new_scheme_and_logic(obj,scheme,section,logic,nil,ini_filename)
 			self:SendOutput("New scheme and logic set for %s.",obj:name())
@@ -289,10 +348,10 @@ end
 
 function debug_ui:OnBtnRevertLogic()
 	local id = self.fld_id:GetText()
+	id = id and tonumber(id)
 	if (id) then
-		local st = db.storage[tonumber(id)]
-		if (st) then
-			local obj = st.object
+		local obj = db.storage[id] and db.storage[id].object or level.object_by_id(id)
+		if (obj) then
 			axr_logic.restore_scheme_and_logic(obj)
 			self:SendOutput("Reverted scheme and logic for %s.",obj:name())
 		end
@@ -378,16 +437,21 @@ end
 
 function debug_ui:spawn_squad(section,smart)
 	if not system_ini():section_exist(section) then
-		self:SendOutput("Section %s does not exist in system INI.",section)
+		self:SendOutput("UISpawner: Section %s does not exist in system INI.",section)
+		return false
+	end
+
+	if not (smart) then
+		self:SendOutput("UISpawner: Smart by name %s does not exist.",smart)
 		return false
 	end
 	local sim = sim_board.get_sim_board()
 	if not (sim.smarts_by_names[smart]) then
-		self:SendOutput("Smart by name %s does not exist.",smart)
-		return
+		self:SendOutput("UISpawner: Smart by name %s does not exist.",smart)
+		return false
 	end
 	local squad = alun_utils.create_squad(section,smart)
-	self:SendOutput("Squad %s created as ID %s at %s.",squad:name(),squad.id,smart)
+	self:SendOutput("UISpawner: Squad %s created as ID %s at %s.",squad:name(),squad.id,smart)
 	return true
 end
 
@@ -423,6 +487,661 @@ function debug_ui:FindNearest(txt)
 			self:SendOutput("Object with name not found.")
 		end
 	end
+end
+
+local function get_spawn_table(name)
+	if (name == "Artefacts") then
+		return {
+				"af_medusa", 		    -- 1
+				"af_cristall_flower",   -- 2
+				"af_night_star", 	    -- 3
+				"af_vyvert", 		    -- 4
+				"af_gravi", 		    -- 5
+				"af_gold_fish", 	    -- 6
+				"af_cristall", 		    -- 7
+				"af_fireball", 	        -- 8
+				"af_dummy_glassbeads",  -- 9
+				"af_eye", 			    -- 10
+				"af_fire", 			    -- 11
+				"af_blood", 		    -- 12
+				"af_mincer_meat", 	    -- 13
+				"af_soul", 			    -- 14
+				"af_fuzz_kolobok", 	    -- 15
+				"af_baloon", 		    -- 16
+				"af_glass", 		    -- 17
+				"af_electra_sparkler",  -- 18
+				"af_electra_flash",     -- 19
+				"af_electra_moonlight", -- 20
+				"af_dummy_battery", 	-- 21
+				"af_dummy_dummy", 		-- 22
+				"af_ice", 				-- 23
+				"af_compass", 			-- 24
+				"af_oasis_heart", 		-- 25
+				"jup_b1_half_artifact", -- 26
+				"af_quest_b14_twisted", -- 27
+				}
+	elseif (name == "Outfits") then
+		return {
+				"helm_respirator",
+				"helm_hardhat",
+				"helm_protective",
+				"helm_tactic",
+				"helm_battle",
+				"helm_respirator_joker",
+				"helm_hardhat_snag",
+				"novice_outfit",
+				"stalker_outfit",
+				"svoboda_light_outfit",
+				"dolg_outfit",
+				"scientific_outfit",
+				"cs_heavy_outfit",
+				"svoboda_heavy_outfit",
+				"specops_outfit",
+				"military_outfit",
+				"dolg_heavy_outfit",
+				"exo_outfit",
+				"stalker_outfit_barge",
+				"god_outfit"
+				}
+	elseif (name == "Items (Misc.)") then
+		return {
+				"device_torch",
+				"detector_simple",
+				"detector_advanced",
+				"detector_elite",
+				"detector_scientific",
+				"itm_actor_backpack",
+				"itm_backpack",
+				"itm_sleepbag",
+				"itm_pda_common",
+				"itm_pda_uncommon",
+				"itm_pda_rare",
+				"itm_gunsmith_toolkit"
+				}
+	elseif (name == "Items (Consumable)") then
+		return {
+				"bandage",
+				"antirad",
+				"medkit",
+				"medkit_army",
+				"medkit_scientic",
+
+				"drug_booster",
+				"drug_coagulant",
+				"drug_psy_blockade",
+				"drug_antidot",
+				"drug_radioprotector",
+				"drug_anabiotic",
+
+				"bread",
+				"kolbasa",
+				"conserva",
+				"vodka",
+				"energy_drink"
+				}
+	elseif (name == "Weapons (Addon)") then
+		return {
+				"wpn_addon_scope",
+				"wpn_addon_scope_x2.7",
+				"wpn_addon_scope_detector",
+				"wpn_addon_scope_night",
+				"wpn_addon_scope_susat",
+				"wpn_addon_scope_susat_x1.6",
+				"wpn_addon_scope_susat_custom",
+				"wpn_addon_scope_susat_dusk",
+				"wpn_addon_scope_susat_night",
+				"wpn_addon_silencer",
+				"wpn_addon_grenade_launcher",
+				"wpn_addon_grenade_launcher_m203"
+				}
+	elseif (name == "Weapons (Pistol)") then
+		return  {
+				"wpn_beretta",
+				"wpn_desert_eagle",
+				"wpn_desert_eagle_nimble",
+				"wpn_pm",
+				"wpn_pm_actor",
+				"wpn_pb",
+				"wpn_fort",
+				"wpn_fort_snag",
+				"wpn_hpsa",
+				"wpn_walther",
+				"wpn_sig220",
+				"wpn_sig220_nimble",
+				"wpn_colt1911",
+				"wpn_usp",
+				"wpn_usp_nimble"
+				}
+	elseif (name == "Weapons (Rifle)") then
+		return {
+				"wpn_bm16",
+				"wpn_toz34",
+				"wpn_wincheaster1300",
+				"wpn_spas12",
+				"wpn_spas12_nimble",
+				"wpn_protecta",
+				"wpn_protecta_nimble",
+				"wpn_ak74u",
+				"wpn_mp5",
+				"wpn_ak74",
+				"wpn_abakan",
+				"wpn_l85",
+				"wpn_lr300",
+				"wpn_sig550",
+				"wpn_groza",
+				"wpn_val",
+				"wpn_vintorez",
+				"wpn_svu",
+				"wpn_svd",
+				"wpn_rg-6",
+				"wpn_rpg7",
+				"wpn_g36",
+				"wpn_fn2000",
+				"wpn_pkm",
+				"wpn_gauss",
+				"wpn_wincheaster1300_trapper",
+				"wpn_ak74u_snag",
+				"wpn_mp5_nimble",
+				"wpn_sig550_luckygun",
+				"wpn_groza_nimble",
+				"wpn_vintorez_nimble",
+				"wpn_svu_nimble",
+				"wpn_svd_nimble",
+				"wpn_g36_nimble",
+				"wpn_fn2000_nimble",
+				"wpn_pkm_zulus",
+				"pri_a17_gauss_rifle"
+			}
+	elseif (name == "Weapons (Misc.)") then
+		return	{
+				"grenade_f1",
+				"grenade_rgd5",
+				"grenade_gd-05",
+				"wpn_knife",
+				"wpn_binoc",
+				"wpn_mine",
+				"explosive_barrel",
+				"explosive_mobiltank",
+				"explosive_dinamit"
+				}
+	elseif (name == "Items (Quest)") then
+		return {
+				"jup_a9_conservation_info",
+				"jup_a9_power_info",
+				"jup_a9_way_info",
+				"jup_a9_evacuation_info",
+				"jup_a9_meeting_info",
+				"jup_a9_losses_info",
+				"jup_a9_delivery_info",
+				"jup_b10_ufo_memory",
+				"jup_b10_ufo_memory_2",
+				"jup_b10_notes_01",
+				"jup_b10_notes_02",
+				"jup_b10_notes_03",
+				"jup_b205_sokolov_note",
+				"jup_b206_plant",
+				"jup_b209_monster_scanner",
+				"jup_b200_tech_materials_wire",
+				"jup_b200_tech_materials_acetone",
+				"jup_b200_tech_materials_textolite",
+				"jup_b200_tech_materials_transistor",
+				"jup_b200_tech_materials_capacitor",
+				"jup_b202_bandit_pda",
+				"device_flash_snag",
+				"jup_b9_blackbox",
+				"jup_b32_scanner_device",
+				"jup_b46_duty_founder_pda",
+				"jup_b207_merc_pda_with_contract",
+				"jup_b47_jupiter_products_info",
+				"jup_b47_merc_pda",
+				"toolkit_1",
+				"toolkit_2",
+				"toolkit_3",
+				"zat_b33_safe_container",
+				"zat_b57_gas",
+				"zat_b12_key_1",
+				"zat_b12_key_2",
+				"zat_b12_documents_1",
+				"zat_b12_documents_2",
+				"device_pda_port_bandit_leader",
+				"zat_b40_notebook",
+				"zat_b40_pda_1",
+				"zat_b40_pda_2",
+				"device_pda_zat_b5_dealer",
+				"zat_b20_noah_pda",
+				"zat_a23_access_card",
+				"zat_a23_gauss_rifle_docs",
+				"zat_b44_barge_pda",
+				"zat_b39_joker_pda",
+				"zat_b22_medic_pda",
+				"pri_b35_lab_x8_key",
+				"pri_b306_envoy_pda",
+				"pri_b36_monolith_hiding_place_pda",
+				"pri_a25_explosive_charge_item",
+				"pri_a19_american_experiment_info",
+				"pri_a19_lab_x16_info",
+				"pri_a19_lab_x10_info",
+				"pri_a19_lab_x7_info",
+				"pri_a19_lab_x18_info",
+				"zat_a23_labx8_key",
+				"lx8_service_instruction"
+				}
+	elseif (name == "Ammo") then
+		return {
+				"ammo_9x18_fmj",
+				"ammo_9x18_pmm",
+				"ammo_9x19_fmj",
+				"ammo_9x19_pbp",
+				"ammo_11.43x23_fmj",
+				"ammo_11.43x23_hydro",
+				"ammo_5.45x39_fmj",
+				"ammo_5.45x39_ap",
+				"ammo_5.56x45_ss190",
+				"ammo_5.56x45_ap",
+				"ammo_pkm_100",
+				"ammo_7.62x54_7h1",
+				"ammo_gauss",
+				"ammo_gauss_cardan",
+				"ammo_9x39_pab9",
+				"ammo_9x39_ap",
+				"ammo_12x70_buck",
+				"ammo_12x76_zhekan",
+				"ammo_og-7b",
+				"ammo_vog-25",
+				"ammo_m209"
+				}
+	elseif (name == "NPC (Stalker)") then
+		return {
+				"sim_default_stalker_0",
+				"sim_default_stalker_1",
+				"sim_default_stalker_2",
+				"sim_default_stalker_3",
+				"sim_default_stalker_4",
+				"sim_default_bandit_0",
+				"sim_default_bandit_1",
+				"sim_default_bandit_2",
+				"sim_default_bandit_3",
+				"sim_default_bandit_4",
+				"sim_default_killer_0",
+				"sim_default_killer_1",
+				"sim_default_killer_2",
+				"sim_default_killer_3",
+				"sim_default_killer_4",
+				"sim_default_duty_0",
+				"sim_default_duty_1",
+				"sim_default_duty_2",
+				"sim_default_duty_3",
+				"sim_default_duty_4",
+				"sim_default_freedom_0",
+				"sim_default_freedom_1",
+				"sim_default_freedom_2",
+				"sim_default_freedom_3",
+				"sim_default_freedom_4",
+				"sim_default_army_0",
+				"sim_default_army_1",
+				"sim_default_army_2",
+				"sim_default_army_3",
+				"sim_default_army_4",
+				"sim_default_monolith_0",
+				"sim_default_monolith_1",
+				"sim_default_monolith_2",
+				"sim_default_monolith_3",
+				"sim_default_monolith_4",
+				"sim_monolith_sniper",
+				"sim_monolith_specnaz_rg6",
+				"sim_default_zombied_0",
+				"sim_default_zombied_1",
+				"sim_default_zombied_2",
+				"sim_default_zombied_3",
+				"sim_default_zombied_4",
+				"sim_default_csky_0",
+				"sim_default_csky_1",
+				"sim_default_csky_2",
+				"sim_default_csky_3",
+				"sim_default_csky_4",
+				"sim_default_ecolog_0",
+				"sim_default_ecolog_1",
+				"sim_default_ecolog_2",
+				"sim_default_ecolog_3",
+				"sim_default_ecolog_4",
+				"sim_default_military_0",
+				"sim_default_military_1",
+				"sim_default_military_2",
+				"sim_default_military_3",
+				"sim_default_military_4"
+				}
+	elseif (name == "NPC (Mutant)") then
+		return {
+				"cat_weak",
+				"cat_normal",
+				"cat_strong",
+				"dog_weak",
+				"dog_normal",
+				"dog_strong",
+				"rat_weak",
+				"rat_normal",
+				"rat_strong",
+				"chimera_weak",
+				"chimera_normal",
+				"chimera_strong",
+				"controller_weak",
+				"controller_normal",
+				"controller_strong",
+				"bloodsucker_weak",
+				"bloodsucker_normal",
+				"bloodsucker_strong",
+				"boar_weak",
+				"boar_normal",
+				"boar_strong",
+				"flesh_weak",
+				"flesh_normal",
+				"flesh_strong",
+				"fracture_weak",
+				"fracture_normal",
+				"fracture_strong",
+				"zombie_weak",
+				"zombie_normal",
+				"zombie_strong",
+				"gigant_weak",
+				"gigant_normal",
+				"gigant_strong",
+				"snork_weak",
+				"snork_normal",
+				"snork_strong",
+				"pseudodog_weak",
+				"pseudodog_normal",
+				"pseudodog_strong",
+				"burer_weak",
+				"burer_normal",
+				"burer_strong",
+				"tushkano_weak",
+				"tushkano_normal",
+				"tushkano_strong"
+				}
+	elseif (name == "Squads (Stalker)") then
+		return {
+				"stalker_sim_squad_novice",
+				"stalker_sim_squad_advanced",
+				"stalker_sim_squad_veteran",
+				"bandit_sim_squad_novice",
+				"bandit_sim_squad_advanced",
+				"bandit_sim_squad_veteran",
+				"duty_sim_squad_novice",
+				"duty_sim_squad_advanced",
+				"duty_sim_squad_veteran",
+				"freedom_sim_squad_novice",
+				"freedom_sim_squad_advanced",
+				"freedom_sim_squad_veteran",
+				"army_sim_squad_novice",
+				"army_sim_squad_advanced",
+				"army_sim_squad_veteran",
+				"merc_sim_squad_novice",
+				"merc_sim_squad_advanced",
+				"merc_sim_squad_veteran",
+				"monolith_sim_squad_novice",
+				"monolith_sim_squad_advanced",
+				"monolith_sim_squad_veteran",
+				"csky_sim_squad_novice",
+				"csky_sim_squad_advanced",
+				"csky_sim_squad_veteran",
+				"ecolog_sim_squad_novice",
+				"ecolog_sim_squad_advanced",
+				"ecolog_sim_squad_veteran",
+				"zombied_sim_squad_novice",
+				"zombied_sim_squad_advanced",
+				"zombied_sim_squad_veteran"
+				}
+	elseif (name == "Squads (Monster)") then
+		return {
+				"simulation_bloodsucker",
+				"simulation_boar",
+				"simulation_burer",
+				"simulation_dog",
+				"simulation_pseudodog",
+				"simulation_flesh",
+				"simulation_snork",
+				"simulation_controller",
+				"simulation_mix_dogs",
+				"simulation_mix_boar_flesh",
+				"simulation_poltergeist_tele",
+				"simulation_chimera",
+				"simulation_chimera_zaton",
+				"simulation_chimera_pripyat",
+				"simulation_chimera_jupiter",
+				"simulation_psy_dog",
+				"simulation_tushkano",
+				"simulation_gigant",
+				"simulation_cat",
+				"simulation_zombie",
+				"simulation_rat",
+				"simulation_rats",
+				"simulation_fracture"
+				}
+	elseif (name == "Physic (Misc.)") then
+		return {
+				"mine_blow",
+				"jup_b209_ph_scanner",
+				"jup_b207_depot_cover",
+				"pri_a28_actor_hideout",
+				"jup_b219_gate",
+				"pri_a25_explosive_charge",
+				"pri_a28_earth_helli_1",
+				"pri_a28_earth_helli_2",
+				"jup_b206_plant_ph",
+				"shooting_target_1",
+				"balon_01",
+				"balon_02",
+				"balon_02link",
+				"balon_02a",
+				"bidon",
+				"bochka_close_1",
+				"bochka_close_2",
+				"bochka_close_3",
+				"bochka_close_4",
+				"gaz_balon",
+				"disel_generator",
+				"krisagenerator",
+				"ventilator_01",
+				"ventilator_02",
+				"ventilator_03",
+				"ventilator_04",
+				"ventilator_05",
+				"notebook",
+				"priemnik_gorizont",
+				"rupor",
+				"transiver",
+				"tv_1",
+				"table_lamp_01",
+				"komp_monitor",
+				"komp_klava",
+				"komp_block",
+				"debris_01",
+				"wood_fence_1",
+				"wood_fence_2",
+				"wood_fence_3",
+				"wood_fence_4",
+				"banka_kraski_1",
+				"kanistra_01",
+				"tiski",
+				"kanistra_02",
+				"vedro_01",
+				"axe",
+				"hammer",
+				"hatch_01",
+				"keyga",
+				"lopata",
+				"molot",
+				"pick",
+				"riffler",
+				"saw",
+				"box_1a",
+				"box_1b",
+				"box_1c",
+				"box_bottle_1",
+				"box_metall_01",
+				"box_wood_01",
+				"box_wood_02",
+				"box_paper"
+				}
+	end
+end
+
+function debug_ui:FillList(name)
+	if not (name) then
+		self:SendOutput("UISpawner: No spawn table could be created for %s",name)
+		return
+	end
+
+	self.spawn_list:Clear()
+
+	local spawntbl = get_spawn_table(name)
+
+	if not (spawntbl) then
+		self:SendOutput("UISpawner: No spawn table could be created for %s",name)
+		return
+	end
+
+	local ini = system_ini()
+
+	table.sort(spawntbl)
+	for i = 1, #spawntbl do
+		if (ini:section_exist(spawntbl[i])) then
+			local _itm = set_list_text(22)
+			--local name = game.translate_string(system_ini():r_string(sections[i], "inv_name"))
+
+			--_itm.name:SetText(name)
+			_itm.sect:SetText(spawntbl[i])
+
+			if (string.find(name,"Squad")) then
+				_itm.no_id = true
+				_itm.squad = true
+			elseif (string.find(name,"NPC") or string.find(name,"Physic")) then
+				_itm.no_id = true
+			end
+
+			self.spawn_list:AddExistingItem(_itm)
+		end
+	end
+end
+
+function debug_ui:OnSelectSectionList()
+	self:FillList(self.sections_list:GetText())
+end
+
+function debug_ui:OnButton_create_clicked()
+	if self.spawn_list:GetSize() == 0 then
+		self:SendOutput("UISpawner: List is empty.")
+		return
+	end
+
+	local item
+	item = self.spawn_list:GetSelectedItem()
+	if not(item) then
+		self:SendOutput("UISpawner: No item section was selected in the list.")
+		return
+	end
+
+	local section = item.sect:GetText()
+
+	if (item.squad) then
+		local smart = self.smarts_list:GetText()
+		self:spawn_squad(section,smart)
+		return
+	end
+
+	local pos, lvid, gvid
+	if (self.spawn_pos) then
+		pos = self.spawn_pos
+		lvid = self.spawn_lvid
+		gvid = self.spawn_gvid
+	else
+		pos = db.actor:position()
+		lvid = db.actor:level_vertex_id()
+		gvid = db.actor:game_vertex_id()
+	end
+
+	local id = not item.no_id and self.check_to_actor:GetCheck() and 0
+	local se_obj
+	if (id) then
+		se_obj = alife():create(section, vector(), 0, 0, id)
+	else
+		se_obj = alife():create(section, pos, lvid, gvid)
+	end
+
+	if not (se_obj) then
+		self:SendOutput("UISpawner: Failure to create item with alife create method %s",section)
+		return
+	end
+
+	self:SendOutput("UISpawner: Spawned %s on %s as id %s",se_obj:name(),id == 0 and "Actor" or "level",se_obj.id)
+end
+
+-- SPAWNER UI
+--[[
+Copyright (C) 2012 Alundaio
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License-]]
+--]]
+class "debug_spawner_ui" (CUIWindow)
+function debug_spawner_ui:__init(owner, binds) super()
+	self.owner = owner
+	self.binds = binds
+end
+function debug_spawner_ui:__finalize()
+
+end
+
+function debug_spawner_ui:InitControls(x, y, xml, owner)
+	self:SetWndPos(vector2():set(x-50,y))
+	self:SetWndSize(vector2():set(800,416))
+	self:SetAutoDelete(true)
+
+
+	owner.sections_list = xml:InitComboBox("tab_spawner:list_sections", self)
+	owner.sections_list:ClearList()
+	owner.sections_list:SetAutoDelete(true)
+
+	local slist = {"Weapons (Addon)","Items (Misc.)","Weapons (Rifle)","Weapons (Pistol)","Weapons (Misc.)","Outfits","Ammo","Artefacts","Items (Consumable)","Items (Quest)","NPC (Stalker)","Squads (Stalker)","NPC (Mutant)", "Physic (Misc.)","Squads (Monster)"}
+	table.sort(slist)
+	for i=1,#slist do
+		owner.sections_list:AddItem(slist[i],i-1)
+	end
+
+	owner:Register(owner.sections_list, "list_sections")
+
+	owner.spawn_list_frame = xml:InitFrame("tab_spawner:list_frame",self)
+	owner.spawn_list = xml:InitListBox("tab_spawner:list",self)
+	owner.spawn_list:ShowSelectedItem(true)
+
+	owner:Register(owner.spawn_list, "list_window")
+
+	owner.check_to_actor = xml:InitCheck("tab_spawner:check_own_to_actor",self)
+	owner.check_to_actor:SetCheck(true)
+
+	--local ctrl = xml:Init3tButton("tab_spawner:btn_create",self)
+	--owner:Register(ctrl, "btn_create")
+
+	owner.smarts_list = xml:InitComboBox("tab_spawner:list_smarts", self)
+	owner.smarts_list:ClearList()
+	owner.smarts_list:SetAutoDelete(true)
+
+	local sim = alife()
+	local actor_level = sim:level_name(game_graph():vertex(sim:actor().m_game_vertex_id):level_id())
+	local board = sim_board.get_sim_board()
+	local i = 0
+	for id,t in pairs(board.smarts) do
+		if (t.smrt and actor_level == t.smrt.smart_level) then
+			owner.smarts_list:AddItem(t.smrt:name(),i)
+			i = i + 1
+		end
+	end
+
+	--owner:Register(owner.smarts_list, "list_smarts")
+
+	-- Set defaults
+	owner.sections_list:SetText("Weapons (Rifle)")
+	owner:FillList("Weapons (Rifle)")
+
+	owner.smarts_list:SetText("Squad to Smart")
 end
 
 -- HUD UI
@@ -500,41 +1219,6 @@ function debug_object_ui:InitControls(x, y, xml, owner)
 	owner:Register(btn, "btn_reload")
 end
 
--- SPAWNER UI
---[[
-Copyright (C) 2012 Alundaio
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License-]]
---]]
-class "debug_spawner_ui" (CUIWindow)
-function debug_spawner_ui:__init(owner, binds) super()
-	self.owner = owner
-	self.binds = binds
-end
-function debug_spawner_ui:__finalize()
-
-end
-
-function debug_spawner_ui:InitControls(x, y, xml, owner)
-	self:SetWndPos(vector2():set(x,y))
-	self:SetWndSize(vector2():set(800,416))
-	self:SetAutoDelete(true)
-
-	xml:InitStatic("tab_spawner:cap_spawn", self)
-	owner.fld_spawn = xml:InitEditBox("tab_spawner:fld_spawn", self)
-
-	local btn = xml:Init3tButton("tab_spawner:btn_spawn",self)
-	owner:Register(btn, "btn_spawn")
-
-	xml:InitStatic("tab_spawner:cap_spawn_squad", self)
-	owner.fld_spawn_squad = xml:InitEditBox("tab_spawner:fld_spawn_squad", self)
-
-	xml:InitStatic("tab_spawner:cap_spawn_smart", self)
-	owner.fld_spawn_smart = xml:InitEditBox("tab_spawner:fld_spawn_smart", self)
-
-	btn = xml:Init3tButton("tab_spawner:btn_spawn_squad",self)
-	owner:Register(btn, "btn_spawn_squad")
-end
-
 -- ADVANCED UI
 --[[
 Copyright (C) 2012 Alundaio
@@ -559,9 +1243,18 @@ function debug_advanced_ui:InitControls(x, y, xml, owner)
 	local btn = xml:Init3tButton("tab_advanced:btn_execute_string",self)
 	owner:Register(btn, "btn_execute_string")
 
-	--xml:InitStatic("tab_advanced:cap_switch_distance", self)
-	--owner.fld_switch_distance = xml:InitEditBox("tab_advanced:fld_switch_distance", self)
+	xml:InitStatic("tab_advanced:cap_spawn", self)
+	owner.fld_spawn = xml:InitEditBox("tab_advanced:fld_spawn", self)
 
-	--btn = xml:Init3tButton("tab_advanced:btn_switch_distance",self)
-	--owner:Register(btn, "btn_switch_distance")
+	btn = xml:Init3tButton("tab_advanced:btn_spawn",self)
+	owner:Register(btn, "btn_spawn")
+
+	xml:InitStatic("tab_advanced:cap_spawn_squad", self)
+	owner.fld_spawn_squad = xml:InitEditBox("tab_advanced:fld_spawn_squad", self)
+
+	xml:InitStatic("tab_advanced:cap_spawn_smart", self)
+	owner.fld_spawn_smart = xml:InitEditBox("tab_advanced:fld_spawn_smart", self)
+
+	btn = xml:Init3tButton("tab_advanced:btn_spawn_squad",self)
+	owner:Register(btn, "btn_spawn_squad")
 end

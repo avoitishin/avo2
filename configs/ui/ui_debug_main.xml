@@ -108,44 +108,40 @@
 	</main_dialog>
 
 	<tab_size x="28" y="63" width="445" height="344"/>
-    <tab_spawner>
-        <cap_spawn x="5" y="5" width="135" height="24">
-            <text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Spawn Section</text>
-        </cap_spawn>
-			<fld_spawn x="5" y="25" width="150" height="30">
-				<text x="3" font="letterica18" complex_mode="0" vert_align="c" align="l"/>
-				<texture>ui_inGame2_edit_box_2</texture>
-			</fld_spawn>
-				<btn_spawn x="155" y="27" width="50" height="25">
-					<text align="c" font="letterica16">ui_st_mp_create</text>
-					<texture>ui_inGame2_button</texture>
-					<text_color>
-						<e r="210" g="210" b="210"/>
-					</text_color>
-				</btn_spawn>
 
-		<cap_spawn_squad x="5" y="55" width="135" height="24">
-            <text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Spawn Squad</text>
-        </cap_spawn_squad>
-			<fld_spawn_squad x="5" y="75" width="150" height="30">
-				<text x="3" font="letterica18" complex_mode="0" vert_align="c" align="l"/>
-				<texture>ui_inGame2_edit_box_2</texture>
-			</fld_spawn_squad>
-		<cap_spawn_smart x="155" y="55" width="135" height="24">
-            <text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Smart Name</text>
-        </cap_spawn_smart>
-			<fld_spawn_smart x="155" y="75" width="100" height="30">
-				<text x="3" font="letterica18" complex_mode="0" vert_align="c" align="l"/>
-				<texture>ui_inGame2_edit_box_2</texture>
-			</fld_spawn_smart>
-				<btn_spawn_squad x="255" y="77" width="50" height="25">
-					<text align="c" font="letterica16">ui_st_mp_create</text>
-					<texture>ui_inGame2_button</texture>
-					<text_color>
-						<e r="210" g="210" b="210"/>
-					</text_color>
-				</btn_spawn_squad>
-    </tab_spawner>
+	<tab_spawner>
+	    <list_sections x="5" y="-5" width="125" height="18">
+            <list_font r="170" g="170" b="170" font="letterica16"/>
+            <text_color>
+	            <e r="170" g="170" b="170"/>
+	            <d r="70" g="70" b="70"/>
+            </text_color>
+        </list_sections>
+	    <list_smarts x="240" y="-5" width="125" height="18">
+            <list_font r="170" g="170" b="170" font="letterica16"/>
+            <text_color>
+	            <e r="170" g="170" b="170"/>
+	            <d r="70" g="70" b="70"/>
+            </text_color>
+        </list_smarts>
+		<list_frame x="-23" y="20" width="473" height="335">
+			<texture>ui_inGame2_servers_list_frame</texture>
+		</list_frame>
+
+		<list x="-20" y="20" width="470" height="332" item_height="22" can_select="1">
+			<font font="letterica16" r="210" g="210" b="210"/>
+		</list>
+
+		<check_own_to_actor x="130" y="-5" width="32" height="21" vert_align="c">
+			<texture>ui_inGame2_checkbox</texture>
+			<text font="letterica16" r="115" g="114" b="112">To Actor</text>
+		</check_own_to_actor>
+		<btn_create x="3" y="370" width="80" height="25">
+			<texture>ui_inGame2_button</texture>
+			<text align="c" font="letterica16">Create</text>
+			<text_color><e r="210" g="210" b="210"/></text_color>
+		</btn_create>
+	</tab_spawner>
 
 	<tab_hud>
 		<cap_focus x="5" y="5" width="150" height="29">
@@ -261,19 +257,41 @@
 					</text_color>
 				</btn_execute_string>
 
-		<cap_switch_distance x="5" y="55" width="50" height="29">
-			<text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Switch Distance</text>
-		</cap_switch_distance>
-			<fld_switch_distance x="5" y="75" width="70" height="30" >
+        <cap_spawn x="5" y="55" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Spawn Section</text>
+        </cap_spawn>
+			<fld_spawn x="5" y="75" width="150" height="30">
 				<text x="3" font="letterica18" complex_mode="0" vert_align="c" align="l"/>
 				<texture>ui_inGame2_edit_box_2</texture>
-			</fld_switch_distance>
-				<btn_switch_distance x="75" y="77" width="60" height="25">
-					<text font="letterica16" align="c">Set</text>
+			</fld_spawn>
+				<btn_spawn x="155" y="77" width="50" height="25">
+					<text align="c" font="letterica16">ui_st_mp_create</text>
 					<texture>ui_inGame2_button</texture>
 					<text_color>
 						<e r="210" g="210" b="210"/>
 					</text_color>
-				</btn_switch_distance>
+				</btn_spawn>
+
+		<cap_spawn_squad x="5" y="105" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Spawn Squad</text>
+        </cap_spawn_squad>
+			<fld_spawn_squad x="5" y="125" width="150" height="30">
+				<text x="3" font="letterica18" complex_mode="0" vert_align="c" align="l"/>
+				<texture>ui_inGame2_edit_box_2</texture>
+			</fld_spawn_squad>
+		<cap_spawn_smart x="155" y="105" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="l" vert_align="c">Smart Name</text>
+        </cap_spawn_smart>
+			<fld_spawn_smart x="155" y="125" width="100" height="30">
+				<text x="3" font="letterica18" complex_mode="0" vert_align="c" align="l"/>
+				<texture>ui_inGame2_edit_box_2</texture>
+			</fld_spawn_smart>
+				<btn_spawn_squad x="255" y="127" width="50" height="25">
+					<text align="c" font="letterica16">ui_st_mp_create</text>
+					<texture>ui_inGame2_button</texture>
+					<text_color>
+						<e r="210" g="210" b="210"/>
+					</text_color>
+				</btn_spawn_squad>
 	</tab_advanced>
 </w>

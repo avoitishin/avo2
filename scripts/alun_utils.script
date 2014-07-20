@@ -1,7 +1,7 @@
 --[[
 	Copyright (C) 2012 Alundaio
 	This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
--]]
+--]]
 function add_stalker(npc)
 	if not (db.OnlineStalkers) then
 		db.OnlineStalkers = {}
@@ -18,12 +18,15 @@ function del_stalker(npc)
 	if not (db.OnlineStalkers) then
 		return
 	end
+	local index
 	for i=#db.OnlineStalkers,1,-1 do
 		if (npc:id() == db.OnlineStalkers[i]) then
-			table.remove(db.OnlineStalkers,i)
+			index = i
 			break
 		end
 	end
+
+	table.remove(db.OnlineStalkers,index)
 end
 
 function release_object(p)
@@ -38,8 +41,13 @@ function release_object(p)
 		return false
 	end
 
-	alun_utils.printf("safe released %s",se_obj:name())
-	sim:release(se_obj,true)
+    if not (se_obj.marked_for_release) then
+		if (dev_debug) then
+			alun_utils.printf("safe released %s",se_obj:name())
+		end
+	   sim:release(se_obj,true)
+       se_obj.marked_for_release = true
+	end
 
 	return true
 end
@@ -107,6 +115,12 @@ function print_table(tbl,header)
 	printf("Table written to print_table.txt")
 end
 
+function accessible(npc,point)
+	if (type(point) == "number") then
+		return npc:accessible(point) and point < 4294967295
+	end
+	return npc:accessible(point) and level.vertex_id(point) < 4294967295
+end
 
 function is_in_same_squad(obj,npc)
 	local squad1 = get_object_squad(obj)
@@ -145,15 +159,15 @@ end
 
 function string:split(pat)
 	pat = pat or '%s+'
-	local st, g = 1, self:gmatch("()("..pat..")")
-	local function getter(self, segs, seps, sep, cap1, ...)
-		st = sep and seps + #sep
-		return self:sub(segs, (seps or 0) - 1), cap1 or sep, ...
-	end
-	local function splitter(self)
-		if st then return getter(self, st, g()) end
-	end
-	return splitter, self
+  local st, g = 1, self:gmatch("()("..pat..")")
+  local function getter(self, segs, seps, sep, cap1, ...)
+    st = sep and seps + #sep
+    return self:sub(segs, (seps or 0) - 1), cap1 or sep, ...
+  end
+  local function splitter(self)
+    if st then return getter(self, st, g()) end
+  end
+  return splitter, self
 end
 
 function str_explode(str,pattern)
@@ -411,7 +425,7 @@ function nearest_object(match)
 			end
 
 			if (is_match) then
-				dist = obj.position:distance_to(db.actor:position())
+				dist = obj.position:distance_to_sqr(db.actor:position())
 
 				if not(min_dist) then
 					min_dist = dist
@@ -617,33 +631,40 @@ end
 
 function safe_bone_pos(npc,bone)
     if not (npc) then
-    printf("safe_bone_pos: npc is nil!")
-    return
+		printf("safe_bone_pos: npc is nil!")
+		return
     end
 
-  local pos
+	local pos
 
-  --[[
-  local cls = npc:clsid()
-  if (cls == clsid.burer_s) then
-    pos = utils.vector_copy_by_val(npc:position())
-    pos.y = pos.y + 1
-  elseif cls == clsid.gigant_s then
-    pos = npc:bone_position("bip01_spine")
-  else
-  --]]
+	--[[
+	local cls = npc:clsid()
+	if (cls == clsid.burer_s) then
+		pos = utils.vector_copy_by_val(npc:position())
+		pos.y = pos.y + 1
+	elseif cls == clsid.gigant_s then
+		pos = npc:bone_position("bip01_spine")
+	else
+	--]]
 
-  if (IsStalker(npc)) then
-    pos = npc:bone_position(bone or "bip01_spine")
-  end
+	if (IsStalker(npc)) then
+		pos = npc:bone_position(bone or "bip01_spine")
+	end
 
-  if not (pos) then
-    pos = utils.vector_copy_by_val(npc:position())
-    pos.y = pos.y + 1
-  end
+	if not (pos) then
+		pos = utils.vector_copy_by_val(npc:position())
+		pos.y = pos.y + 0.5
+	end
 
-  return pos
+	return pos
 end
+
+function is_level_changing()
+	local sim = alife()
+	local act = game_graph():vertex(sim:actor().m_game_vertex_id)
+	return act:level_id() ~= sim:level_id()
+end
+
 --------------------------------------switch---------------------------------------
 function switch_online(id)
 	if id == -1 then return end
@@ -670,13 +691,7 @@ function angle_diff(a1, a2)
   return utils.rad2deg(math.acos(dotp))
 end
 
--------------------------------------------------------- DEBUG FUNCTION -------------------------------------------------
-function printf(text,...)
-	debug_write(text,...)
-	--get_console():execute("flush")
-end
-
-function debug_write(text,...)
+function sr(text,...)
 	if not (text) then return end
 	local i = 0
 	local p = {...}
@@ -687,8 +702,60 @@ function debug_write(text,...)
 		end
 		return tostring(p[i])
 	end
-	local output = string.gsub(text,"%%s",sr)
-	get_console():execute("load ~#I#:"..output)
+	return string.gsub(text,"%%s",sr)
+end
+
+-------------------------------------------------------- DEBUG FUNCTION -------------------------------------------------
+function debug_nearest(npc,msg,...)
+	if (npc and xrs_debug_tools.NEAREST_STALKER and npc:id() == xrs_debug_tools.NEAREST_STALKER:id()) then
+		alun_utils.printf("nearest=%s |"..msg,npc:name(),...)
+	end
+end 
+function printf(msg,...)
+	if not (msg) then return end
+	local fmt = tostring(msg)
+
+	if (select('#',...) >= 1) then
+		local i = 0
+		local p = {...}
+		local function sr(a)
+			i = i + 1
+			if (type(p[i]) == 'userdata') then
+				return 'userdata'
+			end
+			return tostring(p[i])
+		end
+		fmt = string.gsub(fmt,"%%s",sr)
+	end
+	get_console():execute("load ~#debug msg:"..fmt)
+	--get_console():execute("flush")
+	debug_write(fmt,true)
+end
+
+local debug_file
+function debug_write(output,trace)
+	if not (dev_debug) then
+		return
+	end
+
+	if (trace and debug and type(debug.traceback) == 'function') then
+		output = output .. debug.traceback('\n', 2)
+	end
+
+	if (last_ouput == output) then
+		return
+	end
+	last_ouput = output
+
+	if not (debug_file) then
+		debug_file = io.open("axr_debug_log.txt","w+")
+		debug_file:write(output.."\n")
+		debug_file:close()
+		debug_file = io.open("axr_debug_log.txt","a+")
+	else
+		debug_file:write(output.."\n")
+	end
+
 end
 
 function str_format(str,...)
@@ -800,11 +867,17 @@ function rand_num(a,b)
 	return rnd()
 end
 
-function create_squad(section,smart)
+function create_squad(section,smart_name)
 	local sim = sim_board.get_sim_board()
 	if not (sim) then return end
-	if not (sim.smarts_by_names[smart]) then return end
-	return sim:create_squad(sim.smarts_by_names[smart],section)
+	local smart = sim.smarts_by_names[smart_name]
+	if not (smart) then
+		alun_utils.printf("create_squad: no smart by name %s",smart_name)
+		return
+	end
+	local squad = sim:create_squad(smart,section)
+	squad.scripted_target = smart_name
+	return squad
 end
 
 function assign_squad_to_smart(squad_id, id)
@@ -830,6 +903,7 @@ function get_commander(npc)
 end
 
 function get_squad_commander_action(npc)
+
 	local commander = get_commander(npc)
 	local mgr = commander and commander:motivation_action_manager()
 	if (mgr and mgr:initialized()) then
@@ -875,41 +949,93 @@ function get_vertex(npc,dist)
 	return npc:vertex_in_direction(npc:level_vertex_id(),dir,dist)
 end
 
-function squad_in_los(npc)
-	local squad = get_object_squad(npc)
-	if not (squad) then
-		return
+
+function in_los(npc,friend,be)
+
+	if (friend:id() ~= 0 and npc:target_body_state() ~= move.crouch and IsStalker(friend) and state_mgr.get_state(friend) ~= "prisoner") then
+		if (friend:target_body_state() == move.crouch or xr_wounded.is_wounded(friend)) then 
+			return false 
+		end	
 	end
 
-	local be = npc:best_enemy()
-	if not (be) then
-		return
-	end
-
-	local pos = npc:bone_position("bip01_l_finger02")
+	local pos = npc:bone_position("bip01_spine")
+	local friend_pos = alun_utils.safe_bone_pos(friend,"bip01_spine")
+	local friend_dist = pos:distance_to(friend_pos)
 	local be_pos = alun_utils.safe_bone_pos(be,"bip01_spine")
 	local dir_aim = be_pos:sub(pos)
-
 	local be_dist = npc:position():distance_to(be:position())
+
+	if (friend_dist < be_dist) then
+		local dir_friend = utils.vector_copy_by_val(friend_pos):sub(pos)
+		local vec_be,vec_who = utils.vector_copy_by_val(dir_aim):set_length(friend_dist),dir_friend:set_length(friend_dist)
+		local mywho = friend_dist < 1.5 and vec_who:similar(vec_be,0) or vec_who:similar(vec_be,1.3)
+		if (mywho == 1) then
+			return true
+		end
+	end
+	return false
+end
+
+function squad_in_los(npc,enemy)
+	local squad = get_object_squad(npc)
+	if not (squad) then
+		return false
+	end
 
 	for o in squad:squad_members() do
 		local member = db.storage[o.id] and db.storage[o.id].object
 		if (member and member:alive()) then
-			local member_pos = alun_utils.safe_bone_pos(member,"bip01_spine")
-			local member_dist = pos:distance_to(member_pos)-0.5
-			if (member_dist < be_dist) then
-				local dir_member = utils.vector_copy_by_val(member_pos):sub(pos)
-				local vec_be,vec_who = utils.vector_copy_by_val(dir_aim):set_length(member_dist),dir_member:set_length(member_dist)
-				local er = 1
-				if (member_dist < 1.6) then
-					er = 0
-				end
-				local mywho = vec_who:similar(vec_be,er)
-				if (mywho == 1) then
-					return true
-				end
+			if (in_los(npc,member,enemy)) then
+				return true
 			end
 		end
+	end
+
+	return false
+end
+
+function in_crosshair()
+	local active_slot = db.actor:active_slot()
+	if active_slot == 2 or active_slot == 3	then
+		local active_item = db.actor:active_item()
+		if active_item and isWeapon( active_item ) then
+			for id,st in pairs(db.storage) do
+				npc = st.object
+				if (npc and (IsStalker(npc) or IsMonster(npc)) and npc:alive()) then
+					local c = utils.vector_copy_by_val(npc:position())
+					local p = db.actor:position()
+					local d = device().cam_dir
+
+					local vpc = vector():sub( c, p )
+					
+					if vpc:dotproduct( d ) > 0 then	 -- facing right direction
+						
+						local vec_c = vector():sub( c, p )
+						vec_c = vector_rotate_y( vpc, 7 ) -- correct a little bit
+
+						local vec_p = d
+						--vec_p:normalize()
+						
+						local temp1 = vec_p:dotproduct( vec_c ) / ( vec_p:magnitude() )
+						
+						local temp2 = vec_p
+						temp2.x = temp2.x * temp1
+						temp2.y = temp2.y * temp1
+						temp2.z = temp2.z * temp1
+						
+						local pc_temp = temp2
+													
+						local pc = vector():add( p, pc_temp )
+															
+						local ppp = vector():sub( c, pc )
+
+						if ppp:magnitude() < 0.5 then
+							return npc
+						end
+					end
+				end
+			end
+		end 
 	end
 end
 
@@ -1024,10 +1150,6 @@ end
 local rep_mem = {}
 
 function get_addon_flag(wpn,with_int)
-	local id,tg = wpn:id(),time_global()
-	if tg == rep_mem.tg and rep_mem.id == id and rep_mem.wi == with_int then
-		return rep_mem.fl
-	else
 		local flag = 0
 		if wpn:weapon_is_scope() then
 			if with_int or get_addon_status(wpn,"sc") == 2 then
@@ -1044,10 +1166,8 @@ function get_addon_flag(wpn,with_int)
 				flag = flag+2
 			end
 		end
-		rep_mem = {tg = tg,id = id,wi = with_int,fl = flag}
 		return flag
 	end
-end
 
 function addon_attached(wpn,addon,flag)
 	local ft = {sc = {[1] = true,[3] = true,[5] = true,[7] = true},
@@ -1321,7 +1441,7 @@ function position_node:select_best_vertex_id(object,dir,lvid,distance)
 
 		self.node[i].vertex_id = level.vertex_in_direction(lvid, self.node[i].desired_direction, distance)
 
-		if (self.node[i].vertex_id and object:accessible(self.node[i].vertex_id)) then
+		if (self.node[i].vertex_id and accessible(object,self.node[i].vertex_id)) then
 			self.node[i].distance = self.node[i].vertex_id == lvid and -1 or object:position():distance_to_sqr(level.vertex_position(self.node[i].vertex_id))
 
 			if not (closest) then
@@ -1339,11 +1459,11 @@ end
 -------------------------------------------- INI utils
 
 -- INI Reader
-function file_to_table(fname)
+function file_to_table(fname,dir)
 	local root = {}
-	local links
 	local includes
-	local sec, t,_root,_links
+	local sec_includes
+	local sec, t,_root,key,val
 	for line in io.lines(fname) do
 		if not (line == "" or line == "\n") then
 			if (startsWith(line, "#include")) then
@@ -1355,15 +1475,8 @@ function file_to_table(fname)
 				end
 
 				table.insert(includes,t[2])
-				_root,_links = file_to_table(t[2])
+				_root = file_to_table(dir..t[2])
 				for k,v in pairs(_root) do root[k] = v end
-
-				if (_links) then
-					if not (links) then
-						links = {}
-					end
-					for k,v in pairs(_links) do links[k] = v end
-				end
 			elseif (startsWith(line, "[")) then
 				t = str_explode(line,";")
 				t = str_explode(t[1],":")
@@ -1371,41 +1484,63 @@ function file_to_table(fname)
 				sec = string.sub(t[1],2,-2)
 				root[sec] = {}
 
-				t = t[2] and str_explode(t[2],",")
-				if (t) then
-					for k, v in ipairs(t) do
-						if not (links) then
-							links = {}
-						end
-
-						links[sec] = v
+				if (t[2]) then
+					if not (sec_includes) then
+						sec_includes = {}
 					end
+
+					sec_includes[sec] = str_explode(t[2],",")
 				end
 			elseif (not startsWith(line, ";")) then
 				t = str_explode(line,";")
-				t = str_explode(t[1],"=")
-				if (sec) then
-					root[sec] = root[sec] or {}
-					root[sec][t[1]] = t[2] or ""
+				key = string.match(t[1],"(.-)=") or t[1]
+				if (key) then
+					key = trim(key)
+					val = string.match(t[1],"=(.+)")
+					if (val) then
+						val = trim(val)
+					end
+
+					if (sec) then
+						root[sec] = root[sec] or {}
+						root[sec][key] = val or ""
+					else
+						root[key] = val or ""
+					end
 				else
-					root[t[1]] = t[2] or ""
+					printf("file_to_table: Unable to process key in section %s. key=%s",sec,key)
 				end
 			end
 		end
 	end
-	return root,links,includes
+
+	if (sec_includes) then
+		for section,tbl in pairs(sec_includes) do
+			if (type(tbl) == "table") then
+				for i=1,#tbl do
+					for key,val in pairs(root[tbl[i]]) do
+						root[section][key] = val
+					end
+				end
+			end
+		end
+	end
+
+	return root,includes
 end
 
 class "cfg_file"
 function cfg_file:__init(fname)
+	--alun_utils.printf("fname=%s",fname)
 	local cfg = io.open(fname,"a+")
 	cfg:close()
 	self.fname = fname
-	self.root,self.links,self.includes = file_to_table(fname)
+	self.directory = string.match(fname,"(.%S+\\)") or ""
+	self.root,self.includes = file_to_table(fname,self.directory)
 end
 
 function cfg_file:GetValue(sec,key,typ,def)
-	local val = self.root and self.root[sec] and self.root[sec][key] or self.links and self.links[sec] and self.root[self.links[sec]] and self.root[self.links[sec]][key]
+	local val = self.root and self.root[sec] and self.root[sec][key]
 	if (val == nil) then
 		return def
 	end
@@ -1442,6 +1577,7 @@ function cfg_file:KeyExist(sec,key)
 	return self.root and self.root[sec] and self.root[sec][key] ~= nil
 end
 
+-- Save ini by preserving original file. Cannot insert new keys or sections
 function cfg_file:SaveExt()
 	local t,sec,comment
 	local str = ""
@@ -1472,6 +1608,7 @@ function cfg_file:SaveExt()
 	cfg:close()
 end
 
+-- Recreates ini as stored in the table
 function cfg_file:Save()
 	local str = "",count
 
@@ -1667,10 +1804,16 @@ function get_fsgame()
 
 	local fsgame = {}
 	fsgame["$fs_root$"] = ""
+	local t
 	for k,v in pairs(root) do
-		local t = str_explode(v,"|")
-		local r = str_explode(root[t[3]],"|")
-		fsgame[k] = (r and r[4] or "") .. (t and t[4] or "")
+		t = str_explode(v,"|")
+		dir = t[3]
+		fsgame[k] = t[4] or ""
+		repeat
+			t = root[dir] and str_explode(root[dir],"|")
+			dir = t and t[3]
+			fsgame[k] = (t and t[4] or "") .. fsgame[k]
+		until (dir == nil)
 	end
 	return fsgame
 end
@@ -1693,3 +1836,284 @@ function fsgame_append(str,ap)
 	end
 	fsg:close()
 end
+
+function CTime2table(gt)
+	if not (gt) then
+		return
+	end
+
+	local t = {}
+	t.y, t.m, t.d, t.h, t.m, t.s, t.ms = 0, 0, 0, 0, 0, 0, 0
+	t.y, t.m, t.d, t.h, t.m, t.s, t.ms = gt:get( t.y, t.m, t.d, t.h, t.m, t.s, t.ms )
+	t.y = t.y - 2000
+	return t
+end
+
+function table2CTime(t)
+	if not (t and t.y and t.m and t.d and t.h and t.m and t.s and t.ms) then
+		return
+	end
+
+	local gt = game.CTime()
+	gt:set( t.y + 2000,  t.m, t.d, t.h, t.m, t.s, t.ms)
+	return gt
+end
+
+function find_random_cover(npc,pos,min_rad,max_rad)
+	local rand = math.random
+	local base_point = npc:level_vertex_id()
+	local base_vertex_id = level.vertex_in_direction(base_point, vector_rotate_y(utils.vector_copy_by_val(npc:direction()),rand(-90,90)), rand(min_rad,max_rad))
+	local base_position = level.vertex_position(base_vertex_id)
+
+	local cover, tcover
+	local cover_dist = rand(1,30)
+	while not cover and cover_dist > 0 do
+		cover = npc:best_cover(base_position,pos,cover_dist,1,150)
+		cover_dist = cover_dist - 1
+	end
+
+	return cover and (tcover and tcover.cover_vertex_id or cover:level_vertex_id()) or base_vertex_id
+end
+
+function find_close_cover(npc,base_position,pos,cover_dist)
+	local cover, tcover
+	cover_dist = not cover_dist and 5 or cover_dist
+	while not cover and cover_dist < 30 do
+		cover = npc:best_cover(base_position,pos,cover_dist,1,30)
+		cover_dist = cover_dist + 2
+	end
+	
+	return cover and (tcover and tcover.cover_vertex_id or cover:level_vertex_id())
+end
+
+function find_cover_in_direction(npc,base_point,pos,dir,min_rad,max_rad)
+	local rand = math.random
+	local base_vertex_id = level.vertex_in_direction(base_point,dir,rand(min_rad,max_rad))
+	local base_position = level.vertex_position(base_vertex_id)
+
+	local cover, tcover
+	local cover_dist = rand(1,30)
+	while not cover and cover_dist > 0 do
+		cover = npc:best_cover(base_position,pos,cover_dist,1,150)
+		cover_dist = cover_dist - 1
+	end
+
+	return cover and (tcover and tcover.cover_vertex_id or cover:level_vertex_id()) or base_vertex_id
+end
+
+function sqrMagnitude(vec)
+	return (vec.x^2)+(vec.y^2)+(vec.z^2) 
+end
+
+--[[
+class "BezierPath"
+function BezierPath:__init() 
+	self.SEGMENTS_PER_CURVE = 10
+	self.MINIMUM_SQR_DISTANCE = 0.01
+	self.DIVISION_THRESHOLD = -0.99
+	self.controlPoints = {}
+	self.curveCount = 0
+end 
+
+-- Sets the control points of this Bezier path.
+-- Points 0-3 forms the first Bezier curve, points 
+-- 3-6 forms the second curve, etc.
+function BezierPath:SetControlPoints(newControlPoints)
+	empty_table(self.controlPoints)
+	self.controlPoints = newControlPoints
+	self.curveCount = (#self.controlPoints-1)/3
+end 
+
+-- returns the control points for this Bezier curve
+function BezierPath:GetControlPoints()
+	return self.controlPoints
+end
+
+-- Calculates a Bezier interpolated path for the given points.
+function BezierPath:Interpolate(segmentPoints,scale)
+	empty_table(self.controlPoints)
+	
+	if (#segmentPoints < 2) then 
+		return 
+	end
+	
+	for i=1, #segmentPoints, 1 do 
+		if (i == 1) then 
+			local p1 = segmentPoints[i]
+			local p2 = segmentPoints[i+1]
+			
+			local tangent = vector():sub(p2,p1)
+			local q1 = p1:add(tangent:mul(scale))
+			
+			table.insert(self.controlPoints,p1)
+			table.insert(self.controlPoints,q1)
+		elseif (i == #segmentPoints) then
+			local p0 = segmentPoints[i]
+			local p1 = segmentPoints[i+1]
+			
+			local tangent = vector():sub(p1,p0)
+			local q0 = p1:add(tangent:mul(scale))
+			
+			table.insert(self.controlPoints,q0)
+			table.insert(self.controlPoints,p1)
+		else
+			local p0 = segmentPoints[i-1]
+			local p1 = segmentPoints[i]
+			local p2 = segmentPoints[i+1]
+			
+			local tangent = vector():sub(p2,p0):normalize()
+			
+			local q0 = vector():sub(p1,tangent:mul(scale):mul( vector():sub(p1,p0):magnitude() ))
+			local q1 = vector():add(p1,tangent:mul(scale):mul( vector():sub(p2,p1):magnitude() ))
+			
+			table.insert(self.controlPoints,q0)
+			table.insert(self.controlPoints,p1)
+			table.insert(self.controlPoints,q1)
+		end
+	end
+	self.curveCount = (#self.controlPoints-1)/3
+end
+
+-- Sample the given points as a Bezier path.
+function BezierPath:SamplePoints(sourcePoints,minSqrDistance,maxSqrDistance,scale)
+	if (#sourcePoints < 2) then 
+		return 
+	end 
+	
+	local samplePoints = {}
+	table.insert(sourcePoints[1])
+	
+	local potentialSamplePoint = sourcePoints[2]
+	
+	for i=3, #sourcePoints, 1 do 
+		if ( sqrMagnitude(vector():sub(potentialSamplePoint,sourcePoints[i])) > minSqrDistance ) then 
+			if ( sqrMagnitude(vector():sub(samplePoints[#samplePoints],sourcePoints[i])) > maxSqrDistance ) then 
+				table.insert(samplePoints,potentialSamplePoint)
+			end		
+		end 
+		potentialSamplePoint = sourcePoints[i]
+	end
+	
+	-- now handle last bit of curve
+	local p1 = samplePoints[#samplePoints]
+	samplePoints[#samplePoints] = nil 
+	
+	local p0 = samplePoints[#samplePoints]
+	local tangent = vector():sub(p0,potentialSamplePoint):normalize()
+	
+	local d2 = vector():sub(potentialSamplePoint,p1):magnitude()
+	local d1 = vector():sub(p1,p0):magnitude()
+	
+	p1 = vector():add(p1, tangent:mul((d1-d2/2)))
+	
+	table.insert(samplePoints,p1)
+	table.insert(samplePoints,potentialSamplePoint)
+	
+	self:Interpolate(samplePoints,scale)
+end 
+
+-- Caluclates a point on the path.
+--
+-- @param curveIndex The index of the curve that the point is on. For example, 
+-- the second curve (index 1) is the curve with controlpoints 3, 4, 5, and 6.
+--
+-- @param t The paramater indicating where on the curve the point is. 0 corresponds 
+-- to the "left" point, 1 corresponds to the "right" end point.
+function BezierPath:CalculateBezierPoint(curveIndex,t)
+	local nodeIndex = curveIndex * 3
+
+	local p0 = self.controlPoints[nodeIndex]
+	local p1 = self.controlPoints[nodeIndex + 1]
+	local p2 = self.controlPoints[nodeIndex + 2]
+	local p3 = self.controlPoints[nodeIndex + 3]
+
+	return self:CalculateBezierPoint(t, p0, p1, p2, p3)
+end
+
+-- Gets the drawing points. This implementation simply calculates a certain number
+-- of points per curve
+
+function BezierPath:GetDrawingPoints0()
+	local drawingPoints = {}
+	
+	for curveIndex=1, self.curveCount, 1 do 
+		if (curveIndex == 1) thne 
+			table.insert(drawingPoints,CalculateBezierPoint(curveIndex,0))
+		end
+		for j=1, self.SEGMENTS_PER_CURVE, 1 do 
+			local t = j/self.SEGMENTS_PER_CURVE
+			table.insert(drawingPoints,self:CalculateBezierPoint(curveIndex,t))
+		end
+	end
+	
+	return drawingPoints
+end
+
+-- slightly different than above
+function BezierPath:GetDrawingPoints1()
+	local drawingPoints = {}
+	
+	for i=1, #self.controlPoints-3, 3 do 
+		local p0 = self.controlPoints[nodeIndex]
+		local p1 = self.controlPoints[nodeIndex + 1]
+		local p2 = self.controlPoints[nodeIndex + 2]
+		local p3 = self.controlPoints[nodeIndex + 3]
+		
+		if (i == 1) then 
+			table.insert(drawingPoints,self:CalculateBezierPoint(0,p0,p1,p2,p3))
+		end
+		
+		for j=1, SEGMENTS_PER_CURVE, 1 do 
+			local t = j/SEGMENTS_PER_CURVE
+			table.insert(CalculateBezierPoint(t,p0,p1,p2,p3))
+		end
+	end
+
+	return drawingPoints
+end
+
+-- returns the number of points added.
+function BezierPath:FindDrawingPoints(curveIndex,t0,t1,pointList,insertionIndex)
+	local left = CalculateBezierPoint(curveIndex, t0)
+	local right = CalculateBezierPoint(curveIndex, t1)
+	
+	if ( sqrMagnitude(vector():sub(left,right)) < self.MINIMUM_SQR_DISTANCE ) then 
+		return 0
+	end
+	
+	local tMid = (t0+t1)/2
+	local mid = CalculateBezierPoint(curveIndex,tMid)
+	
+	local leftDirection = vector():sub(left,mid):normalize()
+	local rightDirection = vector():sub(right,mid):normalize()
+	
+	if (leftDirection:dotproduct(rightDirection) > self.DIVISION_THRESHOLD or math.abs(tMid - 0.5) < 0.0001) then 
+		local pointsAddedCount = 0
+		
+		pointsAddedCount = pointsAddedCount + self:FindDrawingPoints(curveIndex,t0,tMid,pointList,insertionIndex)
+		table.insert(pointList,insertionIndex+pointsAddedCount,mid)
+		pointsAddedCount = pointsAddedCount + 1 
+		pointsAddedCount = pointsAddedCount + self:FindDrawingPoints(curveIndex,tMid,t1,pointList,insertionIndex+pointsAddedCount)
+		return pointsAddedCount
+	end
+	
+	return 0 
+end 
+
+-- Caluclates a point on the Bezier curve represented with the four controlpoints given.
+function BezierPath:CalculateBezierPoint(t,p0,p1,p2,p3)
+	local u = 1 - t
+	local tt = t*t 
+	local uu = u*u 
+	local uuu = uu*u 
+	local ttt = tt*t
+	
+	local p = utils.vector_copy_by_val(p0):mul(uuu)
+	
+	p:add( utils.vector_copy_by_val(p1):mul(uu*t) )
+	p:add( utils.vector_copy_by_val(p2):mul(tt*u) )
+	p:add( utils.vector_copy_by_val(p3):mul(ttt) )
+	
+	return p
+end
+--]]

@@ -8,13 +8,16 @@ Copyright (C) 2012 Alundaio
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
 --]]
 
+-- used for debugging
+NEAREST_STALKER = nil
+
 local show_game_graph = false
 local developer_debug = true
 local spawn_all_items_on_actor = false
 local position_file = ""
 
 local keybinds
-local actions_by_stalker_ids
+actions_by_stalker_ids = nil
 local Enable
 
 local hud_display_top
@@ -23,7 +26,7 @@ local hud_display_right
 function on_game_load()
 	local ini = ini_file("debug\\xrs_debug_tools.ltx")
 	Enable = alun_utils.read_from_ini(ini,"plugin","enable","bool",false,"xrs_debug_tools")
-	if not (Enable) then return end
+	if not (Enable) then ini=nil return end
 
 	actor_info = {}
 	keybinds = {}
@@ -32,6 +35,7 @@ function on_game_load()
 	for k,v in pairs(_G.xr_actions_id) do
 		actions_by_stalker_ids[v] = k
 	end
+	actions_by_stalker_ids[4294967295] = "undefined"
 	actions_by_stalker_ids[7] = "action_accomplish_task"
 	actions_by_stalker_ids[16] = "action_aim_enemy"
 	actions_by_stalker_ids[88] = "action_alife_planner"
@@ -99,18 +103,29 @@ function on_game_load()
 	actions_by_stalker_ids[307] = "smartcover_action"
 	actions_by_stalker_ids[343] = "meet_contact"
 	actions_by_stalker_ids[3865] = "action_walker"
-	actions_by_stalker_ids[188112] = "kill_wounded"
+	actions_by_stalker_ids[453] = "action_animpoint"
+	actions_by_stalker_ids[454] = "action_reach_animpoint"
+	actions_by_stalker_ids[xr_actions_id.stohe_camper_base + 1] = "camper_patrol"
+	--alundaio schemes
+	actions_by_stalker_ids[17000] = "xr_campfire_point"
+	actions_by_stalker_ids[18803] = "rx_ff"
+	actions_by_stalker_ids[18801] = "rx_gl"
+	actions_by_stalker_ids[18815] = "xrs_facer"
 	actions_by_stalker_ids[188111] = "beh"
+	actions_by_stalker_ids[188112] = "kill_wounded"
+	actions_by_stalker_ids[188113] = "script_danger"
+	actions_by_stalker_ids[188114] = "axr_turn_on_campfire"
+	actions_by_stalker_ids[188115] = "axr_new_combat"
 	actions_by_stalker_ids[90005] = "gather_items"
 
 	local sect = "plugin"
 	local developer_debug = alun_utils.read_from_ini(ini,"plugin","developer_debug","bool",false)
+	local debug_gulag = alun_utils.read_from_ini(ini,"plugin","debug_gulag","bool",false)
 	show_game_graph = alun_utils.read_from_ini(ini,"plugin","show_game_graph","bool",false)
 	spawn_all_items_on_actor = alun_utils.read_from_ini(ini,"plugin","spawn_all_items_on_actor","bool",false)
 	position_file = alun_utils.read_from_ini(ini,"plugin","file_save_position_info","string","positional_info.txt")
 
 	keybinds = 	{
-					["spawn_all_items"] = alun_utils.read_from_ini(ini,"plugin","keybind_spawn_all_items","string","A"),
 					["debug_ui"] = alun_utils.read_from_ini(ini,"plugin","keybind_debug_ui","string","S"),
 					["debug_ui_nearest_stalker"] = alun_utils.read_from_ini(ini,"plugin","keybind_debug_ui_nearest_stalker","string","F1"),
 					["debug_ui_spawn_position"] = alun_utils.read_from_ini(ini,"plugin","keybind_debug_ui_spawn_position","string","F2"),
@@ -122,9 +137,8 @@ function on_game_load()
 
 	if (developer_debug) then
 		_G.dev_debug = true
-		_G.log = alun_utils.printf
-		_G.abort = alun_utils.printf
-		_G.sim_debug = true
+		--_G.log = alun_utils.printf
+		--_G.sim_debug = true
 	end
 
 	-- HUD DISPLAYS
@@ -132,10 +146,7 @@ function on_game_load()
 	hud_display_left = hud_tool("cop_debug")
 	hud_display_right = hud_tool("cop2_debug")
 
-	if (spawn_all_items_on_actor) then
-		spawn_items.main()
-	end
-
+	--[[
 	debug_game_graph_loaded = xr_logic.pstor_retrieve(db.actor,"debug_game_graph_loaded",nil)
 	if (show_game_graph and not debug_game_graph_loaded) then
 		local gg = game_graph()
@@ -158,6 +169,7 @@ function on_game_load()
 
 		xr_logic.pstor_store(db.actor,"debug_game_graph_loaded",true)
 	end
+	--]]
 end
 
 ------------------------------------------------------------------------
@@ -174,7 +186,7 @@ function hud_tool:__init(custom_static)
 	self.msg = ""
 end
 
-function hud_tool:add_msg(text,value)
+function hud_tool:add_msg(text,value,...)
 	self.msg = self.msg..str_format(text..": %s\\n",value)
 end
 
@@ -209,9 +221,9 @@ end
 ---------------------------------------------------------------------------------------------------------
 
 local toggle_hud_list = 	{
-							["top"]  = { "stalker_info_hud","stalker_data_hud","position_other_hud","squad_info_hud"},
-							["left"] = { "weapon_hud", "enemy_hud", "anim_hud", "behavior_hud"},
-							["right"] = { "position_hud","planner_hud","wounded_hud","corpse_hud"}
+							["top"]  = { "squad_info_hud","stalker_info_hud","stalker_data_hud","position_other_hud"},
+							["left"] = { "enemy_hud", "trader_hud", "monster_hud", "weapon_hud", "anim_hud", "behavior_hud"},
+							["right"] = { "planner_hud", "gulag_info_hud", "position_hud","wounded_hud","corpse_hud"}
 							}
 --------------------------------------------------------------------------------------------------
 
@@ -264,8 +276,6 @@ function main_menu_on_keyboard(dik,keyboard_action,main_menu)
 			write_file("valid 			= %s",valid)
 			write_file("","")
 		end
-	elseif (keybinds["spawn_all_items"] and dik == DIK_keys["DIK_"..keybinds["spawn_all_items"]]) then
-		spawn_items.main()
 	elseif (keybinds["toggle_top_hud"] and dik == DIK_keys["DIK_"..keybinds["toggle_top_hud"]]) then
 		if ( toggle_top_key < #toggle_hud_list["top"]) then
 			toggle_top_key = toggle_top_key + 1
@@ -316,6 +326,15 @@ function on_actor_update()
 		return
 	end
 
+	--local cross = alun_utils.in_crosshair()
+	--if (cross) then
+	--	alun_utils.printf("in cross_hair %s",cross:name())
+	--end
+	
+	if (STEP) then
+		collectgarbage("step",STEP)
+	end
+
 	if (debug_god) then
 		db.actor.health = 1
 		db.actor.bleeding = 0
@@ -341,7 +360,10 @@ function on_actor_update()
 
 	dtimer = tg + 250
 
-	local disable_draw = alun_utils.load_var(db.actor,"disable_debug_draw",nil)
+	NEAREST_STALKER = alun_utils.get_nearest_stalker("cam",500)
+
+	--local disable_draw = alun_utils.load_var(db.actor,"disable_debug_draw",nil)
+	local disable_draw = axr_main and axr_main.config and axr_main.config:GetValue("debug","enable_hud",1,false) == false
 	if (disable_draw) then
 		hud_display_top:clear()
 		hud_display_left:clear()
@@ -389,8 +411,111 @@ function get_target_at_cursor()
 	end
 end
 
+function trader_hud_show(hud)
+	local function get_nearest_trader(npc)
+		local mon
+		local dist
+		local nearest_stalker,nearest_dist
+		local pos
+		local st
+		for id,st in pairs(db.storage) do
+			mon = st.object or level.object_by_id(id)
+			if (mon and mon.clsid and mon:clsid() == clsid.script_trader) then
+				pos = npc == "cam" and device().cam_pos or mon:position()
+				dist = pos:distance_to_sqr(mon:position())
+				if not (nearest_dist) then
+					nearest_dist = dist
+					nearest_stalker = mon
+				end
+
+				if (dist < nearest_dist) then
+					nearest_dist = dist
+					nearest_stalker = mon
+				end
+			end
+		end
+		return nearest_stalker,nearest_dist
+	end
+
+	local near = get_nearest_trader("cam")
+	if (near) then
+		st = db.storage[near:id()]
+		if (st) then
+			hud:add_msg("Section Name",near:section())
+			--hud:add_msg("ID",near:id())
+			hud:add_msg("Name",near:name())
+			hud:add_msg("Visual",near:get_visual_name())
+			--hud:add_msg("Health",math.floor(near.health*100))
+			hud:add_msg("SID",get_object_story_id(near:id()))
+			hud:add_msg("A.Scheme",st.active_scheme)
+			hud:add_msg("A.Section",st.active_section)
+			hud:add_msg("Logic",st.section_logic)
+			hud:add_msg("Ini",st.ini_filename)
+		end
+	end
+	hud:set_header("-[Trader Info]-")
+	hud:display()
+end
+
+function monster_hud_show(hud)
+	local function get_nearest_monster(npc)
+		local mon
+		local dist
+		local nearest_stalker,nearest_dist
+		local pos
+		local st
+		for id,st in pairs(db.storage) do
+			mon = st.object or level.object_by_id(id)
+			if (mon and mon:alive() and IsMonster(mon)) then
+				pos = npc == "cam" and device().cam_pos or mon:position()
+				dist = pos:distance_to_sqr(mon:position())
+				if not (nearest_dist) then
+					nearest_dist = dist
+					nearest_stalker = mon
+				end
+
+				if (dist < nearest_dist) then
+					nearest_dist = dist
+					nearest_stalker = mon
+				end
+			end
+		end
+		return nearest_stalker,nearest_dist
+	end
+
+	local near = get_nearest_monster("cam")
+	if (near) then
+		st = db.storage[near:id()]
+		local sobj = alife():object(near:id())
+
+		hud:add_msg("Section Name",sobj:section_name())
+		hud:add_msg("ID",near:id())
+		--hud:add_msg("Name",near:name())
+		hud:add_msg("Rank",ranks.get_obj_rank_name(near))
+		hud:add_msg("Visual",near:get_visual_name())
+		hud:add_msg("Health",math.floor(near.health*100))
+		hud:add_msg("FOV",near:fov())
+		hud:add_msg("Range",near:range())
+		hud:add_msg("SID",get_object_story_id(near:id()))
+		hud:add_msg("A.Scheme",st.active_scheme)
+		hud:add_msg("A.Section",st.active_section)
+		hud:add_msg("Logic",st.section_logic)
+		hud:add_msg("Ini",st.ini_filename)
+		local be = near:best_enemy()
+		hud:add_msg("Best Enemy",be and be:name())
+		if (st.overrides and st.overrides.combat_ignore and be) then
+			hud:add_msg("CombatIgnoreCond",xr_logic.pick_section_from_condlist(be, near, st.overrides.combat_ignore.condlist))
+		end
+
+		hud:add_msg("BodyState",near:body_state())
+		hud:add_msg("MentalState",near:mental_state())
+	end
+	hud:set_header("-[Monster Info]-")
+	hud:display()
+end
+
 function position_other_hud_show(hud)
-	local obj = DEBUG_NPC or get_target_at_cursor() or alun_utils.get_nearest_stalker("cam",500)
+	local obj = DEBUG_NPC or get_target_at_cursor() or NEAREST_STALKER
 
 	hud:set_header("-[Pos. Info]-")
 	if (obj) then
@@ -411,12 +536,14 @@ function position_other_hud_show(hud)
 		hud:add_msg("Pos",string.format("%0.3f, %0.3f, %0.3f", pos.x, pos.y, pos.z))
 		hud:add_msg("Dir",string.format("%0.3f, %0.3f, %0.3f HP (%0.3f, %0.3f)", dir.x, dir.y, dir.z,dir:getH(),dir:getP()))
 		hud:add_msg("Angle",angle and string.format("%0.3f, %0.3f, %0.3f", angle.x, angle.y, angle.z))
+		hud:add_msg("Valid",valid)
+
 		hud:display()
 	end
 end
 
 function wounded_hud_show(hud)
-	local obj = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local obj = get_debug_npc() or NEAREST_STALKER
 	hud:set_header("-[Wound Info]-")
 	if (obj) then
 		hud:add_msg("Name",obj:name())
@@ -444,8 +571,11 @@ function wounded_hud_show(hud)
 				local po = level.object_by_id(st.victim_surrender)
 				hud:add_msg("Surrender to",po and po:name())
 			end
+
+
 		end
 	end
+
 	hud:display()
 end
 
@@ -454,7 +584,7 @@ local stalker_id
 local stalker_data = {}
 
 function stalker_data_hud_show(hud)
-	local obj = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local obj = get_debug_npc() or NEAREST_STALKER
 	hud:set_header("-[Stalker Packet Data]-")
 	if (obj) then
 		if (stalker_id ~= obj:id()) then
@@ -519,40 +649,164 @@ local function r_seq(count, stpk)
 end
 
 function planner_hud_show(hud)
-	local obj = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local obj = get_debug_npc() or NEAREST_STALKER
 	hud:set_header("-[Planner Info]-")
 	if (obj) then
 		local manager = obj.motivation_action_manager and obj:motivation_action_manager()
-		if (manager) then
-			local combat_action = manager:action(stalker_ids.action_combat_planner)
-			local combat_action_planner = cast_planner(combat_action)
+		if (manager and manager:initialized()) then
 
 			hud:add_msg("Name",obj:name())
 
 			local actid = manager:current_action_id()
-			local name = actions_by_stalker_ids[actid] or "script"
-			hud:add_msg("Mgr. Act",name)
-			hud:add_msg("Mgr. Act ID",manager:current_action_id())
+			local name = "script"
+			if (actid and actid < 4294967295) then
+				name = actions_by_stalker_ids[actid] or "script"
+				hud:add_msg("Mgr. Act",name)
+				hud:add_msg("Mgr. Act ID",actid)
+			end
 
+			local combat_action = manager:action(stalker_ids.action_combat_planner)
+			local combat_action_planner = cast_planner(combat_action)
 			actid = combat_action_planner:current_action_id()
-			name = actions_by_stalker_ids[actid] or "script"
-			hud:add_msg("Combat Act",name)
-			hud:add_msg("Combat Act ID",combat_action_planner:current_action_id())
+			if (actid and actid < 4294967295) then
+				name = actions_by_stalker_ids[actid] or "unknown"
+				hud:add_msg("Combat Act",name)
+				hud:add_msg("Combat Act ID",actid)
+			end
+
+			local danger_action = manager:action(stalker_ids.action_danger_planner)
+			local danger_action_planner = cast_planner(danger_action)
+			actid = danger_action_planner:current_action_id()
+			if (actid and actid < 4294967295) then
+				name = actions_by_stalker_ids[actid] or "unknown"
+				hud:add_msg("Danger Act",name)
+				hud:add_msg("Danger Act ID",actid)
+			end
+
+			local alife_action = manager:action(stalker_ids.action_alife_planner)
+			local alife_action_planner = cast_planner(alife_action)
+			actid = alife_action_planner:current_action_id()
+			if (actid and actid < 4294967295) then
+				name = actions_by_stalker_ids[actid] or "unknown"
+				hud:add_msg("Alife Act",name)
+				hud:add_msg("Alife Act ID",actid)
+			end
 
 			local st = db.storage[obj:id()]
 			if (st) then
-				local sm = st.state_mgr
-				hud:add_msg("alife",sm.alife)
-				hud:add_msg("combat",sm.combat)
-				if (sm.eval_states) then
-					hud:add_msg("Weapon Locked",post_combat_idle.weapon_locked(obj))
-					hud:add_msg("Animstate Locked",sm.eval_states[sm.properties["animstate_locked"]])
-					hud:add_msg("Animation Locked",sm.eval_states[sm.properties["animation_locked"]])
-					hud:add_msg("Movement",sm.eval_states[sm.properties["movement"]])
-					hud:add_msg("Animstate",sm.eval_states[sm.properties["animstate"]])
-					hud:add_msg("Animation",sm.eval_states[sm.properties["animation"]])
-					hud:add_msg("Smartcover",sm.eval_states[sm.properties["smartcover"]])
+				local function eval_movement(mgr,npc)
+					return state_lib.states[mgr.target_state].movement == nil or state_lib.states[mgr.target_state].movement == npc:target_movement_type() --and not npc:is_body_turning()
 				end
+
+				local function eval_animstate_locked(mgr)
+					return mgr.animstate.states.anim_marker ~= nil and mgr.animstate.states.anim_marker ~= 3
+				end
+
+				local function eval_animation_locked(mgr)
+					return mgr.animation.states.anim_marker ~= nil
+				end
+
+				local function eval_animation(mgr,npc)
+					return state_lib.states[mgr.target_state].animation == mgr.animation.states.current_state
+				end
+
+				local function eval_animstate(mgr,npc)
+					return state_lib.states[mgr.target_state].animstate == mgr.animstate.states.current_state
+				end
+
+				local function eval_smart_cover(mgr,npc)
+					if mgr.target_state ~= "smartcover" then
+						return true
+					end
+
+					local st = db.storage[npc:id()]
+
+					local state_descr = st and st["smartcover"]
+					local dest_smart_cover_name = state_descr and npc:get_dest_smart_cover_name()
+
+					if not dest_smart_cover_name then
+						return true
+					end
+
+					return dest_smart_cover_name == (state_descr.cover_name or "")
+				end
+
+				local function eval_smart_cover_locked(mgr,npc)
+					local st = db.storage[npc:id()]
+					local state_descr = st and st["smartcover"]
+					if state_descr == nil then
+						return false
+					end
+
+					local in_smart_cover = npc:in_smart_cover()
+					return (in_smart_cover and state_descr.cover_name == nil) or (not in_smart_cover and state_descr.cover_name ~= nil)
+				end
+
+				local function eval_weapon(mgr,npc)
+					local weapon = state_lib.states[mgr.target_state].weapon
+					if (weapon == nil) then
+						return true
+					end
+
+					if not isWeapon(npc:best_weapon()) then
+						return true
+					end
+					local bestweapon = npc:best_weapon()
+					local activeitem = npc:active_item()
+
+					if (weapon == "strapped" and
+					   ((state_mgr_weapon.strappable_weapon(bestweapon) and
+					   npc:weapon_strapped() and npc:is_weapon_going_to_be_strapped(bestweapon)) or
+					   (not state_mgr_weapon.strappable_weapon(bestweapon) and activeitem == nil))) then
+						return true
+					end
+
+					if	( (weapon == "unstrapped") or (weapon == "fire") or	(weapon == "sniper_fire") ) and
+						(activeitem) and (bestweapon) and (activeitem:id() == bestweapon:id()) and
+						(not npc:is_weapon_going_to_be_strapped(bestweapon) and npc:weapon_unstrapped()) then
+						return true
+					end
+
+					if (weapon == "none" and activeitem == nil) then
+						return true
+					end
+
+					if (weapon == "drop" and activeitem == nil) then
+						return true
+					end
+
+					return false
+				end
+
+				local function eval_locked(mgr, npc)
+					if (eval_weapon(mgr,npc)) then 
+						return false
+					end
+
+					return (npc:is_body_turning() and (mgr.target_state == "zat_b20_noah_jump" or mgr.mgr:current_action_id() == xr_actions_id.animpoint_action + 1)) or false
+				end 
+				
+				local sm = st.state_mgr
+				if (sm) then
+					hud:add_msg("alife",sm.alife)
+					hud:add_msg("combat",sm.combat)
+					hud:add_msg("locked",eval_locked(sm,obj))
+					hud:add_msg("locked_external",sm.alife or sm.combat)
+					hud:add_msg("Weapon Locked",post_combat_idle.weapon_locked(obj))
+					hud:add_msg("Animstate Locked",eval_animstate_locked(sm,obj))
+					hud:add_msg("Animation Locked",eval_animation_locked(sm,obj))
+					hud:add_msg("Smartcover Locked",eval_smart_cover_locked(sm,obj))
+					hud:add_msg("Movement",eval_movement(sm,obj))
+					hud:add_msg("Animstate",eval_animstate(sm,obj))
+					hud:add_msg("Animation",eval_animation(sm,obj))
+					hud:add_msg("Smartcover",eval_smart_cover(sm,obj))
+					hud:add_msg("Weapon",eval_weapon(sm,obj))
+
+					hud:add_msg("Animstate Marker",sm.animstate.states.anim_marker)
+					hud:add_msg("Animation Marker",sm.animation.states.anim_marker)
+				end
+
+
 			end
 		end
 	end
@@ -588,26 +842,85 @@ function position_hud_show(hud)
 	local Y, M, D, h, m, s, ms
 	Y, M, D, h, m, s, ms = game.get_game_time():get( Y, M, D, h, m, s, ms )
 	hud:add_msg("GameTime",string.format("Y:%d M:%d D:%d h:%d m:%d s:%d ms:%d",Y, M, D, h, m, s, ms))
+
+
+	hud:add_msg("","------nearest campfires------")
+	if (smart_terrain.nearest_to_actor_smart and smart_terrain.nearest_to_actor_smart.id) then
+		local smart = alife():object(smart_terrain.nearest_to_actor_smart.id)
+		if (smart) then
+			local campfires = bind_campfire.campfire_table_by_smart_names[smart:name()]
+			if (campfires) then
+				local camp
+				for id,v in pairs(campfires) do
+					camp = level.object_by_id(id)
+					hud:add_msg(camp and camp:name(),id)
+				end
+			end
+		end
+	end
+
 	hud:display()
 end
 
+function gulag_info_hud_show(hud)
+	if (smart_terrain.nearest_to_actor_smart and smart_terrain.nearest_to_actor_smart.id) then
+		local smart = alife():object(smart_terrain.nearest_to_actor_smart.id)
+		if (smart and smart.stalker_jobs) then
+			hud:add_msg("Nearest Smart",smart:name().." dist="..smart_terrain.nearest_to_actor_smart.dist)
+			hud:add_msg("Job Count",#smart.stalker_jobs)
+
+			local npc,job,sec
+			for i=1,#smart.stalker_jobs do
+				job = smart.stalker_jobs[i]
+				sec = string.gsub(job.section,"logic@","")
+				hud:add_msg("["..i.."]",alun_utils.sr("'%s' | %s",sec,job.npc_id or "empty"))
+			end
+		end
+	end
+	hud:set_header("-[Gulag Info]-")
+	hud:display()
+end
+
+
+
+
 function squad_info_hud_show(hud)
-	local near = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local near = get_debug_npc() or NEAREST_STALKER
 	if (near) then
 		local st = db.storage[near:id()]
 		if (st) then
 			local squad = get_object_squad(near)
-			if not(squad) then return end
-			local smart = squad.smart_id and alife():object(squad.smart_id):name()
-			local current_target = squad.current_target_id and alife():object(squad.current_target_id):name()
-			local assigned_target = squad.assigned_target_id and alife():object(squad.assigned_target_id):name()
+			if (squad) then
+				local smart = squad.smart_id and alife():object(squad.smart_id)
+				local current_target = squad.current_target_id and alife():object(squad.current_target_id)
+				local assigned_target = squad.assigned_target_id and alife():object(squad.assigned_target_id)
 
-			hud:add_msg("Section Name",squad:section_name())
-			hud:add_msg("ID",squad.id)
-			hud:add_msg("Behavior Community",squad.player_id)
-			hud:add_msg("Smart",smart)
-			hud:add_msg("Current Target",current_target)
-			hud:add_msg("Assigned Target",assigned_target)
+				hud:add_msg("Section Name",squad:section_name())
+				hud:add_msg("ID",squad.id)
+				hud:add_msg("Behavior Community",squad.player_id)
+
+				if (smart) then
+					hud:add_msg("Smart",smart:name())
+				end
+
+				if (current_target) then
+					hud:add_msg("Current Target",current_target:name())
+				end
+
+				if (assigned_target) then
+					hud:add_msg("Assigned Target",assigned_target:name())
+				end
+
+				--if (squad.entered_smart) then
+					--hud:add_msg("Entered Smart",squad.entered_smart and squad.board.smarts[squad.entered_smart] and squad.board.smarts[squad.entered_smart].smrt:name())
+				--end
+
+				local npc_info = smart and smart.npc_info[near:id()]
+				if (npc_info and npc_info.job) then
+					local jobinfo = alun_utils.sr("section=%s uid=%s prior=%s exclusive=%s itr=%s",npc_info.job.section,npc_info.job.uid,npc_info.job.prior,npc_info.job.precondition_params and npc_info.job.precondition_params.condlist ~= nil,npc_info.current_index)
+					hud:add_msg("Job",jobinfo)
+				end
+			end
 		end
 	end
 	hud:set_header("-[Squad Info]-")
@@ -615,15 +928,16 @@ function squad_info_hud_show(hud)
 end
 
 function stalker_info_hud_show(hud)
-	local near = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local near = get_debug_npc() or NEAREST_STALKER
 
 	local st = near and db.storage[near:id()]
 	if (st) then
 		local sobj = alife():object(near:id())
 
-		hud:add_msg("Section Name",sobj:section_name())
-		hud:add_msg("ID",near:id())
-		--hud:add_msg("Name",near:name())
+		hud:add_msg("Name",near:name())
+		hud:add_msg("Section",sobj:section_name())
+		hud:add_msg("SID",get_object_story_id(near:id()))
+		hud:add_msg("CLSID",near:clsid())
 		hud:add_msg("Community",character_community(near))
 		hud:add_msg("Rank",ranks.get_obj_rank_name(near))
 		hud:add_msg("Visual",near:get_visual_name())
@@ -632,17 +946,20 @@ function stalker_info_hud_show(hud)
 		hud:add_msg("Range",near:range())
 		local sight_type = near:sight_params()
 		hud:add_msg("Sight Type",sight_type and sight_type.m_sight_type)
-		hud:add_msg("SID",get_object_story_id(near:id()))
 		hud:add_msg("A.Scheme",st.active_scheme)
 		hud:add_msg("A.Section",st.active_section)
 		hud:add_msg("Logic",st.section_logic)
 		hud:add_msg("Ini",st.ini_filename)
+		hud:add_msg("AnimState",state_mgr.get_state(near))
 
 		local pt_index = near.get_current_point_index and near:get_current_point_index()
 		if (not pt_index or pt_index == 4294967296 ) then
 			pt_index = st.active_scheme and (st.active_scheme == "camper" or st.active_scheme == "beh") and alun_utils.load_var(near,"path_index",nil)
 		end
-		hud:add_msg("PT index",pt_index)
+
+		if (pt_index) then
+			hud:add_msg("PT index",pt_index)
+		end
 		--[[
 		local smart = xr_gulag.get_npc_smart(near)
 		if (smart) then
@@ -652,6 +969,37 @@ function stalker_info_hud_show(hud)
 			end
 		end
 		--]]
+
+		if (st.corpse_detection and st.corpse_detection.selected_corpse_id) then
+			local vo = level.object_by_id(st.corpse_detection.selected_corpse_id)
+			if (vo) then
+				hud:add_msg("Looting corpse",vo:name())
+			end
+		end
+
+		if (st.help_wounded and st.help_wounded.selected_id) then
+			local vo = level.object_by_id(st.help_wounded.selected_id)
+			if (vo) then
+				hud:add_msg("Helping wounded",vo:name())
+			end
+		end
+
+		if (st.gather_items and st.gather_items.selected_id) then
+			local vo = level.object_by_id(st.gather_items.selected_id)
+			if (vo) then
+				hud:add_msg("Picking up",vo:name())
+			end
+		end
+
+		local vo = near:best_enemy()
+		if (vo and vo:alive() and IsStalker(vo) and xr_wounded.is_wounded(vo)) then
+			if (db.storage[vo:id()] and db.storage[vo:id()].victim_surrender and db.storage[vo:id()].victim_surrender ~= 65535) then
+				hud:add_msg("Kill wounded",vo:name())
+			end
+		end
+
+		local dist = device().cam_pos:distance_to(near:position())
+		hud:add_msg("distance",string.format("%d (%dm)",dist*dist,dist))
 	end
 
 	hud:set_header("-[Stalker Info]-")
@@ -659,25 +1007,28 @@ function stalker_info_hud_show(hud)
 end
 
 function enemy_hud_show(hud)
-	local near = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local near = get_debug_npc() or NEAREST_STALKER
 	if (near) then
 		local id = near:id()
 		local se_obj = alife():object(id)
 		local st = db.storage[id]
 		if (st) then
 			local be = near:best_enemy()
-			hud:add_msg("Section Name", se_obj:section_name())
 			local relation = { [game_object.enemy] = "enemy",
 								[game_object.friend] = "friend",
 								[game_object.neutral] = "neutral"
 			}
+
+			hud:add_msg("Name", near:name())
 			hud:add_msg("Actor Relation",relation[near:relation(db.actor)])
+
+			if (st.script_combat_type) then
+				hud:add_msg("Script Combat",st.script_combat_type)
+			end
 
 			if (st.overrides and st.overrides.combat_ignore) then
 				hud:add_msg("CombatIgnoreCond",xr_logic.pick_section_from_condlist(be, near, st.overrides.combat_ignore.condlist))
 			end
-
-			hud:add_msg("Combat Type",st.script_combat_type)
 
 			if (be) then
 				hud:add_msg("Best Enemy",be and be:name())
@@ -685,29 +1036,38 @@ function enemy_hud_show(hud)
 
 			local ene = st.enemy_id and level.object_by_id(st.enemy_id)
 			if (ene) then
-				hud:add_msg("Enemy",ene and ene:name())
+				-- What I call pure enemy is an evaluated enemy before combat ignore condition check
+				hud:add_msg("Pure Enemy",ene and ene:name())
 			end
-
+			
 			local tg = time_global()
-			if (st.post_combat_wait) then
-				hud:add_msg("Post Combat Wait",st.post_combat_wait.timer and st.post_combat_wait.timer-tg)
+			
+			local new_enemy = st.new_combat and st.new_combat.target_id and db.storage[st.new_combat.target_id] and db.storage[st.new_combat.target_id].object 
+			if (new_enemy) then 
+				hud:add_msg("AXRNewCombat Enemy",new_enemy:name())
+				hud:add_msg("Memory Time",tg - near:memory_time(new_enemy))
 			end
 
-			hud:add_msg("Memory Time",be and tg - near:memory_time(be))
+			local pcw = st.post_combat_wait and st.post_combat_wait.timer and st.post_combat_wait.timer > 0 and st.post_combat_wait.timer-tg
+			if (pcw and pcw > 0) then
+				hud:add_msg("Post Combat Idle",pcw)
+			end
 
-			local combat_inertion = be and tg - near:memory_time(be)
-			hud:add_msg("Combat Inertion",combat_inertion)
-			hud:add_msg("Search Time",st.combat_ignore and st.combat_ignore.search_time)
-			hud:add_msg("Combat Run",st.combat_ignore and st.combat_ignore.combat_run)
+			if (be and not new_enemy) then
+				hud:add_msg("Memory Time",tg - near:memory_time(be))
+				if (st.combat_ignore and st.combat_ignore.search_time) then
+					hud:add_msg("Search Time",st.combat_ignore.search_time)
+				end
+			end
 
 			local squad = get_object_squad(near)
 			local cid = squad and squad.id or id
 			if (xr_combat_ignore.safe_zone_npcs and xr_combat_ignore.safe_zone_npcs[cid]) then
-				hud:add_msg("In no-combat zone",tg-xr_combat_ignore.safe_zone_npcs[cid])
+				local timer = xr_combat_ignore.safe_zone_npcs[cid] - tg
+				hud:add_msg("In no-combat zone",timer)
 			end
 
 			local bd = near:best_danger()
-
 			if (bd) then
 				local danger_types = {
 
@@ -723,23 +1083,44 @@ function enemy_hud_show(hud)
 					[danger_object.sound]			= "sound",
 					[danger_object.visual]			= "visual"
 				}
+
 				local bdname = bd:object() and bd:object():name()
 				local bddname = bd:dependent_object() and bd:dependent_object():name()
 				local bd_type = bd:type()
 
-				hud:add_msg("Danger",bdname)
-				hud:add_msg("Dependent",bddname)
+				hud:add_msg("","<---Best Danger (Pre-Evaluation)--->")
 				hud:add_msg("Type",danger_types[bd_type])
-				hud:add_msg("DangerMode",st.danger_flag)
-				hud:add_msg("Inertion",st.danger.inertion_time)
-				if (xr_danger.DangerIgnore) then
-					local src = xr_danger.DangerIgnore[danger_types[bd_type]]
-					local ignore_distance = xr_logic.pick_section_from_condlist(db.actor,near,xr_logic.parse_condlist(near,danger_types[bd_type],"danger_object",src))
-					ignore_distance = tonumber(ignore_distance)
-					hud:add_msg("Ignore Distance",ignore_distance)
+				hud:add_msg("Danger Object",bdname)
+				hud:add_msg("Dependent",bddname)
+
+				--[[
+				if (xr_danger.DangerInertion) then
+					local src = xr_danger.DangerInertion[ danger_types[bd_type] ]
+					local inertion = tonumber(xr_logic.pick_section_from_condlist(db.actor,near,xr_logic.parse_condlist(near,danger_types[bd_type],"danger_intertion_time",src))) or 30000
+					hud:add_msg("Inertion",inertion)
+
+					if (st.danger_flag) then
+						local danger_time = xr_danger.get_danger_time(bd,near)
+						local timr = inertion and danger_time and (danger_time + inertion) - time_global()
+						hud:add_msg("Timer",timr and timr > 0 and timr or 0)
+					end
 				end
-				local scripted = xr_danger.is_danger_scripted and xr_danger.is_danger_scripted(near)
-				hud:add_msg("Scripted",scripted)
+				--]]
+
+				if (xr_danger.has_danger(near)) then
+					hud:add_msg("","---Danger Mode is Active---")
+					if (st.danger) then
+						local bd_type = st.danger.type
+						hud:add_msg("Type",bd_type and danger_types[bd_type])
+						local danger_time = st.danger.danger_time
+						local inertion = st.danger.inertion
+						local timr = inertion and danger_time and (danger_time + inertion) - time_global()
+						hud:add_msg("Timer",timr and timr > 0 and timr or 0)
+					end
+				end
+
+				hud:add_msg("Scripted Reaction",xr_danger.is_danger_scripted and xr_danger.is_danger_scripted(near))
+
 			end
 		end
 	end
@@ -748,7 +1129,7 @@ function enemy_hud_show(hud)
 end
 
 function anim_hud_show(hud)
-	local near = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local near = get_debug_npc() or NEAREST_STALKER
 	if (near) then
 		local st = db.storage[near:id()]
 		if (st) then
@@ -818,28 +1199,30 @@ function anim_hud_show(hud)
 end
 
 function behavior_hud_show(hud)
-	local near = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local near = get_debug_npc() or NEAREST_STALKER
 	if (near) then
 		local st = db.storage[near:id()].beh
 		if (st) then
 			local target = st.desired_target and st.desired_target.object and st.desired_target.object:name()
 			local target_type = st.target
 			local pos = st.desired_target and st.desired_target.position and vec_to_str(st.desired_target.position)
-			local beh = st.desired_behavior
+			local beh = st.behavior
 			local assist_pt = st.assist_point
 			local state = st.last_state
+			local lvid = st.desired_target and st.desired_target.level_vertex_id
 
 			hud:add_msg("Target",target)
 			hud:add_msg("Type",target_type)
-			hud:add_msg("Pos",pos)
+			hud:add_msg("Desired lvid",lvid)
 			hud:add_msg("Behavior",beh)
-			hud:add_msg("Assist Pt",assist_pt)
-			hud:add_msg("State",state)
+			if (assist_pt) then
+				hud:add_msg("Assist Pt",assist_pt)
+			end
 			hud:add_msg("State",state)
 			st = db.storage[near:id()]
 			hud:add_msg("PT Index",st.beh and st.beh.path_index)
 			hud:add_msg("PT wait",st.beh and st.beh.wait_delay and st.beh.wait_delay - time_global())
-			hud:add_msg("PT reached",st.beh and st.beh.am_i_reached ~= nil)
+			hud:add_msg("PT reached",st.beh and st.beh.am_i_reached == true)
 			hud:add_msg("Gather Items",st.gather_items and st.gather_items.gather_items_enabled and xr_logic.pick_section_from_condlist(db.actor, near, st.gather_items.gather_items_enabled))
 			hud:add_msg("Loot Corpses",st.corpse_detection and st.corpse_detection.corpse_detection_enabled and xr_logic.pick_section_from_condlist(db.actor, near, st.corpse_detection.corpse_detection_enabled))
 		end
@@ -849,7 +1232,7 @@ function behavior_hud_show(hud)
 end
 
 function weapon_hud_show(hud)
-	local near = get_debug_npc() or alun_utils.get_nearest_stalker("cam",500)
+	local near = get_debug_npc() or NEAREST_STALKER
 	local wpn
 	if (near) then
 		wpn = near:active_item()
@@ -890,19 +1273,25 @@ end
 
 
 function corpse_hud_show(hud)
-	local corpses = release_body_manager.get_release_body_manager().release_objects_table
-
-	local id
-	local obj
-	hud:add_msg("Count",#corpses)
-	for i=1,#corpses do
-		id = corpses[i].id
-		obj = id and level.object_by_id(id)
-		if (obj) then
-			hud:add_msg("",obj:name().."  HasLoot = "..tostring(xr_corpse_detection.has_valuable_loot(obj)).."  DeathTime = "..time_global()-obj:death_time())
+	local rbm = release_body_manager.get_release_body_manager()
+	local corpses = rbm.release_objects_table
+	local count = 0
+	if (corpses) then
+		local id
+		local obj
+		for id,v in pairs(corpses) do
+			obj = type(v) == "table" and v.id and level.object_by_id(v.id) or level.object_by_id(id)
+			if (obj) then
+				if (xr_corpse_detection.has_valuable_loot and xr_corpse_detection.has_valuable_loot(obj)) then
+					hud:add_msg("",obj:name().."  HasLoot = "..tostring(xr_corpse_detection.has_valuable_loot(obj)))--  DeathTime = "..time_global()-obj:death_time())
+				else
+					hud:add_msg("",alun_utils.sr("%s death_time = %s",obj:name(),time_global()-obj:death_time()))
+				end
+			end
+			count = count + 1
 		end
 	end
-	hud:set_header("-[Release Table]-")
+	hud:set_header("-[Release Table]["..count.."]")
 	hud:display()
 end
 
@@ -914,7 +1303,7 @@ end
 --]]
 
 function printf(text,...)
-	get_console():execute("load ~#I#:"..str_format(text,...))
+
 end
 
 function str_format(text,...)
