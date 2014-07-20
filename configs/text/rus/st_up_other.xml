@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+
+      <!-- Copyright: 2010-2012 SWM Team --> 
+      <!-- Author: Jurok --> 
+
+      <string id="sleep_warning_surge_1">
+	      <text>Вы не можете спать во время выброса!</text>
+      </string>    
+      <string id="sleep_warning_surge_2">
+	      <text>Вы не можете спать во время выброса, к тому же имея опасное кровотечение!</text>
+      </string>
+      <string id="sleep_warning_surge_3">
+	      <text>Вы не можете спать во время выброса, к тому же имея высокий уровень облучённости организма!</text>
+      </string>
+      <string id="sleep_warning_surge_4">
+	      <text>Вы не можете спать во время выброса, к тому же имея опасное кровотечение и высокий уровень облучённости организма!</text>
+      </string>
+
+      <string id="st_resupply_ready_2">
+	      <text>Перед операцией можно пополнить запас боеприпасов у лейтенанта Кириллова.</text>
+      </string>
+	
+</string_table>

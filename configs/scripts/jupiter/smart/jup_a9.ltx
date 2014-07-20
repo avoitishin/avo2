@@ -1,0 +1,21 @@
+[smart_terrain]
+respawn_idle = 21600
+respawn_only_level = true
+respawn_radius = 200
+death_idle_time = 21600
+
+squad_id = 40
+max_population = 1
+respawn_params = respawn@jup_a9
+
+[respawn@jup_a9]
+spawn_mutants
+spawn_monolith@master
+
+[spawn_mutants]
+spawn_squads = simulation_zombied_1_jupiter, simulation_zombied_1_jupiter, simulation_zombied_1_jupiter, simulation_zombied_1_jupiter, simulation_fracture_jup_a9, simulation_snork_jupiter, simulation_flesh, simulation_boar ; simulation_zombi_jup_a9, simulation_zombi_jup_a9
+spawn_num = {=actor_on_level(jupiter) -pri_a17_actor_has_gauss_rifle} 2, 0 ; {+jup_b207_task_end} 1, {+jup_a12_task_done} 1, {+jup_b46_task_done} 1, {+jup_b8_heli_4_searched} 1, {+jup_b209_task_done} 1, {+jup_b218_gather_squad_complete} 1, 0
+
+[spawn_monolith@master]
+spawn_squads = monolith_sim_squad_advanced, monolith_sim_squad_veteran
+spawn_num = {=actor_on_level(jupiter) +pri_a17_actor_has_gauss_rifle} 2, 0 ; {+jup_b207_task_end} 1, {+jup_a12_task_done} 1, {+jup_b46_task_done} 1, {+jup_b8_heli_4_searched} 1, {+jup_b209_task_done} 1, {+jup_b218_gather_squad_complete} 1, 0

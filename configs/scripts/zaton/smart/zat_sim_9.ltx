@@ -1,0 +1,48 @@
+[smart_terrain];zat_sim_9
+squad_id = 2
+max_population = 2
+respawn_params = respawn@zat_sim_9
+
+[respawn@zat_sim_9]
+spawn_boar
+spawn_flesh
+spawn_zombied_zat_b100
+spawn_mutants_zat_b100
+spawn_controller_zat_b100
+
+;;; unused
+
+;spawn_dog
+;spawn_pseudodog
+
+;spawn_zombied_zaton_smrter_sim_13
+
+[spawn_zombied_zat_b100]
+spawn_squads = simulation_zombied_1_zat_b100, simulation_zombied_1_zat_b100 ; simulation_zombi_zat_b100
+spawn_num = {=actor_on_level(zaton) -zat_b100_heli_2_searched} 1, 0
+
+[spawn_mutants_zat_b100]
+spawn_squads = simulation_gigant_zat_b100, simulation_psy_dog_zat_b100, simulation_chimera_zat_b100, simulation_snork_zat_b100, simulation_bloodsucker_zat_b100, simulation_snork_zat_b100, simulation_bloodsucker_zat_b100, simulation_fracture_zat_b100, simulation_zombied_1_zat_b100, simulation_zombied_1_zat_b100, simulation_zombied_1_zat_b100
+spawn_num = {=actor_on_level(zaton) -zat_b100_heli_2_searched} 1, 0
+
+[spawn_controller_zat_b100]
+spawn_squads = simulation_poltergeist_flame_zat_b100, simulation_poltergeist_tele_zat_b100, simulation_controller_zat_b100, simulation_controller_zat_b100, simulation_burer_zat_b100, simulation_controller_zat_b100, simulation_controller_zat_b100, simulation_burer_zat_b100
+spawn_num = {=actor_on_level(zaton) -zat_b100_heli_2_searched} 1, 0
+
+[spawn_boar]
+spawn_squads = simulation_flesh, simulation_boar, simulation_flesh, simulation_boar, simulation_flesh, simulation_boar, simulation_flesh, simulation_boar, simulation_snork, simulation_snork, simulation_bloodsucker
+spawn_num = {=actor_on_level(zaton) +zat_b100_heli_2_searched} 1, 0
+
+[spawn_flesh]
+spawn_squads = simulation_boar, simulation_flesh, simulation_boar, simulation_flesh, simulation_snork
+spawn_num = {=actor_on_level(zaton) +zat_b100_heli_2_searched} 1, 0
+
+;;; unused
+
+;[spawn_pseudodog]
+;spawn_squads = simulation_pseudodog
+;spawn_num = 0
+
+;[spawn_dog]
+;spawn_squads = simulation_dog
+;spawn_num = 0

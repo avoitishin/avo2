@@ -1,0 +1,67 @@
+[smart_terrain]
+respawn_idle = 10800
+respawn_only_level = true
+respawn_radius = 150
+death_idle_time = 16800
+
+squad_id = 7
+max_population = 1
+respawn_params = respawn@pri_sim_4
+;arrive_dist = 100
+
+[respawn@pri_sim_4]
+spawn_duty@advanced
+spawn_duty@advanced_hostile
+
+;;; unused
+
+;spawn_dog
+;spawn_pseudodog
+;spawn@zombied
+
+;spawn_boar
+;spawn_flesh
+;spawn_gigant
+
+; Duty squads
+
+[spawn_duty@advanced]
+spawn_squads = duty_sim_squad_veteran_pripyat, duty_hunter_night_simulation_squad_pripyat
+spawn_num = {=actor_on_level(pripyat) +pri_a28_actor_in_zone_stay -sim_freedom_help_harder} 1, 0
+
+; Duty hostile squads
+
+[spawn_duty@advanced_hostile]
+spawn_squads = duty_sim_squad_veteran_pripyat_hostile, duty_hunter_night_simulation_squad_pripyat_hostile
+spawn_num = {=actor_on_level(pripyat) +pri_a28_actor_in_zone_stay +sim_freedom_help_harder} 1, 0
+
+;;; unused
+
+;[spawn_pseudodog]
+;spawn_squads = simulation_pseudodog, simulation_pseudodog, simulation_pseudodog, simulation_tushkano
+;spawn_num = 0
+
+;[spawn_dog]
+;spawn_squads = simulation_dog, simulation_dog, simulation_dog, simulation_dog, simulation_pseudodog
+;spawn_num = 0
+
+;[spawn@zombied]
+;spawn_squads = simulation_pseudodog, simulation_pseudodog, simulation_snork, simulation_bloodsucker, simulation_gigant
+;spawn_num = 0
+
+;[spawn_gigant]
+;spawn_squads = simulation_gigant
+;spawn_num = 0
+
+;[spawn_boar]
+;spawn_squads = simulation_boar, simulation_boar, simulation_snork
+;spawn_num = 0
+
+;[spawn_flesh]
+;spawn_squads = simulation_flesh, simulation_flesh
+;spawn_num = 0
+
+[exclusive]
+pri_b35_envoy_after = pripyat\pri_b35_envoy_logic.ltx
+pri_b35_envoy_squad_1 = pripyat\pri_b35_envoy_logic.ltx
+pri_b35_envoy_squad_2 = pripyat\pri_b35_envoy_logic.ltx

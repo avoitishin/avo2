@@ -1,0 +1,22 @@
+[smart_terrain];jup_sim_7
+squad_id = 45
+max_population = 1
+
+respawn_params = respawn@jup_sim_7
+
+[respawn@jup_sim_7]
+spawn_boar
+
+;;; unused
+
+;spawn_dog
+
+[spawn_boar]
+spawn_squads = simulation_boar, simulation_boar, simulation_flesh, simulation_flesh, simulation_tushkano
+spawn_num = {=actor_on_level(jupiter)} 1, 0
+
+;;; unused
+
+;[spawn_dog]
+;spawn_squads = simulation_boar, simulation_boar, simulation_flesh, simulation_flesh, simulation_tushkano
+;spawn_num = 0

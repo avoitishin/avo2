@@ -1,0 +1,115 @@
+<w>
+	<file name="wpn\wpn_crosshair_class">
+		<texture id="wpn_crosshair_class" x="0" y="0" width="1024" height="1024" />
+		<texture id="wpn_crosshair_add_l" x="0"	y="0" width="102" height="768" />
+		<texture id="wpn_crosshair_add_r" x="0"	y="0" width="102" height="768" />
+	</file>
+	<file name="wpn\wpn_crosshair">
+		<texture id="wpn_crosshair" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_svd_lynx">
+		<texture id="wpn_crosshair_svd_lynx" x="0" y="0" width="1820" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_snag">
+		<texture id="wpn_crosshair_snag" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_fn2000">
+		<texture id="wpn_crosshair_fn2000" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_l85">
+		<texture id="wpn_crosshair_l85" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_g36">
+		<texture id="wpn_crosshair_g36" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_rpg">
+		<texture id="wpn_crosshair_rpg" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_bino">
+		<texture id="wpn_crosshair_bino" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_zf4">
+		<texture id="wpn_crosshair_zf4" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_acog">
+		<texture id="wpn_crosshair_acog" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_trijicon">
+		<texture id="wpn_crosshair_trijicon" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_m24">
+		<texture id="wpn_crosshair_m24" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_l85">
+		<texture id="wpn_crosshair_l85" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_m16a1">
+		<texture id="wpn_crosshair_m16a1" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_ww2">
+		<texture id="wpn_crosshair_ww2" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_ww2_moist">
+		<texture id="wpn_crosshair_ww2_moist" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_ww2_broken">
+		<texture id="wpn_crosshair_ww2_broken" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_gauss">
+		<texture id="wpn_crosshair_gauss" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_modern1">
+		<texture id="wpn_crosshair_modern1" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pso1">
+		<texture id="wpn_crosshair_pso1" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pso1_moist">
+		<texture id="wpn_crosshair_pso1_moist" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pso1_broken">
+		<texture id="wpn_crosshair_pso1_broken" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pu9130">
+		<texture id="wpn_crosshair_pu9130" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pu9130_moist">
+		<texture id="wpn_crosshair_pu9130_moist" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pu9130_scratched">
+		<texture id="wpn_crosshair_pu9130_scratched" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_susat">
+		<texture id="wpn_crosshair_susat" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_susat_moist">
+		<texture id="wpn_crosshair_susat_moist" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_susat_broken">
+		<texture id="wpn_crosshair_susat_broken" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_vsk">
+		<texture id="wpn_crosshair_vsk" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_zf9">
+		<texture id="wpn_crosshair_zf9" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_zf9_moist">
+		<texture id="wpn_crosshair_zf9_moist" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_zf9_broken">
+		<texture id="wpn_crosshair_zf9_broken" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_findot">
+		<texture id="wpn_crosshair_findot" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_pso1_ksvk">
+		<texture id="wpn_crosshair_pso1_ksvk" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_1p78">
+		<texture id="wpn_crosshair_1p78" x="0" y="0" width="1024" height="1024" />
+	</file>
+	<file name="wpn\wpn_crosshair_nspu">
+		<texture id="wpn_crosshair_nspu" x="0" y="0" width="1024" height="1024" />
+	</file>
+</w>

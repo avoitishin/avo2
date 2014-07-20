@@ -1,0 +1,34 @@
+[smart_terrain]
+respawn_idle = 10800
+respawn_only_level = true
+respawn_radius = 150
+death_idle_time = 16800
+
+squad_id = 11
+spawn_point = pri_b36_smart_terrain_spawn_point
+max_population = 2
+respawn_params = respawn@pri_b36   
+
+[respawn@pri_b36]
+spawn_monolith
+
+[spawn_monolith]
+spawn_squads = monolith_sim_squad_advanced_pripyat, monolith_sim_squad_veteran_pripyat
+spawn_num = {=actor_on_level(pripyat) +pri_b36_master_dead +pri_a28_actor_in_zone_stay} 2, 0
+
+[exclusive]
+sniper = pripyat\pri_b36_monolith_sniper.ltx
+master = pripyat\pri_b36_monolith_master.ltx
+zombied_1 = pripyat\pri_b36_zombied.ltx
+zombied_2 = pripyat\pri_b36_zombied.ltx
+zombied_3 = pripyat\pri_b36_zombied.ltx
+zombied_4 = pripyat\pri_b36_zombied.ltx
+zombied_5 = pripyat\pri_b36_zombied.ltx
+guard_1 = pripyat\pri_b36_monolith_guard.ltx
+guard_2 = pripyat\pri_b36_monolith_guard.ltx
+marine_1 = pripyat\pri_b36_monolith_marines_1.ltx
+marine_2 = pripyat\pri_b36_monolith_marines_2.ltx
+marine_3 = pripyat\pri_b36_monolith_marines_3.ltx
+marine_4 = pripyat\pri_b36_monolith_marines_4.ltx
+marine_5 = pripyat\pri_b36_monolith_marines_5.ltx
+marine_sniper = pripyat\pri_b36_monolith_marines_sniper.ltx

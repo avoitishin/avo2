@@ -1,0 +1,24 @@
+[smart_terrain]
+squad_id = 66
+max_population = 1
+
+respawn_params = respawn@jupiter_smrter_sim_12
+
+[respawn@jupiter_smrter_sim_12]
+spawn_flesh
+
+;;; unused
+
+spawn_boar
+
+[spawn_flesh]
+spawn_squads = simulation_dog, simulation_pseudodog, simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_bloodsucker
+spawn_num = {=actor_on_level(jupiter)} 1, 0
+
+;;; unused
+
+[spawn_boar]
+spawn_squads = simulation_cat, simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar
+spawn_num = {=actor_on_level(jupiter)} 1, 0
+
+;active = nil

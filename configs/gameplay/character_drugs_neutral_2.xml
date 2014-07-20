@@ -1,0 +1,20 @@
+grooming		= 1, prob=0.020 \n
+journal			= 1, prob=0.024 \n
+geiger_dead		= 1, prob=0.020 \n
+cooking			= 1, prob=0.020 \n
+picture_woman		= 1, prob=0.024 \n
+
+ied_rpg			= 1, prob=0.010 \n
+
+mine			= 1, prob=0.020 \n
+
+spareparts		= 1, prob=0.016 \n
+beadspread		= 1, prob=0.024 \n
+cards		= 2, prob=0.032 \n
+ammo_bad		= 10, prob=0.008 \n
+swiss		= 1, prob=0.036 \n
+headlamp		= 1, prob=0.020 \n
+mirror		= 1, prob=0.036 \n
+flashlight_old		= 1, prob=0.020 \n
+flashlight_broken		= 1, prob=0.020 \n
+cutlery		= 1, prob=0.036 \n

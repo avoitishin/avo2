@@ -1,0 +1,38 @@
+----------------------
+-- File:   Mines
+-- Author: Shoker
+-- Модуль мин 
+-- Swartz: Adapted a little further, however now you can blow up neutral stalkers with no penalty, (this needs to be fixed). 
+-- Also, actor currently immune to them (needs to be since actor drops them at feet).
+----------------------
+
+local mines_tbl = {}
+local BLOW_RADIUS = 2.25
+
+-- Заносим мину в таблицу
+function build_tbl(m)
+  table.insert(mines_tbl, m:id())
+end
+
+
+-- Проходим по таблице мин и отслеживаем момент попадания НПС в зону мины.
+function chek_target(npc)
+ for k,v in pairs(mines_tbl) do
+ ----------------------------------------
+  local m_obj = level.object_by_id(v)
+ 
+  if m_obj==nil then
+     table.remove(mines_tbl, k)
+	 return
+  else
+    if npc:position():distance_to(m_obj:position())<=BLOW_RADIUS and
+       (IsMonster(npc) or IsStalker(npc)) then
+       m_obj:explode(0)
+	   table.remove(mines_tbl, k)
+	   return
+    end
+  end 
+  ---------------------------------------- 
+ end
+end
+

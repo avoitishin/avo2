@@ -1,0 +1,395 @@
+ <?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+
+        <!-- Copyright: 2010-2012 SWM Team --> 
+        <!-- Author: Jurok, monk --> 
+
+        <!-- Борода -->
+
+        <string id="zat_a2_stalker_barmen_b30_about_new_detector_4">
+		<text>You should not have been in contact with Owl. I can offer you a headstart on a certain artifact order - about three or four hours. Just enough time to beat the other stalkers, no?</text>
+	</string>
+
+        <!-- Ной -->
+
+        <string id="zat_noah_about_pripyat_dialog_0">
+		<text>Greetings from Zulu.</text>
+	</string>
+        <string id="zat_noah_about_pripyat_dialog_1">
+		<text>Zulu? How is the old bastard? Haven't heard from him for a while.</text>
+	</string>
+	<string id="zat_noah_about_pripyat_dialog_2">
+		<text>Yeah, about that... we're planning a trip to Pripyat. We've found an underground tunnel. Would you be willing to go with us?</text>
+	</string>
+        <string id="zat_noah_about_pripyat_dialog_3">
+		<text>Pripyat?! Are you crazy? Why would I go back there? I cannot go. There's a huge wave coming - who will guard the Ark and all that come within it? The flood is coming! I cannot go!</text>
+	</string>
+        <string id="zat_noah_about_pripyat_dialog_4">
+                <text>Ok, ok.. the wave. Ok, I'll leave.</text>
+	</string>
+        <string id="zat_noah_about_pripyat_dialog_5">
+                <text>Remember! Only a select few will be saved!</text>
+	</string>
+        <string id="zat_noah_about_pripyat_dialog_6">
+                <text>I get it. Only your favourites.</text>
+	</string>
+
+        <!-- Сыч -->
+
+        <string id="zat_b30_owl_stalker_trader_sell_items_37">
+		<text>Tremor's PDA</text>
+	</string>
+        <string id="zat_b30_owl_stalker_trader_sell_items_371">
+		<text>Let me look... wow, quite a bit of news! Very, very interesting... 1000, my final offer.</text>
+	</string>
+        <string id="zat_b30_owl_stalker_trader_sell_items_3711">
+		<text>Deal.</text>
+	</string> 
+
+        <!-- Охранник Валета -->
+
+        <string id="jup_a10_guard_dialog_1131">
+		<text>Relax. I'm just passing through.</text>
+	</string>
+       
+        <!-- Лоцман -->
+
+        <string id="zat_lotsman_to_pripyat_dialog_0">
+                <text>Can you take me to Pripyat?</text>
+        </string>
+        <string id="zat_lotsman_to_pripyat_dialog_1">
+                <text>No, sorry. Bit out of the way for me. If you want to get to Yanov, though, I can help you out.</text>
+        </string>
+        <string id="jup_lotsman_to_pripyat_dialog_0">
+		<text>Hey, can you take me to Pripyat?</text>
+        </string>
+        <string id="jup_lotsman_to_pripyat_dialog_1">
+		<text>No, sorry. Try asking Garry. He's got a route there, I hear.</text>
+        </string>
+
+        <string id="zat_b215_stalker_guide_to_zaton_14">
+		<text>Suit yourself.</text>
+	</string>
+        <string id="zat_b215_stalker_guide_to_zaton_24">
+		<text>Suit yourself. I'm always here.</text>
+	</string>
+
+        <string id="zat_b215_stalker_guide_to_jupiter_14">
+		<text>It's your business.</text>
+	</string>
+        <string id="zat_b215_stalker_guide_to_jupiter_24">
+		<text>It's your business. If you want me, I'm always here.</text>
+	</string>
+
+        <string id="zat_b215_stalker_guide_to_zaton_15">
+		<text>If you get some money, come and see me.</text>
+	</string>
+        <string id="zat_b215_stalker_guide_to_zaton_25">
+		<text>No money, no deal. Come back when you've got some.</text>
+	</string>
+
+        <string id="zat_b215_stalker_guide_to_jupiter_15">
+		<text>No money? Then forget about it.</text>
+	</string>
+        <string id="zat_b215_stalker_guide_to_jupiter_25">
+		<text>I don't give my services for free. Come back when you can pay.</text>
+	</string>
+
+        <!-- Гарик -->
+
+        <string id="jup_garik_to_zaton_dialog_0">
+                <text>Can you take me to Zaton?</text>
+        </string>
+        <string id="jup_garik_to_zaton_dialog_1">
+                <text>Man, there's nothing for me there. Why would you ask me that? If you want to go there, ask Pilot. He knows that route better than anyone.</text>
+        </string>
+        <string id="pri_garik_to_zaton_dialog_0">
+                <text>Can you take me to Zaton?</text>
+        </string>
+        <string id="pri_garik_to_zaton_dialog_1">
+                <text>Zaton? You insult me, stalker. Pilot could get you there, of course. I can take you back to Yanov, but that's about it.</text>
+        </string>
+
+        <string id="jup_b43_stalker_assistant_guide_to_jupiter_13">
+		<text>As you wish.</text>
+	</string>
+
+        <string id="jup_b43_stalker_assistant_guide_to_pripyat_131">
+		<text>When you get some cash come back and see me, then.</text>
+	</string>
+
+        <!-- Вобла -->
+
+        <string id="zat_b14_stalker_hello_dialog_1">
+		<text>Oh... it's you.</text>
+	</string>
+	<string id="zat_b14_stalker_hello_dialog_2">
+		<text>What more do you want? Let's go...</text>
+	</string>
+
+        <!-- Кардан -->
+
+        <string id="zat_tech_about_battery_dialog_0">
+		<text>I need a battery for the Gauss.</text>
+	</string>
+	<string id="zat_tech_about_battery_dialog_1">
+		<text>No problem, but to make the battery I'm going to need a "Flash" artifact.</text>
+	</string>
+	<string id="zat_tech_about_battery_dialog_2">
+		<text>Here's the artifact.</text>
+	</string>
+	<string id="zat_tech_about_battery_dialog_3">
+		<text>I'll think about it.</text>
+	</string>
+	<string id="zat_tech_about_battery_dialog_4">
+		<text>I haven't got a Flash</text>
+	</string>
+
+        <string id="zat_tech_drink_dialog_1_0">
+		<text>I've got some vodka. Fancy a drink?</text>
+	</string>
+        <string id="zat_tech_drink_dialog_1_1">
+		<text>Don't be stingy. Hand it over, and let's have a drink!</text>
+	</string>
+        <string id="zat_tech_drink_dialog_1_2">
+		<text>Bottom's up!</text>
+	</string>
+        <string id="zat_tech_drink_dialog_1_3">
+		<text>No, not at the moment. I've still got some raids to do...</text>
+	</string>
+
+        <string id="zat_tech_drink_dialog_2_0">
+		<text>Fancy another?</text>
+	</string>
+        <string id="zat_tech_drink_dialog_2_1">
+		<text>Does a Boar shit in the woods? Of course.</text>
+	</string>
+        <string id="zat_tech_drink_dialog_2_2">
+		<text>Cheers!</text>
+	</string>
+        <string id="zat_tech_drink_dialog_2_3">
+		<text>Better not... one's enough.</text>
+	</string>
+
+        <string id="zat_tech_drink_dialog_3_0">
+		<text>Hey... I've got a third bottle... fancy some more?</text>
+	</string>
+        <string id="zat_tech_drink_dialog_3_1">
+		<text>I'll drink to that!</text>
+	</string>
+        <string id="zat_tech_drink_dialog_3_2">
+		<text>Here goes nothing...</text>
+	</string>
+        <string id="zat_tech_drink_dialog_3_3">
+		<text>I think I've hit my limit...</text>
+	</string>
+
+        <string id="zat_tech_drink_dialog_4">
+		<text>No more drink... I thought some food would help but it hasn't.</text>
+	</string>
+
+        <!-- Шило -->
+
+        <string id="zat_b53_artefact_hunter_2_gathering_artefacts_113">
+		<text>Here, take this medkit. But be careful, man, I've only got one... if you get taken out, we're all screwed.</text>
+	</string>
+        <string id="zat_b53_artefact_hunter_2_gathering_artefacts_114">
+		<text>Thanks, I'll be careful.</text>
+	</string>
+
+        <!-- Зулус -->
+
+        <string id="jup_zulus_about_noah_dialog_0">
+                <text>Hey do you know anything about that guy in the "Ark"? He keeps going on about some Big Wave. I barely got out of there alive...</text>
+	</string>
+        <string id="jup_zulus_about_noah_dialog_1">
+                <text>You mean Noah? Yeah, who else could you mean... guy's pretty crazy. Me and him go way back... he took out a snork with his bare hands once to save me. I'd rather be on his side than not, you get me? Here's a crazy little story about him... not sure if it's true or not, but nothing would surprise me about him. Turns out he lived in Pripyat before the Second Disaster. Well, I say lived - he was squatting in a makeshift shack out on the outskirts. The god damn meltdown happened, and the crazy bastard slept through the entire thing! They say he was one of the first "stalkers" in Pripyat. He came out from the North, babbling incoherently about a huge wave and god knows what else. Luckily we didn't know about Zombies back in those days or they'd have probably shot him down on the spot.</text>
+	</string>
+        <string id="jup_zulus_about_noah_dialog_2">
+                <text>Wow.</text>
+	</string>
+
+        <string id="jup_zulus_bio_dialog_0">
+                <text>Tell me about yourself.</text>
+	</string>
+        <string id="jup_zulus_bio_dialog_1">
+                <text>What's there to tell? You cut me in half, you'd find "Duty" right down the middle. Been here since the beginning... got to be about three years now? I keep to myself, mostly. Those Freedom bastards are in the station now... some sort of truce. Apparently I had something to do with it. I don't feel particular ill-will towards them... but Duty and Freedom go way back... some bloody battles. Just seems wrong for us to be together, no matter what the situation.</text>
+	</string>
+
+        <string id="jup_zulus_bio_dialog_2">
+                <text>Why did you leave Duty?</text>
+	</string>
+        <string id="jup_zulus_bio_dialog_3">
+                <text>You never really leave Duty. I'm still a rank and file member. Will be for the rest of my life. Only Death or Dishonourable Discharge makes you no longer a part of Duty. The situation is fucked... there was a large emission about to hit. Once you know the Zone, you get to sense these things.. and we were in a skirmish with some Freedom. It was a bad situation. An emission about to hit, and our only salvation was our sworn enemies. I gave the warning, but a lot of our guys couldn't make it in time. Apparently Freedom decided that they couldn't let people, even Duty, if you can believe it, die in such a way so they risked their life to drag our guys to safety. After that the top brass decided that maybe Freedom weren't so bad after all. There's a temporary ceasefire in the station. The Loners are our buffer. Buffer or not, Freedom and Duty are sworn enemies.. and that's not my scene, you know?</text>
+	</string>
+
+        <!-- Морган -->
+
+        <string id="jup_morgan_start_dialog_1">
+		<text>What do you want?</text>
+	</string>
+        <string id="jup_morgan_start_dialog_2">
+		<text>You again? What do you want?</text>
+	</string>
+
+        <!-- Стрелок -->
+
+        <string id="pri_return_sig_strelok_dialog_0">
+		<text>Hey man, recognize this weapon? I found it in a stash in Jupiter...</text>
+	</string>
+        <string id="pri_return_sig_strelok_dialog_1">
+		<text>Let me see that... wow, I never thought I'd see this baby again. I ran out of bullets so had to leave it there. Had some good times, me and her... thanks for finding it.</text>
+	</string>
+
+        <!-- Предатели со «Скадовска» -->
+
+        <string id="zat_raider_hello_dialog_1_0">
+		<text>I don't feel like talking right now. Fuck off.</text>
+	</string>
+        <string id="zat_raider_hello_dialog_2_0">
+		<text>What is it? Can't you see I'm relaxing? Fuck off and leave me alone.</text>
+	</string>
+        <string id="zat_raider_hello_dialog_3_0">
+		<text>Fuck off, stalker. I'm busy.</text>
+	</string>
+        <string id="zat_raider_hello_dialog_1_1">
+		<text>Ok. What crawled up your ass and died?</text>
+	</string>
+
+        <!-- Костоправ -->
+
+        <string id="jup_kostoprav_bio_dialog_0">
+		<text>Tell me about yourself.</text>
+	</string>
+        <string id="jup_kostoprav_bio_dialog_1">
+		<text>I'm your standard Sawbones, I guess. Came here as a free stalker many years ago. I had studied medicine back in the Great Land, but there were a few incidents and I couldn't go back. Luckily the Zone forgives all, I guess. I was stationed with Freedom for a while. Some poor group of stalkers got caught in an anomaly in the Warehouses. One guy was killed instantly, the other was badly bleeding. I had to cauterize the poor bastard's wounds with a flare then drag him a mile to the nearest outpost - A Freedom base. I fixed him up, and was recruited for a short while. Back then they were struggling to hold the Monolith back at the Barrier. Such an old term now... when the Scorcher was turned off, I headed up north. Figured there would be plenty of opportunities for a guy skilled at stitching people back together again. So here I am. It's not too bad... get my own private room and patients from both sides of the conflict. I don't judge... heh.</text>
+	</string>
+
+        <!-- Гаваец -->
+
+        <string id="jup_gavaets_bio_dialog_0">
+		<text>Tell me about yourself.</text>
+	</string>
+        <string id="jup_gavaets_bio_dialog_1">
+		<text>Eh... not much to say. I started like most guys back in the Cordon. You ever been there? Got my first weapon from Sid, and not long after that jumped straight into my first anomaly without any protection. Can you imagine that? It's a miracle I managed to survive. I went about my business, much more careful this time, and made a fair trade as a stalker. Decided to give up that game, though. I heard some crazy bastard managed to turn off the Brain Scorcher, so the way to the north was open. I figured there would be more opportunities up north... the road less travelled, y'know? Got up there, and set up shop near here. Decided to open business for stalkers in the area. Why risk my own ass when there's a bunch of crazy bastards willing to do it for you, right? Don't regret it one bit.</text>
+	</string>
+
+        <string id="jup_gavaets_about_vano_dialog_1_0">
+		<text>Hey, what happened to that guy around here?</text>
+	</string>
+        <string id="jup_gavaets_about_vano_dialog_1_1">
+		<text>I guess you mean Vano? No idea... he left here a few days ago. Haven't seen him since. Rumour has it he had some trouble with the bandits. Stupid bastard probably got his head blown off trying to settle a score.</text>
+	</string>
+
+        <string id="jup_gavaets_about_vano_dialog_2_0">
+		<text>Hey what happened to Vano?</text>
+	</string>
+        <string id="jup_gavaets_about_vano_dialog_2_1">
+		<text>No idea... he left a few days ago. Haven't seen him since. Rumour has it he had some trouble with the bandits. Stupid bastard probably got his head blown off trying to settle a score.</text>
+	</string>
+
+        <!-- Группа Тополя -->
+
+        <string id="jup_bulava_hello_dialog_1">
+		<text>The boss might know more... you should talk to him.</text>
+	</string>
+
+        <string id="jup_dux_hello_dialog_1">
+		<text>If you have any questions I'd advise you to talk to the boss. He's a master.</text>
+	</string>
+  
+        <string id="jup_zmey_hello_dialog_1">
+		<text>If you want to know something "big" then talk to the Boss.</text>
+	</string>
+
+        <string id="jup_group_topol_hello_dialog_2">
+		<text>Good to see you.</text>
+	</string>
+        <string id="jup_group_topol_hello_dialog_3">
+		<text>Hey.</text>
+	</string>
+        <string id="jup_group_topol_hello_dialog_4">
+		<text>Cool.</text>
+	</string>
+
+        <!-- Герман -->
+
+        <string id="jup_b6_scientist_nuclear_physicist_about_compass_0">
+		<text>I found a rare artifact called "Compass". Interested?</text>
+	</string>
+        <string id="jup_b6_scientist_nuclear_physicist_about_compass_1">
+		<text>Definitely interested. I'd be willing to offer 14000.</text>
+	</string>
+        <string id="jup_b6_scientist_nuclear_physicist_about_compass_2">
+		<text>Deal.</text>
+	</string>
+	<string id="jup_b6_scientist_nuclear_physicist_about_compass_3">
+		<text>No, I'll look for another buyer.</text>
+	</string>
+        <string id="jup_b6_scientist_nuclear_physicist_about_compass_4">
+		<text>Fine, but I'm not changing my price.</text>
+	</string>
+
+        <!-- Новиков -->
+
+        <string id="jup_novikov_about_gauss_dialog_0">
+		<text>I found a strange gun. Have you ever seen anything like it?</text>
+	</string>
+        <string id="jup_novikov_about_gauss_dialog_1">
+		<text>Curious.. it bears some resemblence to an old project we worked on.. the EM1, but it seems to function completely different. I'm afraid I can't help you with this one, stalker.</text>
+	</string>
+
+        <!-- Азот -->
+
+        <string id="jup_azot_about_gauss_dialog_0">
+		<text>I found a strange gun. Have you ever seen anything like it?</text>
+	</string>
+        <string id="jup_azot_about_gauss_dialog_1">
+		<text>Wow! Now this is a gun! I'm pretty knowledgable about these sorts of things.. but I don't think I've ever seen anything quite like this. Sorry, can't help you much...</text>
+	</string>
+
+        <!-- Сенька-пьяница -->
+   
+        <string id="jup_senya_bio_dialog_0">
+		<text>Tell me about yourself.</text>
+	</string>
+        <string id="jup_senya_bio_dialog_1">
+		<text>Eh... quite a story there. Used to roll with the bandits. Well, not really roll... I sort of got involved with them somehow, back when they were still struggling for the Zone. Made good friends with the technician... well, not really good friends. More like drinking buddies. There was a raid.. I think? Don't know how the hell I got out of there. Maybe I was so drunk they thought I was dead. When I woke up, everyone was dead... I grabbed a stalker suit and made my way in the world. If you fall off a horse, get back on it and all that... wound up here, next to the Duty guys. Nitro here took me under his wing. Well, not really under his wing.. more like drinking buddies. Heh, funny old world, eh?</text>
+	</string>
+       
+        <string id="jup_senya_drunk_dialog_0">
+		<text>Hrr...</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_1">
+		<text>Hey man, you ok?</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_2">
+		<text>Ughhh... head hurts.... vodka...</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_3">
+		<text>Vodka? Here you go.</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_4">
+		<text>Sorry, I've got no vodka.</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_5">
+		<text>I think you've had enough already.</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_6">
+		<text>Oh man, you saved me...</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_7">
+		<text>Well come on stalker... get up.</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_8">
+		<text>Hrr....</text>
+	</string>
+        <string id="jup_senya_drunk_dialog_9">
+		<text>Once a drunk, always a drunk I guess.</text>
+	</string>
+
+    <string id="jup_senya_start_dialog_1">
+		<text>Man, what do you want? I'm trying to sleep....</text>
+	</string>
+
+</string_table>

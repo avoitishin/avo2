@@ -1,0 +1,416 @@
+--[[------------------------------------------------------------------------------------------------------------------
+Игнорирование врагов
+Чугай Александр
+--------------------------------------------------------------------------------------------------------------------]]
+
+local ignored_zone = {
+	"zat_a2_sr_no_assault",
+	"jup_a6_sr_no_assault",
+	"jup_b41_sr_no_assault"
+}
+
+fighting_with_actor_npcs = {}
+safe_zone_npcs = {}
+
+local ini = ini_file("ai_tweaks\\xr_combat_ignore.ltx")
+local CombatDuringSurge = alun_utils.read_from_ini(ini,"settings","combat_during_surge","bool",false)
+local CombatInertion = alun_utils.collect_section(ini,"combat_inertion",true)
+local CombatInertionMult = alun_utils.collect_section(ini,"combat_inertion_mult",true)
+local ForbiddenNPCs = alun_utils.collect_section(ini,"forbidden_npcs",true)
+--Yasti Ghillie Suit--
+local GhillieInertion = alun_utils.collect_section(ini,"ghillie_inertion",true)
+--End Yasti--
+TimeSafe = alun_utils.read_from_ini(ini,"settings","time_safe","float",120000)
+ini = nil
+
+function on_game_start()
+	callback_register("npc_on_update",npc_on_update)
+	callback_register("npc_on_hit_callback",npc_on_hit_callback)
+	callback_register("npc_on_death_callback",npc_on_death_callback)
+	callback_register("squad_on_npc_death",squad_on_npc_death)
+end
+
+function ignore_enemy_by_overrides(obj,enemy)
+	local id = obj:id()
+	local ene_id = enemy:id()
+	-- Overrides from custom data logic
+
+	local st = db.storage[id]
+	if (st.overrides and st.overrides.combat_ignore) then
+		if (xr_logic.pick_section_from_condlist(enemy, obj, st.overrides.combat_ignore.condlist) == "true") then
+			--obj:enable_memory_object(enemy,false)
+			return true
+		end
+	end
+
+	if (ene_id == db.actor:id() and xrs_debug_tools.debug_invis) then
+		return true
+	end
+
+	return false
+end
+
+function npc_in_safe_zone(npc)
+	local squad = get_object_squad(npc)
+	if (squad and safe_zone_npcs[squad.id]) or (safe_zone_npcs[id]) then
+		return true
+	end
+end
+
+function npc_on_update(npc,st)
+	if (character_community(npc) ~= "zombied") then
+		if not (st.safe_zone_dtimer) then
+			st.safe_zone_dtimer = 0
+		end
+
+		local tg = time_global()
+		if (tg < st.safe_zone_dtimer) then
+			return
+		end
+
+		st.safe_zone_dtimer = tg + 5000
+
+		local id = npc:id()
+		local se_obj = alife():object(id)
+		if (se_obj) then
+			local smart = alife():object(se_obj.m_smart_terrain_id)
+			local squad = get_object_squad(npc)
+			local cid = squad and squad.id or id
+
+			if (safe_zone_npcs[cid]) then
+				if (tg > safe_zone_npcs[cid] + TimeSafe) then
+					safe_zone_npcs[cid] = nil
+				end
+			else
+				for i,v in ipairs (ignored_zone) do
+					local zone = db.zone_by_name[v]
+					if (zone and utils.npc_in_zone(npc, zone)) then
+						safe_zone_npcs[cid] = tg
+					end
+				end
+			end
+		end
+	end
+end
+
+function npc_on_hit_callback(npc,amount,local_direction,who,bone_index)
+	if (amount > 0) then
+		db.storage[npc:id()].hitted_by = who and who:id()
+	end
+	--Yasti: if NPC that was killed by Player in a safe zone was in a squad, all squadmembers will override safe zone flag and attack--
+	local squad = get_object_squad(npc)
+	
+	if not squad then
+		return
+	end
+	
+	if (safe_zone_npcs[squad.id]) then
+		if who:id() == db.actor:id() and db.storage[npc:id()].hitted_by == who:id() then
+			alun_utils.set_squad_relation(npc, who, game_object.enemy)
+			for k in squad:squad_members() do
+				local member = db.storage[k.id] and db.storage[k.id].object
+				xr_logic.pstor_store(member,"can_attack_actor",true)
+				if (member and member:alive()) and db.storage[member:id()].combat_ignore.enabled then
+			--		alun_utils.printf("xr_combat_ignore.npc_on_hit_callback: safe zone squad hostile: "..member:character_name().." is now hostile to "..who:character_name())
+			--		db.storage[member:id()].enemy_id = ene_id
+					fighting_with_actor_npcs[member:id()] = true
+					db.storage[member:id()].combat_ignore.enabled = false
+				end
+			end
+		end
+	end
+	--End Yasti--
+end
+
+function npc_on_death_callback(npc,who)
+	safe_zone_npcs[npc:id()] = nil
+end
+
+function squad_on_npc_death(squad,npc)
+	if (squad:npc_count() == 0) then
+		safe_zone_npcs[squad.id] = nil
+	end
+end
+
+function is_enemy(obj,enemy,no_memory)
+--	if not db.actor then return end
+	if not (obj:alive()) then return false end
+	if (obj:critically_wounded()) then return true end
+	
+	local ene_id = enemy:id()
+	local id = obj:id()
+	local st = db.storage[id].combat_ignore
+		
+	-- Ignore long unseen/unheard enemies
+	if not (no_memory) then
+		local tg = time_global()
+		local time_in_memory = tg - obj:memory_time(enemy)
+
+		if (time_in_memory < 0) then
+			time_in_memory = time_in_memory + xr_logic.pstor_retrieve(obj,"mem_time_offset",0)
+		end
+
+		if (time_in_memory > st.combat_inertion) then
+			--	obj:enable_memory_object(enemy,false)
+			xr_logic.pstor_store(obj,"mem_time_offset",tg)
+
+			if (db.actor:id() == ene_id) then
+				if (not st.enabled) then
+					st.enabled = true
+				end
+				fighting_with_actor_npcs[obj:id()] = nil
+				xr_logic.pstor_store(obj,"can_attack_actor",nil)
+			end
+
+			return false
+		end
+	end
+	
+	-- NPC was hit by actor always return true
+	if (db.actor:id() == ene_id and not st.enabled) then
+		db.storage[id].enemy_id = ene_id
+		return true
+	end
+
+	-- Ignore enemies with the safe_zone flag
+	if (IsStalker(obj) and character_community(obj) ~= "zombied" and character_community(enemy) ~= "zombied" and not IsMonster(enemy)) then
+		local se_obj = alife():object(id)
+		if (not se_obj) then
+			alun_utils.printf("xr_combat_ignore: Critical Error dial 911 se_obj is nil!")
+			return false
+		end
+
+		local squad = get_object_squad(obj)
+		local cid = squad and squad.id or id
+
+		if (safe_zone_npcs[cid]) then
+			--Yasti: if NPC that was killed by Player in a safe zone was in a squad, all squadmembers will override safe zone flag and attack--
+			local can_attack_actor = xr_logic.pstor_retrieve(obj,"can_attack_actor",nil)
+			if db.actor:id() == ene_id and (obj:relation(enemy) == game_object.enemy) and can_attack_actor == true then
+				for k in squad:squad_members() do
+					local member = db.storage[k.id] and db.storage[k.id].object
+					if (member and member:alive()) and db.storage[member:id()].combat_ignore.enabled then
+						db.storage[member:id()].combat_ignore.enabled = false
+					end
+				end
+				return true
+			else
+				return false
+			end
+			--End Yasti--
+		end
+
+		if (db.actor:id() ~= ene_id) then
+			local ene_squad = get_object_squad(enemy)
+			local bid = ene_squad and ene_squad.id or ene_id
+			if (safe_zone_npcs[bid]) then
+				return false
+			end
+		end
+	end
+
+	-- Store Pure enemy (Enemy without overrides)
+	if (obj:relation(enemy) == game_object.enemy) then
+		db.storage[id].enemy_id = ene_id
+	end
+
+	-- Ignore enemies by overrides [post_combat_idle and xr_danger]
+	if (ignore_enemy_by_overrides(obj,enemy)) then
+		return false
+	end
+	
+	--Yasti ai_tweaks.override_combat_ignore--
+	if db.actor:id() == ene_id and st.enabled and fighting_with_actor_npcs[obj:id()] == nil and IsStalker(obj) then
+		if (ai_tweaks.override_combat_ignore(obj,enemy, 2) == true) then --Yasti: Check for Recon First
+			return false
+		
+		elseif (ai_tweaks.override_combat_ignore(obj,enemy, 1) == true) then --Yasti: Check for Ghillie
+			return false
+		end
+	end
+	--End Yasti--
+	return true
+end
+
+----------------------------------------------------------------------------------------------------------------------
+
+class "action_process_enemy"
+function action_process_enemy:__init( obj, storage )
+	self.object = obj
+	self.st     = storage
+	self.comm = get_object_community(obj)
+	self.rank = ranks.get_obj_rank_name(obj)
+	self.st.stage = 0
+--	self.timer = nil
+
+	if not (IsStalker(obj)) then
+		return
+	end
+
+	if (self.comm == "zombied") then
+		return
+	end
+	--Yasti Ghillie Suit. Adjusted Values for inertion time--
+	if db.actor and (ai_tweaks.GhillieEnable == true) and ai_tweaks.wearing_ghillie() then --Inertion Values for wearing a Ghillie Suit
+		--alun_utils.printf("xr_combat_ignore.process_enemy_init: Ghillie Suit inertion values loaded")
+		local search = GhillieInertion[self.comm] or "60000"
+		local search_time = xr_logic.pick_section_from_condlist(db.actor,obj,xr_logic.parse_condlist(obj, self.comm,"ghillie_inertion",search))
+		self.st.combat_inertion = search_time and tonumber(search_time) or 60000
+
+		local mult = CombatInertionMult[self.rank] and tonumber(CombatInertionMult[self.rank]) or 1
+		self.st.combat_inertion = self.st.combat_inertion * mult
+	else
+		--alun_utils.printf("xr_combat_ignore.process_enemy_init: Standard inertion values loaded")
+		local search = CombatInertion[self.comm] or "60000"
+		local search_time = xr_logic.pick_section_from_condlist(db.actor,obj,xr_logic.parse_condlist(obj, self.comm,"combat_inertion",search))
+		self.st.combat_inertion = search_time and tonumber(search_time) or 60000
+
+		local mult = CombatInertionMult[self.rank] and tonumber(CombatInertionMult[self.rank]) or 1
+		self.st.combat_inertion = self.st.combat_inertion * mult
+	end
+	--End Yasti--
+end
+
+function action_process_enemy:trader_enemy_callback(obj,enemy)
+	return false
+end
+
+function action_process_enemy:enemy_callback(npc, enemy)
+	if (self.st.stage == 0) then
+		local is_obj_enemy = is_enemy(npc,enemy,self.st)
+		if (is_obj_enemy) then
+			local id = npc:id()
+			local ene_id = enemy:id()
+			
+			-- keep track of actor enemies
+			if (ene_id == db.actor:id()) then
+				fighting_with_actor_npcs[id] = true
+				if (axr_main) then axr_main.npc_on_fighting_actor(npc) end
+			end
+			
+			-- Set smart alarm
+			local se_obj = alife():object(id)
+			if (se_obj and se_obj.m_smart_terrain_id ~= 65535) then
+				local smart_obj = alife():object(se_obj.m_smart_terrain_id)
+				smart_obj:set_alarm()
+
+				if (ene_id == db.actor:id() and smart_obj.base_on_actor_control ~= nil) then
+					smart_obj.base_on_actor_control:actor_attack()
+				end
+			end
+			
+			-- Jump to next stage
+			if (string.find(level.get_weather(),"veryfoggy") or ForbiddenNPCs[npc:section()] or ForbiddenNPCs[enemy:section()]) then
+				self.st.stage = 3
+			elseif (string.find(level.get_weather(),"foggy") or self.comm == "monster" or self.comm == "zombied" or character_community(enemy) == "zombied" or character_community(enemy) == "monster") then
+				self.st.stage = 2
+			else
+				self.st.stage = 1
+			end
+			return true
+		end
+		return false
+	elseif (self.st.stage == 1) then
+		return true
+	elseif (self.st.stage == 2) then
+		local dist = npc:position():distance_to_sqr(enemy:position())
+		if (dist > 22500) then
+			if (enemy:id() == db.actor:id()) then
+				fighting_with_actor_npcs[npc:id()] = nil
+			end
+
+			if (db.storage[npc:id()].enemy_id == enemy:id()) then
+				db.storage[npc:id()].enemy_id = nil
+			end
+
+			--npc:enable_memory_object(enemy,false)
+
+			self.st.enabled = true
+			self.st.stage = 0
+			return false
+		end
+		self.st.stage = 0
+		return true
+	elseif (self.st.stage == 3) then
+		local dist = npc:position():distance_to_sqr(enemy:position())
+		if (dist > 5700) then
+			if (enemy:id() == db.actor:id()) then
+				fighting_with_actor_npcs[npc:id()] = nil
+			end
+
+			if (db.storage[npc:id()].enemy_id == enemy:id()) then
+				db.storage[npc:id()].enemy_id = nil
+			end
+
+			--npc:enable_memory_object(enemy,false)
+
+			self.st.enabled = true
+			self.st.stage = 0
+			return false
+		end
+		self.st.stage = 0
+		return true
+	end
+end
+
+function action_process_enemy:hit_callback(obj, amount, local_direction, who, bone_index)
+	if who == nil then
+		return
+	end
+
+--	printf("_bp: action_process_enemy: hit_callback(): obj='%s'", obj:name())
+	if amount == 0 then
+		-- Кто-то стрельнул в воздух
+		return
+	end
+
+	if who:id() == db.actor:id() then
+		local overrides = self.st.overrides
+		if not overrides or not overrides.combat_ignore_keep_when_attacked then
+			--printf("_bp: action_process_enemy: hit_callback(): obj='%s': SCHEME DISABLED", obj:name())
+			self.st.enabled = false
+		end
+	end
+end
+
+----------------------------------------------------------------------------------------------------------------------
+-- binder
+----------------------------------------------------------------------------------------------------------------------
+function add_to_binder( npc, ini, scheme, section, storage )
+	local new_action = this.action_process_enemy( npc, storage )
+	storage.action = new_action
+end
+
+function set_combat_ignore_checker( npc, ini, scheme)
+	local st = xr_logic.assign_storage_and_bind( npc, ini, scheme )
+end
+
+function reset_combat_ignore_checker(npc, scheme, st, section)
+	local storage = st.combat_ignore
+
+	if (npc:character_community() == "trader" or npc:clsid() == clsid.script_trader or npc:clsid() == clsid.trader) then
+		npc:set_enemy_callback( storage.action.trader_enemy_callback, storage.action )
+	else
+		npc:set_enemy_callback( storage.action.enemy_callback, storage.action )
+	end
+
+	-- Подписываемся на hit callback-и:
+	xr_logic.subscribe_action_for_events( npc, storage, storage.action )
+
+	storage.overrides = xr_logic.generic_scheme_overrides(npc)
+
+	storage.enabled = true
+end
+
+
+
+function disable_scheme( npc, scheme )
+	npc:set_enemy_callback()
+
+	-- Отписываемся от hit callback. Это делать обязательно, потому что иначе при переключении на другой набор
+	-- схем, в котором нет перехвата боя, продолжится вызываться callback в старом подписанном action-е.
+	local st = db.storage[npc:id()][scheme]
+	if st then
+		xr_logic.unsubscribe_action_from_events(npc, st, st.action)
+	end
+end

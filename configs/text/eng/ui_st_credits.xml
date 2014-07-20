@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="st_credits">
+		<text>::::::::::::: Credits :::::::::::::</text>
+	</string>
+	<string id="st_ceano">
+		<text>N.Aaroe</text>
+	</string>
+	<string id="st_alundaio">
+		<text>Trojanuch</text>
+	</string>
+	<string id="st_cromm_cruac">
+		<text>Cromm Cruac</text>
+	</string>
+	<string id="st_neilmc">
+		<text>Alundaio</text>
+	</string>
+	<string id="st_indigosc">
+		<text>_xXxTWiST3DxXx_</text>
+	</string>
+	<string id="st_stooe">
+		<text>Damjancd</text>
+	</string>
+	<string id="st_smrtphoneusr">
+		<text>ponney68</text>
+	</string>
+	<string id="st_koobze">
+		<text>Simbalime</text>
+	</string>
+	<string id="st_slevin_kelevra">
+		<text>r_populik</text>
+	</string>
+	<string id="st_gnomus">
+		<text>Trikzter</text>
+	</string>
+	<string id="st_djahns">
+		<text>ScarabParamit</text>
+	</string>
+	<string id="st_rulix">
+		<text>David.m.e.</text>
+	</string>
+	<string id="st_zombiedance">
+		<text>0800</text>
+	</string>
+	<string id="st_russo">
+		<text>Setakat</text>
+	</string>
+	<string id="st_decane">
+		<text>jketiynu</text>
+	</string>
+	<string id="st_barin">
+		<text>Spetznaz_Reaper</text>
+	</string>
+	<string id="st_mnn">
+		<text>K.E.V.L.A.R.</text>
+	</string>
+	<string id="st_testers_stalker">
+		<text>Kyle_K_ski </text>
+	</string>
+	<string id="st_plaargath">
+		<text>Plaargath</text>
+	</string>
+	<string id="st_credits_end">
+		<text>more at miserymod.com</text>
+	</string>
+</string_table>

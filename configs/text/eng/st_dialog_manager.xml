@@ -1,0 +1,1356 @@
+﻿<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="dm_anomalies_10">
+		<text>There's a spot in Zaton where heat anomalies emerged underwater. They call it 'Boiler' because there's steam and stuff coming out from the ground. If you think steam is nothing, think again. Seasoned Stalkers say this kind of vapor anomaly hits you at least as hard as a regular heat anomaly, if not harder. The temperature may be a bit lower, but it grills you longer. As for artifacts, they found regular ones, the fire kind.</text>
+	</string>
+	<string id="dm_anomalies_11">
+		<text>They say there's a nice spot in the quarry, with lots of artifacts, though not scant on anomalies either. Down at the bottom there's so many bubbles from gas anomalies, it hurts the eyes, even with a gas mask on.</text>
+	</string>
+	<string id="dm_anomalies_12">
+		<text>Ash Heap is at the old graveyard near Kopachy. There's lots of heat anomalies and some zombies from time to time. People try to avoid the place, but they do find artifacts there.</text>
+	</string>
+	<string id="dm_anomalies_13">
+		<text>They say artifacts have been found in the parking lot. Still got vehicles from the first Chernobyl disaster - those babies give the rad counter heartburn. In addition, the lot is full of electrical anomalies as well.</text>
+	</string>
+	<string id="dm_anomalies_14">
+		<text>In the Putrid Grove, where trees are all warped from acid. People who've been there say it's full of gas anomalies. There's so much gas in the air that you can't see straight but with enough experience you can find the artifacts you're looking for.</text>
+	</string>
+	<string id="dm_anomalies_15">
+		<text>If you're after artifacts, go for the acid kind. The best place to get those is the Concrete Bath. You won't have a lot of competition: no one likes that place because of its proximity to the Jupiter building.</text>
+	</string>
+	<string id="dm_anomalies_16">
+		<text>Not far from the Jupiter plant a piece of the road fell through. They called this place Bitumen, because that's where the pavement melted. There're many anomalies in the gap - heat anomalies mixed with gravitational ones. And since it's two kinds of anomalies, the artifacts must be different, too.</text>
+	</string>
+	<string id="dm_anomalies_17">
+		<text>There's a small harbor beyond the cement plant called Fen. The whole harbor's turned into a terrible stinking marsh and the water is full of gas anomalies. It's not even really water anymore, more like acid. People have found artifacts there before, but the place is also teeming with monsters.</text>
+	</string>
+	<string id="dm_anomalies_18">
+		<text>Look in the old cement plant. Lots of anomalies, but it's worth it. Sure, there are spots where artifacts are easier to come by, but so's the competition. Here your only competition consists of hamsters, and that's only if you go down in the basement.</text>
+	</string>
+	<string id="dm_anomalies_19">
+		<text>You should look near Oakpine. That's that thing growing between the hills, above the gas anomalies. Everyone's been calling it that since some geek identified the bark from that tree as both pine and oak. If you want to search for artifacts there, you'll need good chemical protection. Take lots of ammo, too, because those hills are home to packs and packs of dogs.</text>
+	</string>
+	<string id="dm_anomalies_2">
+		<text>Sometimes you don't have to jump into anomalies to scare up an artifact. I've been told of an artifact found out in the open field. This one Stalker had a detector that started acting up, so he decided to change the batteries. As soon as he did, the detector shows a reading and bam, an artifact basically drops in his hands. Lucky bastard, eh? That's the Zone for you: sometimes it punishes you and sometimes it rewards you.</text>
+	</string>
+	<string id="dm_anomalies_20">
+		<text>I've heard from seasoned Stalkers that sometimes artifacts move outside of anomalies. Your detector starts going "peep," you take it out, but there's nothing there. That means a 'nomadic' artifact walked past you but it's no use chasing it, because only the Zone decides who to reward it with.</text>
+	</string>
+	<string id="dm_anomalies_21">
+		<text>No one has looked for artifacts in Pripyat yet. Everyone I know has only been here a short while, so they stay cautious.</text>
+	</string>
+	<string id="dm_anomalies_22">
+		<text>I don't know if anyone knows the good spots. Pripyat is poorly explored so far.</text>
+	</string>
+	<string id="dm_anomalies_23">
+		<text>I would look in the underground tunnels. They say there's tons of them underneath the city.</text>
+	</string>
+	<string id="dm_anomalies_24">
+		<text>Not much is known about these parts. Garry's stories, mostly. He says there's a place here where a huge grapevine grows out of an acid anomaly, as tall as a ten-story building. He might be pulling our leg, but I'd check out that vine for artifacts just in case.</text>
+	</string>
+	<string id="dm_anomalies_3">
+		<text>The surest place is the acid swamp. It's full of gravitational anomalies, but those are easy to spot. Just keep your eye on the water surface and you can't go wrong. Gas anomalies are more of a pain, because there's basically no air to breathe. Getting squirted by one is no fun, believe you me. That thing eats through a vest faster than sulfuric acid.</text>
+	</string>
+	<string id="dm_anomalies_5">
+		<text>There are plenty of heat anomalies at the burnt farmstead up on the hill. People find fire artifacts there. Look in the houses: whichever's got the most anomalies in it after an emission, that's where the artifacts will be.</text>
+	</string>
+	<string id="dm_anomalies_6">
+		<text>There's probably lots of them in the caves under the burnt farmstead. If you walk on the hill with a detector, it doesn't stop beeping. Getting to them is easy enough - just jump in through the gap from above. Getting out is the hard part, with all the anomalies down there. Mostly vortexes and acid. Some also claim to have seen something resembling a comet in that gap. A whole mix of dangers, to be sure, but that means the artifacts are probably mixed as well.</text>
+	</string>
+	<string id="dm_anomalies_7">
+		<text>Have you seen a Circus anomaly? It's a huge springboard anomaly with two comets going round and round - quite a sight to behold. Behold it from a distance, though, because Circus is hot as hell, with lots of heat anomalies. It's got plenty of artifacts, too, but they're guarded by a nasty fire poltergeist that tries to roast you up when you come near.</text>
+	</string>
+	<string id="dm_anomalies_9">
+		<text>If you're interested in gravitational artifacts, look for them in the Fang anomaly. The place is easy to spot - anomalies have done a job on the terrain, took half the hill clean off. A few caves opened up in the hill and were immediately settled by snorks. Thankfully, they rarely go outside.</text>
+	</string>
+	<string id="dm_anomalies_do_not_know_1">
+		<text>Man, the only thing you'll get is a nightmare and that's pretty much it. A lack of sleep and a wet suit. Good luck with your search, Stalker.</text>
+	</string>
+	<string id="dm_anomalies_do_not_know_2">
+		<text>If I were you, I would look for fresh water instead. Water keeps you alive here and artifacts only generate cash but maybe that's why you have come.</text>
+	</string>
+	<string id="dm_anomalies_do_not_know_3">
+		<text>I don't know about artifacts really. They seem too radioactive and dangerous, if you ask me. I suggest you equip a quality suit if your are planning to search for these unearthly things.</text>
+	</string>
+	<string id="dm_anomalies_general">
+		<text>Do you know some good place to search for artifacts?</text>
+	</string>
+	<string id="dm_anomalies_no_more_1">
+		<text>I've already told you.</text>
+	</string>
+	<string id="dm_anomalies_no_more_2">
+		<text>No, I don't know anything else.</text>
+	</string>
+	<string id="dm_anomalies_no_more_3">
+		<text>That's all I know. Ask somebody else.</text>
+	</string>
+	<string id="dm_hello_0">
+		<text>Anything interesting?</text>
+	</string>
+	<string id="dm_hello_1">
+		<text>What's up?</text>
+	</string>
+	<string id="dm_hello_10">
+		<text>You look tired, friend.</text>
+	</string>
+	<string id="dm_hello_11">
+		<text>Hello.</text>
+	</string>
+	<string id="dm_hello_12">
+		<text>What do you want?</text>
+	</string>
+	<string id="dm_hello_13">
+		<text>What?</text>
+	</string>
+	<string id="dm_hello_14">
+		<text>Start talking.</text>
+	</string>
+	<string id="dm_hello_15">
+		<text>Hi, Major!</text>
+	</string>
+	<string id="dm_hello_16">
+		<text>Hi, there!</text>
+	</string>
+	<string id="dm_hello_17">
+		<text>I'm listening, Major.</text>
+	</string>
+	<string id="dm_hello_2">
+		<text>Yeah, hi.</text>
+	</string>
+	<string id="dm_hello_3">
+		<text>What?</text>
+	</string>
+	<string id="dm_hello_4">
+		<text>The man himself.</text>
+	</string>
+	<string id="dm_hello_5">
+		<text>Hey, Stalker. What's your hurry?</text>
+	</string>
+	<string id="dm_hello_6">
+		<text>What's going on?</text>
+	</string>
+	<string id="dm_hello_7">
+		<text>What, Stalker?</text>
+	</string>
+	<string id="dm_hello_8">
+		<text>Oh hey.</text>
+	</string>
+	<string id="dm_hello_9">
+		<text>Hi there.</text>
+	</string>
+	<string id="dm_hello_general">
+		<text>Hey!</text>
+	</string>
+	<string id="dm_help_0">
+		<text>I shouldn't have come here!</text>
+	</string>
+	<string id="dm_help_1">
+		<text>Help me... God, I'm dying...</text>
+	</string>
+	<string id="dm_help_10">
+		<text>I need a medic!</text>
+	</string>
+	<string id="dm_help_11">
+		<text>Medkit! Anything!</text>
+	</string>
+	<string id="dm_help_2">
+		<text>Help me, Stalker... Ahh!</text>
+	</string>
+	<string id="dm_help_3">
+		<text>Gimme a medkit... Now!</text>
+	</string>
+	<string id="dm_help_4">
+		<text>Help me out here damnit!</text>
+	</string>
+	<string id="dm_help_5">
+		<text>I need a medkit... quick!</text>
+	</string>
+	<string id="dm_help_6">
+		<text>Help me, Stalker... a medkit, please!</text>
+	</string>
+	<string id="dm_help_7">
+		<text>I'm hurt... help!</text>
+	</string>
+	<string id="dm_help_8">
+		<text>Aahh ... fuck this place!</text>
+	</string>
+	<string id="dm_help_9">
+		<text>Medkit!</text>
+	</string>
+	<string id="dm_information_1">
+		<text>Have you heard about the dredge station east of Skadovsk? They say something weird glows there at night... Too weird even for the Zone, mind you. I really don't know if it's worth checking out. It might turn out to be something valuable, but is it worth risking my ass over? That's the question...</text>
+	</string>
+	<string id="dm_information_10">
+		<text>God has left this place. I've had nothing but rotten food since I came here two months ago. I think that worms are starting to crawl around inside me and I really am thinking of leaving this fucked up place soon.</text>
+	</string>
+	<string id="dm_information_11">
+		<text>Did you hear Sultan planned to take over Beard's business? Skadovsk ain't big enough for his greedy ass, so he wanted to grab an even larger piece of the pie... But we said, "No way, Josй!" Beard and the rest of our guys gave them hell all right. Sultan's thug operation won't fly here.</text>
+	</string>
+	<string id="dm_information_12">
+		<text>Wow, did you hear about this? That scumbag Sultan clamped down on Beard... I don't know what he did exactly, but it seems he turned on the meter on Beard! What's the Zone coming to? If they keep this up, Skadovsk is going to be a bandit base before you know it!</text>
+	</string>
+	<string id="dm_information_13">
+		<text>Word is that some Zoners here have come to collect personal items for the rich people outside the Zone. You know an artifact can generate huge amounts of cash, right? Maybe that's why you came yourself? But let me tell you this... it's not worth the risk, buddy. People are disappearing from this terrible place for lots of reasons. Stay alert and make sure that you drink lots of canned water or else your mind starts to play tricks on you, I tell ya.</text>
+	</string>
+	<string id="dm_information_14">
+		<text>Let's see... You should conserve your ammo. I know that Owl keeps some in the back of his shop but he won't sell more than one clip of each caliber. Also, he raised his prices on pretty much everything as he knows that we Zoners really need his gear out here... Oh, and scientists are tinkering with some artifact in their bunker as we speak. Some new find.</text>
+	</string>
+	<string id="dm_information_15">
+		<text>Did you hear about Topol? He found some new shithole for his guys to wander into, and of course, they happily went for it. Their escapades ended up with a controller ironing their brains out. They would be pissing all over themselves in hospital bunks if it weren't for this one Stalker that was with them. When Topol came to his senses from that zombification crap, that poor chap was squatting down right next to the controller, cutting its ears off.</text>
+	</string>
+	<string id="dm_information_16">
+		<text>Did you hear about the Kopachy village? When the original disaster hit the Chernobyl NPP, that area got it so bad that they decided to bury the whole village. Nothing but small radioactive mounds there now, in place of houses. They say it was an eerie place even before the disaster; I shudder to think what one might find there nowadays. Everyone's too scared to check it out. But what if they're wrong - it could be an artifact goldmine for all we know!</text>
+	</string>
+	<string id="dm_information_17">
+		<text>When Duty came to Yanov station, Freedom fighters were already there. As could be expected, things got ugly quickly. Both factions suffered heavy losses, even a few free stalkers were hit by stray bullets. That's when Zulu told them an emission was coming. Left with no choice, Duty and Freedom called a truce and dug in at the station. When it was all over, Zulu quit Duty and settled down at the tower near the station.</text>
+	</string>
+	<string id="dm_information_18">
+		<text>Have you trie Beards mushroom tea yet? The taste really is something for dogs only but I just find it to be one of my favorite drinks now... besides clean water. But where can we find any of that? It's like this place has lost its last good items worth stealing... Well, I recommend that brown hot tea for ya'. It also takes away some of that fucking constant hunger.</text>
+	</string>
+	<string id="dm_information_2">
+		<text>I saw a man ripped apart by one of those freaking mutated dogs. His face must have smelled like a delicacy to them. If I only had a few more bullets, I would have shot every single one of those doggies.</text>
+	</string>
+	<string id="dm_information_20">
+		<text>Have you tried the bread? Mind that there two kinds around. A clean one and an old one. Don't spend any money on the latter, it will make you sick. I had nothing but a blurred vision and a pain in my stomach the last time I ate that shit. And no medic could help me, I just had to wait it out, puking constantly. Stick to canned food that you can buy on Skadovsk.</text>
+	</string>
+	<string id="dm_information_21">
+		<text>That new Duty squad, you know... They just about crystallized out of thin air. Think about it: a group of Duty fighters leave Yanov and come back three times as many. Are they cloning themselves or what? I guess you should expect that from Duty, though. Only way they tell each other apart is by rank!</text>
+	</string>
+	<string id="dm_information_22">
+		<text>That new Freedom squad, you know... They just about crystallized out of thin air. Think about it: a group of Freedom fighters leave Yanov and come back three times as many. I got an idea - they're multiplying by budding! You'd think so, wouldn't you? All that grass they're smoking, they're about to take roots and start vegetative reproduction!</text>
+	</string>
+	<string id="dm_information_23">
+		<text>Know Gonta and his guys? They were down on their luck for a while, with Danila disappearing and Crab getting wounded. But they're on a good streak now. They're making out nicely with the scientists, taking measurements for them. Nice, eh? A cushy job and a surefire step toward getting their official permits.</text>
+	</string>
+	<string id="dm_information_24">
+		<text>Heard about stalkers called Mitay, Torba and Grizzly? I hear they got a job with the scientists, taking measurements. What the heck is that about? If you ask me, those eggheads are up to no good. But hey, at least the guys are taking it easy now. They might even get their official permits one day.</text>
+	</string>
+	<string id="dm_information_25">
+		<text>Know Spartacus and his crew? Well, you won't see them at Skadovsk anymore - they're guarding the scientists' bunker now. Why not - they can handle mutants all right and know how to keep the bandits at bay. Science is a worthy cause that could use some peace and quiet.</text>
+	</string>
+	<string id="dm_information_26">
+		<text>Have you seen them mercenaries kicking heels at the substation? Not recently you haven't. They've gone over to Jupiter to guard the scientists' bunker. There had been some other mercs guarding the place before them, but something happened to them, I hear. Ain't a bad trend if you ask me! Some mercs disappear, others take their place and follow suit... A few more rounds like that and we'll be rid of mercs at Zaton altogether.</text>
+	</string>
+	<string id="dm_information_27">
+		<text>Folks say the scientists' bunker is now being guarded by the valiant warriors of Duty... I wonder what's in it for them? Do they really believe those 'ologists' will get them a brand new plasma gun to go hamster-hunting? Guards my butt, heh...</text>
+	</string>
+	<string id="dm_information_28">
+		<text>They say the scientists' bunker is now being guarded by Freedom. Aren't the scientists afraid that their test specimens can go up in smoke - I mean literally? There's a bright side to it, though. If anyone tries to attack the bunker, they'll have to get through a smoke screen first! Ha-ha-ha!</text>
+	</string>
+	<string id="dm_information_29">
+		<text>Have you seen Jupiter, the radio electronics plant? A creepy place that is. No one really knows what goes on in there. The anomalies and mutants are just like everywhere else... But I still don't feel like going there. My gut's telling me that place is trouble.</text>
+	</string>
+	<string id="dm_information_3">
+		<text>Lookie here, ain't you that dude who exposed the Skadovsk medic? 'Preciate that, I really do. I coulda been his next patient, ya know... We all thought it was the monsters, but I guess some people can be just as bad. We live in a dog eat dog world, ain't that the truth?</text>
+	</string>
+	<string id="dm_information_30">
+		<text>I should be asking you that. After you went into those tunnels beneath Jupiter, we heard rumors you reached as far as the center of the Zone. Caused a real turmoil. Got a dozen people itching to follow in your footsteps. Nitro cooled them off, though - he said the tunnel gates closed shut and he couldn't do nothing to reopen them. Sure, we had a few desperados who wanted to blow up the gate, but they're still trying to work out where to get enough dynamite and how they're going to breathe once they actually get down there.</text>
+	</string>
+	<string id="dm_information_31">
+		<text>Oh, have you heard the latest about Garry? The Stalker who used to work for the scientists. He's no longer a 'trespasser' - he's got an official Zone permit, believe it or not! So, you're thinking he should have picked up his loot and gone home, right? Well, instead the crazy bastard got up and went for Pripyat. Everyone thought he was gone for good, like the rest, but far from it. He made it, but his feat wasn't much use to stalkers. He ran into some military guys. Now Garry's cool with the jarheads, having a permit and all, but the area is still off-limits to regular stalkers.</text>
+	</string>
+	<string id="dm_information_32">
+		<text>Well... Freedom and Duty are fighting again, this time over some major stash. They say there was enough gear in there to equip three infantry divisions. Don't know who made the stash in the first place, but the showdown was really something. Stirred up all the stalkers at Yanov, but luckily, they stepped aside or we'd have yet another free-for-all. I guess Duty got the worst of it, 'cause now the area is guarded by Freedom squads.</text>
+	</string>
+	<string id="dm_information_33">
+		<text>Well... Duty and Freedom are fighting again, this time over some major stash. They say there was enough gear in there to equip three infantry divisions. Don't know who made the stash in the first place, but the showdown was really something. Stirred up all the stalkers at Yanov, but luckily, they stepped aside or we'd have yet another free-for-all. I guess Freedom got the worst of it, 'cause now the area is guarded by Duty squads.</text>
+	</string>
+	<string id="dm_information_34">
+		<text>Something happened recently. A group of stalkers were exploring the Jupiter tunnels and stumbled into something - I mean someone. First their guns came flying out of their hands, and then all kinds of crap went flying straight at them. They got no clue what the hell actually happened, but they lost two boys in there.</text>
+	</string>
+	<string id="dm_information_35">
+		<text>I heard they found some kind of gross mutant shit in the tunnels north of Jupiter. Trapper sent a Stalker in there to investigate. Turned out there used to be a burer lair. Why "used to be"? 'Cause that same Stalker wiped out all the burers. On his own... You even seem to fit his description, except he's a bit taller and always carries a grenade launcher.</text>
+	</string>
+	<string id="dm_information_36">
+		<text>Stalkers are done for... Monsters are coming from Fen. Stalkers at the cement plant saw them lugging off one of our guys. There was at least a dozen of them, huge-ass bastards like you won't believe. Looked like bloodsuckers, only twice as big and much faster. We are praying Trapper figures out how to deal with those beasts...</text>
+	</string>
+	<string id="dm_information_37">
+		<text>You heard about swamp bloodsuckers? The ones in Fen? Well, they're gone. Trapper came for 'em... Not personally, though - he hired some Stalkers. They say he put a crew together, about ten men or so, and combed that swamp through and through, and whatever jumped out they blasted to kingdom come. Ain't a frog living in that place no more.</text>
+	</string>
+	<string id="dm_information_38">
+		<text>It wasn't long after word began to spread about a chimera that someone popped it. Mutants used to kill Zoners by the dozen, but I guess we're finally wising up and reversing the trend. I also heard from other sources that the guy was an experienced hunter who has killed more monsters than you and I killed mosquitoes in our lifetime.</text>
+	</string>
+	<string id="dm_information_39">
+		<text>Have you heard the kind of people Freedom recruits nowadays? There was this fella called Flint, bragged left and right about his escapades and trophies... well, he turned out to be the scum of the earth. Left his buddy to die in an anomaly, grabbed his loot and took off. Later they uncovered more of his exploits over at Zaton, where he basically fed a group of hunters to a chimera. I used to think better of Freedom... Hell, I'd rather be factionless than have friends like that.</text>
+	</string>
+	<string id="dm_information_4">
+		<text>Well, they put down that chimera at Zaton. Gonta's crew with an unknown Stalker. Wait, that was you, wasn't it? Maybe you could give me a first-hand account? Thanks a million, by the way - that's one less man-eating mutant to worry about!</text>
+	</string>
+	<string id="dm_information_40">
+		<text>Don't know if it's newsworthy, but we got this Noah fella here, the loopiest headcase you will ever meet. He's got one ugly barge... Looks like he had a bunch of illegals build it in a week, heh. Watch out for him, he shoots first and doesn't even bother to ask questions later. I say, to hell with that asshole.</text>
+	</string>
+	<string id="dm_information_41">
+		<text>You know this cat Nimble? Yeah, he's sneaky all right. Sells the best shooters around, no doubt. I wonder how he smuggles them like that. I mean, how do you carry a Vintar so it don't look like you do? Where do you stick that thing? That's some wizard shit right there, man.</text>
+	</string>
+	<string id="dm_information_42">
+		<text>Word on the street is, Sultan's stepped into some deep shit. The don wanted to bust up Beard and take his business under, but he bit off more than he could chew. Got a mouthful instead. He's got rough times ahead with his crew looking at him all sideways. Ain't got the same weight anymore.</text>
+	</string>
+	<string id="dm_information_43">
+		<text>Word is, Sultan's got Beard in the palm of his hand, juicing his business. That's good shit and Sultan's got a lot of weight now, but the best thing is we can run Skadovsk our own way now. It's gonna be beautiful. Looking for cover from an emission? No problem, just fork up the toll!</text>
+	</string>
+	<string id="dm_information_44">
+		<text>Hey man, you hear about the Oasis? Picture that, a place that instantly heals all your pains and sicknesses. It's gotta be some kinda trick or magic... I got another idea, though. There's all this buzz about the Oasis, but not a word about the Wish Granter like it used to be. Well, maybe the Oasis is actually someone's wish come true?</text>
+	</string>
+	<string id="dm_information_45">
+		<text>There's talk among the eggheads of some artifact dragged here all the way from the Oasis. But get this: once they study it, they're gonna use their research to come up with a cure for cancer! Word up!</text>
+	</string>
+	<string id="dm_information_46">
+		<text>Same shit, different day... Everyone's digging up old stories about the center of the Zone. Like the one about the Oasis - a place that instantly restores all your energy and heals your wounds. It's pure, unadulterated bullshit, but fun to listen to. Especially when they talk of its location. Oh, I wish there was a place like that for real... we'd have saved so many of our boys.</text>
+	</string>
+	<string id="dm_information_47">
+		<text>I heard through the grapevine that they've found the Oasis. I'd have never thought it existed, but facts are a stubborn thing. An artifact was found on location. Scientists are studying it as we speak. Perhaps they can use it to make some ultra-fast healing device... Our boys sure could make use of that.</text>
+	</string>
+	<string id="dm_information_48">
+		<text>Kopachy. Nothing new to the Zone, but new to me. Just imagine - a whole village with houses buried up to their roofs in the ground... Dating all the way back to 1986... the houses emitted so much radiation, they had to bury them. A chilling sight...</text>
+	</string>
+	<string id="dm_information_49">
+		<text>You know the story how Duty and us ended up rooming together at Yanov? That was all Zulu. He was in Duty back then, and he could smell an emission approaching like no one else... But we came to Yanov first; after Stalkers, that is. We barely had time to light up a smoke when those half-assed GIs turned up, waving their shooters at us. The last time I saw that kind of carnage was back at the Garbage over a year ago. Tons of guys dead on both sides. Our emission specialist among them, God save his soul. That's when Zulu goes, "Emission coming! Take cover!" What were we supposed to do, kick them out and let them die? Duty or not, they're still human. That's how we live now: we squabble when it's quiet, but when an emission hits, we sit tight, side by side. Zulu, he ended up leaving Duty. He lives as a hermit near Yanov now.</text>
+	</string>
+	<string id="dm_information_5">
+		<text>It ain't no news and no secret neither, but Cardan the technician is on his way to drinking himself to death. They say he started out easy when he came to Skadovsk, drinking only on occasion or for antirad purposes. It wasn't until later that he really began to belt the grape, grief-stricken by the death of his two friends. They must have been really close...</text>
+	</string>
+	<string id="dm_information_50">
+		<text>Here's a funny story. When you take a nap in your filthy sleeping bag, some cockroaches and spiders that are attracted to your body heat will find their way to your mouth. Imagine that! If you are hungry, you just have to go to bed! Ha! No, let me tell you: those face masks are not just there to make people look badass.</text>
+	</string>
+	<string id="dm_information_51">
+		<text>Did you hear about the Kopachy village? When the original disaster hit the Chernobyl NPP, that area got it so bad that they decided to bury the whole village. Nothing but small radioactive mounds there now, in place of houses. They say it was an eerie place even before the disaster; I shudder to think what one might find there nowadays. Everyone's too scared to check it out.</text>
+	</string>
+	<string id="dm_information_52">
+		<text>This isn't news, but maybe you haven't heard it. We didn't jump in bed with Freedom 'cause we like to snuggle. We owe it to chance. When we came here, Freedom pounced on us out of nowhere... Losses were great on both sides, though we were slowly but surely gaining an edge over the anarchists... But as the fight was in full swing, Zulu sensed an emission approaching. He's never wrong, you know... We had no choice but to put the fighting on hold. What I don't get is why Zulu left Duty after that incident...</text>
+	</string>
+	<string id="dm_information_53">
+		<text>Our scouts won't be around for much longer. They forgot their purpose here and to tell you the truth so did I... Or at least I really can't see any good reason to stay here now except for looting the houses of the Chernobyl workers...</text>
+	</string>
+	<string id="dm_information_54">
+		<text>You were the one who brought that PDA to Loki, right? Man, it's the shiznit. The legendary founder of Duty, General Tachenko, conned his own soldiers like some suckers. Broke the radio so they couldn't be reached from the outside, formed his own following of knuckleheads... only to croak in true retard fashion in an effin' space bubble! You couldn't make this shit up, man!</text>
+	</string>
+	<string id="dm_information_55">
+		<text>Seen the new squad those half-assed GIs been fieldin'? Can't be reinforcements from their base - the ideology hasn't yet replaced good sense altogether. But they're too well trained to be plain Zoners. Who the hell knows. Could they be from the Monolith? I know, that sounds crazy!</text>
+	</string>
+	<string id="dm_information_56">
+		<text>Seen our new fighters? Oh, you brought them here, didn't you? You rock. They're pretty cool, kinda tense though... That's OK, a few months of hanging with us will free their minds. They'll start digging our way of life and become like us soon enough.</text>
+	</string>
+	<string id="dm_information_57">
+		<text>We've got some cool new recruits: a squad of former Monolith fighters. And not some rookies either, these are trained fighters. Of course, their heads haven't quite clicked into place after leaving the Monolith. That's all right though, we've got a special Ideology 101 crash course for that, and much more.</text>
+	</string>
+	<string id="dm_information_58">
+		<text>They say Freedom has recruited some former Monolith fighters. Hard to believe, but they do have a new squad and it definitely didn't come from outside the Zone. I guess they're pretty desperate... that or their brains have completely withered from all those drugs. Who are they gonna recruit next, a zombie brigade? A burer battalion?</text>
+	</string>
+	<string id="dm_information_59">
+		<text>This area will soon have law and order again. Duty has taken control of key local positions. We've secured a firm footing at Yanov, and we've got a 24/7 protection detail at the scientists' bunker. It's high time for Freedom to pack their things and hit the trail - anarchists aren't welcome here.</text>
+	</string>
+	<string id="dm_information_6">
+		<text>Beware, brother. Devils dwell in this place. And I am not talking about those tormented pigs that you can find almost everywhere. I am talking about some black souls that hide in the hills with their camouflaged equipment and constantly on the lookout with their scoped rifles. Maybe they're former Russian soldiers that got fucked up in the head but if I were you I wouldn't camp in the open.</text>
+	</string>
+	<string id="dm_information_60">
+		<text>I think it was you who helped our guys get that job guarding the scientists, wasn't it? Thanks for that. It sure was nice to see our men at the bunker instead of those friggin' mercs. Good stuff!</text>
+	</string>
+	<string id="dm_information_61">
+		<text>Let's see... we're getting a kick from Duty's secret stash. Now we'll use the stash for its intended purpose - as a prison for Duty scum to press them into divulging all their secrets. He-he. Oh, and thanks for tipping us off about the alarm system - without reinforcements we didn't stand a chance.</text>
+	</string>
+	<string id="dm_information_62">
+		<text>Another victory for Duty! Those anarchists really got too big for their britches... Snuck into our secret warehouse, thinking they could get away with it. Hell no! We surprised them and blew their heads off like rabid hamsters.</text>
+	</string>
+	<string id="dm_information_63">
+		<text>It ain't news that Freedom is a bunch of lowlifes, but we've uncovered something new about one of their biggest wackos. This hood went by the name of Flint in Freedom, but before he joined he was Magpie, a Loner. At least Magpie was his name when he came to Zaton and almost led a crew of hunters right into mutants' jaws. He set them up so that a chimera almost tore them to pieces, while this bastard grabbed their equipment and came here to Yanov. After joining Freedom, he threw his partner into an anomaly to take away his artifact. So, that's Freedom for you.</text>
+	</string>
+	<string id="dm_information_7">
+		<text>I think of leaving this Chernobyl nightmare soon. I've managed to find some old books on one of the ships here. I've already gotten in touch with my contact outside the Zone and he's turning them into cash as we speak. I suggest you do the same thing and keep away from the center of Pripyat. There is plenty of loot to make you rich even here. Just search well and you will succeed.</text>
+	</string>
+	<string id="dm_information_8">
+		<text>Have you met Nimble? He's on Skadovsk right now. He's a real pro of his trade. He can get you anything you need. Well, almost anything. He's focused on shooters and suits lately, but always top of the line! Specialty items, experimental designs, hand-crafted articles... His stuff ain't cheap, but why should it be? Exclusivity costs a pretty penny!</text>
+	</string>
+	<string id="dm_information_9">
+		<text>Did you know Pilot has been using a new route between Zaton and Jupiter? It used to take a long while - walking uphill, dodging anomalies and so on. Now it's a piece of cake. Not a journey but a walk in the park, not to mention it's half as long. But Pilot gives credit where credit is due - he wasn't the one to discover the route. A Stalker showed him his maps. For a fee, of course, but he didn't charge an arm and a leg either.</text>
+	</string>
+<!--    Damjancd                             -->
+	<string id="dm_information_64">
+	 <text>Why are you here, Stalker? Some pieces of shit are here out of curiosity or even just for the hell of it. Knifing those bastards usually makes me very happy, but most of the time I stick to the job. You see, I'm here for the job, whatever that might be. I'd rape a fucking flesh if I could get some money out of it. See, I don't care, I know what I'm here for, and none of these idealistic bastards could ever say that. So think about it. But don't think too much or you might end up in a ditch.</text>
+	</string>
+	<string id="dm_information_65">
+		<text>I wonder what those freaking "animal rights" activists would say about the way we treat animals here. Fuck, are those things even "animals"? I call them hell spawns, and I usually shoot them in the face, because that's what you do to hell spawns, you don't protect them, feed them or, God forbid, nurture them. You fill 'em with lead and you move along before their friends arrive.</text>
+	</string>
+	<string id="dm_information_66">
+		<text>You want excitement? Is this place too boring for you? Go say hello to a snork or a bloodsucker. If you're polite enough, they won't even get aggressive. It's weird, I had this one friend, he robbed people for a living, and he was dead set on doing this shit. I haven't seen him since but it sure is worth a try, don't you think? It's strange why not many people have tried this, it's bound to work, you don't even have to carry any weapons.</text>
+	</string>
+	<string id="dm_information_67">
+		<text>My grandfather fought for the country, my father died for this piece of land and I'd be damned if I let this black hole eat my motherland away. The last thing my grandfather said before he succumbed to the crippling cancer was that I need to take care of my land. That is what I'm doing here, or rather was what I was supposed to be doing here. Things have changed now, I'm not even sure who I'm supposed to fight for. I had to put a bullet through the spine of a good friend of mine. The fool didn't "believe" in emissions, so when a psionic storm hit, he was out gathering flowers or doing some other stupid shit. Afterwards, he went insane and started shooting at everyone and everything. I had to take him down. The same guy that I shared food with, the same guy that saved my ass every time I fucked up. What am I supposed to tell his kids now? Fuck this place.</text>
+	</string>
+	<string id="dm_information_68">
+		<text>They say that I made a mistake coming here. They're a bunch of cowards. I'd rather be here than stuck behind some shitty desk. That's what would really finish me off, not a mutated puppy, but mindless, endless paperwork. Demons live inside those gigantic stacks of papers, not under Pripyat sewers. This is where I belong, and this place is where I can actually be myself. Camo suits me much better than any tie, and a rifle speaks in a much clearer voice than any "president" or "director".</text>
+	</string>
+	<string id="dm_information_69">
+		<text>Check the sky and the surroundings as often as you can. The moment you don't look, all hell will break loose, emissions will appear and mutants will bite your ass off. Fight sleepiness by taking caffeine, eating food, just do whatever you need to do to keep awake. I sleep for only two or three hours a day, and always with a shooter beside me. This is something you either do, or you don't, and if you don't, you'll be pushing up daisies in no time. Keep that in mind and get your shit together.</text>
+	</string>
+	<string id="dm_information_70">
+		<text>People do drugs here, it's shit and it fucks them up real bad, but you do whatever you can to survive. If that means doing coke probably cut with detergent, then it's coke and detergent all the way. I've seen some guys that won't even touch the food unless they're high on some crap. I'd wager if they don't get their daily fix, they would rather starve to death than eat food that usually smells of dog piss. Junkies don't live long enough here though. If you get addicted, the first thing you start doing is thieving, later you join the bandits, but soon enough you start thieving from them, and that's when your life story ends and you get cut up like a pig or thrown into a snork hole. Don't fuck with the bandits, and don't fuck with drugs "too much."</text>
+	</string>
+<string id="dm_information_71">
+<text>When that cold sweat hits you after you haven't eaten for more than a day, that is exactly when your immune system goes on a fritz and you won't be able to hold a pencil steady, let alone a machine gun. People start hallucinating and walk into trouble or right off a cliff. Fill your belly at least once a day, and if you can't afford Beard's delicious delicacies, then eat some worm-infested meat that you cut out from a mutant. Worms are cheap when compared to, well... death. I've seen people outside survive whole months without food, but here it's another story. The Zone drains you. Drains your spirit, your willpower and your body. Don't hesitate to feast on snorks if you really have to. Cannibalism isn't exactly welcome, but if nobody sees you, it shouldn't really be a problem.</text>
+</string>
+<string id="dm_information_72">
+<text>I've seen grown men turn into crying babies here. They just can't keep up and succumb to the pressure. Even athletes and people with superb physical condition drop like flies after a few squats here in the Zone. This place is a thief and a very nasty one at that - it takes away a part of your soul every day, and doesn't give it back. I could easily lift 30 kilos before I came here. Now I can barely lift a grenade when faced with a swarm of those tushkanos. It might be fear too, but whatever it is, it's like a heavy burden we all carry, we all share. Next time you want to drop a bandit when you have the upper hand, remember what I said about the burden, he is carrying it too, just like you.</text>
+</string>
+<string id="dm_information_73">
+<text>Next time you face a pack of dogs, try running directly towards them, it might actually save your ass from turning into dog food. We eat them, they eat us, it's a symbiotic thing. But yeah, feel free to try it out, but leave your weapons behind so you’ll be able to run faster and be more intimidating. You might just leave them with me, I can keep them safe while you try this out for yourself. This shit works, but most Stalkers are fucking cowards and don't have the balls for it.</text>
+</string>
+<string id="dm_information_74">
+<text>Get a good knife, best one of those that could shave boar's balls by looks alone. You know, quality brand knives. Get some oil on the knife, make it nice and shiny so that you can see your reflection in it. Then stab some poor fool in the throat, plunge the knife all the way to the hilt and wiggle it a bit. Soon enough, he will start bleeding out and losing consciousness, but - just a moment before he does - stare deep into his eyes. That way, your face, the face of his killer, will be the last thing he ever sees, he will take it to the grave, and the underworld will know about you. I've done this countless times, and I bet down under the ground they know my name and surname by now. When they know about you there, there is no reason to send their minions for you. I myself haven't seen a freaking bloodsucker for months now, they already know about me. This is why I will survive longer than those other cowards.</text>
+</string>
+<string id="dm_information_75">
+<text>I played the violin back home. Was one of the best, I even had the chance to meet the president twice. I knew the strings so well I could caress them in ways other violinists could only dream of. When I was recruited in the army, I thought I'd do my duty, go through a couple of years for my country, then get back to doing what I love. They sent me here, right after bootcamp, and I've been here ever since. Back home, they expect me to return to my previous glory and brilliance, but they don't know what happened here. It's this evil shit, the radiation or the Zone itself. It seeps into me each day, and my hands tremble, my bones hurt. I play some guitar once in a while, but that piece of rotten wood sounds like chimera claws ripping your guts. But that's the only way to keep my sanity. I feel that the guitar takes me back a bit closer to the beauty of before, the strings, the music, but at the same time it hurts me deeply knowing that I could never be that person again. If only I had a violin here, any would do, I could maybe once again take a whiff of the time before I died inside.</text>
+</string>
+<string id="dm_information_76">
+<text>Before all these scientists and mechanics came to the Zone, Stalkers used to carry artifacts on these makeshift belts with crude boxes attached to them. A whole generation of Stalkers are now sterile and slowly dying, their insides turning into liquid that they have to puke out once in a while. I don't know how they stay sane, how they don't just off themselves. If those simple boxes were damaged even a tiny bit, the radiation slowly entered their bodies, and that happened quite often. Now we have artifact containers that are quite durable. I've seen bullets deflecting of those contraptions, they make them as rough as those black boxes on airplanes. We have it easy now, think about the first wave of Stalkers that conquered the Zone, they were the true heroes. They didn't have any manuals nor the tools and couldn't enjoy the comfort of bases. Left completely on their own, they had to make up new ways to survive. Those boys were the pioneers.</text>
+</string>
+<string id="dm_information_77">
+<text>I had this buddy who fought off two chimeras. Just imagine, in front of him there were two hulking monstrosities of flesh and claws, filled with a fair share of human flesh and craving for more. He was right to be afraid. He had his back to a wall, down on his last 20 buckshots and a few bombs. He was a good aim, but that is not why he survived. He had a few of these stimpacks. I call them boosters, because they sure work fast. Whenever the chimeras struck him down and he thought he couldn't get up again, he would fix himself up with those things. Crafty fellow, that one. And you know, the human body is actually quite the resilient mother fucker. We aren't usually used to life-threatening situations and we don't have to fight off two-headed beasts to stay alive very often, but when we do, our body works wonders especially if you give it a tiny push. I don't know what long term consequences those chemical nightmares have, but if you cared about long term consequences, you wouldn't be prying around in the Zone in the first place.</text>
+</string>
+<string id="dm_information_78">
+<text>Shit ain't rosy outside either. My mom used to send me some cookies with sugar every few weeks and some letters telling me how they're doing. She always keeps a brave face, writing how everything is just dandy and that they are quite content, but I can see that the cookies have less and less sugar every month, and the handwriting is getting worse too. At first, she used clean white paper, but now it's this awful greasy paper probably found in some shit dumpster. I can't summon up courage to ask how they're really doing. I'm scared shitless of what they would say to me, even though I already know. I just don't want to read about it. The mental image of my folks being OK is what keeps me going around here, I don't care if it's false, I've got nothing else anymore. I send them whatever money I earn. Yesterday I sent them some that I made by selling off the last of my food rations. I'd be OK, I can always try my luck at the anomaly casino. Losing a bet there isn't the most healthy thing in the world but I'll take my chances.</text>
+</string>
+<string id="dm_information_79">
+<text>I've got it, man, I've got the bug. They told me like it didn't mean shit to them, like reading a booklet about breeds of kittens. They told me I had AIDS and even told me to leave the room when I was still in shock. Fuck those people, you know? They study for so long to be perfect doctors, with a career and everything, but they end up being completely desensitized to everything. Like talking to a snork. The snork would've reacted in a more humane manner, this shit ain't right. And I have to pay heaps of money every month to get the anti-retrovirals. That shit does not come cheap, not even that knockoff Chinese shit that is only available in the Zone. I might be getting placebo pills for all I know, I still feel like crap. The Zone is the best I can do right now. And here I am, 3 years and counting. But I see you have your own shit to take care of, so just walk away like everyone does. Just leave me the fuck alone.</text>
+</string>
+<string id="dm_information_80">
+<text>Money. Cash. Heaps of notes with as many zeros as possible. I can see your eyes light up like an emission. So I guess I have your attention now. But it's no walk in the park, and not everyone does it, and that is why it's so rewarding. I don't tell this shit like this to everyone, you know? But you look like the right guy, so listen up. Listen very carefully and try to remember every single word I tell you. What you should do to get filthy rich very quickly is: "WORK HARD AND DON'T WHINE ALL THE TIME". You lazy fucking bastard. Bugger off and go mind your own bloody business.</text>
+</string>
+<string id="dm_information_81">
+<text>The moment I took a single step inside the Zone was the first moment I felt really free. It was also the first moment I've ever realized that I didn't feel free back home. I thought I was fine working at the docks, bringing in some good money, joking around with friends. I had the average Joe's dream life. Some people think I must be insane for abandoning all that for the Zone. Some get really angry, one little shit even tried to shoot me. They don't know how to enjoy life, how to breathe in a new day, with new possibilities and new challenges. I know it's hard, but if you manage to survive here, even a single day, you've done more than any of the people back home would ever do. We've lost it, man, as humanity, we've been over-civilized, and have lost what it means to be alive. You are constantly reminded of it here, but back home you simply don't realize it. Just yesterday I was taking a dump in some bushes, like a real Stalker, and these bees just appeared. Angry little bitches. So I covered my face with my gasmask and started to run as fast as hell. I was so focused on running that I ran directly into a herd of hungry dogs. This is how my day started, and those 5 kilometers I ran were the daily reminder that I was alive and free.</text>
+</string>
+<string id="dm_information_82">
+<text>There was this broad I knew, and I knew her well, if you know what I mean. But that bitch was just fucked up, she always kept tabs on me, checked where I was, kept calling me, leaving me strange messages. I told her this shit between us wouldn't work. She went fucking insane and started hitting me. See, I have nothing against hitting a woman, actually it's quite a relief of pent up frustration, especially with a psycho like that bitch. So I left her in front of the hospital. I think that was cool enough of me, right? I know some guys that would bury her corpse or chop her up so she could fit in the drains. I'm a good guy, you see, I take care of my bitches, but when they give me shit, that's it, I snap. Fuck, I'd really want to do her right now.</text>
+</string>
+<string id="dm_information_83">
+<text>Don't wait for the siren before an emission. The sirens are always too late and if you're not close to any solid structure, you will get fried quite nicely. To stay alive and to avoid being fried, keep an eye towards the sky. If you see this odd cumulonimbus cloud formation, haul ass. And be quick about it. If a snork lair is your only option, go for it. You'd love those snorks compared to what the emission would do to you. So remember, when a thick vertical cloud formation appears in the sky looking as if God is puking his entrails from up above, that is when you say goodbye to all your heavy items, and sprint towards a safe spot. I had this one guy that wanted to have a tour around the Zone, he was some rich brat, constantly high on some shit and drunk. Well, that prick had the an opportunity to witness an incoming emission, and instead of taking cover like non-idiots like us, he stayed outside to admire the "beauty of the emission". His exact words. As I said, he was quite rich, so I picked up some nice loot from his scarred carcass and one torn picture of a cute girl. Shit, that photo is probably doing the rounds right now among the Stalkers.</text>
+</string>
+<string id="dm_information_84">
+<text>This place isn't made for the likes of me. I'm not made for the likes of this place. I'm talking about the world, not the Zone. I've been having these clusterfuck migraines since I was little. My folks thought I was lying all the time and told me to "suck it up". Only when I started bleeding from my ears on a regular basis they started to take notice. It was all too late naturally, I was much older then, and I decided to pack my things and say hi to the Zone and goodbye to the outside world. And guess what? My migraines miraculously disappeared once I came here. I was overjoyed. For the first time ever I could feel this weight lifted off my shoulders, it felt very liberating. I could smell things, I could focus my eyes well and concentrate on the good things for a change. So I started really enjoying my life when I actually came to what many people call hell. Most were perplexed by my demeanor and I made some enemies along the way. You can't fit in over here unless you have that dreary, miserable outlook. They wouldn't accept me as one of them, neither Duty nor Freedom. I took it upon myself to find somewhere to live, further away from the pessimism of regular Stalkers. I stayed in this makeshift hut I built of metal parts, buried under some concrete slabs. I was quite content, and the place seemed to shield me from emissions quite well, but there was this familiar feeling coming back to me. It even made me feel a bit nostalgic, before I realized the migraines were coming back. Now they are worse than before, my ears burn up, I can't see well, and I can barely hold a gun because of those clusterfucks. I just want everything to end right now.</text>
+</string>
+<string id="dm_information_85">
+<text>Holy shit, I can't take this anymore. The ladies, I really miss 'em. I had a ton of girls back home, they liked the muscular types, I liked the big-boobs type. We had an understanding. But here, I haven't even seen a female nipple! And I'm not touching those magazines Beard sells. They're all greasy and sticky, I don't want to know how they became that way. There were so many women in this place before 1986, before it became a radioactive desert. Parties, music. Communist music, but music nonetheless. Now I get turned on by their ghosts. I think about how many fish there were in the pond at Skadovsk or Yanov. I bet there was enough tail to last a lifetime. This is bullshit, I gotta get laid. Hey, on a completely unrelated matter, do you know where that herd of fleshes was killed recently? I'm actually going for a walk.</text>
+</string>
+<string id="dm_information_86">
+<text>Have you heard about that quick release system? That thing saved my ass when I ran into a massive herd of boars and fleshes. I took some very, very nice loot from what looked like a Duty graveyard. There were literally dozens of bodies along with all their equipment, guns, artifacts, I couldn't believe my eyes. I actually had to leave some artifacts behind, and I never do that, ever. But I was packed to the gills, and felt like a mule right before his back snapped. So it’s time to cash it in, I thought. While I was slowly walking towards the base, I was mumbling to myself: "not now, please not now, just not today, please", and then the low pitched roar of a boar cut my prayers in half. I started running away from the sound, but this air is not good enough for that. It was like made of 95% nitrogen, and each time I breathed in, I choked. So I had to make a decision, I had to leave the loot. When that backpack slammed to the ground like a fucking meteor, I sprang forward like a gazelle with grace and whatnot, the air had oxygen in it once again. Later I came back to the stash, some artifacts were missing, but there was also some blood and a nice chunk of what looked like human flesh near it. Someone tried to take a swipe at the backpack, but was probably hunted down by those boars. Maybe they were guarding it while I was gone. I have newfound respect for boars. Haven't eaten boar meat since.</text>
+</string>
+<string id="dm_information_87">
+<text>Sometimes you'll find some real nice food. You could snack on some nuts, fairly good meat or clean bread. But there are other times, whenever those emissions hit hard and often, where restocking isn't so easy, so the choices are either to eat shit, or dine on some shit. The irradiated chops Beard sells at his place will fill your belly no prob, but you gotta take care of those radiated particles. Remember to wash them down with something clean, like water or something stronger. There was this fat bastard that chugged down some 20 pieces of this infested grilled shit. He was so fucked up later, other Stalkers had to feed him antirad pills, and he had to pay them back later. Even eating food is dangerous here, so watch what you stuff in your mouth and you should be "almost fine" most of the time.</text>
+</string>
+<string id="dm_information_88">
+<text>I'm an ex-military, trained by the best, conditioned to be a killing machine. I might look thin and scrawny, but underneath there are resilient and strong muscles. You wouldn't know what I'm talking about, I could break your neck before you could say "ouch". Just don't fuck with me and you'll be fine. I've rammed into so many boars with my fists, I don't waste ammo on those beasts. I punch them in their ugly muzzles until they just give up on life. I could show you if I wasn't so busy all the time. You should man up, do some push-ups, don't be such a chickenshit, huh? I'm sick of everyone asking for my help in taking down this chimera or sniping that controller from afar. I'd break this controller's neck, I don't snipe things like a coward. For me, it's only close and personal. Sadly, not everyone respects what I do. Some of those bitchy Stalkers would tell you that I'm making all this up. Don't you believe a word that comes out of their filthy lying mouths, they're simply jealous of my strength and prowess. Just don't tell them that I said this, OK?</text>
+</string>
+<string id="dm_information_89">
+<text>What, you think you can just walk here and I'll start spilling my guts like a little baby? Everyone else might be doing it, just waiting for some poor sod to walk by and ask them how they're doing, but fuck you, friend, I'm doing swell, and I don't need anyone to hear my confessions. Now bugger off.</text>
+</string>
+<string id="dm_information_90">
+<text>Just leave me be, I've got too many rads today, ain't my day.</text>
+</string>
+<string id="dm_information_91">
+<text>I was once a lot like you, frightened, helpless and just an awfully pitiful sight. I fixed my attitude immediately after I was almost raped by those boar tusks. They cut you open just for the fun of it, I saw that happen to my buddy, he kind of took one for the team, I guess. I was so scared, I threw away my gun and ran towards cover like crazy. The first thing you have to do is get one of those armors, some thick stuff that would protect you from this awful environment. The more things you put between you and the freaks and monsters of the outside, the higher chances you'll have. There was this guy, he bought some modified exo, and just installed every single Kevlar piece he could find. He looked like a bloody Christmas tree and attracted a shitload of animals, but somehow he always got through. The cannon he was carrying sure helped increase his odds, but that exo with Kevlar works wonders here. I'm this close to getting one of those, if only I didn't have to feed the leeches back home.</text>
+</string>
+<string id="dm_information_92">
+<text>Never trust those doctor fuckups. My granddad and grandma both got butchered by a surgeon. It was officially attributed to something else, but that doc was fucking drinking before the op. He reeked of booze and my granddad had to be operated right then and there. These Zone doctors aren't any better, they'd charge you and arm and a leg for fixing up a scratch, as if they've done a brain transplant twice. I take my chances and heal on my own. I'm just very careful not to get hurt, like obsessively careful, I don't drink and I don't take no drugs. But when I do get hurt, I just eat some good food, drink clean water and plop one of those emergency med kits. It usually is a bit cheaper, but most importantly if I fuck myself up, I'll have only myself to blame. I really don't want to end up like my grandparents, all cut up for no fucking reason.</text>
+</string>
+<string id="dm_information_93">
+<text>I got one for you. NEVER STEAL FROM BASES. You can take anything you want everywhere else, whoever grabs it first, it's theirs. We aren't really fond of thieves around here. Even the bandits know to keep their hands off other people's shit. But if you're caught red-handed, you should feel lucky if you'll only hanged by your intestines on a tree.</text>
+</string>
+<string id="dm_information_94">
+<text>I have seen those chickenshits, too careful what they eat, go broke from buying all this imported delicacies. I have seen idiots throw up all the food they just bought, because they didn't really care about the rads. Both of those fuckers are wrong. You need to have balance, Zen and whatnot, you know? As Aristotle said... nevermind that. When you can spare the time, swallow some shitty meat boiled in shittier stuff, and when you need to be "on the go", imported is what you need. Remember this lesson, and maybe you'll even save enough to buy yourself some shooter that won't break down after three shots at some sucker.</text>
+</string>
+<string id="dm_information_95">
+<text>Back in the military in my home country we used to stuff our feet into the shoes along with a cloth of some sort, no socks. Those things were comfy if you know how to wrap your foot well, but most people were shit at it, and they had bruises the size of tushkanos on their feet. Those pansies got shot first. They were always too careful. Smart doesn't always work, you know. But back to the wraps: they dried well, they lasted a lifetime, and most importantly, they could be used for other "non-approved" ways. Smart guys used to carry two pairs of them along. Whenever one pair gets wet, they replace it with another, their feet always in a perfect shape, you could eat with those feet if only the toes were longer.</text>
+</string>
+<string id="dm_information_96">
+<text>Sometimes it's not worth it. When you have heaps of loot, and dogs are after your ass, then it's time to drop some shit. Calculate what is worthwhile, if it's heavy and you won't need it too much, then you can casually leave a present for your attackers behind you. If it's small, light and expensive, then you don't part with it till you reach the base. I used to throw away things like that while running, and there would be a trail of useless junk behind me.</text>
+</string>
+<string id="dm_information_97">
+<text>I save everything, I have never sold anything to any of those greedy bastard traders in the Zone. I keep everything in secret stashes all over the Zone, and they are really hard to find. I hoard things, and these are not some useless things you can find anywhere. One day they may be of some use, and I will stick it up the assess of all those amateur psychologists that diagnose me with ailments they've read in old magazines.</text>
+</string>
+<string id="dm_information_98">
+<text>Some people only react when threatened. When you really need some loot, try shooting your prey in the legs or hands. When they lose their wits because of the agony, or just get scared shitless, you should have a nice chat with them, ask them where their stash is. Some fools will tell you, and after that you can do with 'em whatever you want. I caught a bandit and cut his trigger finger, after some time I saw him firing with the other hand at some Stalkers. Should've cut his head, that rat bastard.</text>
+</string>
+<string id="dm_information_99">
+<text>The Zone has no mercy, ever. The Zone is living proof that God either does not exist, or doesn't give a fuck. Although He could be this mean bastard that wants to torture us, but that is almost beside the point. Don't expect anything good from anyone here. If I saw you with plenty loot, barely breathing and far from the base, I'd take a shot at you, do not think I won't. We are good buddies here, but outside it's a different matter. The Zone has its own rules, and we can only abide by them.</text>
+</string>
+<string id="dm_information_100">
+<text>Respect the people of the Zone and the Zone itself. Always have at least a grain of respect, because without it we are just like animals, howling and giving in to their urges. Respect is what brings people to the Zone and allows them to stay alive. It doesn't care what you did or how you came here, who you are or where you come from, the Zone will cut you down if you forget respect. I keep a reminder of it right here in my pocket, always. It's one of my toes. One of those gravity anomalies almost sucked me in, and threw a piece of my foot 20 meters away. Had to crawl to bring it back to base for the doctors to stitch it back. But it was a bit too late, and now I carry it here. If you don't want to keep a reminder like this, you should always remember about respect.</text>
+</string>
+<string id="dm_information_101">
+<text>I came here with only one thing in my bag and thanks to it I'm still here and not lying in a ditch somewhere, half eaten by mutants. My switchblade has been with my ever since boot camp. And I do take care of it, every time some gunk gets stuck into the mechanism, every time dirt and sand as much as touch my knife, I make sure to make it sparkly clean afterwards. It's my baby. I mean, it's common sense if you want things to last for life. And this cutter was made to accompany you all your life, if you take care of it. I cut meat, cut mutants, cut bandits and I even cut myself when I need some nasty insect larva removed. You can use it to open cans, open old locks, open up screws, open up someone's belly because they can't take a hint. Ammo you spend, grenades even more so, the knife stays with you forever, and it's a mark. It marks exactly what kind of a person you are.</text>
+</string>
+<string id="dm_information_102">
+<text>You know why these fools carry around teeth with them? They think teeth of their enemies, especially golden teeth, carry the souls of their owners, so when shit hits the fan, you have someone to watch your back. These idiots don't realize how stupid they are, ghosts don't have eyes nor mouths, they can't even use weapons, for fuck's sake. How exactly are they going to watch their backs now, huh? Ah, sometimes people make me so mad I can't control myself and just put a bullet in their heads. After I'm done with them, I take their cherished golden teeth and sell them to whoever wants 'em, and I put some sand in 'em for good measure and so they won't tell enemies that someone is coming.</text>
+</string>
+<string id="dm_information_103">
+<text>I have no friends, only some familiar faces. I know that guy, he sold me some food once, another one smiles like an idiot all the time. I don't even remember their names, they drop like flies so fast, it's not really worth it. And new ones come in by the hundreds, they're really like moths attracted by those fluorescent lights, just to be fried in an instant. That's a fitting description of the Zone, I think. Friends get you killed around here. What happens when he gets surrounded by snorks, and you have to "save" him because he's such a good friend? You die, right there and then. Instead of one, now there are two corpses. My only real friend is my gun, and if you have even a slightest interest in staying alive, then you should really cherish only your shooter and nothing else.</text>
+</string>
+<string id="dm_information_104">
+<text>My family is shit, or rather is in deep shit. I mean, it's really bad back home. No food, no money. I send them money in this gray box, but they say only half comes to them. Always someone takes the other half. When I find that fucker, I will rape his face with my knife.</text>
+</string>
+<string id="dm_information_105">
+<text>Do not touch junk that is not your own. Whatever it is. What if it's bottled anthrax? Do not throw it out, unless you wanna die a horrible death. Even if you find a hundred thousand in cash, even if you think you could just break away from the Zone and live like a king for a few months, you will get hunted down like a bloody animal. You were dead the moment you took that cash. So , keep your hands to yourself and to the things you personally own, everything else should be invisible to you. I hate telling this to every freaking newbie out here. No manners, these morons.</text>
+</string>
+<string id="dm_information_106">
+<text>I've done it all, man, I've been here for so long. I've seen waves of pseudodogs flood bases, pseudogiants fighting between themselves, I've even seen controllers talk with people. Yeah, I've seen that. I smoked a ton of ganja before that, sure, but it was so that my head doesn't explode from the sound of those screeching auras those controllers emit. When you face them, whatever you do, just keep calm, and concentrate on either running away from the sound, or do the iron balls manoeuvre, that is run towards the sound and prepare to unload everything you have into their head. Would not recommend that one though. I've seen tough guys weep like little babies when they fail. Soon after they get mind snapped and they can't even be called people anymore.</text>
+</string>
+<string id="dm_information_107">
+<text>Naturally, I'm the perfect man for this place. I'd say that I've got exactly what it takes to make it here. I was swinging through a bunch of prisons throughout Eastern Europe before I found this hellhole. Some of them were of better standard than some grade A hotels. Jesus, there was room service in one of them, how the hell was I supposed to repent for my crimes when it was so good to be there? I managed to escape from the last one, I shived a guard, didn't care whether he had any family, kids, lover, I didn't give not one fuck about it. So I came here, at least the prison here is much, much larger. It almost feels like freedom, and that's who I joined immediately when I arrived. Duty has their connections with the law. Me and the law don't get along actually. Some of the pussies in Freedom tell me I'm a monster, but once the real monsters come, guess who's gonna save their asses? But my speciality is murder, I can cut up a man faster than a pig, so they use me against Duty whenever the situation calls for it.</text>
+</string>
+<string id="dm_information_108">
+<text>In here, you side either with people or with the mutant beasts roaming the place. If you are a beast, you'll get hunted for sure, if you are civilized enough and act like a person, you might survive for a while. We stick together, and that is why there are human settlements in this hell's kitchen. If we don't stick together, the Zone would turn into a wasteland of unseen proportions in no time. Even if it's a bandit roach, keep him alive, shoot him in the foot and get his stash, but leave him be. There is barely any people here, and you going around wasting good folks is not in anyone's interest. I know you want to be Rambo and are trigger happy all the time, but you won't be Rambo for long here. Rambos don't survive in the Zone for long.</text>
+</string>
+<string id="dm_information_109">
+<text>Those fucks think they have it better than us. It is them that are prisoners, prisoners of comfort, prisoners of taking the easier path. They wouldn't last here. Not one of them would make it one day, it's going either going to be the food, or the air, or the hellspawns walking like they own the God damn place. If the Zone gets bigger and engulfs the whole world, we will be the most experienced and at the top, not them. They'd be hiding in some greasy corner with bags of gold and useless money. Try nibbling on a piece of gold, it doesn't do shit. I love their condescending tone, every time some new guy comes in and speaks to us, he acts all high and mighty, it's like we are living in a gutter, and they've come here to enlighten us. There was once a Christian missionary or a Muslim prophet, some prick like that. He came with food and medicine, promising the salvation of our souls. And virgins. Lots of pure virgins when we go to heaven. Not one Stalker bought his bullshit. Natural selection weeds out the idiots, or rather the Zone does, and those that are left? They don't value bullshit very highly. The guy that wanted to enlighten us was enlightened himself when he stepped into a lightning anomaly. He actually did survive, but he was badly burned and went back home immediately.</text>
+</string>
+<string id="dm_information_110">
+<text>I heard about this guy that came to the Zone and refused to fire any weapons. He was a pacifist of some sort. Coward by my book, but that is irrelevant. Yeah, and he decided to stay here, make some money by helping the traders out, packing supplies, cleaning the beds, all those little things. At first, nobody respected him, they considered him a fool. After a while he started to grow on people, and they started to be dependent of him. He'd know who needs what, where and how. He actually sent money to that shitty country in Eastern Europe he came from. Imagine that, making money in the Zone without weapons? He is still a coward, but a crafty one indeed. He still has never left the base, and sends letters with cash back home. I think he has some family there.</text>
+</string>
+<string id="dm_information_111">
+<text>Trading works around here for one reason: "shitty crook traders get fucked very quickly". There was this one lad, had the appearance of a soldier, that one. He started selling trinkets that were supposed to be half-artifacts. People bought it for a while, carried them around as if some new fashion trend started in the Zone. That kid got some money this way, started selling his goods to more experienced Stalkers, but they don't buy bullshit as you might have learned by now. So they took the so called artifacts to the scientists, they did some research and guess what happened to the kid? He might still be hanging by his intestines from those cranes up in Zaton. They didn't kill him immediately, no. They just ripped him open like a bag of chips, and hanged him by his guts to be pecked by birds like Prometheus. That is the way they die. I bet a lot of people saw that, and a lot of hopeful crooks took note and downsized their businesses.</text>
+</string>
+<string id="dm_information_112">
+<text>I had that fucker as a landlord back in Kiev. He was a shitbag then, he's a shitbag now. He's even a worse shitbag now. I got into debt, did a little of those "games", had to try out my luck. I don't do that anymore, mostly because everything goes to the "landlord". He owns me, man, I've thought about putting a bullet through his head, but I'm not one of those people. It seems like I could never repay the debt I have, and I just go deeper and deeper. I think he's making money off me. At least my family back in Kiev has a roof over their heads. That is the least that I can do for them. He does take care of that part. I studied to become a technician, not a fucking hunter. Whenever I stab some poor flesh all I can think about is how disgusting this is, but this is how I keep my family safe back home. Should've accepted that job at the bank, what a fool I was back then. I had this superficial view on reality, and thought banks were just plain evil. You know, I thought banks were evil, but gambling isn't. I deserve rotting here in the Exclusion Zone.</text>
+</string>
+<string id="dm_information_113">
+<text>You should be a rock, able to withstand waves of shit and gore that the Zone hits you with. But every rock needs its base. Nobody survives without some help. Either the mutants get you, or - if you're one of those nimble motherfuckers - some illness or even greed will get to you. Eat Zone-produced food only once in a while. If you overdo it after a day or two, you'll throw up more than you eat, it's really not worth it. The cancer should put you off too, but who the hell survives in here long enough to be diagnosed with cancer or actually die from cancer? That shit takes a while to develop and slowly engulfs your major organs. So be resourceful and visit the bases once in a while. Unload, unwind and talk to some people, one of those people might drag your unconscious ass back to base when a controller says "hello".</text>
+</string>
+<string id="dm_information_114">
+<text>They say keep your friends close and your enemies closer. I like to keep everyone as close as possible. I keep an eye open at all times. Try catching me off-guard, even when I'm sleeping. I'm always alert and ready to kick some ass. But traveling alone is fucked up. I only travel with other Zoners. They know their fair share of terror, and they can keep their wits when everything turns upside down and you can barely tell a difference between a person and a mutant. You know, I'd love to keep them mutants close, but they do bite, and they sure bite deep. There was this one guy that kept a pseudodog, not sure how he tamed him, but he is one badass mother fucker right there.</text>
+</string>
+<string id="dm_information_115">
+<text>It's called cumulonimbus cloud formation. 'round these parts it means it's high time to "get the fuck under cover." Those clouds resemble a nuclear explosion mushroom, but you'd pray it was a nuke if you actually get caught outside. Sometimes the emission just burns you until there is nothing but dust, sometimes electricity fries you like well-done bacon. But the psy storms are the worst. You can hear them speaking to you, and you must listen. The sound is so penetrating you'll think you've grown deaf. Some say psy storms are actually pent up psychic energy of controllers. So if you see this bizarre cumulonimbus cloud formation, stop whatever you're doing, and start working your way back to base. Emissions are the Zone's way to tell you: "you need a break."</text>
+</string>
+<string id="dm_information_116">
+<text>I have these growths under my armpit and around my neck, doc says he can't do anything and when I ask him what it is, he just goes silent. Like a fucking light switch was turned off in his brain. Don't know what the hell that is, but I live with it. They are slowly getting bigger, I can't sleep on my back anymore. And the jacket I used to wear? I can barely zip it up. I might just be getting fat, I don't know, but who the hell gets fat in the Zone? I rub some imported vodka on my back and neck, and the feeling of tightness disappears for a while. Most think I'm a drunk because I reek of vodka all the time, and I go to bed with a vodka bottle. I've never drunk alcohol in my life, it's a religious thing so you probably wouldn't understand. Fuckit, I'll just head over to that other doc, he's always more helpful anyway.</text>
+</string>
+<string id="dm_information_117">
+<text>You know that old newbie that hangs around the Yanov station? He's still a newbie for a good fucking reason. He tried to take some loot from another friend without him noticing. I'd call this theft, but the newbie is a good guy, and I don't want to see him hanging on a tree. So he took the stuff from his friend, and ran towards some stash he had previously prepared. We knew what he was doing all along, but tracked him anyway because we wanted to find out how he deals with this. Strangely, he returned all the loot and apologised to his friend for his nasty behaviour. He's been at Yanov ever since, washing dishes, tending to crates, moving ammo boxes. That's what you get when you fuck with other people's loot. Well, not really, you get hanged by your intestines on a tree, but that's what you get when you return the liberated goods back to their original owner on your own volition, realizing the mistake you've made. He's a good guy that one, but we all have our moments of weakness.</text>
+</string>
+<string id="dm_information_118">
+<text>I had them in my sights, these mercs that were tormenting some Stalker by the rocks near Zaton plant. I could snipe them off in 4 seconds and it would've ended right there and then. I kept my cool though, and it really paid off because another dozen of mercs came afterwards. I didn't have enough bullets for all of them. I mean, I don't miss, I don't waste any bullets. I count every bullet by the price. If I shoot ten bullets, there will be at least ten corpses and I'd have to take "at least" that amount from their loot to break even. This is a good strategy for any visitor or long term Zoner here. When the mercs left, the guy was in so much pain I had to use one of my subsonic rounds with the suppressor not to attract unwanted attention. That was the only time I didn't calculate how much that bullet was worth. It probably meant everything to that tortured Stalker.</text>
+</string>
+<string id="dm_information_119">
+<text>Nobody knows what the hell makes that pecker sound. Some think it's mutants, the controllers. Other say it's the weather. Still others claim it is antennas used for secret communication. This is what the rumors say, but what we know is that the Zone amplifies the signal and spreads it over a wider area, affecting any electronic device capable of emitting sound. Some people go insane from it, running into a boar lair or an anomaly. Never fall asleep where the sound is loud, you won't wake up the same as before. It fucks with your subconscious, you wake up and hear those unintelligible numbers and word combinations that make no sense. I don't quite understand what that might be, and I don't really want to find out. I just keep a nice distance from those sounds.</text>
+</string>
+<string id="dm_information_120">
+<text>If you see the Z's, all faceless and slow, don't just spray them with bullets. That's like wasting money on slots. You won't gain anything by doing this. They are tough little bitches, and you won't be doing any good if you shoot them in the legs or arms. You could easily unload a crate full of ammo in those things, and won't so much as blink if the bullets miss the sweet spot. Don't waste money like that, it's useless. Aim for their spine or go for the head, and they'll be gone fast. Take your time, breathe steadily and be sure to exploit their weaknesses. Now that you know this, maybe you'll have better chances and won't end up filled with bullet holes.</text>
+</string>
+<string id="dm_information_121">
+<text>Come, sit with me. Have a drink and relax. The Zone is unforgiving, but that doesn't mean Stalkers should be like that as well, right? We should enjoy these brief moments of peace because they may be our last. I knew this Stalker, he was always afraid, always kept an eye out for anything. Every little sound made him jump, wouldn't eat this, wouldn't drink that. Although he's survived until now, he's a wreck, he doesn't sleep, he doesn't leave the station, just too fucking scared of everything. If he took my advice and relaxed even a tiny bit, he'd be a different person now, but to each his own.</text>
+</string>
+<string id="dm_information_122">
+<text>There was this one time I had to battle two hulking chimeras and these were no normal chimeras. They had three heads, man, that was insane. Even if you took care of two heads, there was still one more left. But it was no problem for my skills, you know? I kicked their asses so hard they bled like stuck pigs. I've done a ton of those things, man, no biggie. I once went to Pripyat after hearing all the stories of how fucked up it was. I had to get there, check it out myself. There were thousands of tushkanos, 50 monolith squads at every step, for real. I took down plenty of them but I couldn't carry anymore loot, so I got back here. By the way, do you have any idea how to release the safety on this piece of shit pistol? I couldn't figure it out, it's a new gun for me.</text>
+</string>
+<string id="dm_information_123">
+<text>I'm sure you're eager to explore and wouldn't to find some shiny artifacts, but what if I tell you that the true treasure of the Zone are definitely not the artifacts? And that's exactly what I'm telling you, and to get that true treasure you don't have to fire a single bullet. I know it sounds too good to be true, but that is not a good enough reason to dismiss it. What I need from you is only an initial sum of money, think of it as an investment. And get this, it's going to spit out a return, ten times what you invested. I found this guy that knows this other guy who set all this up. It's all legit, you could ask around, but that would just make other Stalkers want to cash in, and this deal might not be on the table for long if that happens. Think about it and bring in the dough when you're ready.</text>
+</string>
+<string id="dm_information_124">
+<text>I don't really talk to strangers, and we are all strangers here. Most people feel comfortable spilling their life stories to anyone, but I'm not that kind of guy. I realize it's that feeling of fraternity - anyone who isn't shooting at you is automatically your brother, and sharing a cup of shroom tea with another Zoner makes him your best friend. See, I never get used to that attitude, I've always been left to tend to myself. And that's alright with me. </text>
+</string>
+<string id="dm_information_125">
+<text>Who are you living for? What is the "idea" that keeps you alive when every single thing in the Zone wants you dead? Imagine a democratic poll where everything in the Zone could vote, everything: the emissions, the anomalies, bandits, mutants, cancer, tetanus, radiation, etc. The odds are we would all be dead if things worked that way. The Zone wants you dead, but it even doesn't need to vote to get what it wants. Quite terrifying, ain't it? Do you know what keeps me breathing? These kind of conversations. Not vodka, not cocaine, not even those wonderful porn mags Beard sells for a hefty fee, it's simple chats with simple people like you. Thank you for taking the time to have a nice chat.</text>
+</string>
+<string id="dm_information_126">
+<text>They sure put something in the imported tobacco that is being sold here, it reduces the effects of radiation and helps the body recover. Some fantastic shit the Ukrainian government came up with when they had to deal with the first Chernobyl explosion. So smoking one cig after eating some shitty cyst-infested meat from the Zone really works wonders. Unless you want to spend a whole day puking and get cancer in a few years. We are all sterile anyway, our balls can't handle the radiation, and those that aren't yet sterile have defective sperm. Imagine watching your beautiful wife give birth to a disgusting mutant, just because you spent a few months in the Zone back in when you were young. Everything has consequences, or at least that's what the doctors say.</text>
+</string>
+<string id="dm_information_127">
+<text>Tag along with larger groups when you're not prepared for the horror of being alone. They won't mind unless you keep waving a shooter in their faces. That way you get the safety of numbers, you have more fun and you might learn a thing or two from their conversations. You could also learn by watching them in action. Their tactics, how they handle weapons, how they move. It's all important and essential if you want to stay alive. If not, you could join the ranks of zombies if that shit fancies you. Just walk to their lair or chill outside while a psy emission is raging. I wouldn't recommend any of these things though, but it's your call.</text>
+</string>
+<string id="dm_information_128">
+<text>The scientists are good folk, they are timid like rabbits. They wouldn't blow directly on a flower, let alone kill someone. I salute them, they are so dedicated to their cause in spite of such harsh conditions. It's hard going on each day knowing that your bunker could be overwhelmed by the scum of the Zone, and you can't do anything about it. I'd rather have basic knowledge of gun handling, but these are educated people, people with a cause. I'm here because I need to sell artifacts. It helps with my terrible habit of collecting money. I've been doing that all my life, spending as little as possible, and I still ended up here. I seem to be saving in all the wrong ways, I guess. You have to think of some sort of system to make a decent living. Buy optimal amounts of food, spend the least amount of ammo, just the amount necessary for the job. By observing these simple rules you'll have much better chances not to end up like me. But I'm a dreamer, a dreamer that collects money just for the sake of it.</text>
+</string>
+<string id="dm_information_129">
+<text>I came to the Zone with only one thing. I know you aren't supposed to take anything here if you want to bring it back, especially if it's alive and all, because of all the radiation. But it was the most precious thing I've ever had. It was a duckling. The cutest little yellow thing. Quacking like crazy all the time. I wanted to keep it inside so that it wouldn't attract attention. I had a plan on how to feed it and everything. It slept near my heart, where it was the warmest. I had it for 20 days, and when I came to the Zone, it didn't even survive a few hours. Normal animals don't last long here. Just those crows, and I'm not even sure they are normal at all. I've seen them scream like robots, and gouge out eyes of pseudogiants. They are vicious thieves too. If you have some trinkets, golden, silver, doesn't matter, they will take it if you stash them somewhere they can easily reach. Once this drunkard started shooting at the sky for no reason and he hit a crow by accident. How surprised he was when he saw that it was holding this golden watch in its beak. It reminded me of the duckling I had with me. I've seen my friends die dogs' deaths in the mud here, but thinking about that duckling just makes my heart break.</text>
+</string>
+<string id="dm_information_130">
+<text>Nobody cares about us down here. It's as if we don't even exist. The first few days we were in the spotlight. Stalkers, the Zone. Afterwards, they started ignoring everything that's going on here. Mutants, artifacts, they all think it's some kind of a hoax. Sometimes even I wonder if these artifacts are any good. I mean, how could we know? I know the scientists are working their magic back in the bunkers, but how do I know that a specific artifact is good for this and not for another thing? It might just be old wives' tales, superstitious people making stuff up, so they could feel safer in this wasteland. That's probably not an option since even a seemingly harmless superstition can get you killed. I don't know, really, it's a bit too much for me. I know I believe in a loaded gun and a sharp knife. That's my God right there, cocked and ready to go. I pray to that God by cleaning it and doing basic maintenance, and it's very rewarding. Especially when it doesn't get stuck and does exactly what it's made for.</text>
+</string>
+<string id="dm_information_131">
+<text>I want to score big, just once. I've been here for a while now, why can't I get lucky? I follow the right people, carry the right equipment, but it's always either a shitty flesh or a boar if I'm extremely lucky. And this is not exactly profitable, to say the least. To down a boar I gotta use 4 bullets, and I make 3 and a half back when I sell the stuff I take from it. Fleshes are even worse, no one really wants to buy them. You'd better avoid them altogether and hunt for some bigger game. I heard that this one guy accidentally run into a pack of snorks. He chucked a grenade at them while running away. He didn't even look back to see what happened, he just noticed that after the noise from the explosion died down, and the whistling in his ear disappeared, he didn't hear the snorks no more. Now that's what I call scoring big. He took their feet and hands back to base, sold them at an excellent price. He went home with that money. Lucky bastard. If I waste a grenade at my boars, I would cut my own hand and sell it to the first trader that believes it's snork's to make up for the freaking 'nade.</text>
+</string>
+<string id="dm_information_132">
+<text>Carrying a lot of equipment takes its toll on you. Exoskeletons are really cool, I know. But try running away from a pack of dogs with that suit on. It will drain you like a leech. There was some talk about boosters that enable you to run, but you still drain fast. I would go for light armor if I was you. You have more options that way, and the best tactic here is actually not getting shot at all. No armor repairs, no pain, no medicine. It's safe and secure. Although it's quite rare to see people manage to do this for a longer while, it is quite rewarding when you're successful. You always have the choice to either pack armor improvements like Kevlar, or put some hydration upgrades that make life much easier.</text>
+</string>
+<string id="dm_information_133">
+<text>Every time I see you around, I think to myself: "Now, that is a guy who knows where he is going." I just loop around in circles, doing the exact same things each day. Getting bitten by a tushkano is not even exciting anymore. It's as if life has lost any meaning for me. It's bereft of any essence, and I feel I've done my share of living. It's easy getting lost here, ending up in an anomaly. Quick and painless. I've always wanted a death like that. My father was tortured before those bandits tore his throat out along with major arteries. I learned very quickly what happens to a person with torn arteries. Murdering our own kind is just too much for me. I couldn't even manage to retaliate, to avenge my own father. I had the names and whereabouts of each and every one of those bastards that did that to him. But what's the point? We will all perish soon enough, I'd rather be dead on the spot than experience what my father went through.</text>
+</string>
+<string id="dm_information_134">
+<text>Once I get my hands on a good sniper, I'm off to better places. I might even visit some zombie nests. With a sniper I could off each and every one of those Z's without taking a single hit. But they don't come cheap, you'd have to pay that bastard Owl a hand and a leg for 'em. I need my hand for sniping, and my legs are very important for running around as you might already know. Maybe that Haitian or Hawaiian fella has some good deals. I never trust people that are all smiling and nice to me. There is always a catch behind those smiling mouths. I'm good with a sniper too, I used to train with the army. Not in the army, but with it, along with the army. It was an awkward situation, but I was better at sniping than some army grunts. Should've come here with more money, but it's hard to get anything outside and still harder inside. I do what I have to do, and right now, I have to get me a sniper.</text>
+</string>
+<string id="dm_information_135">
+<text>One more and I'm done. This is the last one I'm doing, and I've done a whole bunch. I used to bring in simple artifacts and pseudo-artifacts. They weren't worth much, just enough to keep my belly filled with nasty shit that is barely edible. After I got my advanced detector, more expensive shit began to flow. Beard knew my name, I was popular at Yanov. It isn't easy, this artifact hunting. You can get burned, electrocuted, crushed, you name it. But it's gratifying. At least I don't have to put bullets in people's heads for a living. Not a nice job that one. But sometimes you just have to defend yourself. I had to do it once because some bandits tried to rob me while they were high as fuck on coke. All jittery and such, I had to put them down as fast as possible. Sold their coke too. I felt like a scumbag and a lowlife, but it had to be done. Now I know what routes the bandits have, and I try to not have face to face meets with them. They don't seem to mind, or and don't even notice me at all. And that's a perfect arrangement for me. But all that is in the past now, because this is my last run, and I'm going back to see my sweeties. I have two huskies, one is a big fucker, and the other has some health issues. Well, now that I have so much dough, it shouldn't be a problem. And even if it's not so easy, I can pay them with artifacts. That would wake the veterinarians up, I suppose.</text>
+</string>
+<string id="dm_information_136">
+<text>Do you know what perpetuum mobile is? Of course you don't. I'm going to tell you now, and you better write this shit down. A scientist I used to know was researching this peculiar phenomenon that some lights were still functioning after years without a power source, without maintenance. It's like they were feeding on some source of energy, but it couldn't be determined what it was. They theorized that those objects had become stuck in the particular time when the Zone was created. They didn't even seem to age at all. Naturally, the military would want dibs on this technology, them and every company in the world. But these objects that could work seemingly indefinitely just died when disconnected or taken outside the Zone. They were classified as proto-artifacts, and for a while they were deemed uninteresting to science. How aloof of them. Claiming anything in here uninteresting. </text>
+</string>
+<string id="dm_information_137">
+<text>Independent scientist groups have started popping up around the Zone lately. Folks that don't care for the strict regulations of the military, they even might be corporate scientists. Anyway, what they found was that the proto-artifact story was half right. What they found was that the Zone itself was saturated with magnetic fields of a very complex nature. Some electrical devices started charging themselves up without a plug, just by being in the Zone, and sometimes they overcharged, burning up in the process. Tesla worked on wireless energy transfer, or so they say. He would love to get his hands on any of these artifacts. I bet he would've been a good Stalker.</text>
+</string>
+<string id="dm_information_138">
+<text>You know that this is hell on earth, right? I mean, you've been here more than a minute, I presume? This shit is awful as it is, but it's even worse because it's like we are in the fucking stone age. Have you seen a functioning truck transporting goods? Have you seen a robot venturing into anomalies, fishing out artifacts while this pseudo-Stalker pushes buttons from a safe distance? You haven't, I know you haven't because I've never seen that myself. It just doesn't exist. Complex circuits fry up immediately here, and only smaller devices could withstand the harsh influence of the Zone. All the PDAs here have some form of magnetic shielding or barriers to resist the damaging magnetic forces. Simple mechanism fare much better here, but they too wear out much faster. Have you noticed how often you have to clean your shooter here? It's like any complex mechanism is a magnet for dust particles. Everything breaks down faster here, and the more complex it is, the quicker it becomes useless.</text>
+</string>
+<string id="dm_information_139">
+<text>Every single device made to suck up the magnetic waves the Zone constantly emits fries up before anyone can do any solid measurements. You can't tame the Zone, you can't trick it into feeding you. Large scale engineering projects haven't been attempted because of that. It's like this place has its own mind, and it does whatever it wants. And "it" certainly doesn't want to help us. </text>
+</string>
+<string id="dm_information_140">
+<text>Have you tried contacting the outside from here? Not possible, mobile phones will fry in your hand as soon as you dial the number. The Zone wants to protect its secrets, I guess. 3G, GPS, radio waves all get scrambled when directed from inside out or the other way round. Even cables for fuck's sake, they fry up too. It doesn't make any sense. Powerful military-grade radios manage to maintain contact for only a few moments before they turn off forever. This place is a quiet desert, and it's bound to stay like that.</text>
+</string>
+<string id="dm_information_141">
+<text>During the noosphere rupture a while ago, when the Zone became the Zone, something quite strange happened to some electrical circuitry. For reasons unknown to science, resistance of some circuits has been reduced to almost 1,5 μΩ•m which is a range normally only present in the most powerful superconductors, those that are superchilled. This has made those circuits work practically for years without any applied voltage as electrons are moving through them in endless loops without losing any energy. As a result, some circuits became self-sustaining and perfectly preserved over the years, being able to propel whatever equipment was plugged into them at the moment of this massive emission. On the other hand, some circuits were completely blown out, and new circuits sometimes don't even work at all in here. This poses a problem for scientists, especially since they have to magnetically seal their complex mechanisms, which takes a lot of effort, time and is quite costly. If this wasn't the case, I bet you'd be seeing a lot more scientists than Stalkers around the Zone.</text>
+</string>
+<string id="dm_information_142">
+<text>You don't wanna pass out or stop moving even for a second. If you do, you're dead meat. No Stalker, good guy or bad guy, will ever help you out if you can't take care of yourself. If you get shot, even if you have your bulletproof vest, that bitch hurts like a motherfucker. A few more hits and you'll be struggling to stay conscious from the pain. Do not let that happen. That's when things end for you. There was this wannabe Stalker, this newbie that just came out of the box, still full of beans, he thought if he invested in a good vest, some bullet-proof plates, he'd be unstoppable. He died somewhere after he ate a few bullets to his chest. The impact crushed his ribs and the ribs punctured his lungs. The pain was too much for him. He threw up his insides, and probably dehydrated right there. They found his body ripped apart by hungry doggies or something uglier. I don't want to tell the story of how they found your body, aight?</text>
+</string>
+<string id="dm_information_143">
+<text>The human body is a very reliable machine. It can function almost flawlessly for decades, and it's one of the most complex systems in the known world. The Zone is a little bit different. Immune systems don't work as well as they normally do, coughs last longer, cancer is obviously rampant. It's as if you are immediately drained once you step inside the Zone. If you wanna stay here, you need a very strong spirit, either in alcoholic form or psychological one, preferably both. Some cowards won't stand one bite of those dogs, others can go through a lot of punishment. What is different is spirit, and sometimes drugs, but mostly spirit. You need to have strong and pre-defined goals to keep you going through the everyday shit. That is the difference between newbies, adepts and real Stalkers. Anyone can waltz in here, strutting with brand-new weapons and shiny armor, but when it gets awful, some folks break much easier than others, and it doesn't have anything to do with the weapons you have or the armor you wear. They do help, but what drives you inside is what determines if you live or die.</text>
+</string>
+<string id="dm_information_144">
+<text>I used to refuse to carry a weapon. Anything that could hurt another living being was impure to me. But surviving doesn't come easy. I had to learn the hard way how important it is to have the necessary tools, especially in the Zone. When I first arrived here, people told me I wouldn't live to see another day. I still refused to buy a gun and I had my reasons. I spent 5 years in an Orthodox monastery, high in the mountains and near this little village. The people there have barely heard about World War II, let alone the Zone. Very peaceful people, calm, resilient. But they don't have to face the horrors that dwell here. I bet they would throw away their holy books along with their crosses the moment they see a controller staring them in the eye and meddling in their brain. Drilling deep. So I had to change my attitude. I wanted to live and sacrificing my faith seemed like a low price to pay. And that's how I grabbed my first weapon.</text>
+</string>
+<string id="dm_information_145">
+<text>You have to believe in something, man, and in here you quickly learn to believe in hosts of different gods if you don't wanna go nuts. You know what I'd like to see? A declared atheist run through a fire anomaly. He will start praying to make up for all the years he went on cynically laughing at "petty" religions. Sometimes the only thing you have is that kind of hope, and to take that away under the pretense of "reason" and "science" is just plain stupid. And you've already seen what atrocities the atheists have done throughout history. Millions of people dead. Where was their humanism then?</text>
+</string>
+<string id="dm_information_146">
+<text>I think this "one God" bullshit is just that - a pile of shit. I mean, it's just lazy to think that whoever created us would be just one person. I realize it's kinda complicated to be praying to many gods, so it was natural some people simplified the deal by introducing one true God. But at least they are not cowards not to believe in anything. It takes courage to be hoping for something as beautiful and transcendent as the Gods or even one God. Sometimes you have to keep your mind busy with things like that. If the only thing filling your mind was the horror of the Zone, you would never be able to have a good night's sleep or relax with a cup of coffee and enjoy good conversation. God is the only thing that separates you from the thick layer of shit of daily life here. </text>
+</string>
+<string id="dm_information_147">
+<text>What kind of monster would God have to be to create so much suffering, such widespread poverty, destruction and cruelty? How is that a part of God's plan? How am I supposed to love, respect or worship something or someone as vicious as God? And religion? It's just a twisted combination of crazy and contradictory statements. Every single religion. Even the Buddhists have their fundamentalist fanatic killers. Nothing that claims to be fundamentally good could create so much bile and hatred. Whatever the initial intentions of Jesus and Mohammed and all the world's religious leaders were, however positive and constructive they were, have now become the absolute opposites of what they claimed to be. I'd say that is a massive failure right there. Just pray to yourself, you are your only god and it's only up to you to survive in this hellhole.</text>
+</string>
+<string id="dm_information_148">
+<text>It's hard to hold on to anything here. Memories of family, friends, some nice moments in the past are quickly erased and replaced by the dripping despair, oozing out of every pore of every man. I had convictions and a strict moral code before coming here. Now I see it's all shit, it's all fabrications by people who have a lot of free time on their hands. You think a two-headed chimera would hesitate even for a second before devouring your best friend in front of you? That is what you call a perfect creature - fast, deadly, efficient predator that fears no one and nothing. We have a lot to learn from the beasts, and they have absolutely nothing to learn from us. They are already the masters of the Zone.</text>
+</string>
+<string id="dm_information_149">
+<text>Some places, man. It's just not worth it unless you are some freaking motherfucker with a nuclear blaster rifle or godlike skills. There are areas that only the toughest of Stalkers with the best equipment dare to visit. This is not a zoo, those snorks over there are most definitely not to be fed unless you fancy a quick death, but even then, it's better to just off yourself right here, and let me take care of your things... er... I meant, I can arrange a proper burial for you. It's just that many shitskulls that simply came out of their momma's pussy want to be the hardest motherfucker out there, and jump right into the biggest clusterfucks in the Zone, without any equipment, without any experience, without nothing at all. You can do that in some "normal" places of the world, but the Zone? The Zone definitely is not "normal" by any standards. They probably heard some shit from friends, and want to play a hero. I have to tell you, those folks don't get to enjoy the Zone too long.</text>
+</string>
+<string id="dm_information_150">
+<text>Don't go strolling where you don't belong, boy. If you haven't personally scanned and tested the ground, if you don't know every single crook and cranny, if you aren't acquainted with "that particular area", just stay off. Before going to the Iron Forest I spent 2 months just watching, just observing. Two whole bloody months. That's almost half your age. And that is why I'm alive and kicking today. I was patient. I mean, sure, that poltergeist fried my back so nice that I still get these reactions on my skin whenever FM signals are amplified. And sure, I had a controller take a look into my brain, but I survived. You know why? I've just told you, you worthless punk, I've just told you I spent 2 fucking months observing, thinking, wondering. Making a solid strategy before even thinking of doing anything. How are you going to survive in here if you have the attention span of an ADD Japanese hornet?</text>
+</string>
+<string id="dm_information_151">
+<text>If knives were our only weapon, we would be so dead right now. The mutants would roam the Zone, and it would've been rather quiet. These are no mammoths or elephants, man. The mutants are something else, something much more vicious than anything we've ever encountered outside. We are most definitely not made nor supposed to survive frontal attacks of those beasts. That's why we compensate for our lack of superhuman shit with the right tools. We just have to shoot 'em hard and shoot 'em where it hurts. A lot to remember, I know, but this is crucial if you want to save your ass from becoming a snack, or if you simply want to get some dough by selling mutant meat or organs. I mean, it's a lucrative business, but not a safe one. Look at artifact hunting. If you fuck it up, your life ends almost immediately, so you don't really suffer. Much, at least. But if you fuck it up with those beasts, you are looking at bleeding out in 2 or 3 minutes, best case scenario, and worst case, you'll eaten bit by bit, from bottom to top, in hours, sometimes days. Some Stalkers got real good moves that they've learned over the course of many years in the Zone, things that newbies just can't get at first try. It's muscle memory. If you survive a boar attack once, you will catch a glimpse of how you should move to avoid it. It doesn't seem like much, but some experienced Zoners could hold off 4 or 5 of those boars at the same time, no problemo. Still, I wouldn't like to be in their shoes. I'd rather be like Beard or Hawaiian.</text>
+</string>
+<string id="dm_information_152">
+<text>No easy money here. Fools come here, think they'd get fat rich with a few artifacts and after a few hunting sessions. That's bullshit, my friend. You'll be lucky to survive. Not to say there is no way to make money, but you have to use everything mother nature provided you with: your intelligence, reflexes, spirit, everything you've got, synced to perfection, to be able to get a tiny piece of the cake. Not many of us return to the Great Land, they either die, or get stuck in this hellish cycle: get drunk, cure your hangover with mushroom tea, look for some artifacts or hunt some mutants to get the cycle going, and so the cycle begins anew. And you can't just decide to leave, going back costs money too. Everything's got a price on it, and either you buy it with cold cash, monster hides, weapons, favors or using your own fucking skin. As you can see, nothing is easy here, and this place is certainly not for everybody. It sure has its own way of showing this.</text>
+</string>
+<string id="dm_information_153">
+<text>Making money costs money. You just calculate how much your "investment" costs, and determine the risk and the return. What the hell did you think? This shit is all business and math. Nothing else to it. These sorry ass bitches walking around, looking like tough bastards, brandishing heavy weaponry, they are all mathematicians and businessmen. Some with PHDs and university diplomas. It's a hard place to live, and it's even a harder place to run a business. See, what I do is I calculate the price of the bullet, the price of repair and how much I have to spend if I wanna survive that specific "adventure". And if the return is big enough, I know what I'm doing next. Calculations like that you've got to make all the time. Do I shoot the boar that is chasing me, or keep my ammo for that raid on that bandit camp? Making money sure does cost money, sometimes more than you actually make. You make bad mistakes, you end up in the swamps. And that's all the philosophy there is to it.</text>
+</string>
+<string id="dm_information_154">
+<text>You want to make the big bucks, yes? Make the big bucks from artifacts, yes? Stupid boy, you need to cover yourself proper first. Put on a SEVA, eat pills that make you hold against that anom type, and those bolts aren't for hunting mutties. You could make a very simple, basic combination of anom protection, but then you have to be super-fast at going for that artifact, and some anom's are even too hard for any basic DIY combination you could make. They require professional equipment. Remember, the higher the risk, the more money you get... Sometimes. Other times you get nothing and you just spend all that you have. So don't be stupid, "Stalker", be smart, and alive, or just leave this place, we have enough corpses on the ground, and some even walking. Oh, I'm not from around here so sorry for my language.</text>
+</string>
+<string id="dm_information_155">
+<text>Bandits are the scourge of this land. Awful, tricky weasels that will kill you and rob you, and sometimes they'll do even worse things to you. Some of them are ex-Stalkers, sure, but really, it's what they're doing now that matters. They have no morals, no codes, no underlying structure or rules. If you are just starting out here, and you see a squad of those bastards, you'd better keep off and away. Like some fiends, they can smell a chance to grab some nice loot. Sometimes they won't shoot. Sometimes they will rape you before you can say that you surrender. If you want to take on the sheriff's badge and get rid of that scum, you'd need to be equipped for the job. You can just start blasting, and expect to survive. You ambush them, study their movement patterns, their formations, their habits. If their squads were easy to take down, we wouldn't have people walking in groups. Sometimes a controller is easier to kill than a well-trained squad. Shoot the head, shoot to kill, and then move to the next target. Keep something between you and their bullets, some armor, get boar hides if you have to, and wipe them off. But you don't look like the fighting type, you've been listening to me rant for 10 minutes about this shit, when it's such an excellent opportunity to walk around outside and get some fresh air. Do it. Now. Get out of here. OUT!</text>
+</string>
+<string id="dm_information_156">
+<text>Veteran Stalkers, regular Stalker, hell, almost every Zoner has adapted so well to the Zone over the years that killing them sometimes seems outright impossible. Not that I want to shoot any of them, but hear me out. I think that the Zone not only makes them harder on the outside, but also it has specifically worked its magic on the inside. A civilian that came here would whine and go into a shock after being shot in the leg. A Zoner will fix that shit up, he won't lose touch with the reality of situation and maybe even plan an escape route. Sometimes a veteran Stalker will get shot, but the bullet will be a lucky one for him, and it will miss all major arteries and vital organs, and it would seem like he's bulletproof. Not sure if veteran Stalkers have found the Oasis or some any form of healing artifacts or whatnot, but that will seem really strange to you only if you weren't here for long. I've seen a guy get shot in the head and pull through. There was one guy in Russia, I've forgotten his name, this giant pole was stuck into his brain, another had his head severed almost completely, and they both survived. Outside? It's a massive stroke of luck and a miracle. Here? Here, the rules bend and are bent. Bullets stray away, are deflected of invisible walls that later turn out to be an anomaly or a poltergeist pulling the strings of gravity. But if you fill the head with enough bullets, nobody can survive that. Even the Oasis wouldn't help those poor bastards. You'll find the place one day, too, I'm sure, but in the meantime, put on a metal baseball cap or something.</text>
+</string>
+<string id="dm_information_157">
+<text>A firefight is a hellish thing. Bullets zipping by all around you. Some bury deep into your flesh, some just zoom past you and hit something or someone else. It's chaos, pure and simple. Sometimes you can survive a bandit ambush from all sides, and sometimes one guy can get lucky and strike you down with one well-placed shot. And even if he doesn't kill you, he most certainly will damage your gear. Stuff is barely functioning as it is, and it sure ain't bulletproof, so it's going to get raped in a firefight. That's reality and that's how it works. Nothing you can do about it.</text>
+</string>
+<string id="dm_information_158">
+<text>When you shoot a guy, you won't find everything he had on him, there's no way in hell that's gonna happen. The stress of the fight, the shock of killing someone, it all affects your senses. Sometimes you will find a pack of cigs he was smoking earlier, sometimes you won't find them. Maybe he wanted to hide the pack since it was his last, who knows. You won't get everything you think you deserve, the Zone is not about fairness after all, so cut it out with all that nonsense right know and grow some testicles. And yeah, if the guy you just shot drops like rock onto something or rolls down a cliff, his stuff will get mushed, broken, destroyed. So you won't have a chance at dipping in that butter jar at all.</text>
+</string>
+<string id="dm_information_159">
+<text>No one has as much free time as you do, and Cardan is no exception. Don't assume he's just waiting for you to get your ass to his workshop and shove your sticky, shitty, wasted shooter on his desk. No, no, hell no. He's got his own shit to worry about apart from fixing all the weapons of the world. Sometimes it's just more worthwhile to fix the shit yourself. Clean the gun once in a while, lubricate it. Get a repair kit and use it when you really need it. But don't forget the eroding and destructive power of the Zone that will devour your soul as much as it will devour machinery. Cars don't last here, nor do helicopters or sophisticated machines. Keep it simple, keep it clean, keep it going, and you might see another day.</text>
+</string>
+<string id="dm_information_160">
+<text>I never sell any repair items, man, I just keep them in my box. I know it's good loot, Beard, Owl and Hawaiian love to buy 'em, but I think it's better to just use 'em for my weapons and armor. When you sell something to someone, you sell it cheaper than the price you can buy it for, and then when you buy repair items from someone else, you've got to pay again, and in the end you lose a lot of money. Do shit on your own, it's much more frugal and you get to save a lot. Stalkers don't know how to save here, and whine all the time that they don't have enough dough. What did you think when you came here, you motherfucking piece of dead rat? The Zone taxes you. Materials are hard to come by, weapons even harder. You don't just pay for that one shooter, but you pay for the whole infrastructure that supports the war machine that enables you to buy that one shooter. It's a simple economy, and you should be aware that everything here is expensive as doing everything has its risks and its costs.</text>
+</string>
+<string id="dm_information_161">
+<text>Have you noticed that the Zone just freezes sometimes? It stutters, and everything else stops for microseconds. We call this the Stutter. Some say it's an echo from the first Chernobyl explosion, coming back to remind us of the horror. Some say it is neurological, and our brains, under the influence of the Zone, have problems processing sensual information. And the latter has been proposed by those scientists in the bunker. They've studied the phenomenon and are still baffled by some aspects of it. I have a theory that the stutters are actually microemissions, happening so fast that they can't hurt anyone, but are annoying as hell, especially in the middle of a fight. If some genius Stalker comes up with a way to negate that effect for himself, he'll have a massive advantage over the rest of us. Alas, such Stalker has not yet appeared, and the Stutter always keeps us company. I really hope the Stutter doesn't cause any neurological damage, I don't want to leave this place retarded or something.</text>
+</string>
+<string id="dm_information_162">
+<text>Flashlight is a basic tool here. You can't shoot what you can't see, you can't walk where you can't see. Every Stalker usually carries a flashlight. It's a great tiny thing, mind you, no external batteries are required for it to work. But for more experienced or well-off Stalkers there are also headlamps that Owl has sometimes in stock. And they're great too, because they free up both of your hands. That comes in handy when you wanna shoot with a two-handed weapon or have to use both of your hands for some other "activity". But remember that headlamp needs to be equipped and uses battery power from the UPD. Night vision is another expensive story but I can't tell you shit about it. Just remember that the headlamp is automatically shut off when you are using the handheld flashlight.</text>
+</string>
+<string id="dm_information_163">
+<text>We know everyone, and everyone knows everyone here. We are like a small village. A newcomer comes up, he shines like a dying star. Everybody can notice newcomers right away, and we don't particularly trust them. I won't go into details as to why, mostly because you are a newcomer too, but it has something to do with earning respect and doing something useful for this little community we have here. Growing the mushrooms, hunting some monsters and chasing some bandits, these types of things. And if you do good, we might even help you when you're in a pinch. Some morons come waiving the latest and greatest of the outside world, and then get robbed before they can say 'hello' or 'how do you do'. They think equipment is what makes the difference here, and they couldn't be more wrong. 'cause it's not. It's experience and respect of the people.</text>
+</string>
+<string id="dm_information_164">
+<text>I've opened up a boar, yes. What's it to you? I wanted to find out why they weren't dying that easily when I unloaded everything I had into their heads. When I opened that fucker up, I noticed their brain and major organs moved to the back of their head. In short, they mutated and adapted superfast to us shooting their mugs. Their tissue is as hard as Kevlar, for fuck's sake. Not sure how this was possible since I didn't have a microscope, and even if I had one, I wouldn't know how to use it, but I have to tell you that my knife did not go through that shit at all. And I sharpen it every single day. I did notice though that their thighs, our favorite meal, are more soft, and if you shoot them enough they open up like a can of tuna. But strange beasts they are, maybe they'll get used to it and grow some extra-hard muscles there, and become masters of the Zone, banishing all Stalkers... Probably not.</text>
+</string>
+<string id="dm_information_165">
+<text>Who wants a shooter in their mouth? Not Stalkers, not bandits, not even your best friends. It is disrespectful and just plain annoying. I'd smack anyone who comes up to me with his shooter towards me, even if I'm selling him something. The trigger finger is a gentle thing, not to be trifled with. Sometimes the gun can shoot for seemingly no fucking reason, and what do you think would happen if it was my face in front of that shooter? You so eager to find out? I'm not, and I'll beat the ass of anyone who points the gun at me. Treat people with respect, and you won't get hurt. Well, bandits ain't people, so in their case it's a roll of the dice. Maybe they'll shoot you, maybe they won't, but you shouldn't feel too safe near 'em.</text>
+</string>
+<string id="dm_information_166">
+<text>The better your shooter, the more modern and clean it is, the more you can upgrade it. Although worn or old weapons are usually initially cheaper, it's worth to invest in a better profile, instead of being greedy and buying a cheaper older version. Upgrades can really change your life and they increase your life expectancy too. If it wasn't for the full auto mode on my shotgun, I wouldn't be telling you this. I'd probably be some Zombie, drooling all over myself, and shooting anything that has brains I can eat. Damn, I'm very happy that I managed to get out of that shit bucket. This place is not much of an improvement, but I like the company much better.</text>
+</string>
+<string id="dm_information_167">
+<text>I've been here since the beginning, man. Ever since the Zone was wild and everyone was killing everyone to hold down a rusty piece of shit in the middle of nowhere. It was dog eat dog, kill or be killed... Some say it has never changed and it has always been like this. I just don't agree. There was a time when it was different, you know? More order. It's like God, right? You might be indifferent to him, and he may be a fucking cruel and spiteful being who only wishes to rape and destroy everything you hold dear, but there was some sort of logic to the madness... The Ten Commandments and shit... keep to this, and you'll probably be alright. The Zone used to be like this. You could sort of predict what was going to happen.... now it's all changed. Everything's gone to shit... you can't predict anything. Artifacts used to be visible to the naked eye, the Monolith kept to themselves... now that some crazy fucker turned the Scorcher off and everyone went north, all bets are off. There's no God left in this place, man. Only the Zone... and if that doesn't terrify you, you clearly haven't been here long enough.</text>
+</string>
+<string id="dm_information_168">
+<text>I knew this guy once - name of Scar... craziest motherfucker I've ever seen. He had a deathwish. No matter how dangerous the mission was, no matter how unlikely it was he was going to come back alive, he took it... didn't have a care in the world. Can't imagine why someone would be like that... he must have been pretty screwed up in the head, right? But here's the crazy thing... It seems like nothing could finish that bastard off. He once got hit by two emissions in the space of a week, was out in the open, and survived both times. Can you fucking believe that? It's like the Zone saw his challenge and wanted to punish him for his arrogance. Ain't nothing for free in this world, man. Not even Death, if the Zone doesn't want you to have it. Some reckon he sold his soul to the Zone... God only knows what happened to him. He fell off the face of the world.. but someone like that doesn't go easy, you know? Wonder what he's up to now...</text>
+</string>
+<string id="dm_information_169">
+<text>I know the Zone's a harsh place... but some people go way overboard. I was travelling with a Stalker the other day, and we heard some moans. Turns out a group of Loners got fucked by a bloodsucker. They managed to take it out, but they were hurting pretty bad, man.... And this guy, he pulls out his shooter, walks over to each of them and puts a bullet in their heads. Killing them in cold blood... How can people be like that? He said it was the merciful thing to do... But couldn't we have done something else? It wasn't that far from the camp... we could have dragged them there and tried to help, you know? Even if we wouldn't have been able to save all of them, one or two would make it. The Zone makes monsters out of people, Stalker... That's for fucking sure.</text>
+</string>
+<string id="dm_information_170">
+<text>One thing I really can't stand is people who are cruel to animals. Yeah, there's my type in the Zone too. Don't get me wrong, I understand the laws of the Zone: it's kill or be killed, and if an animal is dead set on your life then you have to do what you have to do to survive... But I always avoid encounters with them whenever I can, and if I have to kill them, I try to be as humane as possible. Too much unnecessary suffering in the world, man, so let's not add more to it. See this shotgun? It's designed so that it takes down almost anything in one shot. Yup, just like Trapper's. My types usually join the hunters... for some reason. Guess they figure that culling certain animals is a necessary evil and it's better to do it efficiently and humanely without making them suffer, you know? I came across a group of bandits the other day. They had a dog and were cutting parts off it while it was still alive. Maybe it was a "monster", but still - it's a living being... If there hadn't been so many of them, or if I had a better gun, I wouldn't have hesitated to kill those bandit monsters myself. The Zone redefines the rules, that's a given, but you need to cling to what's left of morality inside of us... or else you become a monster yourself.</text>
+</string>
+<string id="dm_information_171">
+<text>The Zone changes people, mate. It's true... Everything you see, everything you do, has to benefit you in some way or you're not going to make it. You're forced to become this perfect economic actor: you gotta chose a course of action that will turn out to be the most profitable or else you'll end up dead. Maximum profit with least effort, that's the way your brain is gonna work after your cells get used to constant threat of death. And if you'll gain the most by slaughtering some guys that wouldn't harm a fly, so be it. They would be dead in no time anyway, but what if one of them has something of value to you? Survival of the fittest, man. Weaklings don't make it, the strong survive, so you better be sure you're one of the latter, an alpha, before you go starting any feuds, because if you're not you're in for a world of hurt.</text>
+</string>
+<string id="dm_information_172">
+<text>I never used to buy into that religious crap, you know? God is great, god is merciful, god is a vengeful and jealous fucker. How can he be all three? And at the same time? No one could answer this question for me, and so I didn't believe. Then I came into the Zone and my perspective changed completely... They say there's no atheists in foxholes, but you'd have to be a pretty hardline motherfucker to be one here too. You gotta see it with your own eyes, experience it first-hand, and you'll be reborn. There's things here that defy explanation. I guess you can look at it scientifically: evolution of mutants, chemical reactions in anomalies, and so on... But there's stuff here that science just can't explain. And exactly such a thing happened to me. A friend of mine died when we were kids. It was a stupid mistake... never should have happened. I guess I always blamed myself for his death, you know? We were into some pretty crazy shit... and it turns out that he was the one who suffered for it. I eventually got over it, as best I could, but you never truly get over something like that. The other day, I saw him. I swear to God, he was right there in front of me. He asked me why it happened. Why I didn't do anything. I damn near broke down and cried. He knew everything. What happened, how it was my fault, and how one day I will be judged. Then he was gone... craziest thing I've ever witnessed. So yeah, some might like to think the Zone is scientific wonderland, but I think otherwise... This is a cursed place, Stalker. Every day I walk through here, I can't help but think we're one day closer to the judgment day.</text>
+</string>
+<string id="dm_information_173">
+<text>Hey, watch your back around here. Some guys aren't like me. They're proper scum. Me? I live and let live. Provided you stay out of my way, I'll stay out of yours. Fuck with me, though, and you're going to regret it when you realize you ain't got any means of keeping your guts inside you. Yeah, ask anyone - they'll tell you not to fuck with me.</text>
+</string>
+<string id="dm_information_174">
+<text>I used to be a guide back in the old days. It's a hard job - not only are you responsible for your own life, but the lives of others aswell. I speak English pretty well, so I would often take "tourists" into the Zone. Rich fuckers who wanted to see what the Zone was all about, without the hardship of actually living here. Got pretty famous for a while... People started a rumour that I knew the way to the Wish Granter. I didn't, but I didn't mind people thinking I did. A lot of business came my way. The thing is... in the Zone you really get to know people. You want to know a man's character? A week in the Zone will tell you everything you need to know about him.. and the people that came to me, wanting their desires granted... well, it would make me shudder. Empty men, with dead eyes... Nothing they do is ever for the benefit of anybody but themselves. Even if I did know the way to the Wish Granter, I don't think I'd take a damn soul - not all wishes are good, you know?</text>
+</string>
+<string id="dm_information_175">
+<text>Why are you coming to me? I hope you're not seeking salvation. I have no right to promise you that all is going to end well, because it won't. I'm a priest... in word only now, it seems. I used to believe that God was merciful, that He was fair and just... but having seen the things I've seen how can I go on preaching? I came to the Zone in the hope of rekindling the faith in these lost souls, but it seems I've become lost myself. Nothing could prepare me for this place. I've worked in missions all around the world, and even in the darkest moments there's still some glimmer of faith - of hope. Here? Well, you could walk a thousand years in the Zone and not find a single person who's a true believer. The Zone beats it out of you, and laughs gleefully while it does.</text>
+</string>
+<string id="dm_information_176">
+<text>Saw the freakiest fucking thing ever not too long ago. Me and the boys were on a raid, right... and we found this weird guy. He seemed pretty out of it. Didn't know what the fuck he was doing or saying. Like some sort of retard, I guess. Had no supplies, no gun, no ammo, no nothing, only his black trenchcoat. We were a bit too soft, felt sorry for him, and we decided to let him come with us. An extra guy might come in handy if shit goes down, right? Even if he's a wacko. At least that's what we thought. Went to sleep that night, and it was a gunshot that woke us up. My friend right beside me was screaming like a madman and aiming at something that was hovering over him. Looked like a person, but it was all out of whack... its arms were deformed or something. Guess it tried to kill my friend but he woke up just in time and managed to get a gunshot off, hit this thing in the shoulder and it ran off screaming. That dude we picked up? No sign of him, just his trenchcoat.... Yeah, some weird shit out there, let me tell you.</text>
+</string>
+<string id="dm_information_177">
+<text>I usually don't sleep in camps... Most of the time the "benefits" aren't worth it, you know? Sure, all this crowd may keep you safe from a mutant attack, but if some fucker steals your piece then you're fucked either way, right? A lot of thieving bastards out there. And I don't fancy having so many people around. Crowd mentality, you know? You can never be sure what's gonna happen next when there's a bunch of dim-witted morons posing as leaders and telling other idiots what to do. Some might say "safety in numbers", but fuck that, you know? I stick to the rule that it's your duty to keep yourself safe and not to rely on others to cover your ass. So I like to pick a nice sheltered spot out in the middle of nowhere... Sure, the occasional mutant might wake you up and you gotta stay on your toes at all times. Yeah, there's that. But mind that - in the end it's you versus the Zone, and not you and your friends versus the Zone. 'Cause your only friend is yourself.</text>
+</string>
+<string id="dm_information_178">
+<text>Free will, huh? I have read all sorts of wise books before I came here, but none of this shit applies in the Zone. Free will simply does not exist in this place. There isn't a single person in the Zone who is here out of choice. Virtually everyone I've talked to has the same background. Usually criminals hiding from the law, dodging the draft or just your average Joes that have to provide for their families. And the economic crisis in the Great Land has only made matters worse for everyone. The governments weren't able to stop it and ended up reintroducing slavery. So the only choice you've got is this: escape here or have your life ruined. And that's hardly a choice at all, you're only choosing between two brands of misfortune. And all the people, once they get here, realize that their life is pretty much over anyway - they have almost no chance of escaping and average life expectancy is so low that some of them don't even struggle at all. Some of them, more crafty ones, realize that at least they will be able to send their families some money so that they don't end up as commodities in the human trafficking market. The entire situation makes me sick.... Sorry, I don't feel like talking anymore.</text>
+</string>
+<string id="dm_information_179">
+<text>Hope is a dangerous thing to have in the Zone. There are those who will tell you it is all that keeps them moving, gives them the drive to go on - but I say it is the most dangerous thing of all. The Zone knows. Everything. Your desires, your wants, you dirty secrets... It knows everything. There's not a single thought in your head that the Zone doesn't know, and you can't hide anything from it. Forget privacy: you should assume that whatever you do, whatever you know, whatever you feel the Zone already knows. And you have to remember that the Zone despises feelings, all feelings, but hope, in any form, makes it especially angry. A friend of mine had a family back home. A beautiful wife and two daughters. He would tell me about them all the time, just couldn't stop yapping. I remember there was one thing he always carried with him - an album full of photos of his family. He kept telling me that "today was the day" he was going to make it. And it seemed that this day finally came. He got lucky, found an artifact nobody had ever seen before, took it to the scientists and it turned out they were willing to pay a shitload of money for it. Literally. They didn't have this much dough with them at the moment, so he had to wait for their next supply drop... So yeah, he made it. Then he suffered a bite to the leg. A dog. What started off as a routine infection suddenly got worse. The wound started to fester, maggots made it their home, flies were buzzing around. In no time all flesh in the leg was eaten away. No doctor could help him. Amputation didn't work, infection spread too fast for us to be able to contain it. And the smell, this god-awful smell, would stay with him till his last day. He died before he could get paid... I don't know what happened to the artifact. I wouldn't be surprised if the Zone reclaimed it. After that I wanted to contact his family... Let them know what really happened, but nobody had the slightest idea who he was or where he came from. No hope, Stalker... It will kill you. Trust me on this.</text>
+</string>
+<string id="dm_information_180">
+<text>It amazes me how there's so much talent in the Zone. Every place has its own bards and artists, and the Zone is no exception. But there are differences: in the Great Land poets, writers, musicians tend to be devalued. There's simply no need for them in a society where expert knowledge is the currency. And here a good story, good music, good read are respected, especially if they will increase your odds in the roulette against the Zone. You could even say that good storytelling shows how experienced you are: the better and more believable your tale, the more shit you must have gone through. But truly exceptional are those artists who managed to hit the softest spots in our hearts. I've seen veteran Stalkers moved to tears by a piece of music that reminds them of home - of a happier time. The Zone can be a harsh place, but despite that the human spirit still burns strongly. You can put us in chains, but still we'll sing and live on, no matter what the Zone throws at us.</text>
+</string>
+<string id="dm_information_181">
+<text>Fuck it, almost every guy I talk to shits his pants every time mercs are mentioned in a goddamn conversation. Boogeymen of the Zone, you could say. But not me, I'm not scared of 'em. See, they might have shit-hot equipment and training... but one thing they ain't got is Zone-smarts. This shit you only learn the hard way - through experience, through sweat and tears. Ain't no way standard military training allows you to predict when an emission is going to hit... But once you get into the Zone, survive a few of 'em, and you'll just know. A tingling behind your eyes, your teeth aching, some little sign that tells you all hell is about to break loose and you need to get your ass someplace safe. The mercs think they can take the Zone by force... Impossible, I tell ya. Want to see where that attitude will take you? Look at those military choppers - fucking ripped out of the sky like they were made of paper. The Zone is a cruel, hard bitch, and won't come down so easily. Especially since it is the absolute ruler and force is a currency it trades in. No use opposing it.</text>
+</string>
+<string id="dm_information_182">
+<text>Sometimes I like to sit in the camp, chill out and just listen to the radio, you know? It's a reliable way to forget about all your problems and shit, even if for a second. Sometimes you need that little bit of escape and you gotta reach out to the outside world, otherwise the Zone will overwhelm you and you won't be able to carry on no longer. And the radio gets the job done real well. The tricky question is where the fuck the signal is coming from... Maybe there's this dude sitting by himself in a cosy shack on the fringes of the Zone who sends out a broadcast to keep people's spirit up? Or maybe we're being manipulated by the army? You know, subliminal messages and shit... I'd really like to know the story behind it.</text>
+</string>
+
+
+	<string id="dm_information_do_not_know_1">
+		<text>Can't think of anything interesting.</text>
+	</string>
+	<string id="dm_information_do_not_know_2">
+		<text>There's some quality gear hidden in stashes here and there, I tell you.</text>
+	</string>
+	<string id="dm_information_do_not_know_3">
+		<text>Well, it seems more and more people come to the Zone. I wonder what they're hoping to find here, besides a serious lack of sleep that is.</text>
+	</string>
+	<string id="dm_information_general">
+		<text>Anything new about the Zone?</text>
+	</string>
+	<string id="dm_information_no_more_1">
+		<text>I think that's all the information that I can provide, brother.</text>
+	</string>
+	<string id="dm_information_no_more_2">
+		<text>I would tell you gladly, but that's all I've heard.</text>
+	</string>
+	<string id="dm_information_no_more_3">
+		<text>I told you everything I know.</text>
+	</string>
+	<string id="dm_job_1">
+		<text>Hrm... Maybe you should ask Grouse over at Skadovsk. He's been looking for help with this one thing - people are disappearing without a trace. Everyone blames bloodsuckers, because when their bodies are found, they're bled completely dry. But this is just too much... They're snatching people almost every other day. Which really isn't bloodsuckers' MO... Grouse even hired an experienced hunter to track down those bloodsuckers.</text>
+	</string>
+	<string id="dm_job_10">
+		<text>You know, when a Zoner needs money he's got two ways to go: find artifacts and offload them to traders at 30 kopecks on the ruble, or work for the scientists. They always come up with something a Zoner can do, be it the delivery of a rare artifact or a mutant carcass. But above all else, if you get on their good side they can issue you a permit to the Zone, all official and legit. Picture yourself passing a military post, lugging a full backpack of loot, and being saluted! Warms my heart! So anyway, the scientists' bunker is situated west of Yanov station. They've got one Stalker working for them already, maybe they can hire another one like you.</text>
+	</string>
+	<string id="dm_job_11">
+		<text>How successful you are depends on what you do. If you don't mind hunting mutants, you'll have plenty of offers. Drop in the basement at Yanov and ask for Trapper - he pays good coin for purging mutants, but don't go shooting the first pseudodog you see to claim your reward. Trapper gives out orders on specific monsters that either interfere with artifact collection or frequent the places Zoners use to hide from emissions.</text>
+	</string>
+	<string id="dm_job_14">
+		<text>Fellas like you who come to Skadovsk like to visit Beard. He shells out decent dough for artifacts... But I'll tell you one thing - his business sense is piss poor. He don't wanna share his profits with some powerful people... and that shit's gonna come back to bite him in the ass. Ya dig?</text>
+	</string>
+	<string id="dm_job_15">
+		<text>If you need hard cash, see Owl. He peddles everything a real man needs on Skadovsk - information, shooters, whatever. If you got something hot and valuable, like a document or a PDA - take it to Owl and get paid. You can also scare up good dough by taking on his personal orders. Just ask him if he needs something done.</text>
+	</string>
+	<string id="dm_job_2">
+		<text>You might want to ask Gonta. He and his crew have got quite a story to tell. A chimera turned up at Zaton not long ago, so Gonta and his men went after it. They split into two teams to track down the beast and sent on one of the hunters in search of the bloodsucker lair. They were a bit short-staffed when they finally smelled out the chimera, so another Loner, Magpie, came along. I don't know exactly how it all went down, but most accounts agree that Magpie legged it as soon as he saw the chimera. Gonta barely made it out of there, with one of his men badly wounded. But the chimera is still at large, so they're looking for people to lend a hand.</text>
+	</string>
+	<string id="dm_job_3">
+		<text>That's easy: if you want serious dough, Sultan's your man. He's the local boss, so if you make out like a goodfella, he'll find a job for you.</text>
+	</string>
+	<string id="dm_job_4">
+		<text>If you're good at stalking - that is, finding artifacts - talk to Beard. He's got a lot of respect here. He's the only man on Skadovsk who'll give you a good price for your artifacts. He's got the connections to transport them outside the Zone. Besides, he's a good man, you know... always there for you with advice or a suitable job.</text>
+	</string>
+	<string id="dm_job_5">
+		<text>There's a trader on Skadovsk, Owl's his name. Not the most pleasant of people. Always complaining how all the artifacts go to Beard and not him, but if you need money, you can see what's he's got to offer. That weasel deals in much more than ammo. He can tell you things, sell you things, buy your things and pay for things you know that interest him. Pay him a visit - he's on the second aft deck. I'm sure you can work something out together.</text>
+	</string>
+	<string id="dm_job_6">
+		<text>You can ask Vano, he hangs around at the Yanov bar. He got on the hook with the bandits - been trying to repay his debt three times already. He's got experience and everything, can spot an anomaly with his eyes closed... and still he always manages to get in trouble. A bunch of people have suggested that he just take off. The Zone's too big for the mob to find him, but he's too proud to run away, and there aren't many people willing to help him work out his issue with the bandits...</text>
+	</string>
+	<string id="dm_job_7">
+		<text>Forget about jobs, man... The bandits have gotten really out of hand - they took Mitay prisoner and are demanding ransom. Mitay was one of the first Stalkers here at Yanov, he built this place up so people could take cover during an emission, and now when he needs help no one gives a crap. No question about Freedom or Duty - they're too busy gnawing at each other's throats... But the rest - they should do something! Ah, what's the use... Mitay's own crew can't figure out how to free him. If you want to help them, talk to Grizzly; you can find him at the station bar.</text>
+	</string>
+	<string id="dm_job_8">
+		<text>Nitro, the Yanov technician, needs working materials. He's good with weapons and electronics alike, if you didn't know. But sometimes skills are not enough - he needs the right materials, so he's been asking around. The problem is that all the safe places have been cleaned out, while the rest are too dangerous for most. Nitro's hoping to find someone willing to take those risks, but I'm sure he'll pay good money for the trouble.</text>
+	</string>
+	<string id="dm_job_9">
+		<text>I heard Uncle Yar over at Yanov station was looking for a less-than-curious dude to help him with something. Not sure why he don't ask his Freedom buddies... Anyways, he's a decent old man, so maybe you should talk to him and see if you can work something out.</text>
+	</string>
+	<string id="dm_job_do_not_know_1">
+		<text>Hrm... Don't know anyone like that.</text>
+	</string>
+	<string id="dm_job_do_not_know_2">
+		<text>I'd love to know that myself.</text>
+	</string>
+	<string id="dm_job_do_not_know_3">
+		<text>How the hell should I know?</text>
+	</string>
+	<string id="dm_job_general">
+		<text>Know anyone who'd pay for any kind of help?</text>
+	</string>
+	<string id="dm_job_no_more_1">
+		<text>You've asked me that already.</text>
+	</string>
+	<string id="dm_job_no_more_2">
+		<text>Couldn't tell you anything new.</text>
+	</string>
+	<string id="dm_job_no_more_3">
+		<text>You've got my answer already.</text>
+	</string>
+	<string id="dm_universal_actor_exit">
+		<text>OK, forget about it.</text>
+	</string>
+	<string id="dm_universal_actor_start">
+		<text>I would like to ask you something.</text>
+	</string>
+	<string id="dm_universal_npc_start_0">
+		<text>Ask away.</text>
+	</string>
+	<string id="dm_universal_npc_start_1">
+		<text>Spit it out.</text>
+	</string>
+	<string id="dm_universal_npc_start_2">
+		<text>Shoot.</text>
+	</string>
+	<string id="dm_universal_npc_start_3">
+		<text>I'm listening.</text>
+	</string>
+	<string id="dm_wounded_general">
+		<text>Help!</text>
+	</string>
+	<string id="dm_wounded_medkit">
+		<text>Take this medkit.</text>
+	</string>
+	<string id="dm_wounded_sorry">
+		<text>Sorry, I got nothing.</text>
+	</string>
+	<string id="dm_traveler_bye">
+		<text>I see.</text>
+	</string>
+	<string id="dm_traveler_what_are_you_doing">
+		<text>What's your business?</text>
+	</string>
+	<string id="dm_traveler_can_i_go_with_you">
+		<text>Maybe we could team up?</text>
+	</string>
+	<string id="dm_traveler_stalker_actor_companion_yes">
+		<text>Of course. Everyone needs company in this hell-hole.</text>
+	</string>
+	<string id="dm_traveler_stalker_actor_companion_no">
+		<text>I'm exploring on my own. Sorry.</text>
+	</string>
+	<string id="dm_traveler_actor_go_with_squad">
+		<text>Let's go then.</text>
+	</string>
+	<string id="dm_traveler_take_me_to">
+		<text>I need to go some place, can you lead me there for a fee?</text>
+	</string>
+	<string id="dm_traveler_stalker_where_do_you_want">
+		<text>That depends. Where do you need to go in this miserable place?</text>
+	</string>
+	<string id="dm_traveler_actor_agree">
+		<text>I agree. Let's go.</text>
+	</string>
+	<string id="dm_traveler_actor_refuse">
+		<text>I've changed my mind.</text>
+	</string>
+	<string id="dm_traveler_stalker_i_cant_travel">
+		<text>No, I've got other business to attend to.</text>
+	</string>
+	<string id="dm_stalker_doing_nothing_1">
+		<text>I'm trying to generate some cash. I need better gear.</text>
+	</string>
+	<string id="dm_stalker_doing_nothing_2">
+		<text>In this place? Either dying or finding an artifact and a ticket home.</text>
+	</string>
+	<string id="dm_stalker_doing_nothing_3">
+		<text>Staying alive in this shit. What does it look like I'm doing?</text>
+	</string>
+	<string id="dm_stalker_chasing_squad_monster">
+		<text>None of your business.</text>
+	</string>
+	<string id="dm_stalker_chasing_squad_bandit">
+		<text>I'm shadowing a couple of assholes. Friggin' retards...</text>
+	</string>
+	<string id="dm_stalker_chasing_squad_killer">
+		<text>Tracking down a few mercenaries. Real bastards, these ones.</text>
+	</string>
+	<string id="dm_stalker_chasing_squad_monolith">
+		<text>I'm tailing a squad of fanatics. Monolith fighters, that is...</text>
+	</string>
+	<string id="dm_stalker_chasing_squad_zombied">
+		<text>I'm looking for zombies. Too many of those poor bastards around...</text>
+	</string>
+	<string id="dm_traveler_travel_cost">
+		<text>OK. That will cost you</text>
+	</string>
+	<string id="dm_traveler_actor_dont_go_with_squad">
+		<text>You know, I've changed my mind.</text>
+	</string>
+	<string id="dm_traveler_actor_has_no_money">
+		<text>I can't afford it then.</text>
+	</string>
+	<string id="dm_freedom_doing_nothing_1">
+		<text>Well, I own what you see here. I am wondering if I should buy some better equipment.</text>
+	</string>
+	<string id="dm_freedom_chasing_squad_monster">
+		<text>I'm tracking mutants. Someone's got to clean this place.</text>
+	</string>
+	<string id="dm_freedom_chasing_squad_bandit">
+		<text>I'm chasing some thugs that I need to have a word with.</text>
+	</string>
+	<string id="dm_freedom_chasing_squad_killer">
+		<text>I'm out to get some mercenary scalps. They've got a debt that needs collecting.</text>
+	</string>
+	<string id="dm_freedom_chasing_squad_monolith">
+		<text>I'm after those screwy Monolith folk.</text>
+	</string>
+	<string id="dm_freedom_chasing_squad_duty">
+		<text>I'm trying to track down some of my debtors.</text>
+	</string>
+	<string id="dm_duty_doing_nothing_1">
+		<text>On the lookout for some guns to unload. We need ammunition to survive this.</text>
+	</string>
+	<string id="dm_duty_chasing_squad_monster">
+		<text>I'm preparing for a long night in this nightmare.</text>
+	</string>
+	<string id="dm_duty_chasing_squad_bandit">
+		<text>I'm on a mission, tracking down a bandit squad.</text>
+	</string>
+	<string id="dm_duty_chasing_squad_killer">
+		<text>Mercenaries are my target. I'm following their squad's tracks.</text>
+	</string>
+	<string id="dm_duty_chasing_squad_monolith">
+		<text>I'm after a Monolith squad.</text>
+	</string>
+	<string id="dm_duty_chasing_squad_freedom">
+		<text>I'm chasing down those half baked assholes - Freedom, that's who...</text>
+	</string>
+	<string id="dm_stalker_searching_artefacts_1">
+		<text>I'm searching for artifacts.</text>
+	</string>
+	<string id="dm_stalker_searching_artefacts_2">
+		<text>I ain't picking mushrooms... artifacts, more like.</text>
+	</string>
+	<string id="dm_stalker_searching_artefacts_3">
+		<text>I'm looking for valuables like artifacts and such.</text>
+	</string>
+	<string id="st_stalker_zat_sim_1">
+		<text>I'm headed toward the Boiler anomaly, the one next to a small grove.</text>
+	</string>
+	<string id="st_stalker_zat_sim_2">
+		<text>I'm moving out to the northern lake... gonna take some time off on the peninsula.</text>
+	</string>
+	<string id="st_stalker_zat_sim_3">
+		<text>I'm going beyond the northern lake - there's a decent camping spot there.</text>
+	</string>
+	<string id="st_stalker_zat_sim_4">
+		<text>I'm going to the woods beyond the northern lake.</text>
+	</string>
+	<string id="st_stalker_zat_sim_5">
+		<text>I'm headed to a small forest west of the sawmill.</text>
+	</string>
+	<string id="st_stalker_zat_sim_6">
+		<text>I'm headed for the hill that's west of the swamp. None of the swamp pollution can reach me there.</text>
+	</string>
+	<string id="st_stalker_zat_sim_7">
+		<text>I'm heading to the antenna complex. There's a nice little spot west of that.</text>
+	</string>
+	<string id="st_stalker_zat_sim_8">
+		<text>I'm headed for the woods west of Oakpine... come along if you like - I don't mind company.</text>
+	</string>
+	<string id="st_stalker_zat_sim_9">
+		<text>To a grove between the Iron Forest and the workshops.</text>
+	</string>
+	<string id="st_stalker_zat_sim_10">
+		<text>Toward the great bridge... there's supposed to be a safe, private little spot east of there.</text>
+	</string>
+	<string id="st_stalker_zat_sim_11">
+		<text>To a parking lot south of the old barge.</text>
+	</string>
+	<string id="st_stalker_zat_sim_12">
+		<text>Just looking around for a good place to repair my gear.</text>
+	</string>
+	<string id="st_stalker_zat_sim_13">
+		<text>To a grove between Izumrudnoye and the gas station.</text>
+	</string>
+	<string id="st_stalker_zat_sim_14">
+		<text>A fork in the road near the waste processing station.</text>
+	</string>
+	<string id="st_stalker_zat_sim_15">
+		<text>To the Boiler anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_sim_16">
+		<text>To the ranger station. There's a building complex there, you've probably seen it. One of them even got furnaces - I wonder what kind of business they ran down there.</text>
+	</string>
+	<string id="st_stalker_zat_sim_17">
+		<text>To a grove west of the burnt farmstead.</text>
+	</string>
+	<string id="st_stalker_zat_sim_18">
+		<text>To a grove east of the Boiler anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_sim_19">
+		<text>To a hill just past the northern lake.</text>
+	</string>
+	<string id="st_stalker_zat_sim_20">
+		<text>A little grove south of the burnt farmstead.</text>
+	</string>
+	<string id="st_stalker_zat_sim_21">
+		<text>I'm headed west of Skadovsk... where the pipes come out.</text>
+	</string>
+	<string id="st_stalker_zat_sim_22">
+		<text>I'm headed to a spot midway between Skadovsk and the dredge station.</text>
+	</string>
+	<string id="st_stalker_zat_sim_23">
+		<text>To a bayou near the old barge.</text>
+	</string>
+	<string id="st_stalker_zat_sim_24">
+		<text>To a creek near the Scar anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_sim_25">
+		<text>To the gas station.</text>
+	</string>
+	<string id="st_stalker_zat_sim_26">
+		<text>To the Oakpine ravines.</text>
+	</string>
+	<string id="st_stalker_zat_b55">
+		<text>I want to look for artifacts in the Claw anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_a1">
+		<text>I'm going toward a hill west of the Boiler anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_a23_smart_terrain">
+		<text>To the Iron Forest anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_b100">
+		<text>I'm going to the Iron Forest anomaly to look for artifacts.</text>
+	</string>
+	<string id="st_stalker_zat_b101">
+		<text>I'm going to the swamp. Sure, it ain't easy breathing with all that gas, but the artifacts make up for it.</text>
+	</string>
+	<string id="st_stalker_zat_b103_merc_smart">
+		<text>I'm going to the substation workshops. They say it's a nice place to hide from emissions, so I'm going to give it a test run.</text>
+	</string>
+	<string id="st_stalker_zat_b104_zombied">
+		<text>You know there's a sawmill nearby, that's where I'm headed. I want to double check it for anything of value.</text>
+	</string>
+	<string id="st_stalker_zat_b106_smart_terrain">
+		<text>I feel like taking some time off at the Izumrudnoye resort. Oh, sure it is a fine resort... for flesh and boars! Ha-ha! Still, I'm sure I can camp out there a bit.</text>
+	</string>
+	<string id="st_stalker_zat_b12">
+		<text>To a bridge, I think it's marked Preobrazhensky on the map.</text>
+	</string>
+	<string id="st_stalker_zat_b14_smart_terrain">
+		<text>To the dredge station. I bet there are still some valuables to be found in the area.</text>
+	</string>
+	<string id="st_stalker_zat_b18">
+		<text>To the old barge.</text>
+	</string>
+	<string id="st_stalker_zat_b20_smart_terrain">
+		<text>I want to swing by the burnt farmstead, see if any new artifacts have popped up.</text>
+	</string>
+	<string id="st_stalker_zat_b28">
+		<text>To the southern plateau.</text>
+	</string>
+	<string id="st_stalker_zat_b33">
+		<text>To the crack by the gas station.</text>
+	</string>
+	<string id="st_stalker_zat_b38">
+		<text>I'm going to the Krug antenna complex - need a safe place to hide from emissions. There's supposed to be lots of monsters there, unfortunately.</text>
+	</string>
+	<string id="st_stalker_zat_b38u">
+		<text>I'm going to the Krug antenna complex - need a safe place to hide from emissions. There's supposed to be lots of monsters there, unfortunately.</text>
+	</string>
+	<string id="st_stalker_zat_b39">
+		<text>I'm going to look for artifacts near Oakpine. Hopefully the mutts will keep at bay.</text>
+	</string>
+	<string id="st_stalker_zat_b40_smart_terrain">
+		<text>To the cesspool... you know, the waste processing station. It's as good a place as any to hide from emissions.</text>
+	</string>
+	<string id="st_stalker_zat_b42_smart_terrain">
+		<text>I'm headed to the boat pier on the northern lake. Once there I'll play it by ear.</text>
+	</string>
+	<string id="st_stalker_zat_b52">
+		<text>I'm going to the docks, where the cranes are. A decent place to camp out.</text>
+	</string>
+	<string id="st_stalker_zat_b53">
+		<text>I'm planning to look for artifacts in the Boiler anomaly. I just hope my suit will survive this little hot springs vacation.</text>
+	</string>
+	<string id="st_stalker_zat_b54">
+		<text>To the Scar anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_b56">
+		<text>I want to test how fireproof my equipment is, plus look for artifacts - all in the Circus anomaly.</text>
+	</string>
+	<string id="st_stalker_zat_b5_smart_terrain">
+		<text>To the ranger station.</text>
+	</string>
+	<string id="st_stalker_zat_b7">
+		<text>I'm going to camp out on Shevchenko. It's safe from emissions, and a tough spot for mutants to attack.</text>
+	</string>
+	<string id="st_stalker_zat_b7_stalker_raider">
+		<text>I'm going to camp out on Shevchenko. It's safe from emissions, and a tough spot for mutants to attack.</text>
+	</string>
+	<string id="st_stalker_zat_medic_home_smart">
+		<text>I'm going to the docks, where the cranes are. A decent place to camp out.</text>
+	</string>
+	<string id="st_stalker_zat_stalker_base_smart">
+		<text>I want to dump my loot and have a cold one or two. Skadovsk is just the place.</text>
+	</string>
+	<string id="st_stalker_jup_a10_smart_terrain">
+		<text>I'm going to the army checkpoint, next to the Jupiter plant.</text>
+	</string>
+	<string id="st_stalker_jup_a12">
+		<text>To the container warehouse.</text>
+	</string>
+	<string id="st_stalker_jup_a12_merc">
+		<text>I'm headed to a totally inconspicuous area between the container warehouse and the southern tunnel.</text>
+	</string>
+	<string id="st_stalker_jup_a6">
+		<text>To Yanov station. Finally a time to relax.</text>
+	</string>
+	<string id="st_stalker_jup_b1">
+		<text>To the tunnel north of Kopachy.</text>
+	</string>
+	<string id="st_stalker_jup_b19">
+		<text>I'm going to a really creepy place, the Kopachy village... or whatever is left of it. Yes, I've stocked up on extra antirads and ammo - I'm gonna need 'em!</text>
+	</string>
+	<string id="st_stalker_jup_b200">
+		<text>To the cement factory. A nice observation point, and no one can sneak up on you there.</text>
+	</string>
+	<string id="st_stalker_jup_b200_tushkan_smart_terrain">
+		<text>To the cement factory. Gonna check out that basement.</text>
+	</string>
+	<string id="st_stalker_jup_b202">
+		<text>To the substation near Yanov.</text>
+	</string>
+	<string id="st_stalker_jup_b203">
+		<text>I'm going to a spot near the southern railroad tunnel.</text>
+	</string>
+	<string id="st_stalker_jup_b204">
+		<text>I'm going to a cooling pond near the Jupiter plant.</text>
+	</string>
+	<string id="st_stalker_jup_b205_smart_terrain">
+		<text>I'm going to the Volkhov AA complex, gonna hunt me some zombies.</text>
+	</string>
+	<string id="st_stalker_jup_b205_smart_terrain_tushkano">
+		<text>To the bunker, you know, the one at the Volkhov AA complex.</text>
+	</string>
+	<string id="st_stalker_jup_b206">
+		<text>To the anomalous grove near the quarry. Might find an artifact or two.</text>
+	</string>
+	<string id="st_stalker_jup_b207">
+		<text>I'm going to the quarry, where the construction workers' vans are.</text>
+	</string>
+	<string id="st_stalker_jup_b207_depot_attack">
+		<text>There's this spot between the quarry and Yanov station. I'm gonna lay low there for a while.</text>
+	</string>
+	<string id="st_stalker_jup_b208">
+		<text>I'm going to the eastern tunnel, one that goes under the Jupiter plant.</text>
+	</string>
+	<string id="st_stalker_jup_b209">
+		<text>To the Bitumen anomaly. Gonna see how fireproof my suit is.</text>
+	</string>
+	<string id="st_stalker_jup_b211">
+		<text>I'm going to the Plavni anomaly to look for artifacts. Got enough antidote - it's the monsters I'm worried about.</text>
+	</string>
+	<string id="st_stalker_jup_b212">
+		<text>To the ventilation complex, between the factory and the container warehouse. Why? Eh, hell if I know.</text>
+	</string>
+	<string id="st_stalker_jup_b219">
+		<text>I'm going to the Jupiter workshops. Maybe I'll find out what gives the place such a bad name.</text>
+	</string>
+	<string id="st_stalker_jup_b25">
+		<text>I'm going to the very bottom of the quarry. Stalkers say they find a lot of artifacts down there.</text>
+	</string>
+	<string id="st_stalker_jup_b32">
+		<text>To the parking lot where the old vehicles are. Gonna look for artifacts in electric anomalies.</text>
+	</string>
+	<string id="st_stalker_jup_b4">
+		<text>There's a neat little spot located between the Volkhov AA complex and the container warehouse, and that's where I'm headed.</text>
+	</string>
+	<string id="st_stalker_jup_b41">
+		<text>To the scientists' bunker.</text>
+	</string>
+	<string id="st_stalker_jup_b46">
+		<text>To the cooling tower northwest of Yanov station.</text>
+	</string>
+	<string id="st_stalker_jup_b47">
+		<text>Toward the Jupiter plant, but I have no desire to go inside. I'll hang around the administration buildings and see what my options are.</text>
+	</string>
+	<string id="st_stalker_jup_b6_anom_2">
+		<text>I'm going to the Ash Heap anomaly, beyond Kopachy.</text>
+	</string>
+	<string id="st_stalker_jup_b8_smart_terrain">
+		<text>I'm going to the Jupiter workshops. They say a helicopter went down in that area, so I thought I'd check it out.</text>
+	</string>
+	<string id="st_stalker_jup_sim_1">
+		<text>I'm going to the dilapidated train located between the Volkhov AA complex and the parking lot.</text>
+	</string>
+	<string id="st_stalker_jup_sim_2">
+		<text>I'm going to the southern tunnel, just to be safe in case of an emission.</text>
+	</string>
+	<string id="st_stalker_jup_sim_3">
+		<text>I'm going to this one spot between Yanov and Kopachy.</text>
+	</string>
+	<string id="st_stalker_jup_sim_4">
+		<text>I'm going to a spot not far from the canal, south of the cement factory.</text>
+	</string>
+	<string id="st_stalker_jup_sim_5">
+		<text>I'm going to a spot near the canal, north of the Jupiter plant.</text>
+	</string>
+	<string id="st_stalker_jup_sim_6">
+		<text>I'm going to check out the quarry.</text>
+	</string>
+	<string id="st_stalker_jup_sim_7">
+		<text>I'm going to check out the quarry.</text>
+	</string>
+	<string id="st_stalker_jup_sim_8">
+		<text>I'm going to check out the area north of Yanov.</text>
+	</string>
+	<string id="st_stalker_jup_sim_9">
+		<text>Toward the Volkhov AA complex. There's a nice spot to camp out, between the complex and the Kopachy village.</text>
+	</string>
+	<string id="st_stalker_jup_sim_10">
+		<text>Oh, just travelling... Heading toward the container warehouse.</text>
+	</string>
+	<string id="st_stalker_jup_sim_11">
+		<text>I'm surveying the area. Right now I'm going to check out what's south of the army checkpoint.</text>
+	</string>
+	<string id="st_stalker_jup_sim_12">
+		<text>To the helicopter pad, the one between the factory and the container warehouse.</text>
+	</string>
+	<string id="st_stalker_jup_sim_13">
+		<text>I'm going to this spot south of Yanov station, by the railroad.</text>
+	</string>
+	<string id="st_stalker_jup_sim_14">
+		<text>To a spot north of Yanov station.</text>
+	</string>
+	<string id="st_stalker_jup_sim_15">
+		<text>To the anomalous grove.</text>
+	</string>
+	<string id="st_stalker_jup_sim_16">
+		<text>To a spot south of the AA complex.</text>
+	</string>
+	<string id="st_stalker_jup_sim_17">
+		<text>To the cooling pond that's right by the Concrete Bath anomaly.</text>
+	</string>
+	<string id="st_stalker_jup_sim_18">
+		<text>I'm going to check out the area around the plant.</text>
+	</string>
+	<string id="st_stalker_jup_sim_19">
+		<text>I'm going to check out the area around the plant.</text>
+	</string>
+	<string id="st_stalker_pri_a15">
+		<text>To the yard behind the laundromat.</text>
+	</string>
+	<string id="st_stalker_pri_a16">
+		<text>To the laundromat, the safest place around.</text>
+	</string>
+	<string id="st_stalker_pri_a17">
+		<text>To the hospital. I hope I won't run into those Monolith lunatics along the way...</text>
+	</string>
+	<string id="st_stalker_pri_a18_smart_terrain">
+		<text>To the book store... I heard it provides decent cover from emissions.</text>
+	</string>
+	<string id="st_stalker_pri_a20">
+		<text>I'm going to see the local attraction - the All-People Friendship symbol. It's not far from the book store.</text>
+	</string>
+	<string id="st_stalker_pri_a21_smart_terrain">
+		<text>To the old grocery store. You ain't gonna find any fresh bread in there nowadays, but it's good enough to hide from an emission.</text>
+	</string>
+	<string id="st_stalker_pri_a22_smart_terrain">
+		<text>To the Berezka store.</text>
+	</string>
+	<string id="st_stalker_pri_a25_smart_terrain">
+		<text>To the old kindergarten.</text>
+	</string>
+	<string id="st_stalker_pri_a28">
+		<text>To the movie theater square, near the Prometheus monument.</text>
+	</string>
+	<string id="st_stalker_pri_b301">
+		<text>I'm headed to the school building. They say it's teeming with monsters, but it'll also do in case an emission hits.</text>
+	</string>
+	<string id="st_stalker_pri_b303">
+		<text>I'm headed to the old service center. There's supposed to be an anomaly on the first floor, and maybe some artifacts too.</text>
+	</string>
+	<string id="st_stalker_pri_b304">
+		<text>I'm exploring this part of town. Right now I'm headed to the old grocery store.</text>
+	</string>
+	<string id="st_stalker_pri_b304_monsters_smart_terrain">
+		<text>I'm exploring this part of town. Right now I'm headed to the old grocery store.</text>
+	</string>
+	<string id="st_stalker_pri_b305_dogs">
+		<text>I'm surveying the area. Right now I want to check out this one building behind the apartment complex.</text>
+	</string>
+	<string id="st_stalker_pri_b306">
+		<text>I want to search the public amenities center, I think it was called Yubileiny.</text>
+	</string>
+	<string id="st_stalker_pri_b307">
+		<text>I'm searching this area for anomalies. I heard there's a fire anomaly in a yard, west of the kindergarten...</text>
+	</string>
+	<string id="st_stalker_pri_b35_envoy">
+		<text>Oh, I'm just touring the town. Heading to the apartment complex right now.</text>
+	</string>
+	<string id="st_stalker_pri_b35_mercs">
+		<text>Oh, I'm just touring the town. Heading to the apartment complex right now.</text>
+	</string>
+	<string id="st_stalker_pri_b35_military">
+		<text>Oh, I'm just touring the town. Heading to the apartment complex right now.</text>
+	</string>
+	<string id="st_stalker_pri_b36_smart_terrain">
+		<text>I'm just travelling around, heading to the river port right now. Hopefully I won't run into any Monolith fanatics...</text>
+	</string>
+	<string id="st_stalker_pri_b302">
+		<text>I'm looking for a place in Pripyat with lots of artifacts and no monsters or Monolith fighters... He-he... Seriously, I'm going to check out this anomaly I heard of, just south of the river port.</text>
+	</string>
+	<string id="st_stalker_pri_sim_1">
+		<text>Toward the Prometheus movie theater.</text>
+	</string>
+	<string id="st_stalker_pri_sim_2">
+		<text>To the movie theater square, near the Prometheus monument.</text>
+	</string>
+	<string id="st_stalker_pri_sim_3">
+		<text>I want to lay low for a while and catch my breath. There's a neat little spot in a yard north of the kindergarten that'd be perfect for it.</text>
+	</string>
+	<string id="st_stalker_pri_sim_4">
+		<text>South of the apartment complex.</text>
+	</string>
+	<string id="st_stalker_pri_sim_5">
+		<text>I'm going to this place between the kindergarten and the apartment complex.</text>
+	</string>
+	<string id="st_cannot_tell">
+		<text>This is none of your business.</text>
+	</string>
+	<string id="dm_anomalies_8">
+		<text>There's this place they call Scar, where the ground looks like it has been hacked with an axe. People have found artifacts there, but once you go in there something weird starts to happen. That thing hits your brains so hard you almost forget how to breathe, let alone try to get your ass out of there.</text>
+	</string>
+	<string id="dm_anomalies_1">
+		<text>You know where the dredge station is? It's been battered up by gravitational anomalies, but not too bad for an experienced Stalker. Just keep throwing bolts as usual. There's also radiation, inside and out - it's like being next to a massive chunk of enriched uranium.</text>
+	</string>
+	<string id="dm_anomalies_4">
+		<text>There's an old substation here, also called the Iron Forest. You'll understand why when you see it. Some people claim to have found clusters of artifacts in that area after an emission hit. It's not all that dangerous, mainly electric anomalies and a bit of radiation... There's also a few poltergeists, that will bury you in all kinds of crap if you don't hide in time.</text>
+	</string>
+	<string id="dm_job_12">
+		<text>Work? I don't know, to be honest. But if you get a chance to help Freedom out - go see our boss at Yanov. Go to the southern wing and see Loki - that's him. Remember, if you believe in the advancement of humankind, in greater consciousness and significance of the Zone's gifts, you'll be making the right choice.</text>
+	</string>
+	<string id="dm_job_13">
+		<text>No idea. But if you find something that can help us in our fight against the Zone and those who think it's a gift rather than a curse, go see the commander of Duty's expedition unit - Lieutenant Colonel Shulga. He's the man in charge at Yanov station. You'll find him in the northern wing. One thing's for sure - any civilian who contributes to Duty's overall success will get a handsome reward.</text>
+	</string>
+	<string id="dm_information_19">
+		<text>Everyone's talking about some weird stuff going on at the old cooling tower. If you turn on the common frequency, you catch bits and pieces of distress calls, sounding like some poor bastard trying to get out of an anomaly. When you ask for coordinates, there's no reply. The weirdest thing though is the sound. That kind of distortion can't be explained away...</text>
+	</string>
+	<string id="st_stalker_zat_sim_27">
+		<text>I'm headed to a place half way between Skadovsk and Shevchenko.</text>
+	</string>
+	<string id="st_stalker_jup_a9">
+		<text>To Jupiter. I probably won't venture too far in though.</text>
+	</string>
+</string_table>

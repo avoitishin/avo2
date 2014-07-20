@@ -1,0 +1,12 @@
+shovel_mili		= 1, prob=0.024 \n
+ied				= 1, prob=0.024 \n
+mine			= 1, prob=0.048 \n
+meinkampf		= 1, prob=0.086 \n
+maps_kit		= 1, prob=0.040 \n
+
+walkie		= 1, prob=0.085 \n
+tarpaulin		= 2, prob=0.048 \n
+rope		= 2, prob=0.068 \n
+cutlery		= 1, prob=0.088 \n
+
+mili_maps		= 1, prob=0.062 \n

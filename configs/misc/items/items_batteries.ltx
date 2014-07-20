@@ -1,0 +1,148 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; BATTERY PACKS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[batteries]:booster
+$spawn 				= "food and drugs\kolbasa"
+$prefetch 			= 16
+cform				= skeleton
+visual				= dynamics\equipments\trade\battery.ogf
+radius				= 68; 50
+inv_weight			= 0.139
+
+inv_name			= st_batteries
+inv_name_short		= st_batteries
+description			= st_batteries_descr
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 11
+inv_grid_y			= 17
+cost				= 1135
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+// should be deleted after update
+bone_name				= bip01_r_hand
+position_offset			 = 0.0,0.0,0.0
+angle_offset			 = 1.570790,1.570790,3.92699
+
+use_sound			= interface\inv_batt
+
+[batteries_dead]:booster
+$spawn 				= "food and drugs\kolbasa"
+$prefetch 			= 16
+cform				= skeleton
+visual				= dynamics\equipments\trade\battery.ogf
+radius				= 68; 50
+inv_weight			= 0.127
+
+inv_name			= st_batteries_dead
+inv_name_short		= st_batteries_dead
+description			= st_batteries_dead_descr
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 12
+inv_grid_y			= 19
+cost				= 424
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+// should be deleted after update
+bone_name				= bip01_r_hand
+position_offset			 = 0.0,0.0,0.0
+angle_offset			 = 1.570790,1.570790,3.92699
+
+use_sound			= interface\inv_batt
+
+[batteries_ccell]:booster
+$spawn 				= "food and drugs\kolbasa"
+$prefetch 			= 16
+cform				= skeleton
+visual				= dynamics\equipments\trade\battery.ogf
+radius				= 68; 50
+inv_weight			= 0.141
+
+inv_name			= st_batteries_ccell
+inv_name_short		= st_batteries_ccell
+description			= st_batteries_ccell_descr
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 10
+inv_grid_y			= 17
+cost				= 1690
+
+attach_angle_offset		= 0.440521, 1.378287, -0.644026
+attach_position_offset	= 0.104196, -0.010821, 0.076969
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+// should be deleted after update
+bone_name				= bip01_r_hand
+position_offset			 = 0.0,0.0,0.0
+angle_offset			 = 1.570790,1.570790,3.92699
+
+use_sound			= interface\inv_batt
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;DEAD BATTERIES;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[batteries_empty]:identity_immunities
+$spawn 				= "devices\roubles"
+$prefetch 			= 16
+class				= S_PDA
+cform				= skeleton
+radius				= 68; 50
+
+visual          = dynamics\equipments\trade\battery.ogf
+inv_name			= st_batteries_empty
+inv_name_short		= st_batteries_empty
+description			= st_batteries_empty_descr
+
+inv_weight   	= 0.139
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 12
+inv_grid_y			= 19
+cost    		= 32
+
+attach_angle_offset		= -0.287979, 1.560923, 1.544060
+attach_position_offset		= 0.096910, -0.013594, 0.107925
+attach_bone_name		= bip01_r_hand
+auto_attach				= false
+
+
+[batteries_dead_empty]:batteries_empty
+
+inv_name			= st_batteries_dead_empty
+inv_name_short		= st_batteries_dead_empty
+description			= st_batteries_dead_empty_descr
+inv_weight   		= 0.127
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 12
+inv_grid_y			= 19
+
+[batteries_ccell_empty]:batteries_empty
+
+inv_name			= st_batteries_ccell_empty
+inv_name_short		= st_batteries_ccell_empty
+description			= st_batteries_ccell_empty_descr
+inv_weight   		= 0.141
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 10
+inv_grid_y			= 17

@@ -1,0 +1,41 @@
+########################
+# Alundaio
+########################
+
+#debug tools
+#debug/
+#xrs_debug_tools.script
+#debug_cmd_list.script
+#ui_main_menu.script
+#ui_debug_advanced.script
+#ui_debug_hud.script
+#ui_debug_main.script
+#ui_debug_spawner.script
+#ui_debug_object.script
+#ui_debug_main.xml
+#ui_custom_msgs.xml
+
+/textures/
+/levels/
+/meshes/
+/sounds/
+
+class_diversity/assaulter/gamedata/textures/
+class_diversity/assaulter/gamedata/meshes/
+class_diversity/assaulter/gamedata/sounds/
+
+class_diversity/sniper/gamedata/textures/
+class_diversity/sniper/gamedata/meshes/
+class_diversity/sniper/gamedata/sounds/
+
+class_diversity/recon/gamedata/textures/
+class_diversity/recon/gamedata/meshes/
+class_diversity/recon/gamedata/sounds/
+
+
+########################
+# aVo
+########################
+*.jpg
+*.rtf
+/anims/

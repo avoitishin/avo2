@@ -1,0 +1,57 @@
+class "opt_gameplay" (CUIWindow)
+
+function opt_gameplay:__init() super()
+end
+
+function opt_gameplay:__finalize()
+
+end
+
+function opt_gameplay:InitControls(x, y, xml, handler)
+
+	self:SetWndPos(vector2():set(x,y))
+	self:SetWndSize(vector2():set(738,416))
+	self:SetAutoDelete(true)
+
+--	self.bk = xml:InitFrame("frame_gameplay", self)
+
+	xml:InitStatic("tab_gameplay:cap_check_crosshair",		self)
+	xml:InitStatic("tab_gameplay:cap_check_dyn_crosshair",	self)
+	xml:InitStatic("tab_gameplay:cap_check_show_weapon",	self)
+	xml:InitStatic("tab_gameplay:cap_check_important_save",	self)
+	xml:InitStatic("tab_gameplay:cap_check_crouch_toggle",	self)
+	xml:InitStatic("tab_gameplay:cap_check_hud_draw",		self)
+
+	xml:InitCheck("tab_gameplay:check_crosshair",			self)
+	xml:InitCheck("tab_gameplay:check_dyn_crosshair", 		self)
+	xml:InitCheck("tab_gameplay:check_show_weapon", 		self)
+	xml:InitCheck("tab_gameplay:check_important_save", 		self)
+	xml:InitCheck("tab_gameplay:check_crouch_toggle",		self)
+	xml:InitCheck("tab_gameplay:check_hud_draw",			self)
+
+	-- Extended Options (dynamic hud, battery life, infinite ammo, AI Aim)
+	xml:InitStatic("tab_gameplay:cap_check_hud_helm", self)
+	local ck = xml:InitCheck("tab_gameplay:check_hud_helm",	self)
+	handler.ck_hud_helm = ck
+	handler:Register(ck,"ck_hud_helm")
+
+	xml:InitStatic("tab_gameplay:cap_check_upd_drain", self)
+	ck = xml:InitCheck("tab_gameplay:check_upd_drain",	self)
+	handler.ck_upd_drain = ck
+	handler:Register(ck,"ck_upd_drain")
+
+	xml:InitStatic("tab_gameplay:cap_check_inf_ammo", self)
+	ck = xml:InitCheck("tab_gameplay:check_inf_ammo",	self)
+	handler.ck_inf_ammo = ck
+	handler:Register(ck,"ck_inf_ammo")
+
+	xml:InitStatic("tab_gameplay:cap_check_ai_aim", self)
+	ck = xml:InitCheck("tab_gameplay:check_ai_aim",	self)
+	handler.ck_ai_aim = ck
+	handler:Register(ck,"ck_ai_aim")
+
+	xml:InitStatic("tab_gameplay:cap_check_safe_cover", self)
+	ck = xml:InitCheck("tab_gameplay:check_safe_cover",	self)
+	handler.ck_safe_cover = ck
+	handler:Register(ck,"ck_safe_cover")
+end

@@ -1,0 +1,24 @@
+shovel_mili		= 1, prob=0.016 \n
+ied_rpg			= 2, prob=0.036 \n
+ied			= 1, prob=0.008 \n
+meinkampf		= 1, prob=0.026 \n
+jar			= 2, prob=0.030 \n
+welding_goggles		= 1, prob=0.030 \n
+jewelry_box		= 1, prob=0.036 \n
+drugs_kit		= 1, prob=0.024 \n
+
+mine			= 1, prob=0.048 \n
+
+porn = 1, prob=0.034 \n
+
+crowbar		= 1, prob=0.048 \n
+cards		= 2, prob=0.064 \n
+boots		= 1, prob=0.044 \n
+mirror		= 1, prob=0.048 \n
+underwear		= 1, prob=0.036 \n
+porn2		= 1, prob=0.015 \n
+rope		= 1, prob=0.022 \n
+cutlery		= 1, prob=0.022 \n
+
+letter_freedom_manual_1_of_2		= 1, prob=0.011 \n
+letter_freedom_manual_2_of_2		= 1, prob=0.011 \n

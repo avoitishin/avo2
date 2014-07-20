@@ -1,0 +1,207 @@
+[up_sect_firsta_binoc]
+;---------------
+cost		      		= 970
+
+scope_nightvision = scope_contrast
+
+[up_sect_firstc_binoc]
+;------------------
+cost		      		= 1240
+
+scope_zoom_factor       = -9
+inv_weight              = +0.2
+
+[up_sect_firste_binoc]
+;--------------
+cost		      		= 2980
+
+scope_dynamic_zoom = on
+inv_weight              = +0.12
+
+[up_sect_secona_binoc]
+;---------------
+cost		      		= 1090
+value					= -0.18
+
+control_inertion_factor = -0.4f
+crosshair_inertion			= -0.26f
+
+PDM_disp_base 				= -0.15
+PDM_disp_vel_factor 		= -0.3
+PDM_disp_accel_factor 		= -0.3
+
+inv_weight              = -0.18
+
+[up_sect_seconc_binoc]
+;--------------
+cost		      		= 780
+value					= -0.22
+
+control_inertion_factor = -0.2f
+crosshair_inertion			= -0.13f
+
+PDM_disp_base 				= -0.07
+PDM_disp_vel_factor 		= -0.15
+PDM_disp_accel_factor 		= -0.15
+
+inv_weight              = -0.22
+
+[up_sect_secone_binoc]
+;--------------
+cost		      		= 660
+value					= -0.11
+
+control_inertion_factor = -0.1f
+crosshair_inertion			= -0.07f
+
+PDM_disp_base 				= -0.04
+PDM_disp_vel_factor 		= -0.07
+PDM_disp_accel_factor 		= -0.07
+
+inv_weight              = -0.11
+
+[up_firsta_binoc]
+scheme_index            = 0, 0
+known                   = 1
+effects                 = 
+section                 = up_sect_firsta_binoc
+property                = prop_contrast
+
+known                   = 1
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_opt_binoc1_name
+description             = st_up_opt_binoc1_descr
+icon                    = ui_inGame2_upgrade_FT200M_17
+
+[up_firstc_binoc]
+scheme_index            = 1, 0
+known                   = 1
+effects                 = up_gr_firstef_binoc
+section                 = up_sect_firstc_binoc
+property                = prop_scope_6x
+
+known                   = 1
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_opt_binoc2_name
+description             = st_up_opt_binoc2_descr
+icon                    = ui_inGame2_upgrade_FT200M_16
+
+[up_firste_binoc]
+scheme_index            = 2, 0
+known                   = 1
+effects                 =
+section                 = up_sect_firste_binoc
+property                = prop_scope
+
+known                   = 1
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_opt_binoc3_name
+description             = st_up_opt_binoc3_descr
+icon                    = ui_inGame2_upgrade_FT200M_19
+
+[up_secona_binoc]
+scheme_index            = 0, 1
+known                   = 1
+effects                 = up_gr_seconcd_binoc
+section                 = up_sect_secona_binoc
+property                = prop_weight
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_stk_binoc1_name
+description             = st_up_stk_binoc1_descr
+icon                    = ui_inGame2_upgrade_SGI_5K_13
+
+[up_seconc_binoc]
+scheme_index            = 1, 1
+known                   = 1
+effects                 = up_gr_seconef_binoc
+section                 = up_sect_secone_binoc
+property                = prop_weight
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_stk_binoc2_name
+description             = st_up_stk_binoc2_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_9
+
+[up_secone_binoc]
+scheme_index            = 2, 1
+known                   = 1
+effects                 =
+section                 = up_sect_secone_binoc
+property                = prop_weight
+
+known                   = 1
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_stk_binoc3_name
+description             = st_up_stk_binoc3_descr
+icon                    = ui_inGame2_upgrade_AS96_2_13
+
+[up_gr_firstab_binoc]
+elements                = up_firsta_binoc
+
+[up_gr_firstcd_binoc]
+elements                = up_firstc_binoc
+
+[up_gr_firstef_binoc]
+elements                = up_firste_binoc
+
+[up_gr_seconab_binoc]
+elements                = up_secona_binoc
+
+[up_gr_seconcd_binoc]
+elements                = up_seconc_binoc
+
+[up_gr_seconef_binoc]
+elements                = up_secone_binoc

@@ -1,0 +1,668 @@
+----------------------
+-- AI Tweaks
+-- Alundaio
+--[[
+	Copyright (C) 2012 Alundaio
+	This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+-]]
+
+local ini = ini_file("ai_tweaks\\ai_tweaks.ltx")
+local InfiniteAmmoPrimary = alun_utils.read_from_ini(ini,"weapon_reload","infinite_ammo_primary","bool",true)
+local InfiniteAmmoSecondary = alun_utils.read_from_ini(ini,"weapon_reload","infinite_ammo_secondary","bool",true)
+local LIOSEnable = alun_utils.read_from_ini(ini,"lios","enable","bool",false)
+local LIOSRange = alun_utils.read_from_ini(ini,"lios","range_add","float",0.30)
+local LIOSFov = alun_utils.read_from_ini(ini,"lios","fov_add","float",-0.30)
+
+local NpcHelpEnable = alun_utils.read_from_ini(ini,"npc_help","enable","bool",true)
+local NpcHelpDistanceClose = alun_utils.read_from_ini(ini,"npc_help","npc_help_distance_close","float",225)
+local NpcHelpTimerClose = alun_utils.read_from_ini(ini,"npc_help","npc_help_timer_close","float",3500)
+local NpcHelpDistanceMedium = alun_utils.read_from_ini(ini,"npc_help","npc_help_distance_medium","float",900)
+local NpcHelpTimerMedium = alun_utils.read_from_ini(ini,"npc_help","npc_help_timer_medium","float",15000)
+local NpcHelpDistanceFar = alun_utils.read_from_ini(ini,"npc_help","npc_help_distance_far","float",2500)
+local NpcHelpTimerFar = alun_utils.read_from_ini(ini,"npc_help","npc_help_timer_far","float",20000)
+
+GhillieEnable = alun_utils.read_from_ini(ini,"ghillie_settings","enable","bool",true)
+local GhillieSightRange = alun_utils.read_from_ini(ini,"ghillie_settings","detect_range_factor","float",0.8)
+local GhillieAimTime = alun_utils.read_from_ini(ini,"ghillie_settings","aim_time_factor","float",2)
+local GhillieHelpTimeFactor = alun_utils.read_from_ini(ini,"ghillie_settings","help_timer_factor","float",2)
+local GhillieHelpDistanceFactor = alun_utils.read_from_ini(ini,"ghillie_settings","help_distance_factor","float",0.9)
+
+local NightEnable = alun_utils.read_from_ini(ini,"night_settings","enable","bool",true)
+local NightSightRange = alun_utils.read_from_ini(ini,"night_settings","detect_range_factor","float",0.85)
+local NightAimTime = alun_utils.read_from_ini(ini,"night_settings","aim_time_factor","float",1.5)
+local NightHelpTimeFactor = alun_utils.read_from_ini(ini,"night_settings","help_timer_factor","float",1.2)
+local NightHelpDistanceFactor = alun_utils.read_from_ini(ini,"night_settings","help_distance_factor","float",0.8)
+
+local ReconEnable = alun_utils.read_from_ini(ini,"recon_settings","enable","bool",true)
+local ReconSightRange = alun_utils.read_from_ini(ini,"recon_settings","detect_range_factor","float",0.8)
+local ReconAimTime = alun_utils.read_from_ini(ini,"recon_settings","aim_time_factor","float",1.5)
+local ReconHelpTimeFactor = alun_utils.read_from_ini(ini,"recon_settings","help_timer_factor","float",1.2)
+local ReconHelpDistanceFactor = alun_utils.read_from_ini(ini,"recon_settings","help_distance_factor","float",0.8)
+ini = nil
+
+local is_night = xr_conditions.is_dark_night()
+local act_class = axr_misery.ActorClass
+
+local scope_flags = {	[1] = true,
+						[3] = true,
+						[5] = true,
+						[7] = true
+}
+
+local gl_flags = {	[2] = true,
+					[4] = true,
+					[6] = true,
+					[7] = true
+}
+
+local silencer_flags = { 	[4] = true,
+							[5] = true,
+							[6] = true,
+							[7] = true
+}
+
+------------------
+-- on_game_start()
+------------------
+function on_game_start()
+	callback_register("npc_on_net_destroy",npc_on_net_destroy)
+	callback_register("npc_on_weapon_sight",npc_on_weapon_sight)
+	callback_register("npc_on_weapon_unsight",npc_on_weapon_unsight)
+	callback_register("npc_on_weapon_no_ammo",npc_on_weapon_no_ammo)
+	callback_register("npc_on_weapon_unstrapped",npc_on_weapon_unstrapped)
+	callback_register("squad_can_help_actor",squad_can_help_actor)
+	callback_register("npc_on_hit_callback",npc_on_hit_callback)
+	callback_register("npc_on_update",npc_on_update)
+end
+
+function npc_on_hit_callback(npc,who)
+	local reset_states = {
+							["search_corpse"] 	= true,
+							["pickup_crouch"] 	= true,
+							["help_wounded"] 	= true,
+							["help_victim_1"] 	= true,
+							["help_victim_2"] 	= true,
+							["search"]			= true
+	}
+	local state = state_mgr.get_state(npc)
+	if (state and reset_states[state]) then
+		npc:clear_animations()
+	end
+end
+
+
+function npc_on_net_destroy(npc)
+	local st = db.storage[npc:id()]
+	if (st and st.range and st.fov) then
+		npc:set_range(st.range)
+		npc:set_fov(st.fov)
+		st.range = nil
+		st.fov = nil
+	end
+end
+
+-------------------
+-- npc_on_weapon_sight(npc,weapon,storage,sight_type)
+-------------------
+function npc_on_weapon_sight(npc,wpn,st,sight_type)
+	if not (LIOSEnable) then
+		return
+	end
+
+	if not (alun_utils.addon_attached(wpn,"sc")) then
+		return
+	end
+
+	local sec = wpn:section()
+	local scope = alun_utils.read_from_ini(nil,sec,"scope_status","string",nil) == 2 and alun_utils.read_from_ini(nil,sec,"scopes_sect","string",nil) or sec
+	local zoom = alun_utils.read_from_ini(nil,scope,"scope_zoom_factor","float",30)
+	local max_range = alun_utils.read_from_ini(nil,sec,"fire_distance","float",150)
+
+	if not (st.range) then
+		st.range = npc:range()
+	end
+
+	if not (st.fov) then
+		st.fov = npc:fov()
+	end
+
+	if (zoom < 80 and max_range > st.range) then
+		zoom = 30/zoom
+
+		local range = st.range + (st.range * LIOSRange * zoom)
+		if (range > max_range) then
+			range = max_range
+		end
+
+		local fov = st.fov + (st.fov * LIOSFov * zoom)
+		if (fov < 40) then
+			fov = 40
+		end
+
+		npc:set_range(range)
+		npc:set_fov(fov)
+	end
+end
+
+-------------------
+-- npc_on_weapon_unsight(npc,weapon,storage,sight_type)
+-------------------
+function npc_on_weapon_unsight(npc,wpn,st,sight_type)
+	if (st.range and st.fov) then
+		npc:set_range(st.range)
+		npc:set_fov(st.fov)
+		st.range = nil
+		st.fov = nil
+	end
+end
+
+------------------
+-- npc_on_weapon_no_ammo(npc,weapon,storage)
+-------------------
+function npc_on_weapon_no_ammo(npc,wpn,st)
+
+	local isPistol = alun_utils.isPistol(wpn)
+	if (isPistol and InfiniteAmmoSecondary) or (not isPistol and axr_misery.Config:GetValue("settings","infinite_npc_primary_ammo",1)) then
+		return
+	end
+
+	local ini = system_ini()
+	local sec = wpn:section()
+	local se_wpn = alife():object(wpn:id())
+	local data = stpk_utils.get_weapon_data(se_wpn)
+	local ammos = alun_utils.parse_list(ini,sec,"ammo_class")
+
+	local box = data.ammo_type+1 == 1 and npc:object(ammos[1]) or npc:object(ammos[2])
+	if (box) then
+		alife():release( alife():object(box:id()), true)
+	end
+end
+
+-------------------
+-- npc_on_weapon_unstrapped(npc,weapon)
+-------------------
+function npc_on_weapon_unstrapped(npc,weapon)
+--[[
+	local id = weapon:id()
+	local se_wpn = alife():object(id)
+
+	local data = alun_utils.get_weapon_data(se_wpn)
+	if not (data) then
+		return
+	end
+
+	local sim = alife()
+
+	local sec = weapon:section()
+	local flag = data.addon_flags
+
+	if not (scope_flags[data.addon_flags]) then
+		local sc_status = alun_utils.read_from_ini(nil,sec,"scope_status","float",0)
+		local sc_name = sc_status == 2 and alun_utils.read_from_ini(nil,sec,"scope_name","string","")
+		local sc = sc_name and npc:object(sc_name)
+		if (sc) then
+			flag = flag + 1
+			sim:release(sim:object(sc:id()),true)
+		end
+	end
+
+	if not (gl_flags[data.addon_flags]) then
+		local gl_status = alun_utils.read_from_ini(nil,sec,"grenade_launcher_status","float",0)
+		local gl_name = gl_status == 2 and alun_utils.read_from_ini(nil,sec,"grenade_launcher_name","string","")
+		local gl = gl_name and npc:object(gl_name)
+		if (gl) then
+			flag = flag + 2
+			sim:release(sim:object(gl:id()),true)
+		end
+	end
+
+	if not (silencer_flags[data.addon_flags]) then
+		local si_status = alun_utils.read_from_ini(nil,sec,"silencer_status","float",0)
+		local si_name = si_status == 2 and alun_utils.read_from_ini(nil,sec,"silencer_name","string","")
+		local si = si_name and npc:object(si_name)
+		if (si) then
+			flag = flag + 4
+			sim:release(sim:object(si:id()),true)
+		end
+	end
+
+	if (data.addon_flags ~= flag) then
+		local function update_addon_flag(se_wpn,p)
+			if (se_wpn) then
+				local data = alun_utils.get_weapon_data(se_wpn)
+				data.addon_flags = flag
+				alun_utils.set_weapon_data(data,se_wpn)
+			end
+		end
+		alun_utils.switch_offline_execute(se_wpn.id,update_addon_flag,flag)
+	end
+--]]
+end
+
+-------------------
+-- squad_can_help_actor(squad)
+-------------------
+function squad_can_help_actor(squad)
+	if (game_relations.get_squad_goodwill_to_actor_by_id(squad.id) == "friend" and db.actor:position():distance_to_sqr(squad.position) <= 22500) then
+		return true
+	end
+end
+
+
+-------------------
+-- npc_on_update(obj, st)
+-------------------
+function npc_on_update(obj,st)
+	if not (st) and not (obj) then
+		return
+	end
+	
+	--Yasti: Ghillie aim time increase--
+	if GhilliEnable or NightEnable or ReconEnable then
+		if db.actor and st.enemy_id == db.actor:id() then
+			aim_modify(obj,st)
+		end
+	end
+	--End Yasti--
+	
+	--Yasti: NPC informs close-by allies of your location--
+	if (NpcHelpEnable) then
+		local help_dist_close
+		local help_dist_med
+		local help_dist_far
+		
+		if GhillieEnable and wearing_ghillie() and NightEnable and is_night then
+			help_dist_close = NpcHelpDistanceClose * GhillieHelpDistanceFactor * NightHelpDistanceFactor
+			help_dist_med = NpcHelpDistanceMedium * GhillieHelpDistanceFactor * NightHelpDistanceFactor
+			help_dist_far = NpcHelpDistanceFar * GhillieHelpDistanceFactor * NightHelpDistanceFactor
+		
+		elseif GhillieEnable and wearing_ghillie() and NightEnable and not is_night then
+			help_dist_close = NpcHelpDistanceClose * GhillieHelpDistanceFactor
+			help_dist_med = NpcHelpDistanceMedium * GhillieHelpDistanceFactor
+			help_dist_far = NpcHelpDistanceFar * GhillieHelpDistanceFactor
+			
+		elseif NightEnable and is_night then
+			help_dist_close = NpcHelpDistanceClose * NightHelpDistanceFactor
+			help_dist_med = NpcHelpDistanceMedium * NightHelpDistanceFactor
+			help_dist_far = NpcHelpDistanceFar * NightHelpDistanceFactor
+		
+		else
+			help_dist_close = NpcHelpDistanceClose
+			help_dist_med = NpcHelpDistanceMedium
+			help_dist_far = NpcHelpDistanceFar
+		end
+		
+		if IsStalker(obj) and xr_combat_ignore.fighting_with_actor_npcs[obj:id()] == true then
+			--alun_utils.printf("ai_tweaks.npc_on_update: fighting with actor table check: "..tostring(k).." | "..tostring(v))
+			local hostile_npc = obj
+			local near_npc = get_near_npc(hostile_npc)
+			local npc_distances = near_npc and hostile_npc:position():distance_to_sqr(near_npc:position())
+			local timer_close = get_timer_close(db.storage[hostile_npc:id()])
+			local timer_medium = get_timer_med(db.storage[hostile_npc:id()])
+			local timer_far = get_timer_far(db.storage[hostile_npc:id()])
+			local fighting_actor = near_npc and xr_combat_ignore.fighting_with_actor_npcs[near_npc:id()]
+					--Yasti: Distance Checks for Closest NPC to Hostile NPC. Further away they are the longer it takes to flag NPC to engage Actor
+			if not is_in_ignored_zone(hostile_npc) then
+				if near_npc and near_npc:alive() and npc_distances <= help_dist_close and timer_close == 1 and fighting_actor == nil then
+					if near_npc:character_community() == hostile_npc:character_community() then
+						db.storage[near_npc:id()].enemy_id = db.actor:id()
+						xr_combat_ignore.fighting_with_actor_npcs[near_npc:id()] = true
+			--			alun_utils.printf("ai_tweaks.npc_on_update: Nearest Close Dist Stalker to "..tostring(hostile_npc:character_name()).." is: "..tostring(near_npc:character_name()).." and is now hostile to Actor")
+					end
+				
+				elseif near_npc and near_npc:alive() and (npc_distances > help_dist_close) and (npc_distances <= help_dist_med) and timer_medium == 1 and fighting_actor == nil then
+					if near_npc:character_community() == hostile_npc:character_community() then
+						db.storage[near_npc:id()].enemy_id = db.actor:id()
+						xr_combat_ignore.fighting_with_actor_npcs[near_npc:id()] = true
+			--			alun_utils.printf("ai_tweaks.npc_on_update: Nearest Medium Dist Stalker to "..tostring(hostile_npc:character_name()).." is: "..tostring(near_npc:character_name()).." and is now hostile to Actor")
+					end
+							
+				elseif near_npc and near_npc:alive() and (npc_distances > help_dist_med) and (npc_distances <= help_dist_far) and timer_far == 1 and fighting_actor == nil then
+					if near_npc:character_community() == hostile_npc:character_community() then
+						db.storage[near_npc:id()].enemy_id = db.actor:id()
+						xr_combat_ignore.fighting_with_actor_npcs[near_npc:id()] = true
+			--			alun_utils.printf("ai_tweaks.npc_on_update: Nearest Far Dist Stalker to "..tostring(hostile_npc:character_name()).." is: "..tostring(near_npc:character_name()).." and is now hostile to Actor")
+					end
+				
+				else
+					if timer_close == nil then
+						if GhillieEnable and wearing_ghillie() and NightEnable and is_night then
+							set_timer_close(db.storage[hostile_npc:id()], NpcHelpTimerClose * GhillieHelpTimeFactor * NightHelpTimeFactor)
+				
+						elseif GhillieEnable and wearing_ghillie() and not is_night then
+							set_timer_close(db.storage[hostile_npc:id()], NpcHelpTimerClose * GhillieHelpTimeFactor)
+					
+						elseif NightEnable and is_night then
+							set_timer_close(db.storage[hostile_npc:id()], NpcHelpTimerClose * NightHelpTimeFactor)
+					
+						else
+							set_timer_close(db.storage[hostile_npc:id()], NpcHelpTimerClose)
+						end
+			--			alun_utils.printf("ai_tweaks: NPC on update: close dist timer started for: "..tostring(hostile_npc:character_name()))
+					end
+					
+					if timer_medium == nil then
+						if GhillieEnable and wearing_ghillie() and NightEnable and is_night then
+							set_timer_med(db.storage[hostile_npc:id()], NpcHelpTimerMedium * GhillieHelpTimeFactor * NightHelpTimeFactor)
+				
+						elseif GhillieEnable and wearing_ghillie() and not is_night then						
+							set_timer_med(db.storage[hostile_npc:id()], NpcHelpTimerMedium * GhillieHelpTimeFactor)
+					
+						elseif NightEnable and is_night then
+							set_timer_med(db.storage[hostile_npc:id()], NpcHelpTimerMedium * NightHelpTimeFactor)
+						
+						else
+							set_timer_med(db.storage[hostile_npc:id()], NpcHelpTimerMedium)
+						end
+			--			alun_utils.printf("ai_tweaks: NPC on update: med dist timer started for: "..tostring(hostile_npc:character_name()))
+					end
+				
+					if timer_far == nil then
+						if GhillieEnable and wearing_ghillie() and NightEnable and is_night then
+							set_timer_far(db.storage[hostile_npc:id()], NpcHelpTimerFar * GhillieHelpTimeFactor * NightHelpTimeFactor)
+					
+						elseif GhillieEnable and wearing_ghillie() and NightEnable and not is_night then
+							set_timer_far(db.storage[hostile_npc:id()], NpcHelpTimerFar * GhillieHelpTimeFactor)
+					
+						elseif NightEnable and is_night then
+							set_timer_far(db.storage[hostile_npc:id()], NpcHelpTimerFar * NightHelpTimeFactor)
+					
+						else
+							set_timer_far(db.storage[hostile_npc:id()], NpcHelpTimerFar)
+						end
+			--			alun_utils.printf("ai_tweaks: NPC on update: far dist timer started for: "..tostring(hostile_npc:character_name()))
+					end
+				end
+			end
+		end
+	end
+	--End Yasti
+end
+
+
+--[[
+--------------------------------------------------------
+	Checks Number List for Function override_combat_ignore
+1 = Ghillie Suit
+2 = Recon Class
+
+
+--------------------------------------------------------
+--]]
+function override_combat_ignore(obj,enemy,check_num)
+	local id = obj:id()
+	local ene_id = enemy:id()
+	
+	local ghillie_range = tonumber((obj:range() * GhillieSightRange)*(obj:range() * GhillieSightRange)) --distance squared for detection
+	local ghillie_range_night = tonumber((obj:range() * GhillieSightRange * NightSightRange)*(obj:range() * GhillieSightRange * NightSightRange)) --distance squared for detection
+	local recon_range = tonumber((obj:range() * ReconSightRange)*(obj:range() * ReconSightRange)) --distance squared for detection
+	
+	if check_num == 1 then
+		if GhillieEnable and NightEnable then
+			if wearing_ghillie() and is_night then
+				if obj:position():distance_to_sqr(enemy:position()) >= ghillie_range_night then
+					return true
+				end
+			
+			elseif wearing_ghillie() and not is_night then 																--Checks to see if Ghillie Suit is being Worn
+				if obj:position():distance_to_sqr(enemy:position()) >= ghillie_range then			--Distance the player is no longer ignored by NPC
+					return true
+				end
+			end
+		
+		elseif GhillieEnable then
+			if wearing_ghillie() then
+				if obj:position():distance_to_sqr(enemy:position()) >= ghillie_range then			--Distance the player is no longer ignored by NPC
+					return true
+				end
+			end
+		end
+	
+	elseif check_num == 2 then
+		if act_class == "recon" and ReconEnable then
+			if GhillieEnable and NightEnable then
+				if wearing_ghillie() and is_night then
+					if obj:position():distance_to_sqr(enemy:position()) >= (ghillie_range_night * ReconSightRange) then
+						return true
+					end
+				end
+			
+			elseif NightEnable then
+				if is_night then
+					if obj:position():distance_to_sqr(enemy:position()) >= (recon_range * NightSightRange) then
+						return true
+					end
+				end
+			end
+		end
+	end
+	
+	return false
+end
+
+
+--------------------------------------------------------
+--Function used to check for closest stalker to NPC that isn't fighting actor. Modified from alun_utils.get_nearest_stalker
+--------------------------------------------------------
+
+function get_near_npc(npc)
+	if not (alun_utils.db.OnlineStalkers) then
+		return
+	end
+	local stalker
+	local dist
+	local nearest_stalker,nearest_dist
+	local pos
+	
+	
+	for i=1, #alun_utils.db.OnlineStalkers do
+		stalker = db.storage[alun_utils.db.OnlineStalkers[i]] and db.storage[alun_utils.db.OnlineStalkers[i]].object or level.object_by_id(alun_utils.db.OnlineStalkers[i])
+		if (stalker and stalker:alive() and (stalker:id() ~= npc:id()) and npc:alive()) and not xr_combat_ignore.fighting_with_actor_npcs[stalker:id()] then
+				pos = npc:position()
+				dist = pos:distance_to_sqr(stalker:position())
+				if not (nearest_dist) then
+					nearest_dist = dist
+					nearest_stalker = stalker
+				end
+		end
+	end
+	return nearest_stalker
+end
+
+
+--------------------------------------------------------
+--Function used to check if an NPC is in a protected or ignored zone
+--------------------------------------------------------
+
+function is_in_ignored_zone(npc)
+	local ignored_smart = {
+	zat_stalker_base_smart	= true,
+	jup_b41					= true,
+	jup_a6					= true,
+	pri_a16					= true
+	}
+	
+	local se_npc = alife():object(npc:id())
+	
+	if se_npc ~= nil and se_npc.m_smart_terrain_id ~= nil and se_npc.m_smart_terrain_id ~= 65535 then
+		local npc_smart = alife():object(se_npc.m_smart_terrain_id)
+		local smart_name = npc_smart:name()
+	
+		if ignored_smart[smart_name] == true then
+			return true
+		end
+	end
+	
+	return false
+end
+	
+	
+--------------------------------------------------------
+--Function used to increase the NPC's aiming time while wearing a Ghillie
+--------------------------------------------------------
+
+function aim_modify(obj, st)
+	local active_item = st.object:active_item()
+	local flag = 0
+	--local default_aim = obj:aim_time(active_item)
+	
+	if ReconEnable and act_class == "recon" then
+		if GhillieEnable and wearing_ghillie() and NightEnable and is_night and isWeapon(active_item) then
+			if st.enemy_id == db.actor:id() and st.old_aim == nil then
+				st.old_aim = st.object:aim_time(active_item)
+				st.object:aim_time(active_item,st.old_aim * GhillieAimTime * NightAimTime * ReconAimTime)
+			--	debug_write("Aim Time increased for %s as actor is wearing a ghillie, is recon, and is night",st.object:character_name())
+				flag = 1
+			end
+		
+		elseif NightEnable and is_night then
+			if st.enemy_id == db.actor:id() and wearing_ghillie() and st.old_aim == nil and isWeapon(active_item) then
+				st.old_aim = st.object:aim_time(active_item)
+				st.object:aim_time(active_item,st.old_aim * ReconAimTime * NightAimTime)
+			--	debug_write("Aim Time increased for %s as actor is recon, and at night",st.object:character_name())
+				flag = 2
+			end
+		
+		elseif GhillieEnable and wearing_ghillie() then
+			if st.enemy_id == db.actor:id() and wearing_ghillie() and st.old_aim == nil and isWeapon(active_item) then
+				st.old_aim = st.object:aim_time(active_item)
+				st.object:aim_time(active_item,st.old_aim * GhillieAimTime)
+			--	debug_write("Aim Time increased for %s as actor is recon, and at night",st.object:character_name())
+				flag = 3
+			end
+		end
+		
+		if (st.old_aim ~= nil) then
+			if (not wearing_ghillie() and not is_night and flag == 1) or (not wearing_ghillie() and flag == 3) then
+				st.object:aim_time(active_item,st.old_aim)
+			--	debug_write("aim time is back to normal for %s",st.object:character_name())
+				st.old_aim = nil
+				flag = 0
+			
+			elseif not is_night and flag == 2 then
+				st.object:aim_time(active_item,st.old_aim)
+			--	debug_write("aim time is back to normal for %s",st.object:character_name())
+				st.old_aim = nil
+				flag = 0
+			end
+		end
+			
+	elseif GhillieEnable then
+		if NightEnable and is_night and wearing_ghillie() and isWeapon(active_item) then
+			if st.enemy_id == db.actor:id() and st.old_aim == nil then
+				st.old_aim = st.object:aim_time(active_item)
+				st.object:aim_time(active_item,(st.old_aim * GhillieAimTime * NightAimTime))
+			--	debug_write("Aim Time increased for %s as actor is wearing a ghillie, and is night",st.object:character_name())
+			end
+		
+		elseif wearing_ghillie() and not is_night and isWeapon(active_item) then
+			if st.enemy_id == db.actor:id() and st.old_aim == nil then
+				st.old_aim = st.object:aim_time(active_item)
+				st.object:aim_time(active_item,(st.old_aim * GhillieAimTime))
+			--	debug_write("Aim Time increased for %s as actor is wearing a ghillie",st.object:character_name())
+			end
+		end
+			
+		if (st.old_aim ~= nil) and not wearing_ghillie() then
+			st.object:aim_time(active_item,st.old_aim)
+		--	debug_write("aim time is back to normal for %s",st.object:character_name())
+			st.old_aim = nil
+		end
+	end
+end	
+
+
+--------------------------------------------------------
+--Function used to Check to see if actor is wearing a Ghillie
+--------------------------------------------------------
+
+function wearing_ghillie()
+	local cur_outfit
+	if db.actor:item_in_slot(7) ~= nil then
+		cur_outfit = db.actor:item_in_slot(7):section()
+	end
+	
+	local ghillie_sec = "ghillie_outfit"
+	
+	if cur_outfit == ghillie_sec then
+		return true
+	else
+		return false
+	end
+end
+
+
+--------------------------------------------------------
+--Timer function's. Taken from alun_utils for use with NPC Help
+--------------------------------------------------------
+
+function set_timer_close(userobj, time)
+	if not ( userobj ) then
+		return
+	end
+	userobj.timerclose = time_global() + time
+end
+
+function get_timer_close(userobj)
+	if ( userobj.timerclose ~= nil ) then
+		if ( time_global() > userobj.timerclose ) then
+			userobj.timerclose = nil
+			return 1
+		else
+			return -1
+		end
+	end
+	return nil
+end
+
+--------------------------------------------------------
+
+function set_timer_med(userobj, time)
+	if not ( userobj ) then
+		return
+	end
+	userobj.timermed = time_global() + time
+end
+
+function get_timer_med(userobj)
+	if ( userobj.timermed ~= nil ) then
+		if ( time_global() > userobj.timermed ) then
+			userobj.timermed = nil
+			return 1
+		else
+			return -1
+		end
+	end
+	return nil
+end
+
+--------------------------------------------------------
+
+function set_timer_far(userobj, time)
+	if not ( userobj ) then
+		return
+	end
+	userobj.timerfar = time_global() + time
+end
+
+function get_timer_far(userobj)
+	if ( userobj.timerfar ~= nil ) then
+		if ( time_global() > userobj.timerfar ) then
+			userobj.timerfar = nil
+			return 1
+		else
+			return -1
+		end
+	end
+	return nil
+end
+
+--------------------------------------------------------
+
+--DEBUG FUNCTIONS--
+function debug_write(text,...)
+	local i = 0
+	local varlist = {...}
+	output = string.gsub(text,"%%s",function(a) i = i + 1 return tostring(varlist[i]) end)
+	get_console():execute("load ~#I#:"..output)
+end

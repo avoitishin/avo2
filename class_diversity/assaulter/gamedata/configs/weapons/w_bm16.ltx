@@ -1,0 +1,413 @@
+[wpn_bm16]:identity_immunities,weapon_probability,default_weapon_params
+GroupControlSection		= spawn_group
+$spawn                  = "weapons\bm16"		; option for Level Editor
+$npc			 		= on						; option for Level Editor
+$prefetch 		 		= 8
+scheduled               = off    				; option for ALife Simulator
+cform                   = skeleton
+class                   = WP_BM16
+
+description				= st_wpn_bm16_descr
+
+ef_main_weapon_type		= 1
+ef_weapon_type			= 9
+
+;-----------------------------------------------------------------------------
+cost					= 10560
+weapon_class			= shotgun
+inv_weight				= 2.73
+
+upgrades                = up_gr_firstab_bm16, up_gr_seconab_bm16, up_gr_thirdab_bm16
+installed_upgrades      = 
+upgrade_scheme          = upgrade_scheme_bm16
+
+;---TTX-------------------------------------------------------------------------
+hit_power       = 0.88, 0.88, 0.88, 0.88
+hit_impulse     = 30
+hit_type 		= fire_wound
+fire_distance       	= 170
+bullet_speed			= 340
+rpm                 	= 800
+
+hud                      		= wpn_bm16_hud
+
+misfire_start_condition		= 0.85
+misfire_end_condition		= 0.1
+misfire_start_prob = 0.003 ;	     	= 0.008
+misfire_end_prob = 0.02 ;	     	= 0.08
+condition_shot_dec      	= 0.0022
+condition_queue_shot_dec	= 0.0012
+
+ammo_elapsed		 	= 2
+ammo_mag_size		 	= 2
+ammo_class		 		= ammo_12x70_buck, ammo_12x76_zhekan
+hand_dependence 		= 1
+single_handed			= 0
+
+;---DOF-------------------------------------------------------------------------
+zoom_dof			    = 0.5, 1.0, 180
+;reload_dof           = 0.0, 0.5, 5, 1.7
+;----дисперсия--------------------------------------------------------------------------
+;базовая дисперсия
+fire_dispersion_base		= 0.85  	;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor = 1.05f
+crosshair_inertion		= 4.0
+
+;отдача
+cam_return = 0 ;				= 0
+cam_relax_speed         = 8.0		;скорость возврата в исходное положение
+cam_relax_speed_ai      = 360
+cam_dispersion	        = 4.92
+cam_dispersion_inc      = 4.78
+cam_dispersion_frac		= 0.5 	;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
+cam_max_angle			= 50.0 		;максимальный угол отдачи
+cam_max_angle_horz		= 50.0 		;(degree) maximum shot horizontal degree
+cam_step_angle_horz		= 5.98 	;(degree) size of step camera moved in horizontal position while shooting
+
+zoom_cam_relax_speed        = 8.0    ; scope & ironsight
+zoom_cam_relax_speed_ai     = 120.75
+zoom_cam_dispersion         = 4.43
+zoom_cam_dispersion_inc     = 3.98
+zoom_cam_dispersion_frac    = 0.5
+zoom_cam_max_angle          = 50.0
+zoom_cam_max_angle_horz     = 50.0
+zoom_cam_step_angle_horz    = 3.93
+
+fire_dispersion_condition_factor = 0.001 ; = 0.01 ; 2	
+
+;-------------------------------------------------------------------------------
+holder_range_modifier	= 1.0     ; во сколько раз увеличивается eye_range
+holder_fov_modifier		= 1.0     ; во сколько раз увеличивается eye_fov
+
+min_radius = 0 ;              = 0
+max_radius = 500 ; = 250 ;              = 50
+
+hit_probability_gd_novice = 1.00 ;	= 0.80
+hit_probability_gd_stalker = 1.00 ;	= 0.80
+hit_probability_gd_veteran = 1.00 ;	= 0.80
+hit_probability_gd_master = 1.00 ;	= 0.80
+
+;-------------------------------------------------------------------------------
+slot 					= 2
+animation_slot			= 3
+
+inv_name				= st_wpn_bm16
+inv_name_short			= st_wpn_bm16
+
+inv_grid_width			= 3
+inv_grid_height			= 1
+inv_grid_x				= 6
+inv_grid_y				= 1
+
+upgr_icon_x			= 1724 ; 599
+upgr_icon_y			= 802 ; 559
+upgr_icon_width		= 167 ; 272
+upgr_icon_height   	= 159 ; 54
+
+kill_msg_x				= 0
+kill_msg_y		  		= 104
+kill_msg_width			= 54
+kill_msg_height			= 16
+
+position                 		= -0.026, -0.096, 0.045
+orientation              		= 0, 30, 0      ;значение устанавливается в градусах
+
+shell_point				= 0.0, 0.136, 0.07
+fire_point              = 0.000000,0.136000,0.390000     ;r
+fire_point2             = 0.000000,0.136000,0.390000		;l
+
+;flame_particles	= weapons\generic_weapon05
+smoke_particles         = amik\weapons\smoke_particles\smoke_particles_pump_01
+rpm_empty_click = 200
+
+PDM_disp_base 				= 1.35
+PDM_disp_vel_factor 		= 1.35
+PDM_disp_accel_factor 		= 1.35
+PDM_disp_crouch = 1.0 ;  				= 0.925
+PDM_disp_crouch_no_acc = 1.0 ; 			= 2.205
+
+;--STRAP PARAMETERS-----------------------------------------------------------------
+;под мишкой
+strap_position         			= -0.26,-0.11,0.15
+strap_orientation      			= -15,-9,110
+;на спине
+strap_bone0							= bip01_spine2
+strap_bone1							= bip01_spine1
+
+startup_ammo             		= 10
+visual                   		= dynamics\weapons\wpn_bm16\wpn_bm16.ogf
+
+light_color		 					= 0.6,0.5,0.3
+light_range		 					= 6.0
+light_var_color		 			= 0.05
+light_var_range		 			= 0.5
+light_time 		 					= 0.2
+
+ph_mass			 					= 3
+
+;addons
+scope_status						= 0
+silencer_status					= 0
+grenade_launcher_status			= 0
+
+zoom_enabled						= true
+scope_zoom_factor       = 58.6 ; 	    			= 85
+
+;звуки
+snd_draw			= weapons\generic\generic_draw
+snd_holster			= weapons\generic\generic_holster
+snd_shoot			= weapons\bm16\bm16_shot
+snd_empty			= weapons\generic\shotgun_empty
+snd_reload			= weapons\bm16\bm16_reload_lr	;reload both
+snd_shoot_duplet		= weapons\bm16\bm16_shot
+snd_shoot_1			= weapons\bm16\bm16_shot
+snd_reload_1		        = weapons\bm16\bm16_reload_l	;reload left
+
+[wpn_bm16_hud]:hud_base
+zoom_hide_crosshair				= true
+
+
+hands_position				= 0.014500,-0.096000,0.057500
+hands_orientation			= -0.450030,2.099998,-0.200003
+
+
+hands_position_16x9				= 0.016500,-0.096000,-0.004000
+hands_orientation_16x9			= 0.300000,1.350000,-2.599999
+
+item_position						= -0.003178,0.002246,0.000581
+item_orientation					= -181.191742,180.482727,-180.330688
+
+shell_point							= 0,0,0
+shell_dir                     = 0.0, 1.0, 0.0
+shell_bone							= wpn_body
+
+fire_point		= 0, 0.066, 0.514
+fire_bone                     = wpn_body
+
+attach_place_idx					= 0
+item_visual							= dynamics\weapons\wpn_bm16\wpn_bm16_hud.ogf
+
+anm_show_0			            = bm16_draw,bm16_idle_lr
+anm_show_1			            = bm16_draw,bm16_idle_l
+anm_show_2			            = bm16_draw,bm16_idle
+
+anm_hide_0			            = bm16_holster,bm16_idle_lr
+anm_hide_1			            = bm16_holster,bm16_idle_l
+anm_hide_2			            = bm16_holster,bm16_idle
+
+anm_idle_0			            = bm16_idle,bm16_idle_lr
+anm_idle_1			            = bm16_idle,bm16_idle_l
+anm_idle_2			            = bm16_idle,bm16_idle
+
+anm_idle_aim_0			         = bm16_idle_aim,bm16_idle_lr
+anm_idle_aim_1			         = bm16_idle_aim,bm16_idle_l
+anm_idle_aim_2			         = bm16_idle_aim,bm16_idle
+
+anm_idle_moving_0		         = bm16_idle_moving,bm16_idle_lr
+anm_idle_moving_1		         = bm16_idle_moving,bm16_idle_l
+anm_idle_moving_2		         = bm16_idle_moving,bm16_idle
+
+anm_idle_sprint_0		        = bm16_idle_sprint,bm16_idle_lr
+anm_idle_sprint_1		        = bm16_idle_sprint,bm16_idle_l
+anm_idle_sprint_2		        = bm16_idle_sprint,bm16_idle
+
+anm_reload_1						= bm16_reload_l
+anm_reload_2						= bm16_reload_lr
+anm_shot_1							= bm16_shoot_r
+anm_shot_2							= bm16_shoot_l
+
+anm_bore_0							= bm16_idle_bore,bm16_idle_lr
+anm_bore_1							= bm16_idle_bore,bm16_idle_l
+anm_bore_2							= bm16_idle_bore,bm16_idle
+
+aim_hud_offset_pos = -0.084000,0.054500,0.075000
+aim_hud_offset_rot = 0.009000,-0.010000,-0.003500
+
+aim_hud_offset_pos_16x9 = -0.079000,0.060000,0.075000
+aim_hud_offset_rot_16x9 = 0.002000,-0.003000,-0.050000
+
+gl_hud_offset_pos					= 0,0,0
+gl_hud_offset_rot					= 0,0,0
+
+lean_hud_offset_pos				= 0,0,0
+lean_hud_offset_rot				= 0,0,0
+
+;-----------------------------------------------------------------------------
+; Уникальные
+;-----------------------------------------------------------------------------
+
+;======================================================================================================
+[wpn_bm16_gold]:wpn_bm16
+inv_name				= st_wpn_bm16_gold
+inv_name_short			= st_wpn_bm16_gold
+
+cost					= 16780
+inv_weight				= 3.02
+
+upgrades                = up_gr_firstab_bm16_gold, up_gr_seconab_bm16_gold, up_gr_thirdab_bm16_gold
+installed_upgrades      = up_secona_bm16_gold, up_second_bm16_gold
+
+hit_power       = 0.945, 0.945, 0.945, 0.945
+hit_impulse     = 30
+hit_type 		= fire_wound
+fire_distance       	= 200
+bullet_speed			= 370
+rpm                 	= 800
+
+hud                      		= wpn_bm16_gold_hud
+
+misfire_start_condition		= 0.84
+misfire_end_condition		= 0.11
+misfire_start_prob = 0.003 ;	     	= 0.0052
+misfire_end_prob = 0.02 ;	     	= 0.063
+condition_shot_dec      	= 0.0020
+condition_queue_shot_dec	= 0.0008
+
+ammo_class		 		= ammo_12x70_buck, ammo_12x76_zhekan
+
+fire_dispersion_base		= 0.8
+
+inv_grid_width          = 3
+inv_grid_height         = 1
+inv_grid_x           	= 12
+inv_grid_y           	= 63
+
+visual                   		= dynamics\weapons\wpn_bm16\wpn_bm1a.ogf
+
+snd_reload_1		        = weapons\bm16\bm16_reload_l
+
+[wpn_bm16_gold_hud]:wpn_bm16_hud
+
+item_visual               		= dynamics\weapons\wpn_bm16\wpn_bm1a_hud.ogf
+
+;======================================================================================================
+[wpn_bm16_worn]:wpn_bm16
+inv_name				= st_wpn_bm16_worn
+inv_name_short			= st_wpn_bm16_worn
+
+cost					= 8640
+inv_weight				= 2.73
+
+upgrades                = up_gr_firstab_bm16_worn, up_gr_seconab_bm16_worn, up_gr_thirdab_bm16_worn
+
+hit_power       = 0.78, 0.78, 0.78, 0.78
+hit_impulse     = 30
+hit_type 		= fire_wound
+fire_distance       	= 150
+bullet_speed			= 330
+rpm                 	= 800
+
+hud                      		= wpn_bm16_worn_hud
+
+misfire_start_condition		= 0.91
+misfire_end_condition		= 0.15
+misfire_start_prob = 0.003 ;	     	= 0.0074
+misfire_end_prob = 0.02 ;	     	= 0.071
+condition_shot_dec      	= 0.0040
+condition_queue_shot_dec	= 0.0019
+
+ammo_class		 		= ammo_12x70_buck, ammo_12x76_zhekan
+
+fire_dispersion_base		= 1.0
+
+inv_grid_width          = 3
+inv_grid_height         = 1
+inv_grid_x           	= 12
+inv_grid_y           	= 65
+
+visual                   		= dynamics\weapons\wpn_bm16\wpn_bm1b.ogf
+
+snd_reload_1		        = weapons\bm16\bm16_reload_l
+
+[wpn_bm16_worn_hud]:wpn_bm16_hud
+
+item_visual               		= dynamics\weapons\wpn_bm16\wpn_bm1b_hud.ogf
+
+;======================================================================================================
+[wpn_bm16_rusty]:wpn_bm16
+inv_name				= st_wpn_bm16_rusty
+inv_name_short			= st_wpn_bm16_rusty
+description				= st_wpn_bm16_irishrampage_descr
+
+cost					= 6240
+inv_weight				= 2.8
+
+upgrades                = up_gr_firstab_bm16_rusty, up_gr_seconab_bm16_rusty, up_gr_thirdab_bm16_rusty
+
+hit_power       = 0.74, 0.74, 0.74, 0.74
+hit_impulse     = 30
+hit_type 		= fire_wound
+fire_distance       	= 130
+bullet_speed			= 314
+rpm                 	= 800
+
+hud                      		= wpn_bm16_rusty_hud
+
+misfire_start_condition		= 0.95
+misfire_end_condition		= 0.14
+misfire_start_prob = 0.003 ;	     	= 0.0083
+misfire_end_prob = 0.02 ;	     	= 0.076
+condition_shot_dec      	= 0.0050
+condition_queue_shot_dec	= 0.0025
+
+ammo_class		 		= ammo_12x70_buck, ammo_12x76_zhekan
+
+fire_dispersion_base		= 1.15
+
+inv_grid_width          = 3
+inv_grid_height         = 1
+inv_grid_x           	= 12
+inv_grid_y           	= 64
+
+visual                   		= dynamics\weapons\wpn_bm16\wpn_bm1c.ogf
+
+snd_reload_1		        = weapons\bm16\bm16_reload_l
+
+[wpn_bm16_rusty_hud]:wpn_bm16_hud
+
+item_visual               		= dynamics\weapons\wpn_bm16\wpn_bm1c_hud.ogf
+
+;======================================================================================================
+[wpn_bm16_silver]:wpn_bm16
+
+cost					= 12320
+inv_weight				= 2.91
+
+upgrades                = up_gr_firstab_bm16_silver, up_gr_seconab_bm16_silver, up_gr_thirdab_bm16_silver
+installed_upgrades      = up_firsta_bm16_silver, up_firstc_bm16_silver
+
+hit_power       = 0.93, 0.93, 0.93, 0.93
+hit_impulse     = 30
+hit_type 		= fire_wound
+fire_distance       	= 200
+bullet_speed			= 366
+rpm                 	= 800
+
+hud                      		= wpn_bm16_silver_hud
+
+misfire_start_condition		= 0.85
+misfire_end_condition		= 0.1
+misfire_start_prob = 0.003 ;	     	= 0.007
+misfire_end_prob = 0.02 ;	     	= 0.07
+condition_shot_dec      	= 0.0020
+condition_queue_shot_dec	= 0.0009
+
+ammo_class		 		= ammo_12x70_buck, ammo_12x76_zhekan
+
+fire_dispersion_base		= 0.77
+
+inv_name				= st_wpn_bm16_silver
+inv_name_short			= st_wpn_bm16_silver
+
+inv_grid_width          = 3
+inv_grid_height         = 1
+inv_grid_x           	= 12
+inv_grid_y           	= 70
+
+visual                   		= dynamics\weapons\wpn_bm16\wpn_bm16.ogf
+
+snd_reload_1		        = weapons\bm16\bm16_reload_l
+
+[wpn_bm16_silver_hud]:wpn_bm16_hud
+
+item_visual							= dynamics\weapons\wpn_bm16\wpn_bm16_hud.ogf

@@ -1,0 +1,23 @@
+[logic]
+active = ph_sound@normal
+
+[ph_sound@normal]
+snd = music_boroda
+looped = false
+min_idle = 300
+max_idle = 500
+random = true
+on_info = {=emission_started} ph_sound@surge
+
+[ph_sound@static]
+snd = static
+random = true
+on_signal = sound_end | ph_sound@normal
+
+[ph_sound@surge]
+snd = broadcast_disrupt
+looped = false
+min_idle = 300
+max_idle = 500
+random = true
+on_info = {=emission_finished} ph_sound@static

@@ -1,0 +1,15 @@
+shovel_mili		= 1, prob=0.024 \n
+ied				= 1, prob=0.036 \n
+ied_rpg			= 1, prob=0.018 \n
+maps_kit		= 1, prob=0.036 \n
+
+mine			= 1, prob=0.048 \n
+
+radio2			= 1, prob=0.056 \n
+
+tarpaulin		= 2, prob=0.064 \n
+synthrope		= 1, prob=0.072 \n
+cutlery			= 1, prob=0.06 \n
+swiss			= 1, prob=0.054 \n
+
+mili_maps		= 1, prob=0.048 \n

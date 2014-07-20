@@ -1,0 +1,36 @@
+[smart_terrain];zat_sim_3
+squad_id = 8
+max_population = 2
+respawn_params = respawn@zat_sim_3
+
+[respawn@zat_sim_3]
+spawn_snork
+spawn_boar
+
+;;; unused
+
+spawn_flesh
+;spawn_dog
+;spawn_pseudodog
+
+[spawn_snork]
+spawn_squads = simulation_snork, simulation_flesh, simulation_flesh, simulation_boar, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_boar
+spawn_num = {=actor_on_level(zaton)} 1, 0
+
+[spawn_boar]
+spawn_squads = simulation_boar, simulation_flesh
+spawn_num = {=actor_on_level(zaton)} 1, 0
+
+;;; unused
+
+[spawn_flesh]
+spawn_squads = simulation_boar, simulation_flesh, simulation_flesh
+spawn_num = 0 ; {=actor_on_level(zaton)} 1, 0
+
+;[spawn_pseudodog]
+;spawn_squads = simulation_pseudodog, simulation_tushkano
+;spawn_num = 1
+
+;[spawn_dog]
+;spawn_squads = simulation_dog
+;spawn_num = 2

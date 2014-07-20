@@ -1,0 +1,527 @@
+[up_sect_firsta_desert_eagle]
+;Скорострельность(1)10%
+;----------------------
+cost		      		= 3340
+value					= +20
+
+rpm						= +38
+
+inv_weight				= +0.15
+
+[up_sect_firstc_desert_eagle]
+;Отдача(2)-20%
+;------------
+cost		      		= 3690
+value                   = -10
+
+cam_dispersion          	= -0.191		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc			= -0.198		;увеличениe cam_dispersion с каждым выстрелом
+cam_step_angle_horz			= -0.114		;(degree) size of step camera moved in horizontal position while shooting
+
+inv_weight				= +0.05
+
+[up_sect_firste_desert_eagle]
+;Точность(3)25%
+;---------------
+cost		      		= 3140
+value					= +25
+
+fire_dispersion_base	= -0.15
+;fire_dispersion_condition_factor    = -1
+
+inv_weight				= +0.1
+
+[up_sect_firstf_desert_eagle]
+;Отдача(3)-30%
+;------------
+cost		      		= 3840
+value                   = -10
+
+cam_dispersion          	= -0.191		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc			= -0.198		;увеличениe cam_dispersion с каждым выстрелом
+cam_step_angle_horz			= -0.114		;(degree) size of step camera moved in horizontal position while shooting
+
+inv_weight				= +0.05
+
+[up_sect_secona_desert_eagle]
+;Настильность(1)10%
+;------------------
+cost		      		= 2840
+value					= +5
+
+bullet_speed		 	= +22
+fire_dispersion_base		= -0.05
+
+inv_weight				= +0.05
+
+[up_sect_seconc_desert_eagle]
+;Надежность(2)15%
+;---------------
+cost		      		= 3160
+value					= +15
+
+;fire_dispersion_condition_factor    = -2 ;15
+condition_shot_dec      	= -0.0004
+condition_queue_shot_dec	= -0.0004
+
+misfire_start_prob	     	= -0.0025
+misfire_end_prob	     	= -0.025 ;0.03
+
+inv_weight				= +0.15
+
+[up_sect_secone_desert_eagle]
+;Скорострельность(3)15%
+;----------------------
+cost		      		= 2800
+value					= +15
+
+rpm						= +29
+
+inv_weight				= +0.15
+
+[up_sect_seconf_desert_eagle]
+;Настильность(3)5%
+;------------------
+cost		      		= 2920
+value					= +5
+
+bullet_speed		 	= +22
+fire_distance           	= +30
+
+fire_dispersion_base		= -0.03
+
+inv_weight				= +0.05
+
+[up_sect_thirda_desert_eagle]
+;Вес
+;------------------
+cost		      		= 3890
+value					= -0.76
+
+inv_weight              = -0.76
+
+crosshair_inertion			= -0.3
+
+PDM_disp_base 				= -0.05
+PDM_disp_vel_factor 		= -0.15
+PDM_disp_accel_factor 		= -0.15
+
+[up_sect_thirdc_desert_eagle]
+;Удобство(2)15%
+;--------------
+cost		      		= 3680
+value					= +15
+
+inv_weight              = -0.1
+
+crosshair_inertion			= -0.7
+
+PDM_disp_base 				= -0.15
+PDM_disp_vel_factor 		= -0.35
+PDM_disp_accel_factor 		= -0.35
+
+[up_sect_thirdd_desert_eagle]
+;Отдача(2)-20%
+;------------
+cost		      		= 2280
+value                   = -5
+
+cam_dispersion          	= -0.095		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc			= -0.099		;увеличениe cam_dispersion с каждым выстрелом
+cam_step_angle_horz			= -0.057		;(degree) size of step camera moved in horizontal position while shooting
+
+inv_weight				= +0.1
+
+[up_sect_thirde_desert_eagle]
+;Отдача(3)-30%
+;------------
+cost		      		= 2240
+value                   = -5
+
+cam_dispersion          	= -0.095		;увеличения угла (в градусах) с каждым выстрелом
+cam_dispersion_inc			= -0.099		;увеличениe cam_dispersion с каждым выстрелом
+cam_step_angle_horz			= -0.057		;(degree) size of step camera moved in horizontal position while shooting
+
+inv_weight				= +0.15
+
+[up_sect_fourta_desert_eagle]
+;Точность(1)25%
+;---------------
+cost		      		= 3450
+value					= +25
+
+fire_dispersion_base	= -0.15
+
+inv_weight				= +0.1
+
+[up_sect_fourtc_desert_eagle]
+;Надежность(2)15%
+;---------------
+cost		      		= 3180
+value					= +15
+
+;fire_dispersion_condition_factor    = -2 ;15
+condition_shot_dec      	= -0.0004
+condition_queue_shot_dec	= -0.0004
+
+misfire_start_prob	     	= -0.0025
+misfire_end_prob	     	= -0.025
+
+inv_weight				= +0.15
+
+[up_sect_fiftha_desert_eagle]
+;Увеличенный объем магазина
+;---------------
+cost		      		= 3650
+value					= +3
+
+ammo_mag_size		 	= +3
+
+inv_weight				= +0.1
+
+[up_firsta_desert_eagle]
+scheme_index            = 0, 0
+known                   = 1
+;;invented                = 1                							; 0
+effects                 = up_gr_firstcd_desert_eagle
+section                 = up_sect_firsta_desert_eagle
+property                = prop_rpm
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = on_weapon_upgrade_something_here
+
+; ui
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           =
+name                    = st_up_zatp_a1_name
+description             = st_up_zatp_a1_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_1
+
+;;...
+[up_firstc_desert_eagle]
+scheme_index            = 1, 0
+known                   = 1
+effects                 = up_gr_firstef_desert_eagle
+section                 = up_sect_firstc_desert_eagle
+property                = prop_recoil
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+; ui
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_zatp_b6_name
+description             = st_up_zatp_b6_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_2
+
+[up_firste_desert_eagle]
+scheme_index            = 2, 0
+known                   = 1
+effects                 =
+section                 = up_sect_empty_tier_3 ; up_sect_firste_desert_eagle
+property                = prop_not_available
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = true
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_upgrade_not_available_name
+description             = st_up_upgrade_not_available_descr
+icon                    = ui_inGame2_upgrade_unavailable
+
+[up_firstf_desert_eagle]
+scheme_index            = 2, 1
+known                   = 1
+effects                 =
+section                 = up_sect_empty_tier_3 ; up_sect_firstf_desert_eagle
+property                = prop_not_available
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = true
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_upgrade_not_available_name
+description             = st_up_upgrade_not_available_descr
+icon                    = ui_inGame2_upgrade_unavailable
+
+
+[up_secona_desert_eagle]
+scheme_index            = 0, 1
+known                   = 1
+effects                 = up_gr_seconcd_desert_eagle
+section                 = up_sect_secona_desert_eagle
+property                = prop_bullet_speed
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_barp_a1_name
+description             = st_up_barp_a1_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_5
+
+[up_seconc_desert_eagle]
+scheme_index            = 1, 1
+known                   = 1
+effects                 = up_gr_seconef_desert_eagle
+section                 = up_sect_seconc_desert_eagle
+property                = prop_reliability
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+; ui
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_barp_b1_name
+description             = st_up_barp_b1_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_6
+
+[up_secone_desert_eagle]
+scheme_index            = 2, 2
+known                   = 1
+effects                 =
+section                 = up_sect_empty_tier_3 ; up_sect_secone_desert_eagle
+property                = prop_not_available
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = true
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_upgrade_not_available_name
+description             = st_up_upgrade_not_available_descr
+icon                    = ui_inGame2_upgrade_unavailable
+
+[up_seconf_desert_eagle]
+scheme_index            = 2, 3
+known                   = 1
+effects                 =
+section                 = up_sect_empty_tier_3 ; up_sect_seconf_desert_eagle
+property                = prop_not_available
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = true
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_upgrade_not_available_name
+description             = st_up_upgrade_not_available_descr
+icon                    = ui_inGame2_upgrade_unavailable
+
+
+[up_thirda_desert_eagle]
+scheme_index            = 0, 2
+known                   = 1
+effects                 = up_gr_thirdcd_desert_eagle
+section                 = up_sect_thirda_desert_eagle
+property                = prop_weight
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_stvp_b1_name
+description             = st_up_stvp_b1_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_9
+
+[up_thirdc_desert_eagle]
+scheme_index            = 1, 2
+known                   = 1
+effects                 = up_gr_thirdef_desert_eagle
+section                 = up_sect_thirdc_desert_eagle
+property                = prop_inertion
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_stvp_b5_name
+description             = st_up_stvp_b5_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_10
+
+[up_thirdd_desert_eagle]
+scheme_index            = 1, 3
+known                   = 1
+effects                 = up_gr_thirdef_desert_eagle
+section                 = up_sect_thirdd_desert_eagle
+property                = prop_recoil
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_stvp_b3_name
+description             = st_up_stvp_b3_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_11
+
+[up_thirde_desert_eagle]
+scheme_index            = 2, 4
+known                   = 1
+effects                 =
+section                 = up_sect_empty_tier_3 ; up_sect_thirde_desert_eagle
+property                = prop_not_available
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = true
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_upgrade_not_available_name
+description             = st_up_upgrade_not_available_descr
+icon                    = ui_inGame2_upgrade_unavailable
+
+[up_fourta_desert_eagle]
+scheme_index            = 0, 3
+known                   = 1
+effects                 = up_gr_fourtcd_desert_eagle
+section                 = up_sect_fourta_desert_eagle
+property                = prop_dispersion
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_usmp_a1_name
+description             = st_up_usmp_a1_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_13
+
+
+[up_fourtc_desert_eagle]
+scheme_index            = 1, 4
+known                   = 1
+effects                 =
+section                 = up_sect_fourtc_desert_eagle
+property                = prop_reliability
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           = 
+name                    = st_up_usmp_b5_name
+description             = st_up_usmp_b5_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_14
+
+
+[up_fiftha_desert_eagle]
+scheme_index            = 0, 4
+known                   = 1
+effects                 =
+section                 = up_sect_fiftha_desert_eagle
+property                = prop_ammo_size 
+
+
+precondition_functor    = inventory_upgrades.precondition_functor_a
+precondition_parameter  = a & b
+
+effect_functor          = inventory_upgrades.effect_functor_a
+effect_parameter        = something_here
+
+; ui
+prereq_functor          = inventory_upgrades.prereq_functor_a
+prereq_tooltip_functor  = inventory_upgrades.prereq_tooltip_functor_a
+prereq_params           =
+name                    = st_up_add_a4_name
+description             = st_up_addd_a1_descr
+icon                    = ui_inGame2_upgrade_Black_hawk_15
+
+[up_gr_firstab_desert_eagle]
+elements                = up_firsta_desert_eagle
+
+[up_gr_firstcd_desert_eagle]
+elements                = up_firstc_desert_eagle
+
+[up_gr_firstef_desert_eagle]
+elements                = up_firste_desert_eagle, up_firstf_desert_eagle
+
+[up_gr_seconab_desert_eagle]
+elements                = up_secona_desert_eagle
+
+[up_gr_seconcd_desert_eagle]
+elements                = up_seconc_desert_eagle
+
+[up_gr_seconef_desert_eagle]
+elements                = up_secone_desert_eagle, up_seconf_desert_eagle
+
+[up_gr_thirdab_desert_eagle]
+elements                = up_thirda_desert_eagle
+
+[up_gr_thirdcd_desert_eagle]
+elements                = up_thirdc_desert_eagle, up_thirdd_desert_eagle
+
+[up_gr_thirdef_desert_eagle]
+elements                = up_thirde_desert_eagle
+
+[up_gr_fourtab_desert_eagle]
+elements                = up_fourta_desert_eagle
+
+[up_gr_fourtcd_desert_eagle]
+elements                = up_fourtc_desert_eagle
+
+[up_gr_fifthab_desert_eagle]
+elements                = up_fiftha_desert_eagle

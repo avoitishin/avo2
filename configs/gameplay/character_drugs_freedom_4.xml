@@ -1,0 +1,20 @@
+journal			= 1, prob=0.08 \n
+geiger_dead		= 1, prob=0.08 \n
+welding_goggles		= 1, prob=0.08 \n
+book1			= 1, prob=0.08 \n
+book2			= 1, prob=0.08 \n
+book3			= 1, prob=0.08 \n
+drugs_kit		= 1, prob=0.095 \n
+
+mine			= 1, prob=0.08 \n
+
+hammer_inv		= 1, prob=0.095 \n
+spareparts		= 1, prob=0.048 \n
+beadspread		= 1, prob=0.095 \n
+cards		= 2, prob=0.120 \n
+ammo_bad		= 15, prob=0.056 \n
+swiss		= 1, prob=0.120 \n
+mirror		= 1, prob=0.120 \n
+
+letter_freedom_manual_1_of_2		= 1, prob=0.036 \n
+letter_freedom_manual_2_of_2		= 1, prob=0.036 \n

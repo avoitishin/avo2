@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="st_journal_delivery">
+		<text>!!WARNING!!</text>
+	</string>
+	<string id="st_journal_delivery_descr">
+		<text>You were not expected to locate this item. The contents of this stash must stay in this box as they are needed for a script in the mod. As long as you leave everything in place the script will be fine later on. Now get out of here, Stalker!</text>
+	</string>
+	<string id="st_journal_delivery_2_descr">
+		<text>Alright, so here's your stuff. I wasn't able to get you any ammo for this baby, but you can have some of mine and trade it off for the caliber you need. Your weapon is all oiled up and ready to be put to good use. Take good care of it and it will serve you well here in this shithole. Peace! NA</text>
+	</string>
+	<string id="st_journal_drop">
+		<text>USS military journal</text>
+	</string>
+	<string id="st_journal_drop_assaulter_descr">
+		<text>Here's your gear and equipment, Major.\nEverything you need for the assaulter-oriented missions and tasks that you lose yourself into in this God forsaken place.\nI hope that it all landed in one piece. This box is worth a fortune.\nFound the drop before the darkness embraced you? Anyway, there is a nightvision device in this combat helmet for you. Put it to good use.\nGood hunting, Stalker.</text>
+	</string>
+	<string id="st_journal_drop_recon_descr">
+		<text>Here's your gear and equipment, MD.\nEverything you need for recon-oriented missions and tasks is right here.\nI hope that it all landed in one piece. This box is worth a fortune.\nHopefully you found this drop before darkness surrounded you. Anyway, there is a nightvision device in the helmet. Put it to good use.\nGood hunting, Stalker.</text>
+	</string>
+	<string id="st_journal_drop_sniper_descr">
+		<text>Here's your gear and equipment, Deg.\nThe stuff that you need for sniper-oriented missions and tasks you lose yourself into.\nI hope that it all landed in one piece. This box is worth a fortune.\nIf you feel you're losing your cool, we expect from you that you leave the Zone at once.\nGood hunting, Stalker.</text>
+	</string>
+</string_table>

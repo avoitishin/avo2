@@ -1,0 +1,301 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; M.S.O. (Massive Simulation Overhaul) MISERY v2 Edition ;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;; XRS Random NPC  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; scripting: alundaio ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; configs: trojanuch ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;------------------------------------------------------------------------------------------------------------
+; Only one listed item from each list will be randomly selected
+; section:addon_flag:ammo_type
+; EXAMPLES
+; wpn_l85:5:1   Spawns l85 with Scope, Silencer and AP ammo
+; wpn_l85        Spawn l85 with default 0 ammo type and 0 addon flags
+;
+;Note: If you decide to use extra params you must use all 3 params (ie. section:flags:ammo_type)
+
+; Addon Flag ( 0 - no attachment, Scope +1 to flag, GL add +2 to flag, Silencer add + 4 to flag)
+; Specify 'r' for addon flag for random (ie. wpn_l85:r:1)
+
+; Ammo type corresponds to the ammo_class listed for the weapon.
+
+; Specify "none" if you want randomly no weapon in that slot
+
+;extra = section:min_amount:max_amount
+; Add as many items as you like separated by commas.
+;------------------------------------------------------------------------------------------------------------
+
+
+#include "loadouts\stalker.ltx"
+#include "loadouts\bandit.ltx"
+#include "loadouts\dolg.ltx"
+#include "loadouts\freedom.ltx"
+#include "loadouts\army.ltx"
+#include "loadouts\killer.ltx"
+#include "loadouts\ecolog.ltx"
+#include "loadouts\monolith.ltx"
+#include "loadouts\zombied.ltx"
+
+
+;----------------- SPECIAL SECTIONS
+[zat_b22_stalker_medic]
+primary = empty_wpn_section
+
+[zat_b18_noah]
+primary = noah_primary
+ammo_1 = ammo_secondary
+
+[actor_visual_stalker]
+primary = empty_wpn_section
+
+[zat_b30_owl_stalker_trader]
+primary = empty_wpn_section
+
+[zat_a2_stalker_barmen]
+primary = empty_wpn_section
+
+[jup_a6_stalker_barmen]
+primary = empty_wpn_section
+
+[jup_a6_stalker_medik]
+primary = empty_wpn_section
+
+[sim_default_duty_commando_sniper]
+primary = sniper_primary
+secondary = dolg_elite_secondary
+ammo_1 = ammo_primary_master
+ammo_2 = ammo_secondary_master
+
+;------------------ PRIMARY
+[medic_primary]
+wpn_pm_worn
+wpn_pm_worn:0:1
+wpn_pm:0:1
+wpn_pm
+wpn_pm
+wpn_pm:0:2
+wpn_pm:0:1
+wpn_pm:0:1
+wpn_pm:0:2
+wpn_pm_worn
+wpn_pm_worn:0:2
+wpn_pm
+wpn_pm
+wpn_pm
+wpn_pm:0:1
+wpn_pm:0:2
+wpn_pm:0:1
+wpn_pm:0:2
+wpn_pm_alt
+wpn_pm_alt
+wpn_pm_alt
+wpn_pm_alt:0:2
+wpn_pm_alt:0:1
+wpn_pm_alt:0:2
+wpn_pm_alt:0:1
+wpn_pm_alt:0:1
+wpn_pm_alt:0:2
+wpn_pm_custom:0:1
+wpn_pm_custom:0:2
+wpn_pm_custom:0:1
+wpn_tt33
+wpn_tt33
+wpn_tt33
+wpn_tt33
+wpn_tt33
+wpn_tt33:0:1
+wpn_tt33:0:2
+wpn_tt33:0:1
+wpn_tt33:0:1
+wpn_tt33:0:2
+wpn_tt33:0:2
+wpn_oc33
+wpn_oc33:0:1
+wpn_oc33:0:1
+wpn_oc33:0:1
+wpn_oc33:0:1
+wpn_oc33:0:1
+wpn_oc33:0:1
+wpn_gsh18
+wpn_gsh18:0:1
+wpn_gsh18:0:1
+wpn_gsh18:0:1
+wpn_gsh18:0:1
+wpn_gsh18:0:1
+wpn_aps
+wpn_aps:0:2
+wpn_aps:0:1
+wpn_aps:0:2
+wpn_fort_worn
+wpn_fort_worn:0:1
+wpn_fort_worn:0:2
+wpn_fort_worn:0:1
+wpn_fort
+wpn_fort
+wpn_fort:0:2
+wpn_fort:0:1
+wpn_fort:0:1
+wpn_fort_worn
+wpn_fort_worn:0:1
+wpn_fort:0:2
+wpn_fort:0:2
+wpn_fort_custom
+wpn_fort_custom:0:1
+wpn_fort_custom:0:1
+wpn_fort_custom:0:2
+wpn_fort_custom:0:2
+wpn_fort_camo:0:2
+wpn_fort_camo:0:1
+wpn_walther_worn
+wpn_walther_worn:0:1
+wpn_walther
+wpn_walther
+wpn_walther:0:1
+wpn_walther_alt1:0:1
+wpn_walther_alt1:0:2
+wpn_walther_alt2:0:1
+wpn_walther_alt2:0:2
+wpn_walther_custom:0:2
+wpn_beretta_worn
+wpn_beretta_worn:0:2
+wpn_beretta:0:2
+wpn_beretta
+wpn_beretta
+wpn_beretta_alt:0:1
+wpn_beretta_alt:0:1
+wpn_beretta_alt:0:2
+wpn_beretta_custom:0:1
+wpn_beretta_custom:0:2
+wpn_hpsa_worn
+wpn_hpsa_worn:0:1
+wpn_hpsa
+wpn_hpsa:0:2
+wpn_hpsa_alt:0:1
+wpn_hpsa_alt:0:1
+wpn_hpsa_alt:0:2
+wpn_hpsa_custom:0:1
+wpn_hpsa_custom:0:2
+wpn_colt1911_worn
+wpn_colt1911_worn:0:2
+wpn_colt1911
+wpn_colt1911
+wpn_colt1911:0:1
+wpn_colt1911_alt1:0:1
+wpn_colt1911_alt1:0:2
+wpn_colt1911_alt2:0:1
+wpn_colt1911_alt2:0:2
+wpn_colt1911_camo:0:2
+wpn_usp_worn
+wpn_usp_worn:0:1
+wpn_usp
+wpn_usp
+wpn_usp:0:2
+wpn_usp_alt1:0:1
+wpn_usp_alt1:0:2
+wpn_usp_alt2:0:1
+wpn_usp_alt2:0:2
+wpn_sig220_worn
+wpn_sig220_worn:0:1
+wpn_sig220
+wpn_sig220:0:2
+wpn_sig220:0:2
+wpn_sig220_custom:0:1
+wpn_sig220_custom:0:2
+wpn_sig220_camo:0:1
+wpn_desert_eagle_worn
+wpn_desert_eagle_worn:0:1
+wpn_desert_eagle
+wpn_desert_eagle:0:2
+wpn_desert_eagle_alt
+wpn_desert_eagle_alt:0:1
+wpn_desert_eagle_custom:0:2
+wpn_gp100
+wpn_gp100:0:1
+wpn_gp100:0:1
+wpn_gp100:0:1
+wpn_gp100:0:1
+
+[sniper_primary]
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_m21:0:1
+wpn_svd
+wpn_svd
+wpn_svd
+wpn_svd
+wpn_svd
+wpn_svd
+wpn_svd:0:1
+wpn_svd:0:1
+wpn_svu
+wpn_svu
+wpn_svu
+wpn_svu
+wpn_svu:0:1
+wpn_svu:0:1
+wpn_trg
+wpn_trg
+wpn_trg
+wpn_trg:0:1
+wpn_trg:0:1
+wpn_trg:0:1
+wpn_sig550_sniper:0:1
+wpn_sig550_sniper:0:1
+wpn_sig550_sniper:0:1
+wpn_sig550_sniper:0:1
+wpn_sig550_sniper:0:1
+wpn_sig550_sniper:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+wpn_vintorez:0:1
+
+[noah_primary]
+wpn_mossberg
+wpn_mossberg
+wpn_mossberg
+wpn_mossberg:0:1
+wpn_mossberg:0:1
+wpn_mossberg:0:1
+wpn_mossberg:0:1
+wpn_wincheaster1300
+wpn_wincheaster1300
+wpn_wincheaster1300
+wpn_wincheaster1300:0:1
+wpn_wincheaster1300:0:1
+wpn_wincheaster1300:0:1
+wpn_wincheaster1300:0:1
+wpn_wincheaster1300_alt
+wpn_wincheaster1300_alt
+wpn_wincheaster1300_alt:0:1
+wpn_wincheaster1300_alt:0:1
+wpn_wincheaster1300_alt:0:1
+wpn_spas12
+wpn_spas12
+wpn_spas12:0:1
+wpn_spas12:0:1
+wpn_spas12:0:1
+wpn_spas12_alt
+wpn_spas12_alt:0:1
+wpn_spas12_alt:0:1
+wpn_spas12_alt:0:1
+
+[empty_wpn_section]
+none

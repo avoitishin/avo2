@@ -1,0 +1,19 @@
+geiger_dead		= 1, prob=0.032 \n
+welding_goggles		= 1, prob=0.024 \n
+book1			= 1, prob=0.040 \n
+book2			= 1, prob=0.040 \n
+book3			= 1, prob=0.040 \n
+drugs_kit		= 1, prob=0.032 \n
+
+mine			= 1, prob=0.018 \n
+
+hammer_inv		= 1, prob=0.024 \n
+spareparts		= 1, prob=0.018 \n
+beadspread		= 1, prob=0.032 \n
+cards		= 2, prob=0.032 \n
+ammo_bad		= 10, prob=0.008 \n
+swiss		= 1, prob=0.048 \n
+mirror		= 1, prob=0.048 \n
+
+letter_freedom_manual_1_of_2		= 1, prob=0.018 \n
+letter_freedom_manual_2_of_2		= 1, prob=0.018 \n

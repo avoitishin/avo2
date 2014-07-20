@@ -1,0 +1,17 @@
+[smart_terrain]
+respawn_idle = 10800
+respawn_only_level = true
+respawn_radius = 150
+death_idle_time = 16800
+
+squad_id = 29
+max_population = 1
+respawn_only_smart = true
+respawn_params = respawn@pri_sim_6
+
+[respawn@pri_sim_6]
+spawn_monolith
+
+[spawn_monolith]
+spawn_squads = monolith_sim_squad_advanced_pripyat, monolith_sim_squad_veteran_pripyat, monolith_sci_simulation_squad_pripyat
+spawn_num = {=actor_on_level(pripyat) -pri_b306_task_end -pri_b36_master_dead} 1, {=actor_on_level(pripyat) +pri_b306_task_end +pri_b36_master_dead} 2, 0

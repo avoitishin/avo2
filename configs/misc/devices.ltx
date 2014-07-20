@@ -1,0 +1,473 @@
+[device_pda]:identity_immunities
+GroupControlSection	= spawn_group
+discovery_dependency=
+$spawn 				= "devices\pda"
+$prefetch 			= 16
+class				= S_PDA
+cform				= skeleton
+visual				= dynamics\devices\dev_pda\dev_pda.ogf
+description			= st_pda_descr
+radius				= 68; 50
+slot				= 7
+default_to_ruck		= false
+sprint_allowed		= true
+control_inertion_factor = 1
+script_binding      = bind_physic_object.init
+
+inv_name			= st_pda_name
+inv_name_short		= st_pda_name
+inv_weight			= 0.1	;0.2
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 6
+inv_grid_y			= 13
+cost				= 1840
+quest_item     			= false
+
+attach_angle_offset		= -1.303,0.107,-1.702   ;устанавливается в радианах Angle*PI/180
+attach_position_offset	= 0.14,0.001,0.02
+attach_bone_name		= bip01_l_hand
+auto_attach			= false
+
+
+[dev_flash_1]:identity_immunities
+GroupControlSection	= spawn_group
+discovery_dependency=
+$spawn 				= "devices\dev_flash_1"
+$prefetch 			= 16
+class				= D_PDA
+cform				= skeleton
+visual				= dynamics\devices\dev_flash_1\dev_flash_1.ogf
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 11
+inv_grid_y			= 22
+
+slot				= 7
+radius				= 50
+default_to_ruck		= false
+inv_weight			= 0.05
+
+inv_name			= st_pda_name
+inv_name_short		= st_pda_name
+description			= st_pda_descr
+cost				= 940
+can_trade			= false
+
+[dev_flash_2]:identity_immunities
+GroupControlSection	= spawn_group
+discovery_dependency=
+$spawn 				= "devices\dev_flash_2"
+$prefetch 			= 16
+class				= D_PDA
+cform				= skeleton
+visual				= dynamics\devices\dev_flash_2\dev_flash_2.ogf
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 11
+inv_grid_y			= 23
+
+slot				= 7
+radius				= 50
+default_to_ruck		= false
+inv_weight			= 0.05
+
+inv_name			= st_pda_name
+inv_name_short		= st_pda_name
+description			= st_pda_descr
+cost				= 1120
+can_trade			= false
+
+[device_torch]:identity_immunities
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn				= "devices\torch"
+$prefetch 			= 32
+class				= TORCH_S
+cform				= skeleton
+visual				= dynamics\devices\dev_torch_light\dev_torch_light.ogf
+description			= st_device_torch_descr
+cost				= 0
+inv_name			= st_device_torch_name
+inv_name_short		= st_device_torch_name
+inv_weight			= 0.0
+inv_grid_width		= 2
+inv_grid_height		= 1
+inv_grid_x			= 16
+inv_grid_y			= 12
+
+;вещью нельзя торговать
+can_trade			= true
+
+position			= 0.35,0.25,0.0
+light_trace_bone		= lights_bone
+
+attach_angle_offset		= 3.062, 0.008, -1.532
+attach_position_offset		= 0.134, -0.007, 0.09
+
+attach_bone_name		= bip01_head
+auto_attach			= false
+
+night_vision				= on
+night_vision_texture		= wpn\wpn_night
+night_vision_effector		= postprocess_night
+
+snd_night_vision_on			= weapons\nv_start
+snd_night_vision_off		= weapons\nv_off
+snd_night_vision_idle		= weapons\nv_loop
+snd_night_vision_broken		= weapons\nv_off
+
+night_vision_recharge_time			= 6		;(c) время зарядки аккамулятора
+night_vision_recharge_time_min		= 2		;(c) мин. время зарядки аккамулятора, после которого уст-во уже может работать
+night_vision_discharge_time			= 20	;(c) время разрядки (работы) устройства после полной зарядки
+slot								= 9
+default_to_ruck						= false
+sprint_allowed						= true
+control_inertion_factor				= 1
+disabled_maps						= ai_test,ai_test2, andy_test_
+
+[inventory_box]
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn 				= "devices\inventory box"
+class				= S_INVBOX
+cform				= skeleton
+visual				= dynamics\equipment_cache\equipment_box_01_case.ogf
+script_binding      = bind_physic_object.init
+
+[device_flare]:identity_immunities
+class                   = D_FLARE
+visual					= dynamics\devices\dev_flare\dev_flare
+description             = enc_weapons1_wpn_flare
+
+inv_weight				= 0.2
+inv_name				= device_flare
+inv_name_short			= device_flare_short
+
+inv_grid_width				= 2
+inv_grid_height				= 1
+inv_grid_x					= 12
+inv_grid_y					= 7
+
+slot					= 11
+cost					= 50
+default_to_ruck         = true
+sprint_allowed			= true
+control_inertion_factor = 1.0
+work_time_sec			= 10000
+hud                     = device_flare_hud
+animation_slot			= 7
+
+working_particles		= weapons\dev_flare_flame
+
+[device_flare_hud]:hud_base
+hands_position				= 0.361999,-0.164000,0.106000
+hands_orientation			= 21.000044,-1.700000,0.000000
+hands_position_16x9             = 0,0,0
+hands_orientation_16x9          = 0,0,0
+
+aim_hud_offset_pos				= 0,0,0
+aim_hud_offset_rot				= 0,0,0
+
+gl_hud_offset_pos				= 0,0,0
+gl_hud_offset_rot				= 0,0,0
+
+lean_hud_offset_pos				= 0,0,0
+lean_hud_offset_rot				= 0,0,0
+
+item_position				= -0.031455,0.017528,0.136259
+item_orientation			= 62.783558,75.663406,-79.665085
+
+item_visual                   	= dynamics\devices\dev_flare\dev_flare
+attach_place_idx				= 1
+
+fire_point						= 0.279000,-0.143000,-0.009000
+fire_bone                		= flare_point
+
+
+anm_show						= flare_draw
+anm_hide						= flare_holster
+anm_idle						= flare_idle
+anm_drop						= flare_holster
+
+[inv_rucksack]:inventory_box
+visual = dynamics\devices\dev_rukzak\dev_rukzak.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_sumka1]:inventory_box
+visual = dynamics\equipments\sumka1.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_sumka2]:inventory_box
+visual = dynamics\equipments\sumka2.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_sumka3]:inventory_box
+visual = dynamics\equipments\sumka3.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_sumka4]:inventory_box
+visual = dynamics\equipments\sumka4.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_sumka5]:inventory_box
+visual = dynamics\equipments\sumka5.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_sumka7]:inventory_box
+visual = dynamics\equipments\sumka7.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_case]:inventory_box
+visual = dynamics\equipments\case.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_blue_box]:inventory_box
+visual = dynamics\equipments\blue_box.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_dev_merger]:inventory_box
+visual = dynamics\devices\dev_merger\dev_merger.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_box_metall_01]:inventory_box
+visual = dynamics\box\box_metall_01.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_expl_dinamit]:inventory_box
+visual = dynamics\box\expl_dinamit.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_green_box]:inventory_box
+visual = dynamics\equipments\green_box.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[inv_micro]:inventory_box
+visual = dynamics\equipments\small_cube.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+;========================================
+; Environment Props
+;========================================
+
+[vertel_boar]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= S_INVBOX
+cform					= skeleton
+visual 					= dynamics\dead_body\vertel_boar.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+
+[transiver_01]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= S_INVBOX
+cform					= skeleton
+visual 					= dynamics\el_tehnika\transiver.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+
+[child_bench_prop]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\stul\child_bench.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[yanov_door]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\prop\yanov_door.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[yanov_bucket]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\workshop_room\vedro_01.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[porn_prop]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\equipments\trade\porn_prop.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[wood_doska1_prop]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\wood_doski\wood_doska1.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[pri_a25_antenna_destroyable_barrier]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\scene_objects\pripyat\pri_a25_antenna_destroyable_barrier.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[wood_stolb1]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\wood_doski\wood_stolb1.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+[mattress02]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\equipments\mattress02.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will
+
+[armor_repair_fa_prop]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\repair\armor_repair_fa.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will
+
+[blue_box]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\equipments\blue_box.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will
+
+[green_box]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\equipments\green_box.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will
+
+[case]
+GroupControlSection		= spawn_group
+discovery_dependency 	=
+$spawn 					= "devices\inventory box"
+class					= O_PHYS_S
+cform					= skeleton
+visual 					= dynamics\equipments\case.ogf
+script_binding      	= bind_physic_object.init
+visual_flags 			= 1
+remove_time     = 60; after this time  unbreaked removable bone will be removed
+
+;========================================
+; USS OPERATIVE DROP-OFF, USS class dependent
+;========================================
+
+[dropoff_assaulter]:inventory_box
+visual = dynamics\personal\dropoff_assaulter.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[dropoff_recon]:inventory_box
+visual = dynamics\personal\dropoff_recon.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[dropoff_sniper]:inventory_box
+visual = dynamics\personal\dropoff_sniper.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+;========================================
+; PERSONAL DELIVERY, customized
+;========================================
+
+[delivery_noah]:inventory_box
+visual = dynamics\personal\delivery_box_noah.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[delivery_nimble]:inventory_box
+visual = dynamics\personal\delivery_box_nimble.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[delivery_bunker]:inventory_box
+visual = dynamics\personal\delivery_box_bunker.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[delivery_freedom]:inventory_box
+visual = dynamics\personal\delivery_box_freedom.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[delivery_duty]:inventory_box
+visual = dynamics\personal\delivery_box_duty.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1
+
+[delivery_bonesetter]:inventory_box
+visual = dynamics\personal\delivery_box_bonesetter.ogf
+custom_data = scripts\treasure_inventory_box.ltx
+radius = 1

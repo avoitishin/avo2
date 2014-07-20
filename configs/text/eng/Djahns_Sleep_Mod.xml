@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="st_sleep_bag_descr">
+		<text>A light sleeping bag that will keep you warm and dry when you need to rest. Be sure to pick a safe spot with a possible escape route.\n \n%c[0,204,0,51]WARNING:\n \n%c[0,170,170,170]Sleeping in the open may attract predators. Does not protect from radiation.\n \n%c[0,153,255,255] • %c[0,140,140,140] sets up portable bed\n%c[0,153,255,255] • %c[0,140,140,140] multiple use\n%c[0,153,255,255] • %c[0,140,140,140] everyday item</text>
+	</string>
+	<string id="st_sleep_bag">
+		<text>Sleeping bag</text>
+	</string>
+	<string id="sleep_warning_blowout">
+		<text>It's not safe to sleep!</text>
+	</string>
+</string_table>

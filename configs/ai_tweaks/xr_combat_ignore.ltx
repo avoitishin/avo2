@@ -1,0 +1,214 @@
+[settings]
+enable = true  									;Enables a memory system that keeps track of how long enemy has been visible or heard. When time is up, combat enemy is forgotten.
+combat_during_surge = false						; When disabled NPCs will ignore enemies during surge until cover is reached.
+time_safe = 30000 ; 60000								;Amount of time before safe zone flag wears off when an NPC leaves a no combat smart
+
+[ghillie_inertion] ;Reduced inertion Value for if a Ghillie Suit is being Worn
+stalker = 	{=is_dark_night} 90000, 75000
+bandit = 	{=is_dark_night} 90000, 75000
+dolg = 		{=is_dark_night} 105000, 90000
+freedom =	{=is_dark_night} 105000, 90000
+ecolog = 	{=is_dark_night} 90000, 90000
+killer = 	{=is_dark_night} 135000, {=is_dark_night !npc_in_zone(zat_b40)} 165000, {=npc_in_zone(zat_b40)} 125000, 105000
+army =		{=is_dark_night} 135000, 105000
+monolith =	{=is_dark_night} 135000, 105000
+
+[combat_inertion]; Time in which a NPC engages combat long after losing sight or sound on an enemy
+stalker = 	{=is_dark_night} 180000, 150000
+bandit = 	{=is_dark_night} 180000, 150000
+dolg = 		{=is_dark_night} 210000, 180000
+freedom =	{=is_dark_night} 210000, 180000
+ecolog = 	{=is_dark_night} 180000, 180000
+killer = 	{=is_dark_night} 270000, {=is_dark_night !npc_in_zone(zat_b40)} 330000, {=npc_in_zone(zat_b40)} 260000, 210000
+army =		{=is_dark_night} 270000, 210000
+monolith =	{=is_dark_night} 270000, 210000
+
+[combat_inertion_mult]
+novice = 0.9
+experienced = 1.0
+veteran = 1.2
+master = 1.3
+
+[forbidden_npcs] NPCs who will use vanilla distance check
+zat_b38_stalker_cop
+zat_b18_noah
+zat_b20_noah_teleport
+zat_b18_dog_noah
+zat_a2_stalker_nimble
+zat_b7_bandit_boss_sultan
+zat_b22_stalker_medic
+zat_b30_owl_stalker_trader
+zat_a2_stalker_barmen
+zat_b215_stalker_guide_zaton
+zat_b14_stalker_1
+zat_b14_stalker_2
+zat_b14_stalker_3
+zat_b106_stalker_gonta
+zat_b106_stalker_garmata
+zat_b106_stalker_crab
+;zat_b7_stalker_victim_1
+zat_b7_stalker_raider_leader
+zat_b7_stalker_raider_1
+zat_b7_stalker_raider_2
+zat_b7_stalker_raider_3
+zat_b5_stalker_raider_1
+zat_b5_stalker_raider_2
+zat_b5_stalker_raider_3
+zat_b5_stalker_raider_4
+zat_b7_duty_illicit_dealer
+zat_b5_dealer_assistant_1
+zat_b5_dealer_assistant_2
+zat_b103_lost_merc_leader
+zat_b103_lost_merc_1
+zat_b103_lost_merc_2
+zat_b103_lost_merc_3
+zat_b103_lost_merc_4
+zat_b215_stalker_guide_jupiter
+zat_b5_stalker_1
+zat_b5_stalker_2
+zat_b5_stalker_3
+zat_b5_stalker_4
+jup_a10_bandit_leader
+jup_a12_bandit_cashier
+jup_a12_bandit_chief
+jup_a12_stalker_prisoner
+jup_a12_stalker_assaulter
+jup_a12_stalker_diplomat
+jup_a12_merc_cover
+jup_a12_bandit_guard
+jup_b25_freedom_flint
+jup_b25_stalker_senya
+jup_b47_merc_01
+jup_b47_merc_02
+jup_b47_merc_03
+jup_b47_merc_04
+jup_b47_merc_05
+jup_b1_stalker_1
+jup_b1_stalker_2
+jup_b1_stalker_3
+jup_b1_stalker_4
+jup_b1_pro_stalker_1
+jup_b1_pro_stalker_2
+jup_b1_pro_stalker_3
+jup_b1_pro_stalker_4
+jup_b6_scientist_tech
+jup_b6_scientist_nuclear_physicist
+jup_b6_scientist_biochemist
+jup_b6_freedom_stalker_1
+jup_b6_freedom_stalker_2
+jup_b6_freedom_stalker_3
+jup_b6_freedom_stalker_4
+jup_b6_duty_stalker_1
+jup_b6_duty_stalker_2
+jup_b6_duty_stalker_3
+jup_b6_duty_stalker_4
+jup_b6_stalker_gonta
+jup_b6_stalker_garmata
+jup_b6_stalker_crab
+jup_b6_stalker_prisoner
+jup_b6_stalker_assaulter
+jup_b6_stalker_diplomat
+jup_b202_stalker_snag
+jup_a6_stalker_medik
+jup_b15_zulus
+jup_b202_bandit
+;jup_b207_merc_illicit_dealer
+;jup_b207_duty_security_squad_leader
+;jup_b207_freedom_assault_squad_leader
+;jup_b207_freedom_recon_squad_leader
+jup_b4_monolith_squad_leader_monolith_skin
+jup_b4_monolith_squad_soldier_1_monolith_skin
+jup_b4_monolith_squad_soldier_2_monolith_skin
+jup_b4_monolith_squad_soldier_3_monolith_skin
+jup_b4_monolith_squad_soldier_4_monolith_skin
+jup_b4_monolith_squad_soldier_5_monolith_skin
+jup_b4_duty_squad_leader_duty_skin
+jup_b4_monlith_squad_soldier_1_duty_skin
+jup_b4_monlith_squad_soldier_2_duty_skin
+jup_b4_monlith_squad_soldier_3_duty_skin
+jup_b4_monlith_squad_soldier_4_duty_skin
+jup_b4_monlith_squad_soldier_5_duty_skin
+jup_b4_monlith_squad_leader_freedom_skin
+jup_b4_monlith_squad_soldier_1_freedom_skin
+jup_b4_monlith_squad_soldier_2_freedom_skin
+jup_b4_monlith_squad_soldier_3_freedom_skin
+jup_b4_monlith_squad_soldier_4_freedom_skin
+jup_b4_monlith_squad_soldier_5_freedom_skin
+jup_b4_freedom_leader
+jup_b4_freedom_help
+jup_b4_duty_leader
+jup_b4_duty_help
+jup_a6_stalker_barmen
+jup_a6_stalker_medik
+jup_b19_freedom_yar
+jup_b19_merc_1
+jup_b19_merc_2
+jup_b19_merc_3
+jup_b19_merc_4
+jup_b19_merc_5
+pri_a16_freedom_yar_squad
+jup_b218_vano_in_suit
+pri_a15_sokolov_sci_head
+pri_a15_sokolov_sci_head_strong
+pri_a22_military_yarmoshuk
+pri_a22_military_skelja
+pri_a15_sokolov_sci
+pri_a15_sokolov
+pri_b36_monolith_marine_sniper
+pri_b35_envoy
+pri_b35_guard_envoy_1
+pri_b35_guard_envoy_2
+pri_a22_army_signaller
+jup_b43_stalker_assistant_pri
+jup_b43_stalker_assistant
+pri_a15_military_tarasov
+pri_a22_military_merkulov
+pri_a22_military_yarmoshuk
+pri_a22_military_skelja
+pri_a22_military_skelja_strong
+pri_a25_base_medic
+pri_a21_sentry_lieutenant_stecenko
+pri_a18_monolith_2nd_corridor_1
+pri_a17_military_captain_tarasov
+pri_a17_military_prapor_valentyr
+pri_a17_military_sergeant_morozov
+pri_a17_military_lieutenant_podorojniy
+pri_a17_monolith_patrol_1
+pri_a17_monolith_patrol_2
+pri_a17_monolith_patrol_lead
+pri_a17_monolith_preacher
+pri_a17_monolith_ambusher_1
+pri_a17_monolith_sniper_1
+pri_a17_monolith_sniper_2
+pri_a17_monolith_ambusher_2
+pri_a17_monolith_ambusher_3
+pri_a17_monolith_ambusher_4
+pri_a17_monolith_ambusher_5
+pri_a17_monolith_ambusher_6
+pri_a17_monolith_ambusher_8
+pri_a17_monolith_ambusher_10
+pri_a17_monolith_ambusher_7
+pri_a17_monolith_sniper_4
+pri_a17_monolith_ambusher_9
+pri_a17_monolith_sniper_3
+pri_a15_military_recon_leader
+pri_a15_military_recon_1
+pri_a15_military_recon_2
+pri_a15_military_recon_3
+pri_a17_military_colonel_kovalski
+pri_b301_zulus
+pri_a25_base_medic
+pri_a22_army_signaller
+pri_a17_military_colonel_kovalski_strong
+pri_a25_base_medic_strong
+pri_a22_army_signaller_strong
+pas_b400_monolith_sniper
+pas_b400_monolith_sniper
+pas_b400_monolith_sniper
+pas_b400_monolith_sniper
+pas_b400_zulus
+jup_a6_freedom_leader
+jup_a6_duty_leader
+jup_b10_stalker_drunk
+jup_b219_zulus
+jup_b219_stalker_tech

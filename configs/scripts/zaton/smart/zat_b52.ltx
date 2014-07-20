@@ -1,0 +1,28 @@
+[smart_terrain]
+squad_id = 35
+max_population = 2
+;arrive_dist = 100
+
+[respawn@zat_b52]
+
+;;; unused
+
+spawn_boar
+spawn_flesh
+
+;;; unused
+
+[spawn_boar]
+spawn_squads = simulation_dog, simulation_dog, simulation_pseudodog, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh
+spawn_num = 0 ; {=actor_on_level(zaton)} 1, 0
+
+[spawn_flesh]
+spawn_squads = simulation_dog, simulation_dog, simulation_pseudodog, simulation_flesh, simulation_flesh, simulation_boar, simulation_bloodsucker
+spawn_num = 0 ; {=actor_on_level(zaton)} 2, 0
+
+[exclusive]
+port_bandit_1_leader = zaton\zat_b52_port_bandits.ltx
+port_bandit_2 = zaton\zat_b52_port_bandits.ltx
+port_bandit_3 = zaton\zat_b52_port_bandits.ltx
+port_bandit_4 = zaton\zat_b52_port_bandits.ltx
+port_bandit_5 = zaton\zat_b52_port_bandits.ltx

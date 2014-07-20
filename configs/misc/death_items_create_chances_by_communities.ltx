@@ -1,0 +1,642 @@
+--' RevampedNpcLoot
+-- 06/mar/2011: v1.0b by jci_pt
+
+--' Rebuild by ScarabParamit
+-- 7/07/2012
+
+; --- Items create chances upon death by Communities ---
+
+; Papa ScarabParamit say's:
+; Here You can set CHANCES of certain items to be CREATED upon NPC's death...for every faction separetly.
+; 1.0 = 100%
+; 0.5 = 50%
+; And so on...
+; Base faction are Stalkers (who would gues ? ;-)), set them up first,
+; then copy and add new values only for objects You want to set up differently,
+; there is no need of mirroring everything.
+; Please remember - certain ammo amounth and other objects can be gathered by stalker during his lifespan,
+; take this under consideration while balancing. Gathered objects and ammo surviveabilty can be
+; LOWERED/CLEARED upon death using "item_survival_factor", "community_item_survive_chance"
+; and "rank_item_survive_chance" in death_loot_settings.ltx
+; To change AMMOUNTH of items created on NPC's death
+; look at "item_drop_counts" in death_loot_settings.ltx
+
+[stalker] ;                  --- FREE STALKER FACTION/LONE WOLVES ---
+
+; --- Ammunition ---
+ammo_9x18_fmj			= 1.0 ; 0.95 ; Light Pistol Rounds
+ammo_9x18_pmm			= 1.0 ; 0.25
+ammo_9x18_ap			= 1.0 ; 0.25
+ammo_9x19_fmj			= 1.0 ; 0.95 ; Pistol & SMG Rounds
+ammo_9x19_pbp			= 1.0 ; 0.25
+ammo_9x19_ap			= 1.0 ; 0.25
+ammo_11.43x23_fmj		= 1.0 ; 0.95 ; 45 ACP Heavy Pistol Rounds
+ammo_11.43x23_hydro		= 1.0 ; 0.25
+ammo_11.43x23_ap		= 1.0 ; 0.25
+ammo_12x70_buck			= 1.0 ; 0.95 ; Shotgun Shells
+ammo_12x76_zhekan		= 1.0 ; 0.25
+ammo_5.45x39_fmj		= 1.0 ; 0.75 ; Warsaw Pact Rifle Rounds
+ammo_5.45x39_ap			= 1.0 ; 0.25
+ammo_5.56x45_ss190		= 1.0 ; 0.75 ; NATO Assault Rifle Rounds
+ammo_5.56x45_ap			= 1.0 ; 0.25
+ammo_9x39_pab9			= 1.0 ; 0.75 ; Special Forces Subsonic Rounds
+ammo_9x39_ap			= 1.0 ; 0.25
+ammo_7.62x39_fmj		= 1.0 ; 0.95 ; Old Soviet WorldWar II Rounds
+ammo_7.62x39_ap			= 1.0 ; 0.25
+ammo_7.92x33_fmj		= 1.0 ; 0.95 ; Old German WorldWar II Rounds
+ammo_7.92x33_ap			= 1.0 ; 0.25
+ammo_7.62x54_7h1		= 1.0 ; 0.50 ; Warsaw Pact Sniper Rifle Rounds
+ammo_7.62x54_7h14		= 1.0 ; 0.25
+ammo_7.62x51_fmj		= 1.0 ; 0.50 ; NATO Sniper Rifle Rounds
+ammo_7.62x51_ap			= 1.0 ; 0.25
+ammo_gauss				= 1.0 ; 0.75 ; Electro-Magnetic Particle Cannon
+ammo_gauss_cardan		= 1.0 ; 0.25
+ammo_pkm_100			= 1.0 ; 0.95 ; Warsaw Pact Light Machine Gun
+ammo_7.62x54_ap			= 1.0 ; 0.25
+ammo_357_hp_mag			= 1.0 ; 0.35
+ammo_357_hp_mag_ap		= 1.0 ; 0.15
+ammo_magnum_300 		= 1.0 ; 0.50
+ammo_magnum_300_ap 		= 1.0 ; 0.25
+;ammo_12.7x108_fmj 		= 1.0
+ammo_12.7x108_ap 		= 1.0
+
+; --- Explosive Projectiles ---
+ammo_vog-25				= 0.25 ; Warsaw Pact ammo for Grenade Launcher
+ammo_m209				= 0.20 ; NATO ammo for Grenade Launcher
+ammo_og-7b				= 0.50 ; RPG-7 self-propelled Grenade
+
+; --- Explosives ---
+grenade_rgd5			= 0.10 ; Light Fragmentation Grenade
+grenade_f1				= 0.06 ; Fragmentation Grenade
+grenade_gd-05			= 0.02 ; Thermite Grenade
+
+; --- Equipment ---
+sleep_bag			= 0.001
+
+wpn_knife			= 0.001
+wpn_knife_inv		= 0.001
+wpn_knife_inv_2		= 0.001
+wpn_knife_inv_3		= 0.001
+wpn_knife_inv_4		= 0.001
+wpn_knife_inv_5		= 0.001
+wpn_knife_m			= 0.001
+
+af_medusa_af_iam			= 0.001
+af_cristall_flower_af_iam	= 0.001
+af_night_star_af_iam		= 0.001
+af_vyvert_af_iam			= 0.001
+af_gravi_af_iam				= 0.001
+af_gold_fish_af_iam			= 0.001
+af_cristall_af_iam			= 0.001
+af_fireball_af_iam			= 0.001
+af_dummy_glassbeads_af_iam	= 0.001
+af_eye_af_iam				= 0.001
+af_fire_af_iam				= 0.001
+af_blood_af_iam				= 0.001
+af_mincer_meat_af_iam		= 0.001
+af_soul_af_iam				= 0.001
+af_fuzz_kolobok_af_iam		= 0.001
+af_baloon_af_iam			= 0.001
+af_glass_af_iam				= 0.001
+af_electra_sparkler_af_iam	= 0.001
+af_electra_flash_af_iam		= 0.001
+af_electra_moonlight_af_iam	= 0.001
+af_dummy_battery_af_iam		= 0.001
+af_dummy_dummy_af_iam		= 0.001
+af_ice_af_iam				= 0.001
+af_compass_af_iam			= 0.001
+af_oasis_heart_af_iam		= 0.001
+jup_b1_half_artifact_af_iam	= 0.001
+af_quest_b14_twisted_af_iam	= 0.001
+
+af_medusa_af_aac					= 0.001
+af_cristall_flower_af_aac			= 0.001
+af_night_star_af_aac				= 0.001
+af_vyvert_af_aac					= 0.001
+af_gravi_af_aac						= 0.001
+af_gold_fish_af_aac					= 0.001
+af_cristall_af_aac					= 0.001
+af_fireball_af_aac					= 0.001
+af_dummy_glassbeads_af_aac			= 0.001
+af_eye_af_aac						= 0.001
+af_fire_af_aac						= 0.001
+af_blood_af_aac						= 0.001
+af_mincer_meat_af_aac				= 0.001
+af_soul_af_aac						= 0.001
+af_fuzz_kolobok_af_aac				= 0.001
+af_baloon_af_aac					= 0.001
+af_glass_af_aac						= 0.001
+af_electra_sparkler_af_aac			= 0.001
+af_electra_flash_af_aac				= 0.001
+af_electra_moonlight_af_aac			= 0.001
+af_dummy_battery_af_aac				= 0.001
+af_dummy_dummy_af_aac				= 0.001
+af_ice_af_aac						= 0.001
+af_compass_af_aac					= 0.001
+af_oasis_heart_af_aac				= 0.001
+jup_b1_half_artifact_af_aac			= 0.001
+af_quest_b14_twisted_af_aac			= 0.001
+
+af_medusa_af_aam					= 0.001
+af_cristall_flower_af_aam			= 0.001
+af_night_star_af_aam				= 0.001
+af_vyvert_af_aam					= 0.001
+af_gravi_af_aam						= 0.001
+af_gold_fish_af_aam					= 0.001
+af_cristall_af_aam					= 0.001
+af_fireball_af_aam					= 0.001
+af_dummy_glassbeads_af_aam			= 0.001
+af_eye_af_aam						= 0.001
+af_fire_af_aam						= 0.001
+af_blood_af_aam						= 0.001
+af_mincer_meat_af_aam				= 0.001
+af_soul_af_aam						= 0.001
+af_fuzz_kolobok_af_aam				= 0.001
+af_baloon_af_aam					= 0.001
+af_glass_af_aam						= 0.001
+af_electra_sparkler_af_aam			= 0.001
+af_electra_flash_af_aam				= 0.001
+af_electra_moonlight_af_aam			= 0.001
+af_dummy_battery_af_aam				= 0.001
+af_dummy_dummy_af_aam				= 0.001
+af_ice_af_aam						= 0.001
+af_compass_af_aam					= 0.001
+af_oasis_heart_af_aam				= 0.001
+jup_b1_half_artifact_af_aam			= 0.001
+af_quest_b14_twisted_af_aam			= 0.001
+
+af_medusa_lead_box					= 0.001
+af_cristall_flower_lead_box			= 0.001
+af_night_star_lead_box				= 0.001
+af_vyvert_lead_box					= 0.001
+af_gravi_lead_box						= 0.001
+af_gold_fish_lead_box					= 0.001
+af_cristall_lead_box					= 0.001
+af_fireball_lead_box					= 0.001
+af_dummy_glassbeads_lead_box			= 0.001
+af_eye_lead_box						= 0.001
+af_fire_lead_box						= 0.001
+af_blood_lead_box						= 0.001
+af_mincer_meat_lead_box				= 0.001
+af_soul_lead_box						= 0.001
+af_fuzz_kolobok_lead_box				= 0.001
+af_baloon_lead_box					= 0.001
+af_glass_lead_box						= 0.001
+af_electra_sparkler_lead_box			= 0.001
+af_electra_flash_lead_box				= 0.001
+af_electra_moonlight_lead_box			= 0.001
+af_dummy_battery_lead_box				= 0.001
+af_dummy_dummy_lead_box				= 0.001
+af_ice_lead_box						= 0.001
+af_compass_lead_box					= 0.001
+af_oasis_heart_lead_box				= 0.001
+jup_b1_half_artifact_lead_box			= 0.001
+af_quest_b14_twisted_lead_box			= 0.001
+
+af_surge			= 0.001
+af_frames			= 0.001
+af_grid				= 0.001
+af_freon			= 0.001
+af_cooler			= 0.001
+af_kevlar			= 0.001
+af_plates			= 0.001
+af_camelbak			= 0.001
+af_iam				= 0.001
+af_aac				= 0.001
+af_aam				= 0.001
+
+lead_box			= 0.001
+
+wpn_binoc			= 0.001
+wpn_binoc_inv		= 0.001
+roubles				= 0.001
+porn				= 0.001
+batteries			= 0.001
+dev_flash_1			= 0.001
+dev_flash_2			= 0.001
+;repair_kit			= 0.001
+device_torch		= 0.001
+device_pda			= 0.001
+guitar_a			= 0.001
+harmonica_a			= 0.001
+
+; --- Detectors ---
+detector_simple		= 0.001
+detector_advanced	= 0.001
+detector_elite		= 0.001
+
+; --- Food ---
+breadold			= 0.001
+bread				= 0.001
+kolbasa				= 0.001
+conserva			= 0.001
+protein				= 0.001
+
+tomato				= 0.001
+sausage				= 0.001
+corn				= 0.001
+beans				= 0.001
+chili				= 0.001
+salmon				= 0.001
+raisins				= 0.001
+chocolate			= 0.001
+nuts				= 0.001
+
+drink_crow				= 0.001
+
+tushonka				= 0.001
+glucose					= 0.001
+glucose_s				= 0.001
+
+mre					= 0.001
+mre2				= 0.001
+mre3				= 0.001
+ration_ru			= 0.001
+ration_ru2			= 0.001
+ration_ru3			= 0.001
+ration_ru4			= 0.001
+ration_ru5			= 0.001
+ration_ru6			= 0.001
+ration_ru7			= 0.001
+ration_ukr			= 0.001
+ration_ukr2			= 0.001
+ration_ukr3			= 0.001
+ration_ukr4			= 0.001
+ration_ukr5			= 0.001
+ration_ukr6			= 0.001
+
+; --- Medical Supplies ---
+bandage				= 0.001
+medkit				= 0.001
+medkit_army			= 0.001
+medkit_scientic		= 0.001
+antirad				= 0.001
+
+stimpack			= 0.001
+stimpack_army		= 0.001
+stimpack_scientic	= 0.001
+
+; --- Drugs and Medicines ---
+drug_booster							= 0.001
+drug_coagulant							= 0.001
+drug_coagulant2							= 0.001
+drug_coagulant3							= 0.001
+drug_coagulant4							= 0.001
+drug_coagulant5							= 0.001
+drug_psy_blockade						= 0.001
+drug_psy_blockade2						= 0.001
+drug_psy_blockade3						= 0.001
+drug_psy_blockade4						= 0.001
+drug_psy_blockade5						= 0.001
+drug_antidot							= 0.001
+drug_antidot2							= 0.001
+drug_antidot3							= 0.001
+drug_radioprotector						= 0.001
+drug_radioprotector2					= 0.001
+drug_anabiotic							= 0.001
+drug_sleepingpills						= 0.001
+drug_sleepingpills2						= 0.001
+drug_sleepingpills3						= 0.001
+drug_sleepingpills4						= 0.001
+drug_sleepingpills5						= 0.001
+akvatab									= 0.001
+akvatab2								= 0.001
+akvatab3								= 0.001
+akvatab4								= 0.001
+cocaine									= 0.001
+cocaine2								= 0.001
+cocaine3								= 0.001
+tetanus									= 0.001
+adrenalin								= 0.001
+salicidic_acid							= 0.001
+morphine								= 0.001
+caffeine								= 0.001
+caffeine2								= 0.001
+caffeine3								= 0.001
+caffeine4								= 0.001
+caffeine5								= 0.001
+
+mint									= 0.001
+mint2									= 0.001
+mint3									= 0.001
+mint4									= 0.001
+mint5									= 0.001
+
+mineral_water						= 0.001
+mineral_water2						= 0.001
+mineral_water3						= 0.001
+
+beer								= 0.001
+
+vodka								= 0.001
+vodka_2								= 0.001
+vodka_3								= 0.001
+vodka2								= 0.001
+vodka2_2							= 0.001
+vodka2_3							= 0.001
+vodka_quality						= 0.001
+vodka_quality2						= 0.001
+vodka_quality3						= 0.001
+energy_drink						= 0.001
+water_drink							= 0.001
+tea									= 0.001
+tea2								= 0.001
+tea3								= 0.001
+bottle_metal						= 0.001
+bottle_metal2						= 0.001
+bottle_metal3						= 0.001
+flask								= 0.001
+flask2								= 0.001
+flask3								= 0.001
+
+cigarretes							= 0.001
+cigarretes2							= 0.001
+cigarretes3							= 0.001
+cigarretes4							= 0.001
+hand_rolling_tobacco						= 0.001
+hand_rolling_tobacco2						= 0.001
+hand_rolling_tobacco3						= 0.001
+hand_rolling_tobacco4						= 0.001
+hand_rolling_tobacco5						= 0.001
+cigar							= 0.001
+cigar1							= 0.001
+cigar1_2						= 0.001
+cigar1_3						= 0.001
+cigar2							= 0.001
+cigar2_2						= 0.001
+cigar2_3						= 0.001
+cigar3							= 0.001
+cigar3_2						= 0.001
+cigar3_3						= 0.001
+cigarettes_lucky						= 0.001
+cigarettes_lucky2						= 0.001
+cigarettes_lucky3						= 0.001
+cigarettes_lucky4						= 0.001
+cigarettes_russian						= 0.001
+cigarettes_russian2						= 0.001
+cigarettes_russian3						= 0.001
+tobacco							= 0.001
+tobacco2						= 0.001
+tobacco3						= 0.001
+tobacco4						= 0.001
+tobacco5						= 0.001
+marijuana						= 0.001
+marijuana2						= 0.001
+marijuana3						= 0.001
+joint							= 0.001
+
+; --- Repair items ---
+gun_oil							= 0.001
+gun_oil2						= 0.001
+cleaning_kit_p						= 0.001
+cleaning_kit_p2						= 0.001
+cleaning_kit_p3						= 0.001
+cleaning_kit_s						= 0.001
+cleaning_kit_s2						= 0.001
+cleaning_kit_s3						= 0.001
+cleaning_kit_r5						= 0.001
+cleaning_kit_r5_2						= 0.001
+cleaning_kit_r5_3						= 0.001
+cleaning_kit_r7							= 0.001
+cleaning_kit_r7_2						= 0.001
+cleaning_kit_r7_3						= 0.001
+cleaning_kit_u							= 0.001
+cleaning_kit_u2							= 0.001
+cleaning_kit_u3							= 0.001
+toolkit_p						= 0.001
+toolkit_p2						= 0.001
+toolkit_p3						= 0.001
+toolkit_p4						= 0.001
+toolkit_s						= 0.001
+toolkit_s2						= 0.001
+toolkit_s3						= 0.001
+toolkit_s4						= 0.001
+toolkit_r5						= 0.001
+toolkit_r5_2						= 0.001
+toolkit_r5_3						= 0.001
+toolkit_r5_4						= 0.001
+toolkit_r7							= 0.001
+toolkit_r7_2						= 0.001
+toolkit_r7_3						= 0.001
+toolkit_r7_4						= 0.001
+toolkit_u						= 0.001
+toolkit_u2						= 0.001
+toolkit_u3						= 0.001
+toolkit_u4						= 0.001
+sharpening_stones						= 0.001
+sharpening_stones2						= 0.001
+sharpening_stones3						= 0.001
+sharpening_stones4						= 0.001
+gun_oil_ru_d						= 0.001
+gun_oil_ru_d2						= 0.001
+gun_oil_ru							= 0.001
+gun_oil_ru2							= 0.001
+solvent								= 0.001
+solvent2							= 0.001
+grease							= 0.001
+grease2							= 0.001
+steel_wool						= 0.001
+steel_wool2						= 0.001
+glue_b						= 0.001
+glue_b2						= 0.001
+glue_a						= 0.001
+glue_a2						= 0.001
+glue_e						= 0.001
+glue_e2						= 0.001
+sewing_kit_b						= 0.001
+sewing_kit_b2						= 0.001
+sewing_kit_b3						= 0.001
+sewing_kit_b4						= 0.001
+sewing_kit_a						= 0.001
+sewing_kit_a2						= 0.001
+sewing_kit_a3						= 0.001
+sewing_kit_a4						= 0.001
+sewing_kit_h						= 0.001
+sewing_kit_h2						= 0.001
+sewing_kit_h3						= 0.001
+sewing_kit_h4						= 0.001
+armor_repair_fa						= 0.001
+armor_repair_fa2						= 0.001
+helmet_repair_kit						= 0.001
+helmet_repair_kit2						= 0.001
+helmet_repair_kit3						= 0.001
+armor_repair_pro						= 0.001
+armor_repair_pro2						= 0.001
+armor_repair_pro3						= 0.001
+armor_repair_pro4						= 0.001
+textile_patch_b						= 0.001
+textile_patch_m						= 0.001
+textile_patch_e						= 0.001
+
+; --- Explosives ---
+
+explo_jerrycan_fuel							= 0.001
+explo_jerrycan_fuel2						= 0.001
+explo_jerrycan_fuel3						= 0.001
+explo_jerrycan_fuel4						= 0.001
+explo_jerrycan_fuel5						= 0.001
+explo_jerrycan_fuel6						= 0.001
+explo_jerrycan_fuel7						= 0.001
+explo_jerrycan_fuel8						= 0.001
+explo_metalcan_powder					= 0.001
+explo_balon_gas							= 0.001
+explo_balon_gas2						= 0.001
+explo_balon_gas3						= 0.001
+explo_balon_gas4						= 0.001
+explo_balon_gas5						= 0.001
+explo_balon_gas6						= 0.001
+explo_balon_gas7						= 0.001
+explo_balon_gas8						= 0.001
+mine									= 0.001
+
+; --- Artifacts ---
+af_cristall				= 0.001
+af_fireball				= 0.001
+af_dummy_glassbeads		= 0.001
+af_eye					= 0.001
+af_fire					= 0.001
+af_medusa				= 0.001
+af_cristall_flower		= 0.001
+af_night_star			= 0.001
+af_vyvert				= 0.001
+af_gravi				= 0.001
+af_gold_fish			= 0.001
+af_blood				= 0.001
+af_mincer_meat			= 0.001
+af_soul					= 0.001
+af_fuzz_kolobok			= 0.001
+af_baloon				= 0.001
+af_glass				= 0.001
+af_electra_sparkler		= 0.001
+af_electra_flash		= 0.001
+af_electra_moonlight	= 0.001
+af_dummy_battery		= 0.001
+af_dummy_dummy			= 0.001
+af_ice					= 0.001
+
+; --- Mutant Fleash ---
+mutant_part_flesh_eye				= 0.001
+mutant_part_tushkano_head			= 0.001
+mutant_part_pseudogigant_hand		= 0.001
+mutant_part_burer_hand				= 0.001
+mutant_part_snork_hand				= 0.001
+mutant_part_psevdodog_tail			= 0.001
+mutant_part_dog_tail				= 0.001
+mutant_part_boar_leg				= 0.001
+mutant_part_snork_leg				= 0.001
+mutant_part_snork_mask				= 0.001
+mutant_part_controller_glass		= 0.001
+mutant_part_chimera_kogot			= 0.001
+mutant_part_boar_chop				= 0.001
+mutant_part_flesh_meat				= 0.001
+mutant_part_dog_meat				= 0.001
+mutant_part_psevdodog_meat			= 0.001
+mutant_part_krovosos_meat			= 0.001
+mutant_part_chimera_meat			= 0.001
+mutant_part_tushkano_meat			= 0.001
+mutant_part_crow_beak				= 0.001
+
+hide_chimera						= 0.001
+powder_poltergeist					= 0.001
+hide_pseudogiant					= 0.001
+hide_psy_dog						= 0.001
+hide_pseudodog						= 0.001
+hide_burer							= 0.001
+hide_controller						= 0.001
+hide_bloodsucker					= 0.001
+hide_boar							= 0.001
+hide_flesh							= 0.001
+
+; --- Findings/immersion stuff
+shovel_old				= 0.01
+shovel_mili				= 0.01
+ied_rpg					= 0.01
+ied						= 0.01
+meinkampf				= 0.01
+jar						= 0.01
+grooming				= 0.01
+journal					= 0.01
+maps_kit				= 0.01
+geiger_dead				= 0.01
+welding_goggles			= 0.01
+survival_kit			= 0.01
+jewelry_box				= 0.01
+cooking					= 0.01
+book1					= 0.01
+book2					= 0.01
+book3					= 0.01
+picture_woman			= 0.01
+drugs_kit				= 0.01
+
+hammer_inv				= 0.01
+crowbar					= 0.01
+spareparts				= 0.01
+beadspread				= 0.01
+walkie					= 0.01
+cards					= 0.01
+ammo_bad				= 0.01
+boots					= 0.01
+mili_maps				= 0.01
+swiss					= 0.01
+headlamp				= 0.01
+mirror					= 0.01
+kit_hunt				= 0.01
+flashlight_old			= 0.01
+flashlight_broken		= 0.01
+underwear				= 0.01
+porn2					= 0.01
+batteries_dead			= 0.01
+batteries_ccell			= 0.01
+tarpaulin				= 0.01
+rope					= 0.01
+synthrope				= 0.01
+cutlery					= 0.01
+radio					= 0.01
+radio2					= 0.01
+fieldcooker				= 0.01
+wood_stove				= 0.01
+kerosene				= 0.01
+kerosene2				= 0.01
+kerosene3				= 0.01
+kerosene4				= 0.01
+kerosene5				= 0.01
+charcoal				= 0.01
+charcoal2				= 0.01
+charcoal3				= 0.01
+
+letter_memoirs_1_of_2				= 0.01
+letter_memoirs_2_of_2				= 0.01
+letter_freedom_manual_1_of_2				= 0.01
+letter_freedom_manual_2_of_2				= 0.01
+letter_stalker_letter_1_of_2				= 0.01
+letter_stalker_letter_2_of_2				= 0.01
+letter_ecologist_report_1_of_3				= 0.01
+letter_ecologist_report_2_of_3				= 0.01
+letter_ecologist_report_3_of_3				= 0.01
+letter_monolith_prayer_1_of_3				= 0.01
+letter_monolith_prayer_2_of_3				= 0.01
+letter_monolith_prayer_3_of_3				= 0.01
+letter_monolithian_thoughts				= 0.01
+letter_letter_to_outside				= 0.01
+letter_military_stalker				= 0.01
+letter_mercenary				= 0.01
+letter_military_log				= 0.01
+letter_stalker_letter_3			= 0.01
+
+[bandit]:stalker ;                  --- THE DEGENERATES/THE RENEGADES/THIEFS/RAPERS/BANDIT BANDS ---
+
+[killer]:stalker ;                  --- MERCENARIES/HITMANS/ASSASSINS/AGENTS/GUNS FOR HIRE ---
+
+[ecolog]:stalker ;                  --- ECOLOGISTS RESEARCHERS/SCIENCE TEAMS/HIRED STALKER EXPEDITIONS ---
+
+[army]:stalker ;                  --- ARMY/SOLDIERS/MILITARY ELITE STALKERS ---
+
+[dolg]:stalker ;                  --- DUTY ORDER/MUTANT HUNTERS/ZONE RESTRICTORS ---
+
+[freedom]:stalker ;                  --- FREEDOM ANARCHISTS/TRADE LEAGUE/ZONE STUDENTS ---
+
+[zombied]:stalker ;                  --- ZOMBIE/BRAIN SCORCHERED STALKERS/WALKING DEAD ---
+
+[monolith]:stalker ;                  --- MONOLITH FANATICS/MYSTERY ZONE BROTHERHOOD/WISH GRANTER DEFENDERS ---
+
+[trader]

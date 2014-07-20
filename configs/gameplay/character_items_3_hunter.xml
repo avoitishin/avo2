@@ -1,0 +1,34 @@
+mutant_part_boar_leg = 3, prob=0.08 \n
+mutant_part_dog_tail = 3, prob=0.08 \n
+mutant_part_flesh_eye = 2, prob=0.08 \n
+mutant_part_psevdodog_tail = 2, prob=0.04 \n
+mutant_part_snork_leg = 2, prob=0.04 \n
+mutant_part_snork_mask = 1, prob=0.04 \n
+mutant_part_tushkano_head = 1, prob=0.016 \n
+mutant_part_krovosos_jaw = 1, prob=0.014 \n
+
+mutant_part_flesh_meat = 3, prob=0.08 \n
+mutant_part_boar_chop = 2, prob=0.08 \n
+mutant_part_dog_meat = 3, prob=0.08 \n
+mutant_part_psevdodog_meat = 2, prob=0.04 \n
+mutant_part_krovosos_meat = 1, prob=0.014 \n
+mutant_part_snork_hand = 2, prob=0.04 \n
+mutant_part_tushkano_meat = 2, prob=0.016 \n
+mutant_part_crow_beak = 1, prob=0.002 \n
+
+hide_pseudogiant = 1, prob=0.09 \n
+hide_psy_dog = 2, prob=0.02 \n
+hide_pseudodog = 2, prob=0.08 \n
+hide_bloodsucker = 2, prob=0.05 \n
+hide_burer = 2, prob=0.002 \n
+hide_controller = 1, prob=0.002 \n
+hide_boar = 3, prob=0.08 \n
+hide_flesh = 3, prob=0.08 \n
+
+drink_crow = 1, prob=0.003 \n
+
+swiss		= 1, prob=0.25 \n
+kit_hunt		= 1, prob=0.33 \n
+rope		= 1, prob=0.15 \n
+synthrope		= 1, prob=0.02 \n
+fieldcooker		= 1, prob=0.01 \n

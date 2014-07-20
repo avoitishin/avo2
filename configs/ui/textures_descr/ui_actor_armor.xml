@@ -1,0 +1,23 @@
+<w>
+    <file name="ui\ui_actor_armor">
+
+	<texture id="ui_inGame2_Armor_1" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Armor_2" x="760" y="535" width="262" height="229" />
+	<texture id="ui_inGame2_Armor_3" x="760" y="535" width="262" height="229" />
+	<texture id="ui_inGame2_Armor_4" x="760" y="535" width="262" height="229" />
+	<texture id="ui_inGame2_Armor_5" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Armor_6" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Armor_7" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Armor_8" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Armor_9" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Armor_10" x="760" y="535" width="262" height="229" />
+	<texture id="ui_inGame2_Armor_11" x="647" y="812" width="326" height="215" />
+	
+	<texture id="ui_inGame2_Helmet_1" x="760" y="535" width="262" height="229" />
+	<texture id="ui_inGame2_Helmet_2" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Helmet_3" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Helmet_4" x="647" y="812" width="326" height="215" />
+	<texture id="ui_inGame2_Helmet_5" x="760" y="535" width="262" height="229" />
+
+   </file>
+</w>

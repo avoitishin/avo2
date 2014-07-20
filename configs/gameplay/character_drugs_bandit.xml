@@ -1,0 +1,20 @@
+meinkampf		= 1, prob=0.006 \n
+jar			= 1, prob=0.012 \n
+welding_goggles		= 1, prob=0.008 \n
+jewelry_box		= 1, prob=0.004 \n
+
+mine			= 1, prob=0.012 \n
+
+porn = 1, prob=0.012 \n
+
+crowbar		= 1, prob=0.018 \n
+cards		= 2, prob=0.020 \n
+boots		= 1, prob=0.008 \n
+mirror		= 1, prob=0.014 \n
+underwear		= 1, prob=0.008 \n
+porn2		= 1, prob=0.012 \n
+rope		= 1, prob=0.018 \n
+cutlery		= 1, prob=0.012 \n
+
+letter_freedom_manual_1_of_2		= 1, prob=0.006 \n
+letter_freedom_manual_2_of_2		= 1, prob=0.006 \n

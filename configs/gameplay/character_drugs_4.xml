@@ -1,0 +1,435 @@
+bandage					= 3, prob=0.75 \n
+medkit					= 4, prob=0.75 \n
+medkit_army				= 2, prob=0.55 \n
+medkit_scientic			= 1, prob=0.33 \n
+
+stimpack					= 4, prob=0.8 \n
+stimpack_army					= 2, prob=0.66 \n
+stimpack_scientic					= 1, prob=0.45 \n
+
+antirad					= 1, prob=0.03 \n
+
+survival_kit		= 1, prob=0.006 \n
+
+drug_booster					= 1, prob=0.002 \n
+drug_coagulant					= 1, prob=0.0005 \n
+drug_coagulant2					= 1, prob=0.001 \n
+drug_coagulant3					= 1, prob=0.0015 \n
+drug_coagulant4					= 1, prob=0.002 \n
+drug_coagulant5					= 1, prob=0.0025 \n
+drug_psy_blockade					= 1, prob=0.0005 \n
+drug_psy_blockade2					= 1, prob=0.001 \n
+drug_psy_blockade3					= 1, prob=0.0015 \n
+drug_psy_blockade4					= 1, prob=0.002 \n
+drug_psy_blockade5					= 1, prob=0.0025 \n
+drug_antidot					= 1, prob=0.001 \n
+drug_antidot2					= 1, prob=0.0015 \n
+drug_antidot3					= 1, prob=0.002 \n
+drug_radioprotector					= 1, prob=0.0015 \n
+drug_radioprotector2					= 1, prob=0.002 \n
+drug_anabiotic					= 1, prob=0.001 \n
+drug_sleepingpills					= 1, prob=0.0005 \n
+drug_sleepingpills2					= 1, prob=0.001 \n
+drug_sleepingpills3					= 1, prob=0.0015 \n
+drug_sleepingpills4					= 1, prob=0.002 \n
+drug_sleepingpills5					= 1, prob=0.0025 \n
+akvatab					= 1, prob=0.001 \n
+akvatab2					= 1, prob=0.0015 \n
+akvatab3					= 1, prob=0.002 \n
+akvatab4					= 1, prob=0.0025 \n
+cocaine					= 1, prob=0.0015 \n
+cocaine2					= 1, prob=0.002 \n
+cocaine3					= 1, prob=0.0025 \n
+tetanus					= 1, prob=0.002 \n
+adrenalin					= 1, prob=0.0015 \n
+salicidic_acid					= 1, prob=0.0025 \n
+morphine					= 1, prob=0.0015 \n
+caffeine					= 1, prob=0.0005 \n
+caffeine2					= 1, prob=0.001 \n
+caffeine3					= 1, prob=0.0015 \n
+caffeine4					= 1, prob=0.002 \n
+caffeine5					= 1, prob=0.0025 \n
+
+roubles					= 5, prob=0.5 \n
+
+bread					= 3, prob=0.0035 \n
+breadold				= 3, prob=0.0035 \n
+kolbasa					= 2, prob=0.0035 \n
+conserva				= 1, prob=0.003 \n
+protein					= 1, prob=0.001 \n
+
+tomato				= 2, prob=0.0035 \n
+sausage				= 2, prob=0.0035 \n
+corn				= 2, prob=0.0035 \n
+beans				= 1, prob=0.003 \n
+chili				= 1, prob=0.003 \n
+salmon				= 1, prob=0.003 \n
+raisins				= 2, prob=0.0015 \n
+chocolate			= 1, prob=0.003 \n
+nuts				= 1, prob=0.0015 \n
+
+mint				= 1, prob=0.0005 \n
+mint2				= 1, prob=0.001 \n
+mint3				= 1, prob=0.0015 \n
+mint4				= 1, prob=0.002 \n
+mint5				= 1, prob=0.0025 \n
+
+mineral_water				= 1, prob=0.0015 \n
+mineral_water2				= 1, prob=0.002 \n
+mineral_water3				= 1, prob=0.0025 \n
+
+vodka				= 1, prob=0.0015 \n
+vodka_2				= 1, prob=0.002 \n
+vodka_3				= 1, prob=0.0025 \n
+vodka2				= 1, prob=0.0015 \n
+vodka2_2				= 1, prob=0.002 \n
+vodka2_3				= 1, prob=0.0025 \n
+vodka_quality				= 1, prob=0.0015 \n
+vodka_quality2				= 1, prob=0.002 \n
+vodka_quality3				= 1, prob=0.0025 \n
+tea				= 1, prob=0.0015 \n
+tea2				= 1, prob=0.002 \n
+tea3				= 1, prob=0.0025 \n
+bottle_metal				= 1, prob=0.0015 \n
+bottle_metal2				= 1, prob=0.002 \n
+bottle_metal3				= 1, prob=0.0025 \n
+flask				= 1, prob=0.003 \n
+flask2				= 1, prob=0.0035 \n
+flask3				= 1, prob=0.008 \n
+
+hand_rolling_tobacco				= 1, prob=0.0005 \n
+hand_rolling_tobacco2				= 1, prob=0.001 \n
+hand_rolling_tobacco3				= 1, prob=0.0015 \n
+hand_rolling_tobacco4				= 1, prob=0.002 \n
+hand_rolling_tobacco5				= 1, prob=0.0025 \n
+cigar				= 1, prob=0.001 \n
+cigar1				= 1, prob=0.0015 \n
+cigar1_2				= 1, prob=0.002 \n
+cigar1_3				= 1, prob=0.0025 \n
+cigar2				= 1, prob=0.0015 \n
+cigar2_2				= 1, prob=0.002 \n
+cigar2_3				= 1, prob=0.0025 \n
+cigar3				= 1, prob=0.0015 \n
+cigar3_2				= 1, prob=0.002 \n
+cigar3_3				= 1, prob=0.0025 \n
+cigarettes_lucky				= 1, prob=0.001 \n
+cigarettes_lucky2				= 1, prob=0.0015 \n
+cigarettes_lucky3				= 1, prob=0.002 \n
+cigarettes_lucky4				= 1, prob=0.0025 \n
+cigarettes_russian				= 1, prob=0.002 \n
+cigarettes_russian2				= 1, prob=0.0025 \n
+cigarettes_russian3				= 1, prob=0.003 \n
+cigarettes 						= 1, prob=0.001 \n
+cigarettes2 					= 1, prob=0.0015 \n
+cigarettes3 					= 1, prob=0.002 \n
+tobacco					= 1, prob=0.0005 \n
+tobacco2				= 1, prob=0.001 \n
+tobacco3				= 1, prob=0.0015 \n
+tobacco4				= 1, prob=0.002 \n
+tobacco5				= 1, prob=0.0025 \n
+marijuana				= 1, prob=0.0015 \n
+marijuana2				= 1, prob=0.002 \n
+marijuana3				= 1, prob=0.0025 \n
+
+beer					= 3, prob=0.001 \n
+
+energy_drink			= 1, prob=0.003 \n
+water_drink				= 2, prob=0.012 \n
+
+meat_tushkano			= 3, prob=0.009 \n
+meat_dog				= 3, prob=0.009 \n
+meat_pseudodog			= 2, prob=0.006 \n
+meat_flesh				= 3, prob=0.009 \n
+meat_boar				= 2, prob=0.008 \n
+meat_bloodsucker		= 1, prob=0.004 \n
+meat_snork				= 2, prob=0.005 \n
+meat_chimera			= 1, prob=0.003 \n
+
+itm_sleepbag = 1, prob=0.007 \n
+
+joint = 4, prob=0.03 \n
+
+porn = 1, prob=0.025 \n
+
+shovel_old		= 1, prob=0.009 \n
+shovel_mili		= 1, prob=0.004 \n
+ied_rpg			= 2, prob=0.005 \n
+ied				= 1, prob=0.003 \n
+grooming		= 1, prob=0.012 \n
+journal			= 1, prob=0.01 \n
+maps_kit		= 1, prob=0.01 \n
+geiger_dead		= 1, prob=0.01 \n
+jewelry_box		= 1, prob=0.004 \n
+cooking			= 1, prob=0.01 \n
+book1			= 1, prob=0.01 \n
+book2			= 1, prob=0.01 \n
+book3			= 1, prob=0.01 \n
+picture_woman		= 1, prob=0.012 \n
+
+hammer_inv		= 1, prob=0.011 \n
+crowbar		= 1, prob=0.011 \n
+spareparts		= 2, prob=0.011 \n
+beadspread		= 1, prob=0.009 \n
+walkie		= 1, prob=0.01 \n
+cards		= 2, prob=0.012 \n
+ammo_bad		= 20, prob=0.008 \n
+boots		= 1, prob=0.008 \n
+mili_maps		= 1, prob=0.005 \n
+swiss		= 1, prob=0.012 \n
+headlamp		= 1, prob=0.008 \n
+mirror		= 1, prob=0.011 \n
+
+flashlight_old		= 1, prob=0.01 \n
+flashlight_broken		= 1, prob=0.006 \n
+underwear		= 1, prob=0.01 \n
+porn2		= 1, prob=0.021 \n
+batteries_dead		= 7, prob=0.012 \n
+batteries_ccell		= 4, prob=0.009 \n
+tarpaulin		= 3, prob=0.012 \n
+rope		= 2, prob=0.012 \n
+synthrope		= 1, prob=0.009 \n
+cutlery		= 2, prob=0.015 \n
+radio		= 1, prob=0.01 \n
+radio2		= 1, prob=0.01 \n
+fieldcooker		= 1, prob=0.012 \n
+
+af_frames = 2, prob=0.004 \n
+af_kevlar = 2, prob=0.004 \n
+af_plates = 1, prob=0.003 \n
+af_camelbak = 2, prob=0.004 \n
+af_surge = 1, prob=0.003 \n
+af_cooler = 1, prob=0.002 \n
+af_freon = 1, prob=0.003 \n
+af_iam = 1, prob=0.002 \n
+af_aac = 1, prob=0.001 \n
+
+lead_box = 2, prob=0.005 \n
+
+af_medusa_lead_box = 1, prob=0.005 \n
+af_cristall_lead_box = 1, prob=0.005 \n
+af_blood_lead_box = 1, prob=0.005 \n
+af_electra_sparkler_lead_box = 1, prob=0.005 \n
+
+af_cristall_flower_lead_box = 1, prob=0.001 \n
+af_vyvert_lead_box = 1, prob=0.001 \n
+af_fireball_lead_box = 1, prob=0.001 \n
+af_dummy_glassbeads_lead_box = 1, prob=0.001 \n
+af_mincer_meat_lead_box = 1, prob=0.001 \n
+af_soul_lead_box = 1, prob=0.001 \n
+af_fuzz_kolobok_lead_box = 1, prob=0.001 \n
+af_electra_flash_lead_box = 1, prob=0.001 \n
+af_electra_moonlight_lead_box = 1, prob=0.001 \n
+af_dummy_battery_lead_box = 1, prob=0.001 \n
+af_dummy_dummy_lead_box = 1, prob=0.001 \n
+
+af_medusa_af_iam = 1, prob=0.003 \n
+af_cristall_af_iam = 1, prob=0.003 \n
+af_blood_af_iam = 1, prob=0.003 \n
+af_electra_sparkler_af_iam = 1, prob=0.003 \n
+
+af_cristall_flower_af_aac = 1, prob=0.001 \n
+af_vyvert_af_aac = 1, prob=0.001 \n
+af_fireball_af_aac = 1, prob=0.001 \n
+af_dummy_glassbeads_af_aac = 1, prob=0.001 \n
+af_mincer_meat_af_aac = 1, prob=0.001 \n
+af_soul_af_aac = 1, prob=0.001 \n
+af_electra_flash_af_aac = 1, prob=0.001 \n
+af_electra_moonlight_af_aac = 1, prob=0.001 \n
+af_dummy_battery_af_aac = 1, prob=0.001 \n
+
+af_gravi_af_aam = 1, prob=0.001 \n
+af_gold_fish_af_aam = 1, prob=0.001 \n
+af_eye_af_aam = 1, prob=0.001 \n
+af_fire_af_aam = 1, prob=0.001 \n
+af_baloon_af_aam = 1, prob=0.001 \n
+af_glass_af_aam = 1, prob=0.001 \n
+af_dummy_dummy_af_aam = 1, prob=0.001 \n
+af_ice_af_aam = 1, prob=0.001 \n
+
+mutant_part_boar_leg = 3, prob=0.04 \n
+mutant_part_dog_tail = 5, prob=0.04 \n
+mutant_part_flesh_eye = 4, prob=0.04 \n
+mutant_part_chimera_kogot = 2, prob=0.005 \n
+mutant_part_psevdodog_tail = 3, prob=0.02 \n
+mutant_part_snork_leg = 3, prob=0.02 \n
+mutant_part_snork_mask = 2, prob=0.02 \n
+mutant_part_tushkano_head = 2, prob=0.008 \n
+mutant_part_pseudogigant_hand = 2, prob=0.006 \n
+mutant_part_controller_glass = 1, prob=0.006 \n
+mutant_part_burer_hand = 1, prob=0.008 \n
+mutant_part_krovosos_jaw = 2, prob=0.007 \n
+
+mutant_part_flesh_meat = 4, prob=0.04 \n
+mutant_part_boar_chop = 4, prob=0.04 \n
+mutant_part_dog_meat = 4, prob=0.04 \n
+mutant_part_psevdodog_meat = 3, prob=0.02 \n
+mutant_part_krovosos_meat = 2, prob=0.007 \n
+mutant_part_snork_hand = 3, prob=0.02 \n
+mutant_part_tushkano_meat = 3, prob=0.008 \n
+mutant_part_chimera_meat = 1, prob=0.005 \n
+
+mre = 1, prob=0.0015 \n
+mre2 = 1, prob=0.0015 \n
+mre3 = 1, prob=0.0015 \n
+ration_ru = 1, prob=0.0015 \n
+ration_ru2 = 1, prob=0.0015 \n
+ration_ru3 = 1, prob=0.0015 \n
+ration_ru4 = 1, prob=0.0015 \n
+ration_ru5 = 1, prob=0.0015 \n
+ration_ru6 = 1, prob=0.0015 \n
+ration_ru7 = 1, prob=0.0015 \n
+ration_ukr = 1, prob=0.0015 \n
+ration_ukr2 = 1, prob=0.0015 \n
+ration_ukr3 = 1, prob=0.0015 \n
+ration_ukr4 = 1, prob=0.0015 \n
+ration_ukr5 = 1, prob=0.0015 \n
+ration_ukr6 = 1, prob=0.0015 \n
+
+gun_oil = 2, prob=0.016
+cleaning_kit_p = 1, prob=0.016
+cleaning_kit_s = 1, prob=0.016
+cleaning_kit_r5 = 1, prob=0.016
+cleaning_kit_r7 = 1, prob=0.016
+cleaning_kit_u = 1, prob=0.013
+toolkit_p = 1, prob=0.0005
+toolkit_s = 1, prob=0.0005
+toolkit_r5 = 1, prob=0.0005
+toolkit_r7 = 1, prob=0.0005
+toolkit_u = 1, prob=0.0005
+sharpening_stones = 2, prob=0.016 \n
+gun_oil_ru_d = 3, prob=0.016 \n
+gun_oil_ru = 3, prob=0.016 \n
+solvent = 1, prob=0.016 \n
+grease = 3, prob=0.016 \n
+steel_wool = 3, prob=0.016 \n
+glue_b = 2, prob=0.016 \n
+glue_a = 2, prob=0.013 \n
+glue_e = 1, prob=0.001 \n
+sewing_kit_b = 1, prob=0.016 \n
+sewing_kit_a = 1, prob=0.013 \n
+sewing_kit_h = 1, prob=0.0005 \n
+armor_repair_fa = 1, prob=0.002 \n
+helmet_repair_kit = 1, prob=0.0005 \n
+armor_repair_pro = 1, prob=0.0005 \n
+textile_patch_b = 2, prob=0.016 \n
+textile_patch_m = 2, prob=0.013 \n
+textile_patch_e = 2, prob=0.008 \n
+
+gun_oil = 2, prob=0.002 \n
+gun_oil2 = 2, prob=0.003 \n
+cleaning_kit_p = 1, prob=0.001 \n
+cleaning_kit_p2 = 1, prob=0.0015 \n
+cleaning_kit_p3 = 1, prob=0.002 \n
+cleaning_kit_s = 1, prob=0.001 \n
+cleaning_kit_s2 = 1, prob=0.0015 \n
+cleaning_kit_s3 = 1, prob=0.002 \n
+cleaning_kit_r5 = 1, prob=0.001 \n
+cleaning_kit_r5_2 = 1, prob=0.0015 \n
+cleaning_kit_r5_3 = 1, prob=0.002 \n
+cleaning_kit_r7 = 1, prob=0.001 \n
+cleaning_kit_r7_2 = 1, prob=0.0015 \n
+cleaning_kit_r7_3 = 1, prob=0.002 \n
+cleaning_kit_u = 1, prob=0.001 \n
+cleaning_kit_u2 = 1, prob=0.0015 \n
+cleaning_kit_u3 = 1, prob=0.002 \n
+toolkit_p2 = 1, prob=0.001 \n
+toolkit_p3 = 1, prob=0.0015 \n
+toolkit_p4 = 1, prob=0.002 \n
+toolkit_s2 = 1, prob=0.001 \n
+toolkit_s3 = 1, prob=0.0015 \n
+toolkit_s4 = 1, prob=0.002 \n
+toolkit_r5_2 = 1, prob=0.001 \n
+toolkit_r5_3 = 1, prob=0.0015 \n
+toolkit_r5_4 = 1, prob=0.002 \n
+toolkit_r7_2 = 1, prob=0.001 \n
+toolkit_r7_3 = 1, prob=0.0015 \n
+toolkit_r7_4 = 1, prob=0.002 \n
+toolkit_u3 = 1, prob=0.001 \n
+toolkit_u4 = 1, prob=0.0015 \n
+sharpening_stones = 1, prob=0.002 \n
+sharpening_stones2 = 1, prob=0.0025 \n
+sharpening_stones3 = 1, prob=0.003 \n
+sharpening_stones4 = 1, prob=0.0035 \n
+gun_oil_ru_d = 2, prob=0.0025 \n
+gun_oil_ru_d2 = 2, prob=0.0035 \n
+gun_oil_ru = 2, prob=0.0025 \n
+gun_oil_ru2 = 2, prob=0.0035 \n
+solvent = 1, prob=0.0025 \n
+solvent2 = 2, prob=0.0035 \n
+grease = 1, prob=0.0035 \n
+grease2 = 2, prob=0.011 \n
+steel_wool = 2, prob=0.0025 \n
+steel_wool2 = 3, prob=0.0035 \n
+glue_b = 2, prob=0.0025 \n
+glue_b2 = 3, prob=0.0035 \n
+glue_a = 1, prob=0.002 \n
+glue_a2 = 2, prob=0.0025 \n
+glue_e = 1, prob=0.0015 \n
+glue_e2 = 1, prob=0.002 \n
+sewing_kit_b2 = 1, prob=0.002 \n
+sewing_kit_b3 = 1, prob=0.0025 \n
+sewing_kit_b4 = 1, prob=0.003 \n
+sewing_kit_a2 = 1, prob=0.0015 \n
+sewing_kit_a3 = 1, prob=0.002 \n
+sewing_kit_a4 = 1, prob=0.0025 \n
+sewing_kit_h2 = 1, prob=0.001 \n
+sewing_kit_h3 = 1, prob=0.0015 \n
+sewing_kit_h4 = 1, prob=0.002 \n
+armor_repair_fa = 1, prob=0.002 \n
+armor_repair_fa2 = 2, prob=0.0025 \n
+helmet_repair_kit = 1, prob=0.0005 \n
+helmet_repair_kit2 = 1, prob=0.0015 \n
+helmet_repair_kit3 = 1, prob=0.002 \n
+armor_repair_pro2 = 1, prob=0.001 \n
+armor_repair_pro3 = 1, prob=0.0015 \n
+armor_repair_pro4 = 1, prob=0.002 \n
+textile_patch_b = 5, prob=0.003 \n
+textile_patch_m = 4, prob=0.0025 \n
+textile_patch_e = 3, prob=0.002 \n
+
+fieldcooker = 1, prob=0.0005 \n
+wood_stove = 1, prob=0.0005 \n
+kerosene = 1, prob=0.0005 \n
+kerosene2 = 1, prob=0.0005 \n
+kerosene3 = 1, prob=0.001 \n
+kerosene4 = 1, prob=0.0015 \n
+kerosene5 = 1, prob=0.002 \n
+charcoal = 1, prob=0.001 \n
+charcoal2 = 1, prob=0.0015 \n
+charcoal3 = 1, prob=0.002 \n
+
+explo_jerrycan_fuel3 = 1, prob=0.0005 \n
+explo_jerrycan_fuel4 = 1, prob=0.0005 \n
+explo_jerrycan_fuel5 = 1, prob=0.001 \n
+explo_jerrycan_fuel6 = 1, prob=0.0015 \n
+explo_jerrycan_fuel7 = 1, prob=0.002 \n
+explo_jerrycan_fuel8 = 1, prob=0.003 \n
+explo_metalcan_powder = 2, prob=0.0025 \n
+explo_balon_gas3 = 1, prob=0.0005 \n
+explo_balon_gas4 = 1, prob=0.0005 \n
+explo_balon_gas5 = 1, prob=0.001 \n
+explo_balon_gas6 = 1, prob=0.0015 \n
+explo_balon_gas7 = 1, prob=0.002 \n
+explo_balon_gas8 = 1, prob=0.003 \n
+
+hide_pseudogiant = 1, prob=0.009 \n
+hide_psy_dog = 1, prob=0.009 \n
+hide_pseudodog = 1, prob=0.011 \n
+hide_bloodsucker = 1, prob=0.011 \n
+hide_burer = 1, prob=0.009 \n
+hide_controller = 1, prob=0.009 \n
+hide_boar = 2, prob=0.011 \n
+hide_flesh = 2, prob=0.011 \n
+
+tushonka	= 3, prob=0.002 \n
+glucose		= 1, prob=0.0045 \n
+glucose_s	= 1, prob=0.007 \n
+
+explo_jerrycan_fuel	= 1, prob=0.0035 \n
+explo_metalcan_powder	= 1, prob=0.0035 \n
+explo_balon_gas	= 1, prob=0.0035 \n
+
+mine	= 2, prob=0.007 \n
+
+wpn_binoc_inv = 1, prob=0.008
+wpn_upd = 1, prob=0.008

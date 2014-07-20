@@ -1,0 +1,19 @@
+[smart_terrain]
+squad_id = 66
+max_population = 1
+
+;active = nil
+
+respawn_params = respawn@pripyat_smrter_sim_8
+
+[respawn@pripyat_smrter_sim_8]
+;spawn_boar
+spawn_flesh
+
+;[spawn_boar]
+;spawn_squads = simulation_boar, simulation_boar, simulation_flesh, simulation_flesh, simulation_snork
+;spawn_num = {=actor_on_level(pripyat) +pri_a28_actor_in_zone_stay} 1, 0
+
+[spawn_flesh]
+spawn_squads = simulation_flesh, simulation_flesh, simulation_flesh, simulation_boar, simulation_bloodsucker
+spawn_num = {=actor_on_level(pripyat) +pri_a28_actor_in_zone_stay} 1, 0

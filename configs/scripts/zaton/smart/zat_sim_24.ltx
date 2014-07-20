@@ -1,0 +1,36 @@
+[smart_terrain];zat_sim_24
+squad_id = 11
+max_population = 1
+respawn_params = respawn@zat_sim_24
+
+[respawn@zat_sim_24]
+spawn_zombies
+spawn_flesh
+spawn_boar
+
+;;; unused
+
+;spawn_dog
+;spawn_bloodsucker
+
+[spawn_zombies]
+spawn_squads = simulation_boar, simulation_flesh, simulation_boar, simulation_flesh, simulation_zombied_1, simulation_snork
+spawn_num = {=actor_on_level(zaton)} 1, 0
+
+[spawn_flesh]
+spawn_squads = simulation_snork, simulation_boar, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_boar, simulation_flesh, simulation_flesh
+spawn_num = {=actor_on_level(zaton)} 1, 0
+
+[spawn_boar]
+spawn_squads = simulation_boar, simulation_flesh
+spawn_num = {=actor_on_level(zaton)} 1, 0
+
+;;; unused
+
+;[spawn_dog]
+;spawn_squads = simulation_dog
+;spawn_num = 0
+
+;[spawn_bloodsucker]
+;spawn_squads = simulation_pseudodog, imulation_pseudodog, imulation_bloodsucker
+;spawn_num = 0

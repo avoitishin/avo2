@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="ui_repair_secondary">
+		<text>Починить оружие (2)</text>
+	</string>
+	<string id="ui_repair_primary">
+		<text>Починить оружие (1)</text>
+	</string>
+	<string id="ui_repair_helmet">
+		<text>Починить шлем</text>
+	</string>
+	<string id="ui_repair_suit">
+		<text>Починить костюм</text>
+	</string>
+	<string id="ui_repair_exit">
+		<text>Отмена</text>
+	</string>
+	<string id="ui_exit">
+		<text>Закрыть</text>
+	</string>
+</string_table>

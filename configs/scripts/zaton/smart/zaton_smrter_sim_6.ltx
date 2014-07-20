@@ -1,0 +1,22 @@
+[smart_terrain]
+squad_id = 29
+max_population = 1
+
+respawn_params = zaton_smrter_sim_6
+
+[zaton_smrter_sim_6]
+spawn_flesh
+
+;;; unused
+
+spawn_boar
+
+[spawn_flesh]
+spawn_squads = simulation_dog, simulation_pseudodog, simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_bloodsucker
+spawn_num = {=actor_on_level(zaton)} 1, 0
+
+;;; unused
+
+[spawn_boar]
+spawn_squads = simulation_cat, simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar
+spawn_num = 0 ; {=actor_on_level(zaton)} 1, 0

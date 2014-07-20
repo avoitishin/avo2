@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+
+      <!-- Copyright: 2010-2012 SWM Team --> 
+      <!-- Author: Jurok --> 
+
+      <string id="sleep_warning_surge_1">
+	      <text>You cannot sleep during an emission!</text>
+      </string>    
+      <string id="sleep_warning_surge_2">
+	      <text>You cannot sleep during an emission and while bleeding!</text>
+      </string>
+      <string id="sleep_warning_surge_3">
+	      <text>You cannot sleep during an emission and while radiated!</text>
+      </string>
+      <string id="sleep_warning_surge_4">
+	      <text>You cannot sleep during an emission, while bleeding and being radiated!</text>
+      </string>
+
+      <string id="st_resupply_ready_2">
+	      <text>Перед операцией можно пополнить запас боеприпасов у лейтенанта Кириллова.</text>
+      </string>
+	
+</string_table>

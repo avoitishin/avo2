@@ -1,0 +1,423 @@
+[wpn_ppsh41]:identity_immunities,weapon_probability,default_weapon_params
+GroupControlSection     = spawn_group
+$spawn                  = "weapons\ppsh41"               ; option for Level Editor
+$npc                    = on                             ; option for Level Editor
+$prefetch               = 8
+scheduled               = off                                ; option for ALife Simulator
+cform                   = skeleton
+class                   = WP_LR300
+description          	= st_wpn_ppsh41_descr
+
+ef_main_weapon_type     = 2
+ef_weapon_type          = 6
+
+default_to_ruck         = false
+sprint_allowed          = true
+control_inertion_factor = 1.0
+
+;-----------------------------------------------------------------------------------------
+cost                    = 14840 
+weapon_class            = assault_rifle
+inv_weight              = 3.64
+
+upgrades                = up_gr_firstab_ppsh41, up_gr_seconab_ppsh41, up_gr_thirdab_ppsh41
+installed_upgrades      = 
+upgrade_scheme          = upgrade_scheme_toz34
+
+;-----------------------------------------------------------------------------------------
+hit_power           	= 0.275, 0.275, 0.275, 0.275
+hit_impulse             = 20
+hit_type                = fire_wound 
+fire_distance           = 500
+bullet_speed            = 380
+rpm                     = 900
+rpm_empty_click         = 200
+
+use_aim_bullet          = false                ;Поддерживается ли первая суппер пуля
+time_to_aim             = 3.0
+
+hud                     = wpn_ppsh41_hud
+
+misfire_probability        = 0.005
+misfire_start_condition		= 0.78
+misfire_end_condition		= 0.07
+misfire_start_prob = 0.003 ;	     	= 0.0042
+misfire_end_prob = 0.02 ;	     	= 0.042
+condition_shot_dec      	= 0.0007
+condition_queue_shot_dec	= 0.0007
+
+ammo_elapsed            = 71
+ammo_mag_size           = 71 
+fire_modes	        	= 1, -1
+ammo_class	            = ammo_9x18_fmj, ammo_9x18_pmm, ammo_9x18_ap
+grenade_class           = ammo_vog-25
+
+launch_speed            = 0
+hand_dependence         = 1
+single_handed           = 0
+
+;-----------------------------------------------------------------------------------------
+zoom_dof                = 0.5, 1.0, 180
+reload_dof              = 0.0, 0.5, 5, 2
+
+;-----------------------------------------------------------------------------------------
+fire_dispersion_base    = 0.62  ;угол (в градусах) базовой дисперсии оружия (оружия зажатого в тисках)
+control_inertion_factor = 1.28f
+crosshair_inertion   	= 5.3
+
+cam_return = 0 ;				= 0
+cam_relax_speed         = 5		;скорость возврата в исходное положение
+cam_relax_speed_ai      = 120.75
+cam_dispersion	        = 0.72
+cam_dispersion_inc      = 0.53
+cam_dispersion_frac     = 1.0		;ствол будет подыматься на cam_dispersion*cam_dispersion_frac +- cam_dispersion*(1-cam_dispersion_frac)
+cam_max_angle           = 39.0		;максимальный угол отдачи
+cam_max_angle_horz      = 39.0		;(degree) maximum shot horizontal degree
+cam_step_angle_horz     = 1.8
+
+PDM_disp_base 				= 0.75
+PDM_disp_vel_factor 		= 1.855
+PDM_disp_accel_factor 		= 1.855
+PDM_disp_crouch = 1.0 ;  			= 1.165
+PDM_disp_crouch_no_acc = 1.0 ; 		= 1.325
+
+zoom_cam_relax_speed    = 10
+zoom_cam_relax_speed_ai = 120.75
+zoom_cam_dispersion       = 0.56
+zoom_cam_dispersion_inc   = 0.39
+zoom_cam_dispersion_frac= 0.7
+zoom_cam_max_angle      = 32.0
+zoom_cam_max_angle_horz = 32.0
+zoom_cam_step_angle_horz= 1.7
+
+fire_dispersion_condition_factor = 0.001 ; = 0.01 ; 9
+
+;-----------------------------------------------------------------------------------------
+holder_range_modifier   = 1.0                       ; во сколько раз увеличивается eye_range
+holder_fov_modifier     = 1.0
+
+min_radius = 0 ;              = 0
+max_radius = 500 ; = 250 ;              = 50
+
+hit_probability_gd_novice = 1.00 ;  = 0.80
+hit_probability_gd_stalker = 1.00 ; = 0.80
+hit_probability_gd_veteran = 1.00 ; = 0.80
+hit_probability_gd_master = 1.00 ;  = 0.80
+
+;-----------------------------------------------------------------------------------------
+slot                    = 2 
+animation_slot          = 8
+
+position                = -0.026, -0.175, -0.03
+orientation             = 0, 0, 0
+
+fire_point              = 0.0, 0.25, 0.570
+fire_point2             = 0.0, 0.188, 0.392
+
+;flame_particles		  = weapons\generic_weapon03
+smoke_particles         = weapons\generic_shoot_00
+grenade_flame_particles = weapons\generic_weapon01
+
+shell_point             = 0.0, 0.188, 0.082
+;shell_particles         = weapons\generic_shells 
+shell_particles	 			= amik\weapons\data\9x18\9x18_2_r
+
+;-----------------------------------------------------------------------------------------
+inv_name                = st_wpn_ppsh41
+inv_name_short          = st_wpn_ppsh41
+
+inv_grid_width     = 4
+inv_grid_height    = 1
+inv_grid_x         = 16
+inv_grid_y         = 62
+
+upgr_icon_x			= 1724 ; 599
+upgr_icon_y			= 802 ; 559
+upgr_icon_width		= 167 ; 272
+upgr_icon_height   	= 159 ; 54
+
+kill_msg_x         	= 72
+kill_msg_y         	= 82
+kill_msg_width     	= 56
+kill_msg_height    	= 23
+
+;------------------------------------------------------------------------------------
+strap_position         	= -0.2,-0.42,0.05	;смещение (от спины/к спине, вправо/влево, вверх/вниз)
+strap_orientation      	= -10,-5,10				
+strap_bone0             = bip01_spine2
+strap_bone1             = bip01_spine1
+
+startup_ammo            = 90
+visual                  = dynamics\weapons\wpn_ppsh41\wpn_ppsh4b.ogf
+
+light_disabled          = false
+light_color             = 0.6,0.5,0.3
+light_range             = 5
+light_var_color         = 0.05
+light_var_range         = 0.5
+light_time              = 0.2
+
+ph_mass                 = 3
+
+scope_status            = 0 
+silencer_status         = 2
+grenade_launcher_status = 0
+
+zoom_enabled            = true  
+zoom_rotate_time        = 0.25
+scope_zoom_factor       = 58.6 ;        = 85
+
+scope_name              = wpn_addon_scope       ; section name for the attachable scope
+scope_x                 = 47                 ; offset in inventory icon
+scope_y                 = 0
+silencer_name           = wpn_addon_silencer_9x18    ; section name for the attachable silencer
+silencer_x              = 175                ; offset in inventory icon
+silencer_y              = -16
+grenade_launcher_name   = wpn_addon_grenade_launcher
+grenade_launcher_x      = 126
+grenade_launcher_y      = 24
+
+silencer_light_color    = 0.6,0.5,0.3
+silencer_light_range    = 0.01
+silencer_light_var_color= 0.05
+silencer_light_var_range= 0.5
+silencer_light_time     = 0.2
+
+snd_draw                = weapons\generic\rifle_historic_draw
+snd_holster             = weapons\ppsh41\ppsh41_holster
+snd_shoot               = weapons\ppsh41\ppsh41_shoot
+snd_silncer_shot        = weapons\silencers\silencer_9x19
+snd_empty               = weapons\generic\rifle_historic_empty, 0.5
+snd_reload              = weapons\ppsh41\ppsh41_reload
+snd_bore		= weapons\ppsh41\ppsh41_draw_silent
+snd_bore1		= weapons\ppsh41\ppsh41_bore
+
+;-------------------------------------------------------------------------------------
+[wpn_ppsh41_hud]
+zoom_hide_crosshair     = true
+attach_place_idx        = 0
+item_visual             = dynamics\weapons\wpn_ppsh41\wpn_ppsh4d_hud.ogf
+
+hands_position	    	= -0.0985,-0.118,0.113
+hands_orientation   	= -6.0,-1.5,-0.4
+hands_position_16x9 	= -0.0785,-0.118,0.113
+hands_orientation_16x9	= -6.0,-1.5,-0.4
+
+item_position	     	= 0.0242,-0.0216,0.01451
+item_orientation    	= 4.9,5.08,-90 
+
+shell_point             = 0.025,-0.10,0.22  ;0.021,0.099,0.286
+shell_dir               = 0.0, 1.0, 0.0
+shell_bone              = wpn_body
+
+fire_point	        	= 0,-0.0,0.839
+fire_bone               = wpn_body
+fire_point2	        	= -0.03,0.0745,-0.037
+fire_bone2              = wpn_body
+
+anm_show                = ppsh_draw
+anm_hide                = ppsh_holster
+anm_idle                = ppsh_idle
+anm_idle_sprint         = ppsh_idle_sprint
+anm_idle_moving         = ppsh_idle
+anm_shots               = ppsh_shoot
+anm_reload              = ppsh_reload
+anm_idle_aim            = ppsh_idle_aim
+anm_bore                = ppsh_idle  ;ppsh_idle_bore
+
+aim_hud_offset_pos = -0.101900,0.069000,-0.018000
+aim_hud_offset_rot = 0.024000,-0.018750,0.010000
+aim_hud_offset_pos_16x9 = -0.121300,0.070300,-0.018000
+aim_hud_offset_rot_16x9 = 0.023500,-0.018400,-0.005200
+
+gl_hud_offset_pos       = 0,0,0
+gl_hud_offset_rot       = 0,0,0
+gl_hud_offset_pos_16x9  = 0,0,0
+gl_hud_offset_rot_16x9  = 0,0,0
+
+lean_hud_offset_pos     = 0,0,0
+lean_hud_offset_rot     = 0,0,0
+
+;---------------------------
+;AP Weapon Section for NPCs
+;---------------------------
+
+[wpn_ppsh41_ap]:wpn_ppsh41
+
+ammo_class		 		= ammo_9x18_ap, ammo_9x18_pmm, ammo_9x18_fmj
+
+;---------------------------
+;End of AP section
+;---------------------------
+
+;=====================================================================================================================================================
+[wpn_ppsh41_woodnew]:wpn_ppsh41
+
+upgrades                = up_gr_firstab_ppsh41_new, up_gr_seconab_ppsh41_new, up_gr_thirdab_ppsh41_new
+installed_upgrades      = ; up_thirda_ppsh41_new, up_thirdc_ppsh41_new
+
+cost                    = 17180
+inv_weight              = 3.65
+inv_name                = st_wpn_ppsh41_new
+inv_name_short          = st_wpn_ppsh41_new
+
+hit_power           	= 0.308, 0.308, 0.308, 0.308
+hit_impulse             = 20
+hit_type                = fire_wound 
+fire_distance           = 500
+bullet_speed            = 397
+rpm                     = 900
+
+hud                     = wpn_ppsh41_woodnew_hud
+
+misfire_start_condition		= 0.74
+misfire_end_condition		= 0.05
+misfire_start_prob = 0.003 ;	     	= 0.0036
+misfire_end_prob = 0.02 ;	     	= 0.036
+condition_shot_dec      	= 0.0005
+condition_queue_shot_dec	= 0.0005
+
+fire_dispersion_base    = 0.55
+
+inv_grid_width     = 4
+inv_grid_height    = 1
+inv_grid_x         = 16
+inv_grid_y         = 61
+
+visual                  = dynamics\weapons\wpn_ppsh41\wpn_ppsh4c.ogf
+
+snd_reload              = weapons\ppsh41\ppsh41_reload
+
+[wpn_ppsh41_woodnew_hud]:wpn_ppsh41_hud
+
+item_visual             = dynamics\weapons\wpn_ppsh41\wpn_ppsh4a_hud.ogf
+
+;=====================================================================================================================================================
+[wpn_ppsh41_woodworn]:wpn_ppsh41
+
+cost                    = 10220 
+inv_weight              = 3.69
+inv_name                = st_wpn_ppsh41_worn
+inv_name_short          = st_wpn_ppsh41_worn
+description       		= st_wpn_ppsh41_worn_descr
+
+upgrades                = up_gr_firstab_ppsh41_worn, up_gr_seconab_ppsh41_worn, up_gr_thirdab_ppsh41_worn
+
+hit_power           	= 0.232, 0.232, 0.232, 0.232
+hit_impulse             = 20
+hit_type                = fire_wound 
+fire_distance           = 400      
+bullet_speed            = 350
+rpm                     = 850
+
+hud                     = wpn_ppsh41_woodworn_hud
+
+misfire_start_condition		= 0.86
+misfire_end_condition		= 0.11
+misfire_start_prob = 0.003 ;	     	= 0.0058
+misfire_end_prob = 0.02 ;	     	= 0.058
+condition_shot_dec      	= 0.0011
+condition_queue_shot_dec	= 0.0011
+
+silencer_status         = 0
+
+fire_dispersion_base    = 0.8
+
+inv_grid_width          = 4
+inv_grid_height         = 1
+inv_grid_x              = 15
+inv_grid_y              = 4
+
+visual                  = dynamics\weapons\wpn_ppsh41\wpn_ppsh41.ogf
+
+snd_reload              = weapons\ppsh41\ppsh41_reload
+
+[wpn_ppsh41_woodworn_hud]:wpn_ppsh41_hud
+
+item_visual             = dynamics\weapons\wpn_ppsh41\wpn_ppsh41_hud.ogf
+
+;=====================================================================================================================================================
+[wpn_ppsh41_rednew]:wpn_ppsh41
+
+cost                    = 17180
+inv_weight              = 3.6
+inv_name                = st_wpn_ppsh41_new
+inv_name_short          = st_wpn_ppsh41_new
+
+upgrades                = up_gr_firstab_ppsh41_new, up_gr_seconab_ppsh41_new, up_gr_thirdab_ppsh41_new
+installed_upgrades      = ; up_thirda_ppsh41_new, up_thirdc_ppsh41_new
+
+hit_power           	= 0.308, 0.308, 0.308, 0.308
+hit_impulse             = 20
+hit_type                = fire_wound 
+fire_distance           = 500
+bullet_speed            = 397
+rpm                     = 900
+
+hud                     = wpn_ppsh41_rednew_hud
+
+misfire_start_condition		= 0.74
+misfire_end_condition		= 0.05
+misfire_start_prob = 0.003 ;	     	= 0.0036
+misfire_end_prob = 0.02 ;	     	= 0.036
+condition_shot_dec      	= 0.0005
+condition_queue_shot_dec	= 0.0005
+
+fire_dispersion_base    = 0.55
+
+inv_grid_width     = 4
+inv_grid_height    = 1
+inv_grid_x         = 16
+inv_grid_y         = 61
+
+visual                  = dynamics\weapons\wpn_ppsh41\wpn_ppsh4c.ogf
+
+snd_reload              = weapons\ppsh41\ppsh41_reload
+
+[wpn_ppsh41_rednew_hud]:wpn_ppsh41_hud
+
+item_visual             = dynamics\weapons\wpn_ppsh41\wpn_ppsh4c_hud.ogf
+
+;=====================================================================================================================================================
+[wpn_ppsh41_redworn]:wpn_ppsh41
+
+cost                    = 10220
+inv_weight              = 3.64
+inv_name                = st_wpn_ppsh41_worn
+inv_name_short          = st_wpn_ppsh41_worn
+description       		= st_wpn_ppsh41_worn_descr
+
+upgrades                = up_gr_firstab_ppsh41_worn, up_gr_seconab_ppsh41_worn, up_gr_thirdab_ppsh41_worn
+
+hit_power           	= 0.232, 0.232, 0.232, 0.232
+hit_impulse             = 20
+hit_type                = fire_wound 
+fire_distance           = 400      
+bullet_speed            = 350
+rpm                     = 850
+
+hud                     = wpn_ppsh41_redworn_hud
+
+misfire_start_condition		= 0.86
+misfire_end_condition		= 0.11
+misfire_start_prob = 0.003 ;	     	= 0.0058
+misfire_end_prob = 0.02 ;	     	= 0.058
+condition_shot_dec      	= 0.0011
+condition_queue_shot_dec	= 0.0011
+
+silencer_status         = 0
+
+fire_dispersion_base    = 0.8
+
+inv_grid_width          = 4
+inv_grid_height         = 1
+inv_grid_x              = 15
+inv_grid_y              = 4
+
+visual                  = dynamics\weapons\wpn_ppsh41\wpn_ppsh41.ogf
+
+snd_reload              = weapons\ppsh41\ppsh41_reload
+
+[wpn_ppsh41_redworn_hud]:wpn_ppsh41_hud
+
+item_visual             = dynamics\weapons\wpn_ppsh41\wpn_ppsh4d_hud.ogf

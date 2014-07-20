@@ -1,0 +1,1644 @@
+--' RevampedNpcLoot
+-- 06/mar/2011: v1.0b by jci_pt
+
+--' Rebuild by ScarabParamit
+-- 7/07/2012
+
+; --- Survival Chances ---------------------------------------------------------------------
+
+; Papa ScarabParamit say's: IMPORTANT !!!
+; All those settings concern items and ammo NPC possess in his inventory
+; in moment of his death, so everything he looted also, but not
+; items created upon his death.
+
+
+; when NPC have multiple weapons as loot,
+; after the initial [n] the remaining have only [x] chance of survival
+
+[multiple_weapons_survival]
+level_0				= 2, 0.05
+level_1				= 2, 0.05
+level_2				= 2, 0.05
+level_3				= 2, 0.05
+
+
+; Papa ScarabParamit say's:
+; Here you can set modificator which will change ammo and items
+; survive chance based on NPC's community, ranks and values set further on...
+; without changing their numbers one by one.
+; Use this to quickly balance, separate and diversify factions and ranks =)
+; Number equal 1 - No modificator = Same values
+; Number set to 0 - DON'T SET...trust me ^^'
+; Examp: 0.5 = divine by half, 1.5 = multiply by half
+
+[community_item_survive_chance]
+zombied					= 0.8
+bandit					= 0.9
+ecolog					= 1.0
+stalker					= 1.0
+freedom					= 1.0
+dolg					= 1.0
+army					= 1.2
+killer					= 1.2
+monolith				= 1.0
+[rank_item_survive_chance]
+novice					= 0.8
+experienced				= 1.0
+veteran					= 1.1
+master					= 1.2
+elite					= 1.4
+
+; Papa ScarabParamit say's:
+; Here You can set CHANCES of certain items to be DESTROYED upon NPC's death...
+; Settings DO NOT concerns items spawn on NPC death,
+; and will affect only those items and ammunition NPC gathered on his own, has been spawn with,
+; have to disposal and possess until his death.
+; So before balancing take a look on settings in "death_items_create_chances_by_communities.ltx"
+; For best realism and gameplay, same as economy take to consideration
+; usefullnes, price, durability and size (hit zone) of objects =]
+; 1.0 = 100%
+; 0.5 = 50%
+; 0.0 = 0%
+; Also important to mention is "keep_items" (death_generic.ltx) where we can force certain BASE items
+; ( NOT GATHERED but ones NPC is spawned with in the world ) to survive every time NPC is dying,
+; if you ask yourself why NPC always keep or have more items than you set, change TRUE to FALSE in death_generic.ltx
+; (Proved by veteran stalker constant Rgd-5 grenade spawn upon death,
+; easy...change RGD-5 spawn chances to 0 and start a new game...
+; kill first two stalkers in front where player has been spawned and the veteran always keep his RGD-5)
+; So it's not a bug of a script but an option that could bring little concern.
+
+[item_survival_factor]
+
+; --- Equipment ---
+letter_memoirs_1_of_2				= 1.0
+letter_memoirs_2_of_2				= 1.0
+letter_freedom_manual_1_of_2				= 1.0
+letter_freedom_manual_2_of_2				= 1.0
+letter_stalker_letter_1_of_2				= 1.0
+letter_stalker_letter_2_of_2				= 1.0
+letter_ecologist_report_1_of_3				= 1.0
+letter_ecologist_report_2_of_3				= 1.0
+letter_ecologist_report_3_of_3				= 1.0
+letter_monolith_prayer_1_of_3				= 1.0
+letter_monolith_prayer_2_of_3				= 1.0
+letter_monolith_prayer_3_of_3				= 1.0
+letter_monolithian_thoughts				= 1.0
+letter_letter_to_outside				= 1.0
+letter_military_stalker				= 1.0
+letter_mercenary				= 1.0
+letter_military_log				= 1.0
+letter_stalker_letter_3			= 1.0
+
+sleep_bag			= 0.02
+
+wpn_knife			= 0.001
+wpn_knife_inv		= 0.05
+wpn_knife_inv_2		= 0.05
+wpn_knife_inv_3		= 0.05
+wpn_knife_inv_4		= 0.05
+wpn_knife_inv_5		= 0.05
+wpn_knife_m			= 0.05
+
+af_medusa_af_iam			= 1.0
+af_cristall_flower_af_iam			= 1.0
+af_night_star_af_iam			= 1.0
+af_vyvert_af_iam			= 1.0
+af_gravi_af_iam			= 1.0
+af_gold_fish_af_iam			= 1.0
+af_cristall_af_iam			= 1.0
+af_fireball_af_iam			= 1.0
+af_dummy_glassbeads_af_iam			= 1.0
+af_eye_af_iam			= 1.0
+af_fire_af_iam			= 1.0
+af_blood_af_iam			= 1.0
+af_mincer_meat_af_iam			= 1.0
+af_soul_af_iam			= 1.0
+af_fuzz_kolobok_af_iam			= 1.0
+af_baloon_af_iam			= 1.0
+af_glass_af_iam			= 1.0
+af_electra_sparkler_af_iam			= 1.0
+af_electra_flash_af_iam			= 1.0
+af_electra_moonlight_af_iam			= 1.0
+af_dummy_battery_af_iam			= 1.0
+af_dummy_dummy_af_iam			= 1.0
+af_ice_af_iam			= 1.0
+af_compass_af_iam			= 1.0
+af_oasis_heart_af_iam			= 1.0
+jup_b1_half_artifact_af_iam			= 1.0
+af_quest_b14_twisted_af_iam			= 1.0
+
+af_medusa_af_aac			= 1.0
+af_cristall_flower_af_aac			= 1.0
+af_night_star_af_aac			= 1.0
+af_vyvert_af_aac			= 1.0
+af_gravi_af_aac			= 1.0
+af_gold_fish_af_aac			= 1.0
+af_cristall_af_aac			= 1.0
+af_fireball_af_aac			= 1.0
+af_dummy_glassbeads_af_aac			= 1.0
+af_eye_af_aac			= 1.0
+af_fire_af_aac			= 1.0
+af_blood_af_aac			= 1.0
+af_mincer_meat_af_aac			= 1.0
+af_soul_af_aac			= 1.0
+af_fuzz_kolobok_af_aac			= 1.0
+af_baloon_af_aac			= 1.0
+af_glass_af_aac			= 1.0
+af_electra_sparkler_af_aac			= 1.0
+af_electra_flash_af_aac			= 1.0
+af_electra_moonlight_af_aac			= 1.0
+af_dummy_battery_af_aac			= 1.0
+af_dummy_dummy_af_aac			= 1.0
+af_ice_af_aac			= 1.0
+af_compass_af_aac			= 1.0
+af_oasis_heart_af_aac			= 1.0
+jup_b1_half_artifact_af_aac			= 1.0
+af_quest_b14_twisted_af_aac			= 1.0
+
+af_medusa_af_aam			= 1.0
+af_cristall_flower_af_aam			= 1.0
+af_night_star_af_aac			= 1.0
+af_vyvert_af_aam			= 1.0
+af_gravi_af_aam			= 1.0
+af_gold_fish_af_aam			= 1.0
+af_cristall_af_aam			= 1.0
+af_fireball_af_aam			= 1.0
+af_dummy_glassbeads_af_aam			= 1.0
+af_eye_af_aam			= 1.0
+af_fire_af_aam			= 1.0
+af_blood_af_aam			= 1.0
+af_mincer_meat_af_aam			= 1.0
+af_soul_af_aam			= 1.0
+af_fuzz_kolobok_af_aam			= 1.0
+af_baloon_af_aam			= 1.0
+af_glass_af_aam			= 1.0
+af_electra_sparkler_af_aam			= 1.0
+af_electra_flash_af_aam			= 1.0
+af_electra_moonlight_af_aam			= 1.0
+af_dummy_battery_af_aam			= 1.0
+af_dummy_dummy_af_aam			= 1.0
+af_ice_af_aam			= 1.0
+af_compass_af_aam			= 1.0
+af_oasis_heart_af_aam			= 1.0
+jup_b1_half_artifact_af_aam			= 1.0
+af_quest_b14_twisted_af_aam			= 1.0
+
+af_medusa_lead_box			= 1.0
+af_cristall_flower_lead_box			= 1.0
+af_night_star_lead_box			= 1.0
+af_vyvert_lead_box			= 1.0
+af_gravi_lead_box			= 1.0
+af_gold_fish_lead_box			= 1.0
+af_cristall_lead_box			= 1.0
+af_fireball_lead_box			= 1.0
+af_dummy_glassbeads_lead_box			= 1.0
+af_eye_lead_box			= 1.0
+af_fire_lead_box			= 1.0
+af_blood_lead_box			= 1.0
+af_mincer_meat_lead_box			= 1.0
+af_soul_lead_box			= 1.0
+af_fuzz_kolobok_lead_box			= 1.0
+af_baloon_lead_box			= 1.0
+af_glass_lead_box			= 1.0
+af_electra_sparkler_lead_box			= 1.0
+af_electra_flash_lead_box			= 1.0
+af_electra_moonlight_lead_box			= 1.0
+af_dummy_battery_lead_box			= 1.0
+af_dummy_dummy_lead_box			= 1.0
+af_ice_lead_box			= 1.0
+af_compass_lead_box			= 1.0
+af_oasis_heart_lead_box			= 1.0
+jup_b1_half_artifact_lead_box			= 1.0
+af_quest_b14_twisted_lead_box			= 1.0
+
+af_surge			= 1.0
+af_frames			= 1.0
+af_grid			= 1.0
+af_freon			= 1.0
+af_cooler			= 1.0
+af_kevlar			= 1.0
+af_plates			= 1.0
+af_camelbak			= 1.0
+af_iam			= 1.0
+af_aac			= 1.0
+af_aam			= 1.0
+
+lead_box			= 1.0
+
+wpn_binoc			= 0.0
+wpn_binoc_inv		= 1.0
+roubles				= 0.75
+porn				= 1.0
+batteries			= 1.0
+dev_flash_1			= 1.0
+dev_flash_2			= 1.0
+;repair_kit			= 1.0
+device_torch		= 0.01
+device_pda			= 0.02
+guitar_a			= 0.01
+harmonica_a			= 0.02
+;-- device_harmonica	= 0.0 ;-- Doesn't Exist?
+;-- device_guitar		= 0.0 ;-- Doesn't Exist?
+
+; --- Detectors ---
+detector_simple		= 0.2
+detector_advanced	= 0.1
+detector_elite		= 1.0
+
+; --- Food ---
+breadold			= 1.0
+bread				= 1.0
+kolbasa				= 1.0
+conserva			= 1.0
+protein				= 1.0
+
+tomato				= 1.0
+sausage				= 1.0
+corn				= 1.0
+beans				= 1.0
+chili				= 1.0
+salmon				= 1.0
+raisins				= 1.0
+chocolate			= 1.0
+nuts				= 1.0
+
+drink_crow				= 1.0
+
+tushonka				= 1.0
+glucose					= 1.0
+glucose_s				= 1.0
+
+mre				= 1.0
+mre2			= 1.0
+mre3			= 1.0
+ration_ru			= 1.0
+ration_ru2			= 1.0
+ration_ru3			= 1.0
+ration_ru4			= 1.0
+ration_ru5			= 1.0
+ration_ru6			= 1.0
+ration_ru7			= 1.0
+ration_ukr			= 1.0
+ration_ukr2			= 1.0
+ration_ukr3			= 1.0
+ration_ukr4			= 1.0
+ration_ukr5			= 1.0
+ration_ukr6			= 1.0
+
+mint				= 1.0
+mint2				= 1.0
+mint3				= 1.0
+mint4				= 1.0
+mint5				= 1.0
+mineral_water			= 1.0
+mineral_water2			= 1.0
+mineral_water3			= 1.0
+
+beer					= 1.0
+
+energy_drink		= 1.0
+water_drink			= 1.0
+
+vodka				= 1.0
+vodka_2				= 1.0
+vodka_3				= 1.0
+vodka2				= 1.0
+vodka2_2				= 1.0
+vodka2_3				= 1.0
+vodka_quality		= 1.0
+vodka_quality2		= 1.0
+vodka_quality3		= 1.0
+
+bottle_metal			= 1.0
+bottle_metal2			= 1.0
+bottle_metal3			= 1.0
+tea			= 1.0
+tea2			= 1.0
+tea3			= 1.0
+flask			= 1.0
+flask2			= 1.0
+flask3			= 1.0
+
+; --- Mutant Fleash Consumables ---
+meat_tushkano		= 1.0
+meat_dog			= 1.0
+meat_pseudodog		= 1.0
+meat_flesh			= 1.0
+meat_boar			= 1.0
+meat_bloodsucker	= 1.0
+meat_snork			= 1.0
+meat_chimera		= 1.0
+
+; --- Medical Supplies ---
+bandage				= 0.05
+medkit				= 0.05
+medkit_army			= 0.05
+medkit_scientic		= 0.05
+antirad				= 0.05
+
+stimpack			= 0.05
+stimpack_army		= 0.05
+stimpack_scientic	= 0.05
+
+survival_kit		= 1.0
+
+; --- Drugs and Medicines ---
+drug_booster		= 1.0
+drug_coagulant		= 1.0
+drug_coagulant2		= 1.0
+drug_coagulant3		= 1.0
+drug_coagulant4		= 1.0
+drug_coagulant5		= 1.0
+drug_psy_blockade	= 1.0
+drug_psy_blockade2	= 1.0
+drug_psy_blockade3	= 1.0
+drug_psy_blockade4	= 1.0
+drug_psy_blockade5	= 1.0
+drug_antidot		= 1.0
+drug_antidot2		= 1.0
+drug_antidot3		= 1.0
+drug_radioprotector	= 1.0
+drug_radioprotector2	= 1.0
+drug_anabiotic		= 1.0
+drug_sleepingpills	= 1.0
+drug_sleepingpills2	= 1.0
+drug_sleepingpills3	= 1.0
+drug_sleepingpills4	= 1.0
+drug_sleepingpills5	= 1.0
+
+joint				= 1.0
+cigarettes			= 1.0
+cigarettes2			= 1.0
+cigarettes3			= 1.0
+cigarettes4			= 1.0
+cigar1					= 1.0
+cigar1_2					= 1.0
+cigar1_3					= 1.0
+cigar2					= 1.0
+cigar2_2					= 1.0
+cigar2_3					= 1.0
+cigar3					= 1.0
+cigar3_2					= 1.0
+cigar3_3					= 1.0
+
+caffeine				= 1.0
+caffeine2				= 1.0
+caffeine3				= 1.0
+caffeine4				= 1.0
+caffeine5				= 1.0
+
+cigar					= 1.0
+cigarettes_lucky		= 1.0
+cigarettes_lucky2	= 1.0
+cigarettes_lucky3	= 1.0
+cigarettes_lucky4	= 1.0
+cigarettes_russian		= 1.0
+cigarettes_russian2		= 1.0
+cigarettes_russian3		= 1.0
+tobacco					= 1.0
+tobacco2					= 1.0
+tobacco3					= 1.0
+tobacco4					= 1.0
+tobacco5					= 1.0
+marijuana				= 1.0
+marijuana2				= 1.0
+marijuana3				= 1.0
+hand_rolling_tobacco		= 1.0
+hand_rolling_tobacco2		= 1.0
+hand_rolling_tobacco3		= 1.0
+hand_rolling_tobacco4		= 1.0
+hand_rolling_tobacco5		= 1.0
+
+tetanus				= 1.0
+adrenalin			= 1.0
+cocaine				= 1.0
+cocaine2				= 1.0
+cocaine3				= 1.0
+
+salicidic_acid		= 1.0
+morphine			= 1.0
+
+; --- Repair items ---
+gun_oil									= 1.0
+gun_oil2									= 1.0
+cleaning_kit_p							= 1.0
+cleaning_kit_p2							= 1.0
+cleaning_kit_p3							= 1.0
+cleaning_kit_s							= 1.0
+cleaning_kit_s2							= 1.0
+cleaning_kit_s3							= 1.0
+cleaning_kit_r5							= 1.0
+cleaning_kit_r5_2						= 1.0
+cleaning_kit_r5_3						= 1.0
+cleaning_kit_r7							= 1.0
+cleaning_kit_r7_2						= 1.0
+cleaning_kit_r7_3						= 1.0
+cleaning_kit_u							= 1.0
+cleaning_kit_u2							= 1.0
+cleaning_kit_u3							= 1.0
+toolkit_p								= 1.0
+toolkit_p2								= 1.0
+toolkit_p3								= 1.0
+toolkit_p4								= 1.0
+toolkit_s								= 1.0
+toolkit_s2								= 1.0
+toolkit_s3								= 1.0
+toolkit_s4								= 1.0
+toolkit_r5								= 1.0
+toolkit_r5_2								= 1.0
+toolkit_r5_3								= 1.0
+toolkit_r5_4								= 1.0
+toolkit_r7								= 1.0
+toolkit_r7_2								= 1.0
+toolkit_r7_3								= 1.0
+toolkit_r7_4								= 1.0
+toolkit_u								= 1.0
+toolkit_u2								= 1.0
+toolkit_u3								= 1.0
+toolkit_u4								= 1.0
+sharpening_stones						= 1.0
+sharpening_stones2						= 1.0
+sharpening_stones3						= 1.0
+sharpening_stones4						= 1.0
+gun_oil_ru_d							= 1.0
+gun_oil_ru_d2							= 1.0
+gun_oil_ru								= 1.0
+gun_oil_ru2								= 1.0
+solvent									= 1.0
+solvent2									= 1.0
+grease									= 1.0
+grease2									= 1.0
+steel_wool								= 1.0
+steel_wool2								= 1.0
+glue_b									= 1.0
+glue_b2									= 1.0
+glue_a									= 1.0
+glue_a2									= 1.0
+glue_e									= 1.0
+glue_e2									= 1.0
+sewing_kit_b							= 1.0
+sewing_kit_b2							= 1.0
+sewing_kit_b3							= 1.0
+sewing_kit_b4							= 1.0
+sewing_kit_a							= 1.0
+sewing_kit_a2							= 1.0
+sewing_kit_a3							= 1.0
+sewing_kit_a4							= 1.0
+sewing_kit_h							= 1.0
+sewing_kit_h2							= 1.0
+sewing_kit_h3							= 1.0
+sewing_kit_h4							= 1.0
+armor_repair_fa							= 1.0
+armor_repair_fa2							= 1.0
+helmet_repair_kit						= 1.0
+helmet_repair_kit2						= 1.0
+helmet_repair_kit3						= 1.0
+armor_repair_pro						= 1.0
+armor_repair_pro2						= 1.0
+armor_repair_pro3						= 1.0
+armor_repair_pro4						= 1.0
+textile_patch_b							= 1.0
+textile_patch_m							= 1.0
+textile_patch_e							= 1.0
+
+; --- Explosives ---
+
+explo_jerrycan_fuel						= 1.0
+explo_jerrycan_fuel2						= 1.0
+explo_jerrycan_fuel3						= 1.0
+explo_jerrycan_fuel4						= 1.0
+explo_jerrycan_fuel5						= 1.0
+explo_jerrycan_fuel6						= 1.0
+explo_jerrycan_fuel7						= 1.0
+explo_jerrycan_fuel8						= 1.0
+explo_metalcan_powder					= 1.0
+explo_balon_gas							= 1.0
+explo_balon_gas2						= 1.0
+explo_balon_gas3						= 1.0
+explo_balon_gas4						= 1.0
+explo_balon_gas5						= 1.0
+explo_balon_gas6						= 1.0
+explo_balon_gas7						= 1.0
+explo_balon_gas8						= 1.0
+
+mine									= 1.0
+
+; --- Utility items ---
+
+wpn_binoc_inv							= 1.0
+wpn_upd									= 1.0
+
+; --- Artifacts ---
+af_cristall					= 1.0
+af_fireball					= 1.0
+af_dummy_glassbeads			= 1.0
+af_eye						= 1.0
+af_fire						= 1.0
+af_medusa					= 1.0
+af_cristall_flower			= 1.0
+af_night_star				= 1.0
+af_vyvert 					= 1.0
+af_gravi					= 1.0
+af_gold_fish				= 1.0
+af_blood					= 1.0
+af_mincer_meat				= 1.0
+af_soul						= 1.0
+af_fuzz_kolobok				= 1.0
+af_baloon					= 1.0
+af_glass					= 1.0
+af_electra_sparkler			= 1.0
+af_electra_flash			= 1.0
+af_electra_moonlight		= 1.0
+af_dummy_battery			= 1.0
+af_dummy_dummy				= 1.0
+af_ice						= 1.0
+
+; --- Mutant Fleash ---
+mutant_part_flesh_eye				= 1.0
+mutant_part_tushkano_head			= 1.0
+mutant_part_pseudogigant_hand		= 1.0
+mutant_part_burer_hand				= 1.0
+mutant_part_snork_hand				= 1.0
+mutant_part_psevdodog_tail			= 1.0
+mutant_part_dog_tail				= 1.0
+mutant_part_boar_leg				= 1.0
+mutant_part_snork_leg				= 1.0
+mutant_part_snork_mask				= 1.0
+mutant_part_controller_glass		= 1.0
+mutant_part_chimera_kogot			= 1.0
+mutant_part_boar_chop				= 1.0
+mutant_part_flesh_meat				= 1.0
+mutant_part_dog_meat				= 1.0
+mutant_part_psevdodog_meat			= 1.0
+mutant_part_krovosos_meat			= 1.0
+mutant_part_chimera_meat			= 1.0
+mutant_part_tushkano_meat			= 1.0
+mutant_part_crow_beak				= 1.0
+
+hide_chimera						= 1.0
+powder_poltergeist					= 1.0
+hide_pseudogiant					= 1.0
+hide_psy_dog						= 1.0
+hide_pseudodog						= 1.0
+hide_burer							= 1.0
+hide_controller						= 1.0
+hide_bloodsucker					= 1.0
+hide_boar							= 1.0
+hide_flesh							= 1.0
+
+; --- Factions Patches/Insignia/Ribbons
+csky_patch					= 1.0
+freedom_patch				= 1.0
+stalker_patch				= 1.0
+renegade_patch				= 1.0
+bandit_patch				= 1.0
+dolg_patch					= 1.0
+monolith_patch				= 1.0
+army_patch					= 1.0
+merc_patch					= 1.0
+
+; --- Findings/immersion stuff
+shovel_old				= 1.0
+shovel_mili				= 1.0
+ied_rpg					= 1.0
+ied						= 1.0
+meinkampf				= 1.0
+jar						= 1.0
+grooming				= 1.0
+journal					= 1.0
+maps_kit				= 1.0
+geiger_dead				= 1.0
+welding_goggles			= 1.0
+jewelry_box				= 1.0
+cooking					= 1.0
+book1					= 1.0
+book2					= 1.0
+book3					= 1.0
+picture_woman			= 1.0
+drugs_kit				= 1.0
+
+hammer_inv					= 1.0
+crowbar					= 1.0
+spareparts				= 1.0
+beadspread				= 1.0
+walkie					= 1.0
+cards					= 1.0
+ammo_bad				= 1.0
+boots					= 1.0
+mili_maps				= 1.0
+swiss					= 1.0
+headlamp				= 1.0
+mirror					= 1.0
+kit_hunt				= 1.0
+flashlight_old			= 1.0
+flashlight_broken		= 1.0
+underwear				= 1.0
+porn2					= 1.0
+batteries_dead			= 1.0
+batteries_ccell			= 1.0
+tarpaulin				= 1.0
+rope					= 1.0
+synthrope				= 1.0
+cutlery					= 1.0
+radio					= 1.0
+radio2					= 1.0
+fieldcooker				= 1.0
+wood_stove				= 1.0
+kerosene				= 1.0
+kerosene2				= 1.0
+kerosene3				= 1.0
+kerosene4				= 1.0
+kerosene5				= 1.0
+charcoal				= 1.0
+charcoal2				= 1.0
+charcoal3				= 1.0
+
+; --- Ammunition ---
+ammo_9x18_fmj			= 1.0 ; Light Pistol Rounds
+ammo_9x18_pmm			= 0.85
+ammo_9x18_ap			= 0.66
+ammo_9x19_fmj			= 1.0 ; Pistol & SMG Rounds
+ammo_9x19_pbp			= 0.85
+ammo_9x19_ap			= 0.66
+ammo_11.43x23_fmj		= 1.0 ; 45 ACP Heavy Pistol Rounds
+ammo_11.43x23_hydro		= 0.85
+ammo_11.43x23_ap		= 0.66
+ammo_12x70_buck			= 1.0 ; Shotgun Shells
+ammo_12x76_zhekan		= 0.85
+ammo_5.45x39_fmj		= 1.0 ; Warsaw Pact Rifle Rounds
+ammo_5.45x39_ap			= 0.85
+ammo_5.56x45_ss190		= 1.0 ; NATO Assault Rifle Rounds
+ammo_5.56x45_ap			= 0.85
+ammo_9x39_pab9			= 1.0 ; Special Forces Subsonic Rounds
+ammo_9x39_ap			= 0.66
+ammo_7.62x39_fmj		= 1.0 ; Old Soviet WorldWar II Rounds
+ammo_7.62x39_ap			= 0.85
+ammo_7.92x33_fmj		= 1.0 ; Old German WorldWar II Rounds
+ammo_7.92x33_ap			= 0.85
+ammo_7.62x54_7h1		= 0.85 ; Warsaw Pact Sniper Rifle Rounds
+ammo_7.62x54_7h14		= 0.66
+ammo_7.62x51_fmj		= 1.0 ; NATO Sniper Rifle Rounds
+ammo_7.62x51_ap			= 0.85
+ammo_gauss				= 1.0 ; Electro-Magnetic Particle Cannon
+ammo_gauss_cardan		= 1.0
+ammo_pkm_100			= 1.0 ; Warsaw Pact Light Machine Gun
+ammo_7.62x54_ap			= 1.0
+ammo_357_hp_mag_ap		= 0.85
+ammo_357_hp_mag			= 1.0
+ammo_magnum_300 		= 0.85
+ammo_magnum_300_ap 		= 0.66
+;ammo_12.7x108_fmj 		= 0.85
+ammo_12.7x108_ap 		= 0.66
+
+; --- Explosive Projectiles ---
+ammo_vog-25				= 1.0 ; Warsaw Pact ammo for Grenade Launcher
+ammo_m209				= 1.0 ; NATO ammo for Grenade Launcher
+ammo_og-7b				= 1.0 ; RPG-7 self-propelled Grenade
+
+; --- Explosives ---
+grenade_rgd5			= 0.75 ; Light Fragmentation Grenade
+grenade_f1				= 0.75 ; Fragmentation Grenade
+grenade_gd-05			= 0.75 ; Thermite Grenade
+
+
+
+; --- Ammunition ---> Weapon dependent/Weapon match rounds <--------------------------------
+
+; Papa ScarabParamit say's: IMPORTANT !!!
+; All of those settings works only for ammo created upon NPC's death which fits possessed weapons,
+; not ammo NPC gathered in his lifespan or additional ammo to weapon he does not possess !!!
+
+
+; Papa ScarabParamit say's:
+; Ammo overall multiplier for ammo spawn count, per player level.
+; Depending its above, under or same as 1.0 it multiply, divine or live unchanged
+; values set for ammo types in "ammo_count" section.
+; You can use this to quickly change overall center of lowest vs. higest ammo drop,
+; or rise diversity of looted ammo counts.
+; The higer values the higer unpredictability.
+; First number - Divine modificator (1.0 <...> OO)
+; Second number - Multiply modificator (0 <...> 1.0)
+
+[ammo_count_factor]
+level_0			= 0.8, 1.0
+level_1			= 0.8, 1.0
+level_2			= 0.8, 1.0
+level_3			= 0.8, 1.0
+
+
+; Ammunition factors works like overall "ammo_count_factor" based on difficulty level,
+; but can be set differently for every faction or rank of NPC's.
+; Use this to quickly balance, separate and diversify factions and ranks =)
+; Number equal 1 - No modificator = Same values
+; Number set to 0 - DON'T SET...trust me ^^'
+; Examp: 0.5 = divine by half, 1.5 = multiply by half
+
+[community_ammo_count_ammounth]
+zombied					= 0.3
+bandit					= 0.7
+ecolog					= 1.0
+stalker					= 0.7
+freedom					= 0.85
+dolg					= 0.85
+army					= 1.0
+killer					= 0.95
+monolith				= 0.95
+[rank_ammo_count_ammounth]
+novice					= 0.45
+experienced				= 0.60
+veteran					= 0.75
+master					= 0.85
+elite					= 1.0
+
+; Ammunition MIN/MAX counts. Values will be randomly set betwen first and second
+; .aka min/max number, and modified by "ammo_count_factor" further on.
+
+[ammo_drop_counts]
+ammo_9x18_fmj 			= 12, 24 ; Light Pistol Rounds
+ammo_9x18_pmm 			= 8, 16
+ammo_9x18_ap 			= 4, 8
+ammo_9x19_fmj 			= 10, 20 ; Pistol & SMG Rounds
+ammo_9x19_pbp 			= 6, 12
+ammo_9x19_ap 			= 3, 6
+ammo_11.43x23_fmj 		= 8, 16 ; 45 ACP Heavy Pistol Rounds
+ammo_11.43x23_hydro		= 4, 8
+ammo_11.43x23_ap 		= 2, 4
+ammo_12x70_buck 		= 6, 18 ; Shotgun Shells
+ammo_12x76_zhekan 		= 2, 6
+ammo_5.45x39_fmj 		= 8, 36 ; Warsaw Pact Rifle Rounds
+ammo_5.45x39_ap 		= 3, 9
+ammo_5.56x45_ss190 		= 6, 36 ; NATO Assault Rifle Rounds
+ammo_5.56x45_ap 		= 2, 8
+ammo_9x39_pab9 			= 4, 12 ; Special Forces Subsonic Rounds
+ammo_9x39_ap 			= 1, 5
+ammo_7.62x39_fmj 		= 8, 40 ; Old Soviet WorldWar II Rounds
+ammo_7.62x39_ap 		= 2, 8
+ammo_7.92x33_fmj 		= 6, 34 ; Old German WorldWar II Rounds
+ammo_7.92x33_ap 		= 1, 7
+ammo_7.62x54_7h1 		= 1, 6 ; Warsaw Pact Sniper Rifle Rounds
+ammo_7.62x54_7h14 		= 1, 3
+ammo_7.62x51_fmj 		= 4, 12 ; NATO Sniper Rifle Rounds
+ammo_7.62x51_ap 		= 1, 4
+ammo_gauss				= 4, 12 ; Electro-Magnetic Particle Cannon
+ammo_gauss_cardan		= 0, 0
+ammo_pkm_100			= 9, 26 ; Warsaw Pact Light Machine Gun
+ammo_7.62x54_ap			= 4, 9
+ammo_357_hp_mag_ap 			= 1, 5
+ammo_357_hp_mag 			= 2, 8
+ammo_magnum_300 		= 4, 28
+ammo_magnum_300_ap 		= 1, 4
+;ammo_12.7x108_fmj 		= 4, 9
+ammo_12.7x108_ap 		= 1, 3
+
+; --- Explosive Projectiles ---
+ammo_vog-25				= 2, 4 ; Warsaw Pact ammo for Grenade Launcher
+ammo_m209				= 1, 3 ; NATO ammo for Grenade Launcher
+ammo_og-7b				= 1, 2 ; RPG-7 self-propelled Grenade
+
+
+
+; --- Items & Ammunition ---> All items/Weapon independent ammo <---------------------------
+
+; Papa ScarabParamit say's: IMPORTANT !!!
+; All of those settings works for all items and ammo created upon NPC's death without restrictions,
+; its not important if NPC possess weapons maching certain ammo or not,
+; but they don't influance ammo or items NPC gathered in his lifespan !!!
+
+; Multiplier for new item create chance, per player level. <= 1.0
+
+[item_create_factor]
+level_0				= 0.00
+level_1 			= 0.00
+level_2 			= 0.00
+level_3 			= 0.00
+
+
+; Papa ScarabParamit say's:
+; Here You can set CHANCES of items to be created upon NPC's death...
+; based on his community and rank. This settings ware made mostly for RANK,
+; as communities create chances can be set in death_items_create_chances_by_communities,
+; but finnaly...i decided to add this overall option for quick balance modifier.
+; Use this to quickly balance, separate and diversify factions and ranks =)
+; Number equal 1 - No modificator = Same values
+; Number set to 0 - DON'T SET...trust me ^^'
+; Examp: 0.5 = divine by half, 1.5 = multiply by half
+
+[community_item_create_chance]
+zombied					= 1.0 ; 0.8
+bandit					= 1.0 ; 0.9
+ecolog					= 1.0 ; 1.0
+stalker					= 1.0 ; 1.0
+freedom					= 1.0 ; 1.0
+dolg					= 1.0 ; 1.0
+army					= 1.0 ; 1.2
+killer					= 1.0 ; 1.2
+monolith				= 1.0 ; 1.0
+[rank_item_create_chance]
+novice					= 1.0 ; 0.8
+experienced				= 1.0 ; 1.0
+veteran					= 1.0 ; 1.1
+master					= 1.0 ; 1.2
+elite					= 1.0 ; 1.4
+
+
+; Papa ScarabParamit say's:
+; Here you can set modificators for Items AMMOUNTH created upon NPC's death,
+; Use this to quickly balance, separate and diversify factions and ranks =)
+; Number equal 1 - No modificator = Same values
+; Number set to 0 - DON'T SET...trust me ^^'
+; Examp: 0.5 = divine by half, 1.5 = multiply by half
+
+[community_item_create_ammounth]
+zombied					= 0.8
+bandit					= 0.9
+ecolog					= 1.0
+stalker					= 1.1
+freedom					= 1.2
+dolg					= 1.2
+army					= 1.3
+killer					= 1.4
+monolith				= 1.5
+[rank_item_create_ammounth]
+novice					= 1.0
+experienced				= 1.2
+veteran					= 1.4
+master					= 1.6
+elite					= 2.0
+
+
+; Papa ScarabParamit say's:
+; Here You can set MIN/MAX AMMOUNTH of particular item types created upon NPC's death...
+; Values will be randomised between min and max numbers.
+; Use this to modify ALL ITEMS, you can also add additional
+; BASE ammo even if NPC doesn't posses particular weapon type.
+; Please remember - certain ammo ammounth and other objects can be gathered by stalker during his lifespan,
+; take this under consideration while balancing. Gathered objects and ammo can be lowered/cleared upon death
+; using "item_survival_factor", "community_item_survive_chance"
+; and "rank_item_survive_chance" in death_loot_settings_OVERALL.ltx
+; Also important to mention is "keep_items" (death_generic.ltx) where we can force certain BASE items
+; ( NOT GATHERED but ones NPC is spawned with in the world ) to survive every time NPC is dying,
+; if you ask yourself why NPC always keep or have more items than you set, change TRUE to FALSE in death_generic.ltx
+; (Proved by veteran stalker constant Rgd-5 grenade spawn upon death,
+; easy...change RGD-5 spawn chances to 0 and start a new game...
+; kill first two stalkers in front where player has been spawned and the veteran always keep his RGD-5)
+; So it's not a bug of a script but an option that could bring little concern.
+; P.S. You can...but don't use this to control is particular item will be created at all,
+; consider this as a tool to set number of items in PACK if random CHANCES alowed them to spawn.
+; To change CHANCES of items/ammo to be created on NPC's death look at "death_items_create_chances_by_communities.ltx".
+
+[item_drop_counts]
+letter_memoirs_1_of_2				= 0, 0
+letter_memoirs_2_of_2				= 0, 0
+letter_freedom_manual_1_of_2				= 0, 0
+letter_freedom_manual_2_of_2				= 0, 0
+letter_stalker_letter_1_of_2				= 0, 0
+letter_stalker_letter_2_of_2				= 0, 0
+letter_ecologist_report_1_of_3				= 0, 0
+letter_ecologist_report_2_of_3				= 0, 0
+letter_ecologist_report_3_of_3				= 0, 0
+letter_monolith_prayer_1_of_3				= 0, 0
+letter_monolith_prayer_2_of_3				= 0, 0
+letter_monolith_prayer_3_of_3				= 0, 0
+letter_monolithian_thoughts				= 0, 0
+letter_letter_to_outside				= 0, 0
+letter_military_stalker				= 0, 0
+letter_mercenary				= 0, 0
+letter_military_log				= 0, 0
+letter_stalker_letter_3			= 0, 0
+
+ammo_9x18_fmj 			= 12, 24 ; Light Pistol Rounds
+ammo_9x18_pmm 			= 8, 16
+ammo_9x18_ap 			= 3, 8
+ammo_9x19_fmj 			= 10, 20 ; Pistol & SMG Rounds
+ammo_9x19_pbp 			= 6, 12
+ammo_9x19_ap 			= 2, 7
+ammo_11.43x23_fmj 		= 8, 16 ; 45 ACP Heavy Pistol Rounds
+ammo_11.43x23_hydro		= 4, 8
+ammo_11.43x23_ap 		= 1, 5
+ammo_12x70_buck 		= 6, 18 ; Shotgun Shells
+ammo_12x76_zhekan 		= 2, 5
+ammo_5.45x39_fmj 		= 8, 36 ; Warsaw Pact Rifle Rounds
+ammo_5.45x39_ap 		= 2, 5
+ammo_5.56x45_ss190 		= 6, 36 ; NATO Assault Rifle Rounds
+ammo_5.56x45_ap 		= 1, 4
+ammo_9x39_pab9 			= 4, 12 ; Special Forces Subsonic Rounds
+ammo_9x39_ap 			= 1, 3
+ammo_7.62x39_fmj 		= 8, 40 ; Old Soviet WorldWar II Rounds
+ammo_7.62x39_ap 		= 1, 4
+ammo_7.92x33_fmj 		= 6, 34 ; Old German WorldWar II Rounds
+ammo_7.92x33_ap 		= 1, 4
+ammo_7.62x54_7h1 		= 2, 5 ; Warsaw Pact Sniper Rifle Rounds
+ammo_7.62x54_7h14 		= 1, 3
+ammo_7.62x51_fmj 		= 4, 12 ; NATO Sniper Rifle Rounds
+ammo_7.62x51_ap 		= 1, 3
+ammo_gauss				= 1, 2 ; Electro-Magnetic Particle Cannon
+ammo_gauss_cardan		= 0, 0
+ammo_pkm_100			= 11, 22 ; Warsaw Pact Light Machine Gun
+ammo_7.62x54_ap			= 3, 8
+ammo_357_hp_mag_ap 			= 1, 5
+ammo_357_hp_mag 			= 2, 8
+ammo_magnum_300 		= 1, 4
+ammo_magnum_300_ap 		= 1, 2
+;ammo_12.7x108_fmj 		= 4, 9
+ammo_12.7x108_ap 		= 1, 3
+
+; --- Explosive Projectiles ---
+ammo_vog-25				= 2, 4 ; Warsaw Pact ammo for Grenade Launcher
+ammo_m209				= 1, 3 ; NATO ammo for Grenade Launcher
+ammo_og-7b				= 1, 2 ; RPG-7 self-propelled Grenade
+
+; --- Explosives ---
+grenade_rgd5			= 1, 2 ; Light Fragmentation Grenade
+grenade_f1				= 0, 2 ; Fragmentation Grenade
+grenade_gd-05			= 0, 1 ; Thermite Grenade
+
+; --- Equipment ---
+sleep_bag			= 0, 0
+
+wpn_knife			= 0, 0
+wpn_knife_inv		= 0, 0
+wpn_knife_inv_2		= 0, 0
+wpn_knife_inv_3		= 0, 0
+wpn_knife_inv_4		= 0, 0
+wpn_knife_inv_5		= 0, 0
+wpn_knife_m			= 0, 0
+
+af_medusa_af_iam			= 0, 0
+af_cristall_flower_af_iam	= 0, 0
+af_night_star_af_iam		= 0, 0
+af_vyvert_af_iam			= 0, 0
+af_gravi_af_iam				= 0, 0
+af_gold_fish_af_iam			= 0, 0
+af_cristall_af_iam			= 0, 0
+af_fireball_af_iam			= 0, 0
+af_dummy_glassbeads_af_iam	= 0, 0
+af_eye_af_iam				= 0, 0
+af_fire_af_iam				= 0, 0
+af_blood_af_iam				= 0, 0
+af_mincer_meat_af_iam		= 0, 0
+af_soul_af_iam				= 0, 0
+af_fuzz_kolobok_af_iam		= 0, 0
+af_baloon_af_iam			= 0, 0
+af_glass_af_iam				= 0, 0
+af_electra_sparkler_af_iam	= 0, 0
+af_electra_flash_af_iam		= 0, 0
+af_electra_moonlight_af_iam	= 0, 0
+af_dummy_battery_af_iam		= 0, 0
+af_dummy_dummy_af_iam		= 0, 0
+af_ice_af_iam				= 0, 0
+af_compass_af_iam			= 0, 0
+af_oasis_heart_af_iam		= 0, 0
+jup_b1_half_artifact_af_iam	= 0, 0
+af_quest_b14_twisted_af_iam	= 0, 0
+
+af_medusa_af_aac					= 0, 0
+af_cristall_flower_af_aac			= 0, 0
+af_night_star_af_aac				= 0, 0
+af_vyvert_af_aac					= 0, 0
+af_gravi_af_aac						= 0, 0
+af_gold_fish_af_aac					= 0, 0
+af_cristall_af_aac					= 0, 0
+af_fireball_af_aac					= 0, 0
+af_dummy_glassbeads_af_aac			= 0, 0
+af_eye_af_aac						= 0, 0
+af_fire_af_aac						= 0, 0
+af_blood_af_aac						= 0, 0
+af_mincer_meat_af_aac				= 0, 0
+af_soul_af_aac						= 0, 0
+af_fuzz_kolobok_af_aac				= 0, 0
+af_baloon_af_aac					= 0, 0
+af_glass_af_aac						= 0, 0
+af_electra_sparkler_af_aac			= 0, 0
+af_electra_flash_af_aac				= 0, 0
+af_electra_moonlight_af_aac			= 0, 0
+af_dummy_battery_af_aac				= 0, 0
+af_dummy_dummy_af_aac				= 0, 0
+af_ice_af_aac						= 0, 0
+af_compass_af_aac					= 0, 0
+af_oasis_heart_af_aac				= 0, 0
+jup_b1_half_artifact_af_aac			= 0, 0
+af_quest_b14_twisted_af_aac			= 0, 0
+
+af_medusa_af_aam					= 0, 0
+af_cristall_flower_af_aam			= 0, 0
+af_night_star_af_aam				= 0, 0
+af_vyvert_af_aam					= 0, 0
+af_gravi_af_aam						= 0, 0
+af_gold_fish_af_aam					= 0, 0
+af_cristall_af_aam					= 0, 0
+af_fireball_af_aam					= 0, 0
+af_dummy_glassbeads_af_aam			= 0, 0
+af_eye_af_aam						= 0, 0
+af_fire_af_aam						= 0, 0
+af_blood_af_aam						= 0, 0
+af_mincer_meat_af_aam				= 0, 0
+af_soul_af_aam						= 0, 0
+af_fuzz_kolobok_af_aam				= 0, 0
+af_baloon_af_aam					= 0, 0
+af_glass_af_aam						= 0, 0
+af_electra_sparkler_af_aam			= 0, 0
+af_electra_flash_af_aam				= 0, 0
+af_electra_moonlight_af_aam			= 0, 0
+af_dummy_battery_af_aam				= 0, 0
+af_dummy_dummy_af_aam				= 0, 0
+af_ice_af_aam						= 0, 0
+af_compass_af_aam					= 0, 0
+af_oasis_heart_af_aam				= 0, 0
+jup_b1_half_artifact_af_aam			= 0, 0
+af_quest_b14_twisted_af_aam			= 0, 0
+
+af_medusa_lead_box					= 0, 0
+af_cristall_flower_lead_box			= 0, 0
+af_night_star_lead_box				= 0, 0
+af_vyvert_lead_box					= 0, 0
+af_gravi_lead_box						= 0, 0
+af_gold_fish_lead_box					= 0, 0
+af_cristall_lead_box					= 0, 0
+af_fireball_lead_box					= 0, 0
+af_dummy_glassbeads_lead_box			= 0, 0
+af_eye_lead_box						= 0, 0
+af_fire_lead_box						= 0, 0
+af_blood_lead_box						= 0, 0
+af_mincer_meat_lead_box				= 0, 0
+af_soul_lead_box						= 0, 0
+af_fuzz_kolobok_lead_box				= 0, 0
+af_baloon_lead_box					= 0, 0
+af_glass_lead_box						= 0, 0
+af_electra_sparkler_lead_box			= 0, 0
+af_electra_flash_lead_box				= 0, 0
+af_electra_moonlight_lead_box			= 0, 0
+af_dummy_battery_lead_box				= 0, 0
+af_dummy_dummy_lead_box				= 0, 0
+af_ice_lead_box						= 0, 0
+af_compass_lead_box					= 0, 0
+af_oasis_heart_lead_box				= 0, 0
+jup_b1_half_artifact_lead_box			= 0, 0
+af_quest_b14_twisted_lead_box			= 0, 0
+
+af_surge			= 0, 0
+af_frames			= 0, 0
+af_grid				= 0, 0
+af_freon			= 0, 0
+af_cooler			= 0, 0
+af_kevlar			= 0, 0
+af_plates			= 0, 0
+af_camelbak			= 0, 0
+af_iam				= 0, 0
+af_aac				= 0, 0
+af_aam				= 0, 0
+
+lead_box			= 0, 0
+
+wpn_binoc			= 0, 0
+wpn_binoc_inv		= 0, 0
+roubles				= 0, 0
+porn				= 0, 0
+batteries			= 0, 0
+dev_flash_1			= 0, 0
+dev_flash_2			= 0, 0
+;repair_kit			= 0, 0
+device_torch		= 0, 0
+device_pda			= 0, 0
+guitar_a			= 0, 0
+harmonica_a			= 0, 0
+
+; --- Detectors ---
+detector_simple		= 0, 0
+detector_advanced	= 0, 0
+detector_elite		= 0, 0
+
+; --- Food ---
+breadold			= 0, 0
+bread				= 0, 0
+kolbasa				= 0, 0
+conserva			= 0, 0
+protein				= 0, 0
+
+tomato				= 0, 0
+sausage				= 0, 0
+corn				= 0, 0
+beans				= 0, 0
+chili				= 0, 0
+salmon				= 0, 0
+raisins				= 0, 0
+chocolate			= 0, 0
+nuts				= 0, 0
+
+drink_crow				= 0, 0
+
+tushonka				= 0, 0
+glucose					= 0, 0
+glucose_s				= 0, 0
+
+mre					= 0, 0
+mre2				= 0, 0
+mre3				= 0, 0
+ration_ru			= 0, 0
+ration_ru2			= 0, 0
+ration_ru3			= 0, 0
+ration_ru4			= 0, 0
+ration_ru5			= 0, 0
+ration_ru6			= 0, 0
+ration_ru7			= 0, 0
+ration_ukr			= 0, 0
+ration_ukr2			= 0, 0
+ration_ukr3			= 0, 0
+ration_ukr4			= 0, 0
+ration_ukr5			= 0, 0
+ration_ukr6			= 0, 0
+
+; --- Medical Supplies ---
+bandage				= 0, 0
+medkit				= 0, 0
+medkit_army			= 0, 0
+medkit_scientic		= 0, 0
+antirad				= 0, 0
+
+stimpack			= 0, 0
+stimpack_army		= 0, 0
+stimpack_scientic	= 0, 0
+
+; --- Drugs and Medicines ---
+drug_booster							= 0, 0
+drug_coagulant							= 0, 0
+drug_coagulant2							= 0, 0
+drug_coagulant3							= 0, 0
+drug_coagulant4							= 0, 0
+drug_coagulant5							= 0, 0
+drug_psy_blockade						= 0, 0
+drug_psy_blockade2						= 0, 0
+drug_psy_blockade3						= 0, 0
+drug_psy_blockade4						= 0, 0
+drug_psy_blockade5						= 0, 0
+drug_antidot							= 0, 0
+drug_antidot2							= 0, 0
+drug_antidot3							= 0, 0
+drug_radioprotector						= 0, 0
+drug_radioprotector2					= 0, 0
+drug_anabiotic							= 0, 0
+drug_sleepingpills						= 0, 0
+drug_sleepingpills2						= 0, 0
+drug_sleepingpills3						= 0, 0
+drug_sleepingpills4						= 0, 0
+drug_sleepingpills5						= 0, 0
+akvatab									= 0, 0
+akvatab2								= 0, 0
+akvatab3								= 0, 0
+akvatab4								= 0, 0
+cocaine									= 0, 0
+cocaine2								= 0, 0
+cocaine3								= 0, 0
+tetanus									= 0, 0
+adrenalin								= 0, 0
+salicidic_acid							= 0, 0
+morphine								= 0, 0
+caffeine								= 0, 0
+caffeine2								= 0, 0
+caffeine3								= 0, 0
+caffeine4								= 0, 0
+caffeine5								= 0, 0
+
+mint									= 0, 0
+mint2									= 0, 0
+mint3									= 0, 0
+mint4									= 0, 0
+mint5									= 0, 0
+
+mineral_water						= 0, 0
+mineral_water2						= 0, 0
+mineral_water3						= 0, 0
+
+beer								= 0, 0
+
+vodka								= 0, 0
+vodka_2								= 0, 0
+vodka_3								= 0, 0
+vodka2								= 0, 0
+vodka2_2							= 0, 0
+vodka2_3							= 0, 0
+vodka_quality						= 0, 0
+vodka_quality2						= 0, 0
+vodka_quality3						= 0, 0
+energy_drink						= 0, 0
+water_drink							= 0, 0
+tea									= 0, 0
+tea2								= 0, 0
+tea3								= 0, 0
+bottle_metal						= 0, 0
+bottle_metal2						= 0, 0
+bottle_metal3						= 0, 0
+flask								= 0, 0
+flask2								= 0, 0
+flask3								= 0, 0
+
+cigarretes							= 0, 0
+cigarretes2							= 0, 0
+cigarretes3							= 0, 0
+cigarretes4							= 0, 0
+hand_rolling_tobacco						= 0, 0
+hand_rolling_tobacco2						= 0, 0
+hand_rolling_tobacco3						= 0, 0
+hand_rolling_tobacco4						= 0, 0
+hand_rolling_tobacco5						= 0, 0
+cigar							= 0, 0
+cigar1							= 0, 0
+cigar1_2						= 0, 0
+cigar1_3						= 0, 0
+cigar2							= 0, 0
+cigar2_2						= 0, 0
+cigar2_3						= 0, 0
+cigar3							= 0, 0
+cigar3_2						= 0, 0
+cigar3_3						= 0, 0
+cigarettes_lucky						= 0, 0
+cigarettes_lucky2						= 0, 0
+cigarettes_lucky3						= 0, 0
+cigarettes_lucky4						= 0, 0
+cigarettes_russian						= 0, 0
+cigarettes_russian2						= 0, 0
+cigarettes_russian3						= 0, 0
+tobacco							= 0, 0
+tobacco2						= 0, 0
+tobacco3						= 0, 0
+tobacco4						= 0, 0
+tobacco5						= 0, 0
+marijuana						= 0, 0
+marijuana2						= 0, 0
+marijuana3						= 0, 0
+joint							= 0, 0
+
+; --- Repair items ---
+gun_oil							= 0, 0
+gun_oil2						= 0, 0
+cleaning_kit_p						= 0, 0
+cleaning_kit_p2						= 0, 0
+cleaning_kit_p3						= 0, 0
+cleaning_kit_s						= 0, 0
+cleaning_kit_s2						= 0, 0
+cleaning_kit_s3						= 0, 0
+cleaning_kit_r5						= 0, 0
+cleaning_kit_r5_2						= 0, 0
+cleaning_kit_r5_3						= 0, 0
+cleaning_kit_r7							= 0, 0
+cleaning_kit_r7_2						= 0, 0
+cleaning_kit_r7_3						= 0, 0
+cleaning_kit_u							= 0, 0
+cleaning_kit_u2							= 0, 0
+cleaning_kit_u3							= 0, 0
+toolkit_p						= 0, 0
+toolkit_p2						= 0, 0
+toolkit_p3						= 0, 0
+toolkit_p4						= 0, 0
+toolkit_s						= 0, 0
+toolkit_s2						= 0, 0
+toolkit_s3						= 0, 0
+toolkit_s4						= 0, 0
+toolkit_r5						= 0, 0
+toolkit_r5_2						= 0, 0
+toolkit_r5_3						= 0, 0
+toolkit_r5_4						= 0, 0
+toolkit_r7							= 0, 0
+toolkit_r7_2						= 0, 0
+toolkit_r7_3						= 0, 0
+toolkit_r7_4						= 0, 0
+toolkit_u						= 0, 0
+toolkit_u2						= 0, 0
+toolkit_u3						= 0, 0
+toolkit_u4						= 0, 0
+sharpening_stones						= 0, 0
+sharpening_stones2						= 0, 0
+sharpening_stones3						= 0, 0
+sharpening_stones4						= 0, 0
+gun_oil_ru_d						= 0, 0
+gun_oil_ru_d2						= 0, 0
+gun_oil_ru							= 0, 0
+gun_oil_ru2							= 0, 0
+solvent								= 0, 0
+solvent2							= 0, 0
+grease							= 0, 0
+grease2							= 0, 0
+steel_wool						= 0, 0
+steel_wool2						= 0, 0
+glue_b						= 0, 0
+glue_b2						= 0, 0
+glue_a						= 0, 0
+glue_a2						= 0, 0
+glue_e						= 0, 0
+glue_e2						= 0, 0
+sewing_kit_b						= 0, 0
+sewing_kit_b2						= 0, 0
+sewing_kit_b3						= 0, 0
+sewing_kit_b4						= 0, 0
+sewing_kit_a						= 0, 0
+sewing_kit_a2						= 0, 0
+sewing_kit_a3						= 0, 0
+sewing_kit_a4						= 0, 0
+sewing_kit_h						= 0, 0
+sewing_kit_h2						= 0, 0
+sewing_kit_h3						= 0, 0
+sewing_kit_h4						= 0, 0
+armor_repair_fa						= 0, 0
+armor_repair_fa2						= 0, 0
+helmet_repair_kit						= 0, 0
+helmet_repair_kit2						= 0, 0
+helmet_repair_kit3						= 0, 0
+armor_repair_pro						= 0, 0
+armor_repair_pro2						= 0, 0
+armor_repair_pro3						= 0, 0
+armor_repair_pro4						= 0, 0
+textile_patch_b						= 0, 0
+textile_patch_m						= 0, 0
+textile_patch_e						= 0, 0
+
+; --- Explosives ---
+
+explo_jerrycan_fuel							= 0, 0
+explo_jerrycan_fuel2						= 0, 0
+explo_jerrycan_fuel3						= 0, 0
+explo_jerrycan_fuel4						= 0, 0
+explo_jerrycan_fuel5						= 0, 0
+explo_jerrycan_fuel6						= 0, 0
+explo_jerrycan_fuel7						= 0, 0
+explo_jerrycan_fuel8						= 0, 0
+explo_metalcan_powder					= 0, 0
+explo_balon_gas							= 0, 0
+explo_balon_gas2						= 0, 0
+explo_balon_gas3						= 0, 0
+explo_balon_gas4						= 0, 0
+explo_balon_gas5						= 0, 0
+explo_balon_gas6						= 0, 0
+explo_balon_gas7						= 0, 0
+explo_balon_gas8						= 0, 0
+mine									= 0, 0
+
+; --- Artifacts ---
+af_cristall				= 0, 0
+af_fireball				= 0, 0
+af_dummy_glassbeads		= 0, 0
+af_eye					= 0, 0
+af_fire					= 0, 0
+af_medusa				= 0, 0
+af_cristall_flower		= 0, 0
+af_night_star			= 0, 0
+af_vyvert				= 0, 0
+af_gravi				= 0, 0
+af_gold_fish			= 0, 0
+af_blood				= 0, 0
+af_mincer_meat			= 0, 0
+af_soul					= 0, 0
+af_fuzz_kolobok			= 0, 0
+af_baloon				= 0, 0
+af_glass				= 0, 0
+af_electra_sparkler		= 0, 0
+af_electra_flash		= 0, 0
+af_electra_moonlight	= 0, 0
+af_dummy_battery		= 0, 0
+af_dummy_dummy			= 0, 0
+af_ice					= 0, 0
+
+; --- Mutant Fleash ---
+mutant_part_flesh_eye				= 0, 0
+mutant_part_tushkano_head			= 0, 0
+mutant_part_pseudogigant_hand		= 0, 0
+mutant_part_burer_hand				= 0, 0
+mutant_part_snork_hand				= 0, 0
+mutant_part_psevdodog_tail			= 0, 0
+mutant_part_dog_tail				= 0, 0
+mutant_part_boar_leg				= 0, 0
+mutant_part_snork_leg				= 0, 0
+mutant_part_snork_mask				= 0, 0
+mutant_part_controller_glass		= 0, 0
+mutant_part_chimera_kogot			= 0, 0
+mutant_part_boar_chop				= 0, 0
+mutant_part_flesh_meat				= 0, 0
+mutant_part_dog_meat				= 0, 0
+mutant_part_psevdodog_meat			= 0, 0
+mutant_part_krovosos_meat			= 0, 0
+mutant_part_chimera_meat			= 0, 0
+mutant_part_tushkano_meat			= 0, 0
+mutant_part_crow_beak				= 0, 0
+
+hide_chimera						= 0, 0
+powder_poltergeist					= 0, 0
+hide_pseudogiant					= 0, 0
+hide_psy_dog						= 0, 0
+hide_pseudodog						= 0, 0
+hide_burer							= 0, 0
+hide_controller						= 0, 0
+hide_bloodsucker					= 0, 0
+hide_boar							= 0, 0
+hide_flesh							= 0, 0
+
+; --- Findings/immersion stuff
+shovel_old				= 0, 0
+shovel_mili				= 0, 0
+ied_rpg					= 0, 0
+ied						= 0, 0
+meinkampf				= 0, 0
+jar						= 0, 0
+grooming				= 0, 0
+journal					= 0, 0
+maps_kit				= 0, 0
+bottle_metal			= 0, 0
+geiger_dead				= 0, 0
+welding_goggles			= 0, 0
+survival_kit			= 0, 0
+jewelry_box				= 0, 0
+cooking					= 0, 0
+book1					= 0, 0
+book2					= 0, 0
+book3					= 0, 0
+picture_woman			= 0, 0
+drugs_kit				= 0, 0
+
+hammer_inv				= 0, 0
+crowbar					= 0, 0
+spareparts				= 0, 0
+beadspread				= 0, 0
+walkie					= 0, 0
+cards					= 0, 0
+ammo_bad				= 0, 0
+boots					= 0, 0
+mili_maps				= 0, 0
+swiss					= 0, 0
+headlamp				= 0, 0
+mirror					= 0, 0
+kit_hunt				= 0, 0
+flashlight_old			= 0, 0
+flashlight_broken		= 0, 0
+underwear				= 0, 0
+porn2					= 0, 0
+batteries_dead			= 0, 0
+batteries_ccell			= 0, 0
+tarpaulin				= 0, 0
+rope					= 0, 0
+synthrope				= 0, 0
+cutlery					= 0, 0
+radio					= 0, 0
+radio2					= 0, 0
+fieldcooker				= 0, 0
+wood_stove				= 0, 0
+kerosene				= 0, 0
+kerosene2				= 0, 0
+kerosene3				= 0, 0
+kerosene4				= 0, 0
+kerosene5				= 0, 0
+charcoal				= 0, 0
+charcoal2				= 0, 0
+charcoal3				= 0, 0
+
+; --- Random additional Ammo --- ( WIP ) ---------------------------------------------------
+
+; Papa ScarabParamit say's: ( not my part of script, so for now it's disabled = WIP )
+; On some occasions, NPC's will have additional ammo other than the type used by their weapon.
+; this defines a *relative* factor for each (<= 1.0), will be multiplied by several other factors.
+; Settings under works only for ammo spawnable upon death of NPC, not ammo NPC gathered in his lifespan !!!
+
+[random_ammo_factor]
+ammo_9x18_fmj 			= 3, 11 ; Light Pistol Rounds
+ammo_9x18_pmm 			= 2, 4
+ammo_9x18_ap 			= 1, 3
+ammo_9x19_fmj 			= 2, 10 ; Pistol & SMG Rounds
+ammo_9x19_pbp 			= 2, 5
+ammo_9x19_ap 			= 2, 4
+ammo_11.43x23_fmj 		= 4, 8 ; 45 ACP Heavy Pistol Rounds
+ammo_11.43x23_hydro		= 2, 4
+ammo_11.43x23_ap 		= 1, 3
+ammo_12x70_buck 		= 3, 9 ; Shotgun Shells
+ammo_12x76_zhekan 		= 2, 6
+ammo_5.45x39_fmj 		= 3, 12 ; Warsaw Pact Rifle Rounds
+ammo_5.45x39_ap 		= 1, 4
+ammo_5.56x45_ss190 		= 2, 10 ; NATO Assault Rifle Rounds
+ammo_5.56x45_ap 		= 1, 4
+ammo_9x39_pab9 			= 2, 6 ; Special Forces Subsonic Rounds
+ammo_9x39_ap 			= 1, 3
+ammo_7.62x39_fmj 		= 4, 10 ; Old Soviet WorldWar II Rounds
+ammo_7.62x39_ap 		= 1, 2
+ammo_7.92x33_fmj 		= 3, 9 ; Old German WorldWar II Rounds
+ammo_7.92x33_ap 		= 1, 2
+ammo_7.62x54_7h1 		= 1, 4 ; Warsaw Pact Sniper Rifle Rounds
+ammo_7.62x54_7h14 		= 1, 2
+ammo_7.62x51_fmj 		= 2, 6 ; NATO Sniper Rifle Rounds
+ammo_7.62x51_ap 		= 1, 3
+ammo_gauss				= 1, 3 ; Electro-Magnetic Particle Cannon
+ammo_gauss_cardan		= 0, 0
+ammo_pkm_100			= 4, 8 ; Warsaw Pact Light Machine Gun
+ammo_7.62x54_ap			= 2, 4
+ammo_357_hp_mag_ap 		= 1, 2
+ammo_357_hp_mag 		= 2, 7
+ammo_magnum_300 		= 2, 7
+ammo_magnum_300_ap 		= 1, 2
+;ammo_12.7x108_fmj 		= 2, 6
+ammo_12.7x108_ap 		= 1, 2
+
+; --- Weapons ------------------------------------------------------------------------------
+
+; Papa ScarabParamit say's:
+; Weapon overall condition factor by player level.
+; WCF are now used not as a "minimal/maximal" base condition mod. but modificator,
+; which randomly set number between first & second value.
+; Depending its above, under or same as 1.0 it multiply, divine or live unchanged
+; values set for condition based on Community (faction) and Rank of NPC's.
+; You can use this to quickly change overall center of lowest vs. higest con.
+; aka 'average condition' or rise diversity of looted weapons condition.
+; The higer values in WCF & CWC & RWC the higer unpredictability.
+; First number - Divine modificator (1.0 <...> OO)
+; Second number - Multiply modificator (0 <...> 1.0)
+; Number equal 1 - No modificator = Same values
+; Number set to 0 - DON'T SET...trust me ^^'
+; Examp: 0.5 = divine by half, 1.5 = multiply by half
+
+; -- WCF
+[weapon_condition_factor]
+level_0			= 0.9, 1.2
+level_1			= 0.9, 1.2
+level_2			= 0.9, 1.2
+level_3			= 0.9, 1.2
+
+
+; Yeas i know how this sound - Weapon Condition Stage Stepping... =P
+; This one is WIP for now, might be used as a condition modificator
+; changing itself based on player progress in game story.
+
+; -- WC_SS --- ( WIP !!!! ) ---
+[weapon_condition_stage_stepping]
+stage1 = 1.0
+stage2 = 0.9
+stage3 = 0.8
+stage4 = 0.6
+
+
+; Papa ScarabParamit say's:
+; Those are values for BASE condition depending of 'self explantionary'
+; which gonna be sum together and modified (multiply or divine) further by WCF.
+; There is minimal and maximal value for easy balance =)
+; For easy of imagination: value * 100 = condition %
+; Values generated in the end by script can bypas 100 border,
+; game will still lower this to 100, but chance of high number
+; may be a good way if someone decide to promote certain faction,
+; to drop equipment in good condition more often.
+; Only equaly balanced values keep same 'average condition':
+; min=0% max=100% = 50% average
+; min=20% max=80% = 50% average
+; min=40% max=60% = 50% average
+; Remember, seriously disproportional min/max values in conjuction with WCF
+; can occasionally lead to thiner diversity of weapon conditions.
+; Example: 
+; Faction -> min=0.25 max=0.65 = 25-65%
+; Rank -> min=0.20 max=0.45 = 20-45%
+; 25-65 + 20-45 = 45-110%   110>100 = 100
+; So Army Veteran can posses weapon in condition between 45 nad 100% with average of 77.5%
+; If You want to greatly diversify random conditions use WCF, which i present in easy way:
+; 45-110 * WCF 0.5 = 22,5-55%
+; 45-110 * WCF 1 = same 45-110%
+; 45-110 * WCF 1.5 = 67,5-165%
+; So with WCF 0.5-1.5 our Army Veteran can end up with weapon in condition between 22,5 or 100 with average of 93.75%
+; ...which will lead to serious unpredictability same as high probability of ideal weapon condition.
+
+; -- CWC
+[community_weapon_condition_min]
+zombied 			= 0.01
+bandit				= 0.01
+ecolog				= 0.05
+stalker				= 0.01
+freedom				= 0.01
+dolg				= 0.01
+army				= 0.10
+killer				= 0.01
+monolith			= 0.01
+[community_weapon_condition_max]
+zombied 			= 0.05
+bandit				= 0.15
+ecolog				= 0.35
+stalker				= 0.15
+freedom				= 0.20
+dolg				= 0.20
+army				= 0.20
+killer				= 0.25
+monolith			= 0.25
+
+; -- RWC
+[rank_weapon_condition_min]
+novice				= 0.05
+experienced			= 0.05
+veteran				= 0.05
+master				= 0.05
+elite				= 0.05
+[rank_weapon_condition_max]
+novice				= 0.20
+experienced			= 0.25
+veteran				= 0.30
+master				= 0.35
+elite				= 0.45
+
+; --- Outfits ---
+
+[spawn_outfit_chance]
+level_0				= 0.0
+level_1				= 0.0
+level_2				= 0.0
+level_3				= 0.0
+
+
+
+; --- END of settings ---

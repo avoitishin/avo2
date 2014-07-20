@@ -1,0 +1,22 @@
+[smart_terrain];zat_sim_15
+squad_id = 21
+spawn_point = zat_sim_15_spawn_point 
+max_population = 1
+
+respawn_params = respawn@zat_sim_15
+
+[respawn@zat_sim_15]
+spawn_boar
+
+;spawn_flesh
+
+[spawn_boar]
+spawn_squads = simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_flesh, simulation_flesh, simulation_boar, simulation_pseudodog, simulation_dog, simulation_dog, simulation_cat_strong, simulation_bloodsucker
+spawn_num = {=actor_on_level(zaton) +zat_b53_go_nil} 1, {=actor_on_level(zaton) +zat_b53_actor_enemy} 1, {=actor_on_level(zaton) +zat_b53_thanks_dialog} 1, 0
+
+;;; unused
+
+;[spawn_flesh]
+;spawn_squads = simulation_flesh
+;spawn_num = 0
+ 
