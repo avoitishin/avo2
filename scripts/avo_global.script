@@ -1,0 +1,274 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_global
+	Description	: Global functions
+	Credits			: aVo
+	Revision		: 1.1
+	Change Date	: 22.07.2014
+--]] --------------------------------------------------------------------------
+--/----------------------------------------------------------------------------
+--/ Variables
+--/----------------------------------------------------------------------------
+local cfg_file = "avo\\avo_global.ltx"
+local self_name = script_name()
+local mod_version = nil
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/ Note: some global constants and flags are registered in avo_netpk
+--/----------------------------------------------------------------------------
+function _init()
+	avo_profiler.profile_before("avo_global")
+	
+	local ini = ini_file(cfg_file)
+	
+	mod_version = read_ini(ini,"mod","version","string",'')
+	
+	-- lua debug
+	local lua_debug_on = read_ini(ini,"debug","lua_debug","bool",false)
+	if lua_debug_on then require('lua_debug') end -- turn on lua debug by RvP (requires bin\lua_debug.dll)
+
+	_G["abort"] = this.abort	-- crash game
+	_G["ASSERT"] = this.ASSERT -- game specific assert
+	_G["fn_empty"] = this.fn_empty -- empty function
+	_G["callstack"] = this.callstack -- format stack trace
+	
+	-- avo profiler
+	if read_ini(ini,"profiler","enabled","bool",false) then
+		_G["profile_before"] 	= avo_profiler.profile_before
+		_G["profile_after"] 	= avo_profiler.profile_after
+	else
+		_G["profile_before"] 	= fn_empty
+		_G["profile_after"] 	= fn_empty
+	end
+	_G["collect_garbage"] = this.collect_garbage -- collect garbage
+	
+	db.avo = {} -- initialize framework space (will hold storage, online objects, etc)
+	
+	_G["ext_namespace"] = this.ext_namespace -- protection against overriding lua functions
+	
+	require('lua_extensions') -- turn on RvP lua extensions (requires bin\lua_extensions.dll)
+	avo_lua._init() --/ initialize avo lua extensions
+	
+	_G["read_ini"] = this.read_ini	-- read value from config file
+	_G["read_ini_sect"] = this.read_ini_sect	-- read section from config file. returns table
+	
+	local dlog_on = read_ini(ini,"logging","debug","bool",false)
+	local elog_on = read_ini(ini,"logging","error","bool",false)
+	local wlog_on = read_ini(ini,"logging","warning","bool",false)
+	local vlog_on = read_ini(ini,"logging","visual","bool",false)
+	local printf_on = read_ini(ini,"logging","printf","bool",false)
+	
+	if dlog_on then _G["dlog"] = avo_log.dlog else _G["dlog"] = this.fn_empty end
+	if elog_on then _G["elog"] = avo_log.elog else _G["elog"] = this.fn_empty end
+	if wlog_on then _G["wlog"] = avo_log.wlog else _G["wlog"] = this.fn_empty end
+	if vlog_on then _G["vlog"] = avo_log.vlog else _G["vlog"] = this.fn_empty end
+	if printf_on then _G["printf"] = avo_log.printf else _G["printf"] = this.fn_empty end
+	
+	ini = nil -- help gc
+	
+	this.init_signals() -- initialize signals manager
+	
+	avo_netpk._init() -- initialize netpacket manager
+	_G["get_netpk"] = avo_netpk.get
+	
+	avo_storage._init()	-- initialize storage (db.avo) manager 
+	_G["save_astor"] = avo_storage.set
+	_G["load_astor"] = avo_storage.get
+	
+	--/ initialize timers here
+	
+	-- this.init_callbacks() -- initialize custom (xray extensions) callbacks
+	slot("actor_net_destroy", this.on_actor_net_destroy) -- subscribe for profiler
+	
+	avo_game_utils._init()	-- initialize game utilities
+	_G["agu"] = avo_game_utils -- alias
+	_G["save_pstor"] = xr_logic.pstor_store
+	_G["load_pstor"] = xr_logic.pstor_retrieve
+	
+	this.load_deault_settings() -- load game settings
+	
+	smart_names.init_smart_names_table() -- prepare smart terrain names table
+	sound_theme.load_sound() -- prepare sound themes table
+	dialog_manager.fill_phrase_table() -- prepare dialog phrases table
+	sim_objects.clear() -- clear simulation objects tables
+	sim_board.clear() -- clear simulation board
+	sr_light.clean_up() -- clear stalker lights (фонарики) table
+	-- pda.add_quick_slot_items_on_game_start() -- add default items (from config) to quick slots
+	
+	avo_controller._init() --/ initialize controller as last step
+
+	avo_profiler.profile_after("avo_global")
+end
+
+function on_actor_net_destroy()
+	if profiler_on then profiler.stats() end -- log profiler statistics
+end
+--/----------------------------------------------------------------------------
+--/ initialize callbacks
+--/----------------------------------------------------------------------------
+-- function init_callbacks()
+	-- slot("actor_set_callbacks", this.set_actor_callbacks)
+	-- slot("actor_remove_callbacks", this.remove_actor_callbacks)
+-- end
+-- function set_actor_callbacks(actor_binder)
+	-- actor_binder.object:set_callback(callback.hit, this.on_actor_hit, actor_binder)
+	-- actor_binder.object:set_callback(123, this.on_key_press, actor_binder) -- key press
+-- end
+-- function remove_actor_callbacks(actor_binder)
+	-- actor_binder.object:set_callback(callback.hit, nil)
+	-- actor_binder.object:set_callback(123, nil) -- key press
+-- end
+-- function on_actor_hit(obj, amount, local_direction, who, bone_index)
+	-- sm:call("actor_hit", obj, amount, local_direction, who, bone_index)
+-- end
+-- function on_key_press(key)
+	-- dlog("key pressed: %s", key)
+	-- sm:call("actor_key_press", key)
+-- end
+
+--/----------------------------------------------------------------------------
+--/ load default game settings
+--/----------------------------------------------------------------------------
+function load_deault_settings()
+	local console = get_console()
+	-- difficulty
+	console:execute("ai_aim_max_angle 25.0")
+	console:execute("ai_aim_min_angle 20.0")
+	console:execute("ai_aim_min_speed 2.50")
+	console:execute("ai_aim_predict_time 0.28")
+	console:execute("hud_info off")
+	console:execute("hud_crosshair_dist off")
+	console:execute("hud_crosshair off")
+	-- misc
+	console:execute("snd_volume_music 0.0")
+	console:execute("cam_inert 0.0")
+	console:execute("cam_slide_inert 0.0")
+end
+
+--/----------------------------------------------------------------------------
+--/ initialize signals manager
+--/----------------------------------------------------------------------------
+function init_signals()
+  local sm = avo_signals.get_mgr()
+  if sm then _G["sm"] = sm else abort("(%s) falied to initialize signals manager", self_name) end
+  _G["slot"] = avo_signals.slot
+end
+
+--/----------------------------------------------------------------------------
+--/ global functions
+--/----------------------------------------------------------------------------
+--/ protection for extending existing lua namespaces with new functions
+--/ (i.e. string.split etc)
+function ext_namespace(ns, name, fn)
+	if type(ns) ~= 'string' or type(name) ~= 'string' or type(fn) ~= 'function' then 
+		abort("Invalid parameter types passed to ext_namespace(string,string,function): %s, %s, %s", type(ns),type(name), type(fn)) 
+	end
+	if _G[ns][name] then 
+		abort("Function [%s] is already registered in [%s]", name, ns)
+	else
+		_G[ns][name] = fn
+	end
+end
+--/ abort game and log error details
+function abort(msg,...)
+	local function log(msg, ...)
+		if log1 then
+			log1("[ABORT] "..string.format(msg, ...))
+		else
+			console:execute("load ~:[ABORT] "..string.format(msg, ...))
+		end
+	end
+	local function flush()
+		if flush1 then
+			flush1()
+		else
+			console:execute('flush')
+		end
+	end
+	
+	log(msg, ...)
+	if debug then log(callstack(2)) end -- print stack trace (remove 'abort' and 'callstack')
+  flush()
+	os.exit(666)
+  -- local fail = avo_abort_game/0
+end
+function callstack(lines_to_remove)
+	local	dbg_stack = avo_lua.split(debug.traceback(), '\n', true) -- dependent on avo_lua
+	if lines_to_remove and type(lines_to_remove) == 'number' then
+		for i=1, lines_to_remove do
+			table.remove(dbg_stack, 2) -- remove callstack
+			-- table.remove(dbg_stack, 2) -- remove abort
+		end
+	end
+	for k,v in pairs(dbg_stack) do
+		if string.match(v, "stack traceback") then next(dbg_stack)
+		else dbg_stack[k] = string.format("[%d] %s", k-1, string.gsub(string.gsub(v, ".+\\", ""), ">", ""))
+		end
+	end
+	return table.concat(dbg_stack, '\n')
+end
+--/ game specific assert. will crash game if cond is false
+function ASSERT(cond, msg, ...)
+	if not cond then
+    abort(msg,...)
+  end
+end
+--/ collect garbage and return statistics
+function collect_garbage()
+	local before = collectgarbage('count')/1024
+	collectgarbage()
+	local after = collectgarbage('count')/1024
+	return string.format("**[GC] mem before %.2fM | mem after %.2fM] | mem freed %.2fM", before, after, before-after)
+end
+--/ return mod version
+function get_mod_version()
+	local ini = ini_file(cfg_file)
+	return mod_version or this.read_ini(ini,"mod","version","string",'')
+end
+
+--/----------------------------------------------------------------------------
+--/ config file utilities
+--/----------------------------------------------------------------------------
+--/ read value from config file
+function read_ini(ini,section,line,var_type,default)
+	if not (ini) then
+		ini = system_ini()
+	end
+	if (section and line and ini:section_exist(section) and ini:line_exist(section,line)) then
+		if (var_type == "bool") then
+			return ini:r_bool(section,line)
+		elseif (var_type == "string") then
+			return ini:r_string(section,line)
+		elseif (var_type == "float") then
+			return ini:r_float(section,line)
+		else
+			return ini:r_string_wq(section,line)
+		end
+	else
+		return default
+	end
+end
+--/ read section from config file
+function read_ini_sect(ini,section,keys_only)
+	local tmp = nil
+	local trim = string.trim
+	if ini and ini:section_exist(section) then
+		tmp = {}
+		local result, id, value = nil, nil, nil
+		for a = 0, ini:line_count(section) - 1 do
+			result, id, value = ini:r_line(section,a,'','')
+			if id ~= nil and trim(id) ~= '' then
+				if keys_only then
+					table.insert(tmp,id)
+				else
+					tmp[trim(id)] = trim(value)
+				end
+			end
+		end
+	end
+	return tmp
+end
+
+
+--/ empty function used as plug
+function fn_empty(...)
+end
