@@ -270,8 +270,15 @@ function loot_ui:OnKeyboard(dik, keyboard_action)
 		if (dik == DIK_keys.DIK_RETURN) then
 
 		elseif (dik == DIK_keys.DIK_ESCAPE) then
-			self:OnButton_ok()
-			-- self:HideDialog()
+			-- self:OnButton_ok()
+			-- avo: attempt to make ESC work. TODO: fix random loot spawn on each search
+			local mutant = level.object_by_id(self.id)
+			if not mutant then return end -- safety
+			xr_logic.pstor_store(mutant,"looted",false)
+			self:HideDialog()
+			db.actor:restore_weapon()
+			level.enable_input()
+			--/ avo
 		end
 	end
 	return true
