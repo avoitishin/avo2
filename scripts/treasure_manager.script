@@ -45,7 +45,8 @@ end
 
 function CTreasureManager:fill(se_obj, treasure_id)
 	if(self.secrets[treasure_id]) then
-				local item = self.secrets[treasure_id].items[se_obj:section_name()]
+				local item = self.secrets[treasure_id].items[se_obj:section_name()] 
+					or self.secrets[treasure_id].items[string.match(se_obj:section_name(), '([%a|%p]+)')] -- avo: fix for aborts when filling multiuse items (i.e. tobacco5, vodka_quality3)
 		if(item) then
 			for i=1,#item do
 							if not(item[i].item_ids) then
@@ -58,7 +59,8 @@ function CTreasureManager:fill(se_obj, treasure_id)
 				end
 			end
 		else
-			abort("Attempt to register unknown item [%s] in secret [%s]", se_obj:section_name(), treasure_id)
+			-- abort("Attempt to register unknown item [%s] in secret [%s]", se_obj:section_name(), treasure_id)
+			dlog("(ABORT): Attempt to register unknown item [%s] in secret [%s]", se_obj:section_name(), treasure_id)
 		end
 	else
 		abort("Attempt to register item [%s] in unexistent secret [%s]", se_obj:name(), treasure_id)
