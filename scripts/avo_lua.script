@@ -1,0 +1,563 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_lua
+	Description	: Various LUA extensions (string, table, math, etc)
+	Credits			: aVo, Artos, xStream, malandrinus, RVP
+	Revision		: 0.2
+	Change Date	: 07.30.2013
+--]] --------------------------------------------------------------------------
+--/----------------------------------------------------------------------------
+--/ Variables	& Constants	
+--/----------------------------------------------------------------------------
+local SELF_NAME = script_name()
+--/----------------------------------------------------------------------------
+--/ initialization. extend lua types with cutom functions
+--/----------------------------------------------------------------------------
+function on_game_start()
+	--[[ *** Defined as C functions in lua_extensions.dll ***
+			string.trim		-- trim on both sides
+			string.trim_l	-- trim left
+			string.trim_r	-- trim right
+			string.trim_w	-- trim word?
+			string.pack 	-- pack to binary
+			string.unpack -- unpack from binary
+			
+			table.size		--  returns dictionary size
+			table.keys		-- returns list of table keys
+			table.values	-- returns list of table values
+			table.random 	-- returns random key from table
+			
+			math.random
+			math.randomseed
+	]]
+	
+	--/ string
+	-- avo.ext_namespace("string","trim",this.trim) --  trim spaces
+	avo.ext_namespace("string","split",this.split)	-- split into table by delim
+	avo.ext_namespace("string","form",this.form) -- custom version of string.format
+	avo.ext_namespace("string","get_filename",this.get_filename) -- get filename from path
+	
+	--/ table
+	avo.ext_namespace("table","find",this.find)	-- check if value exists in table
+	avo.ext_namespace("table","clone",this.clone)	-- clone table
+	-- avo.ext_namespace("table","size",this.size) -- get size of hash table
+	avo.ext_namespace("table","compress",this.compress) -- compress table into string
+	avo.ext_namespace("table","uncompress",this.uncompress) -- uncompress table from string
+	avo.ext_namespace("table","serialize",this.serialize) -- serialize table into string
+	avo.ext_namespace("table","unserialize",this.unserialize) -- unserialize table from string
+	avo.ext_namespace("table","tostring",this.t_tostring) -- format table data for print
+	
+	--/ math
+	avo.ext_namespace("math","isnan",this.isnan)
+	avo.ext_namespace("math","isinf",this.isinf)
+	avo.ext_namespace("math","isfinite",this.isfinite)
+	avo.ext_namespace("math","round",this.round) -- round to decimal or integer
+	avo.ext_namespace("math","rand",this.rand) -- random number
+	
+end
+
+--/----------------------------------------------------------------------------
+--/ STRING
+--/----------------------------------------------------------------------------
+--/ split string by delimiter. do_trim = true by default
+function split(str, delim, do_trim)
+	local t = {}
+	if not delim then delim = ',' end
+	if type(str) ~= 'string' then
+		return t
+	end
+	local cpt = string.find(str, delim, 1, true)
+	if cpt then
+		repeat
+			if do_trim then
+				table.insert(t, trim(string.sub(str, 1, cpt-1)))
+			else
+				table.insert(t, string.sub(str, 1, cpt-1))
+			end
+			str = string.sub(str, cpt + string.len(delim))
+			cpt = string.find(str, delim, 1, true)
+		until cpt == nil
+	end
+	if not do_trim then
+		table.insert(t, str)
+	else
+		table.insert(t, trim(str))
+	end
+	return t
+end
+
+--/ trim whitespaces from both sides
+function trim(str)
+	return (string.gsub(str, "^%s*(.-)%s*$", "%1"))
+end
+
+--/ replace each place holder %s with tostring(p) of parameters ...
+-- function form(text,...)
+	-- if not text then return end
+	-- local i = 0
+	-- local p = {...}
+	-- return string.gsub(text,"%%s",function(a) i = i + 1 return tostring(p[i]) end)
+-- end
+function form(msg, ...)
+  local function tostr(val)
+    if type(val) == 'number' or type(val) == 'nil' then return tostring(val) -- number, nil
+		elseif type(val) == 'boolean'  then return val and 'true' or 'false' -- boolean
+    elseif type(val) == 'table' then return table.serialize(val) -- table
+    elseif type(val) == 'userdata' then
+      if type(val.getP) == 'function' then return string.format("vec(%.3f,%.3f,%.3f)", val.x, val.y, val.z) -- vector
+      else return '<userdata>' end -- userdata
+    elseif type(val) == 'string' then return val -- string
+    else return '<'..type(val)..'>'
+    end
+  end
+  if type(msg) ~= 'string' then return tostr(msg) end
+  if next({...}) then -- with arguments
+    local args, i = {...}, 1
+    for k,v in pairs(args) do -- replace empty strings
+      if v == '' then args[k] = '<empty>' end
+    end
+    for pat in msg:gmatch('%%[%.|d|s|%d]%.?%d?f?') do 
+      if args[i] == nil then msg = msg:gsub('%'..pat, 'nil', 1) -- replace nil agruments with 'nil'
+      elseif string.find(pat, '%%[%.|%d].*f') then msg = msg:gsub('%'..pat, string.format(pat, args[i]),1) -- format floats (%3.2f, %.4f, etc)
+      else msg = msg:gsub('%'..pat, tostr(args[i]), 1) -- format the rest (%d and %s)
+      end
+      i = i + 1
+    end
+    return msg
+  else -- no arguments
+    return msg == '' and '<empty>' or msg
+  end
+end
+
+--/ get file name without extension from path
+function get_filename(path)
+	return tostring(string.match(trim(path), "^.*\\(.-)%.%a-$"))
+end
+
+--/----------------------------------------------------------------------------
+--/ TABLE
+--/----------------------------------------------------------------------------
+--/ check if value exists in the table
+function find(val, tbl)
+  for _, v in ipairs(tbl) do
+    if v == val then
+      return true
+    end
+  end
+  return false
+end
+
+--/ clone table. usedata is not cloned
+--/ with_meta - clone metatables, false by default
+function clone(tbl, with_meta)
+  local lookup_table = {}
+  local function _copy(tbl)
+    if type(tbl) ~= "table" then
+      return tbl
+    elseif lookup_table[tbl] then
+      return lookup_table[tbl]
+    end
+    local new_table = {}
+    lookup_table[tbl] = new_table
+    for index, value in pairs(tbl) do
+      new_table[_copy(index)] = _copy(value)
+    end
+		if with_meta then
+			return setmetatable(new_table, _copy(getmetatable(tbl)))
+		else
+			return new_table
+		end
+  end
+  return _copy(tbl)
+end
+
+--/ return number of key-value pairs in a table. Use lua_extensions table.size
+-- function size(tbl)
+	-- num = 0
+	-- for _,_ in pairs(tbl or {}) do
+    -- num = num + 1
+	-- end
+	-- return num
+-- end
+
+--/ Упаковка таблицы в строку (стринг) и обратная распаковка (by Artos)
+--/ Внимание! Строки в структуре таблицы не должны содержать символов с кодами 0-31.
+--[[--------------------------------------------------------
+	Формат упаковки:
+	  table     ::= ( listtable | hashtable )
+	  subtable  ::= ( listtable | hashtable )
+	  listtable ::= 0x6 valuetype ( value | subtable 0x5 )
+	  hashtable ::= keytype key valuetype ( value | subtable 0x5 )
+	  keytype   ::= ( 0x1 | 0x2 | 0x7 )
+	  valuetype ::= ( 0x1 | 0x2 | 0x3 | 0x4 | 0x7 )
+--]]--------------------------------------------------------
+local markers = { --/ служебная таблица маркеров упаковки
+	dec = {string.char(1), 1}, --/ 0x1 (SOH) - 'number' (dec)
+	str = {string.char(2), 2}, --/ 0x2 (STX) - 'string'
+	bln = {string.char(3), 3}, --/ 0x3 (ETX) - 'boolean'
+	tbl = {string.char(4), 4}, --/ 0x4 (EOT) - 'table'
+	tbe = {string.char(5), 5}, --/ 0x5 (ENQ) - table-end
+	tbi = {string.char(6), 6}, --/ 0x6 (ACK) - table-list
+	hex = {string.char(7), 7}  --/ 0x7 (BEL) - number-hex
+}
+local type_to_marker = { ['nil']=0,['boolean']=1,['number']=2,['string']=3,['table']=4 }
+
+--/ упаковка таблицы (списка) 'tbl' в строку 'str'
+function compress(tbl, recur) -- table [,(nil|true|false)]
+	if type(tbl) ~= 'table' or getmetatable(tbl) then --/ can not serialize a table that has a metatable associated with it.
+		abort("(%s:compress) cannot compress [%s] types or there is a metatable", SELF_NAME, type(tbl))
+		return "",true --/> zero-string & error (не таблица!)
+	elseif not next(tbl) then --/ --/>? (отсутствует 1-й элемент таблицы)
+		return "",false --/> zero-string (таблица пуста)
+	end
+	recur = recur or {}
+	
+	--/ локальная функция: проверка типа таблицы - list or hash
+	local is_list = function(tbl)
+		local list = false
+		local cnt_index = #tbl -- длина индексированной части таблицы
+		if cnt_index > 0 then -- есть элементы списка?
+			-- индексы начинаются с 1 и за 'списком' отсутствует хеш-элемент
+			if next(tbl) == 1 and not next(tbl,cnt_index) then
+				for i=2,cnt_index-1 do -- цикл перепроверки: 'отсутствуют пустые элементы?'
+					if tbl[i] == nil then -- пустышка?
+						return false -- hash
+					end
+				end
+				list = true -- list
+			end
+		end
+		return list
+	end
+	--/ локальная функция: упаковка (+конвертер) числа (number) в 'dec' или 'hex' строку (string)
+	local pack_num_to_string = function(num)
+		if num == math.modf(num) then -- отсутствует дробная часть
+			local num_abs = math.abs(num) -- модуль числа
+			if num_abs > 9 then -- число 2-x и более разрядное?
+				local num_level = math.floor(math.log10(num_abs+1)) -- степень ближайшего к модулю бОльшего числа кратного 10-ти
+				if num_abs >= 10^num_level and num_abs < 2^(4*num_level) then -- разрядность 'dec' > 'hex'?
+					if num >= 0 then -- не отрицательное?
+						return markers.hex[1] .. string.format('%X', num_abs) -- 'hex' строка
+					end
+					-- отрицательное - упаковываем со знаком
+					return markers.hex[1] .. "-" .. string.format('%X', num_abs) -- 'hex' строка со знаком
+				end
+			end 
+		end 
+		return markers.dec[1] .. num -- 'dec' строка
+	end
+	--/ локальная функция: упаковка ключа (индекса) элемента таблицы
+	local pack_key = function(key)
+		local marker = type_to_marker[type(key)] or -1 --/ 0...4
+		if marker == 2 then -- 'number'
+			return pack_num_to_string(key) -- 'dec|hex' строка
+		elseif marker == 3 then -- 'string'
+			return markers.str[1] .. key -- строка
+		end
+		abort("(%s:compress:pack_key) key type [%s] of key [%s] is not supported", SELF_NAME, type(key), key)
+		-- return nil,true -- nil & error
+	end
+	--/ локальная функция: упаковка значения элемента таблицы
+	local pack_value = function(value)
+		local marker = type_to_marker[type(value)] or -1 --/ 0...4
+		if     marker == 2 then -- 'number'
+			return pack_num_to_string(value) -- 'dec|hex' строка
+		elseif marker == 3 then -- 'string'
+			return markers.str[1] .. value -- строка
+		elseif marker == 1 then -- 'boolean'
+			return markers.bln[1] .. ((value and "1") or "0") -- 'bool' строка ('0'|'1')
+		elseif getmetatable(value) then
+			--/ can not serialize a table
+		elseif marker == 4 then -- 'table'
+			if recur[tbl] then --/ can not serialize recursive tables
+				--return nil, true --/> nil & error #???#
+			end
+			recur[tbl] = true
+			return markers.tbl[1] .. compress(value,recur) .. markers.tbe[1] -- рекурсивный вызов
+		end
+		abort("(%s:compress:pack_value) value type [%s] is not supported", SELF_NAME, type(value))
+		-- return nil,true -- nil & error
+	end
+	--/ тело основной функции: all pack
+	local temp_pack_strs = {} -- временная таблица для частей общей строки
+	local key, val, err
+	if is_list(tbl) then -- упаковывается список?
+		table.insert( temp_pack_strs, markers.tbi[1] ) -- маркер 'list' (список)
+		for i=1,#tbl do
+			val, err = pack_value(tbl[i], recur)
+			table.insert(temp_pack_strs, val)
+		end
+	else -- полная упаковка (ключ и значение)
+		for k,v in pairs(tbl) do
+			key, err = pack_key(k, recur)
+			table.insert(temp_pack_strs, key)
+			val, err = pack_value(v,recur)
+			table.insert(temp_pack_strs, val)
+		end
+	end
+	return table.concat(temp_pack_strs), nil -- строка
+end
+
+--/ Pаспаковка строки 'str' в таблицу
+function uncompress(str)
+	local str_len = str:len() -- длина строки
+	--/ локальная функция: по-символьный парсер строки 'str' от symb-го до 1-го 'управляющего' символа
+	local get_str = function(symb) -- текущий индекс символа в строке
+		for i=symb,str_len do
+			local byte_code = string.byte(str:sub(i,i)) -- код i-го символа строки
+			if byte_code < 32 then -- 'управляющий' символ?
+				if byte_code > 7 or i == symb then -- запрещенный 'управляющий' символ или 1-й?
+					abort("(%s:uncompress:get_str) encountered bad control symbol [%s] at position [%s]", SELF_NAME, byte_code, i)
+				end
+				return str:sub(symb,i-1),i -- str, i (субстрока и индекс 1-го упр.символа)
+			end
+		end
+		return str:sub(symb,str_len) -- str (субстрока до конца строки)
+	end
+	--/ локальная функция: конвертер субстроки (str) в десятичное число
+	local get_num = function(str,hex_flag) -- hex_flag: флаг 'hex' строки
+		local num = nil
+		if not hex_flag then -- распаковки 'dec' строки?
+			num = tonumber(str) -- перевод 'dec' строки в десятичное число
+		else -- распаковка 'hex' строки
+			if str:sub(1,1) ~= "-" then -- отсутствует символ '-' (минус)?
+				num = tonumber(str,16) -- перевод 'hex'-строки в десятичное число ('0x'..str)
+			else --/для отрицательного - отрезаем 1-й символ
+				num = tonumber(str:sub(2,-1),16) *(-1) -- перевод 'hex'-строки в отрицательное десятичное число
+			end
+		end
+		if not num then -- ошибка распаковки числа?
+			abort("(%s:uncompress:get_num) error unpacking number from string [%s]", SELF_NAME, str)
+		end
+		return num -- number
+	end
+	--/ тело основной функции: parse all
+	parse = function(symb) -- парсинг строки 'str' с symb-го символа
+		-- проверка: упакована таблица типа 'список' (table-list)?
+		local byte_code = string.byte(str:sub(symb,symb)) -- код symb-го символа в строке
+		symb = symb+1 -- переходим к следующему символу
+		local list = byte_code == markers.tbi[2] -- флаг: 'начало списка' (table-list)
+		if list then -- проверка: 'список'?
+			byte_code,symb = string.byte(str:sub(symb,symb)), symb+1-- пропускаем маркер списка и переходим к следующему символу
+		end
+		local tbl,key,value = {},nil,nil
+		-- цикл парсинга строки с symb-го символа
+		while symb <= str_len do -- (суб)строка не закончилась?
+			if byte_code == markers.tbe[2] then -- проверка: маркер конца субтаблицы (table-end)?
+				return tbl,symb -- субстрока субтаблицы закончилась - выход из функции
+			end
+			if not list then -- проверка: не 'список'? -> режим 'общей' таблицы
+				key,symb = get_str(symb) -- парсинг 'key'
+				if byte_code == markers.dec[2] then -- 'number' (dec)?
+					key = get_num(key, false) -- распаковка 'dec'-строки
+				elseif byte_code == markers.hex[2] then -- 'number-hex'?
+					key = get_num(key, true) -- 'true' - флаг распаковка 'hex'-строки
+				elseif byte_code ~= markers.str[2] then -- не 'string'? -> ошибка формата упаковки
+					abort("(%s:uncompress:parse) unsupported key type [%s] | key [%s] | byte code [%s] | str [%s]", SELF_NAME, symb, key, byte_code, str)
+				end
+				byte_code,symb = string.byte(str:sub(symb,symb)), symb+1 -- код следующего символа строки
+			end
+			--/ проверка 'value'
+			if byte_code == markers.tbl[2] then -- 'table'?
+				value,symb = parse(symb) -- рекурсивный вызов для 'табличных субстрок'
+			else -- парсинг 'value'
+				value,symb = get_str(symb) -- парсинг 'value'
+				if     byte_code == markers.dec[2] then -- 'number' (dec)?
+					value = get_num(value, false) -- распаковка 'dec' строки
+				elseif byte_code == markers.hex[2] then -- 'number-hex'?
+					value = get_num(value, true) -- 'true' - флаг распаковка 'hex' строки
+				elseif byte_code == markers.bln[2] then -- 'boolean'?
+					value = value == "1"
+				elseif byte_code ~= markers.str[2] then -- не 'string'? - ошибка формата упаковки
+					abort("(%s:uncompress:parse) unsupported value type [%s] | key [%s] | value [%s] | byte code [%s] | str [%s]", SELF_NAME, symb, key, value, byte_code, str)
+				end
+			end
+			--/ запоминаем элемент в таблицу
+			if list then -- элемент списка?
+				table.insert(tbl, value) -- добавляем в таблицу типа 'список' (table-list)
+			else -- элементы 'общей' таблицы
+				tbl[key] = value
+			end
+			if symb then
+				byte_code,symb = string.byte(str:sub(symb,symb)), symb+1 -- код следующего символа строки
+			else
+				return tbl -- строка закончилась - выход из функции
+			end
+		end
+		return tbl,symb -- (sub)table
+	end
+	--/ парсинг строки 'str' (с 1-го символа)
+	return parse(1) or {} -- table
+end
+
+--/ serialize table to string reprezentation
+--/  in: table|nil|string|number|boolean, nil
+--/  out: string|nil, boolean(error)
+function serialize(x, recur)
+	--local lua_type = type(x)
+	local marker = type_to_marker[type(x)] --/ 0...4
+	if marker then
+		recur = recur or {}
+		
+		if     marker == 3 then -- lua_type == 'string'
+			return string.format('%q',x)
+		elseif marker == 2 then -- lua_type == 'number'
+			return tostring(x)
+		elseif marker == 1 then -- lua_type == 'boolean'
+			return x and "true" or "false"
+		elseif marker == 0 then -- lua_type == 'nil'
+			return "nil"
+		elseif getmetatable(x) then -- can not serialize a table that has a metatable associated with it.
+			return nil, true
+		elseif marker == 4 then -- lua_type == 'table'
+			if table.size(x) == 0 then return '{}' end
+			if recur[x] then -- can not serialize recursive tables.
+				return nil, true
+			end
+			recur[x] = true
+			
+			local str,key,val,err = "{",nil,nil,nil
+			for k,v in pairs(x) do
+				key,err = serialize(k, recur) -- recursive call
+				if err then -- if something srong with table's keys
+					return nil, true
+				end
+				val,err = serialize(v, recur) -- recursive call
+				if err then -- if something srong with table's values
+					return nil, true
+				end
+				str = str.."["..key.."]".."="..val..","
+			end
+			
+			return str:sub(0, str:len() -1).."}"
+		end
+	end
+	--/ can not serialize value of passed type
+	return nil, true
+end
+
+--/ unserialize table from string
+function unserialize(str)
+	return loadstring("return " .. str)() or {}
+end
+
+--/ table to string
+function t_tostring(tbl, title, mode) -- mode: key=true, value=false
+	if type(tbl) == 'table' then
+		local msg = "print table: "
+		if type(title) == 'string' then
+			msg = msg..title
+		else
+			title = ''
+		end
+		if mode then
+			msg = msg.." (keys only)"
+		elseif mode == false then
+			msg = msg.." (values only)"
+		end
+		local out = string.format(">>>\n----| %s |----\n", msg)
+		local level = '' -- sub-table level indicator
+		--/------------------------------------------
+		local function prnt(tbl_in)
+			if next(tbl_in) then
+				for k,v in pairs(tbl_in) do
+					local key = type(k)
+					if key == 'string' then
+						key = k --string.format("%q", k)
+					elseif key == 'number' then
+						key = tostring(k)
+					else
+						key = "[<"..key..">]"
+					end
+					local val_type = type(v)
+					if val_type == 'table' then
+						if key == "_G" or (key == "loaded" and v["package"]) then
+							level = level..'.'
+							prnt({}) -- рекурсивный вызов
+						else
+							level = level..'.'
+							prnt(v) -- рекурсивный вызов
+						end
+					else
+						if val_type == 'string' then
+							if v ~= '' then
+								--v = string.format("%q", v)
+								if v:len() > 255 then
+									v = v:sub(1,255) --/ ограничиваем длину строки
+								end
+							else
+								v = '<<zero_string>>'
+							end
+						elseif val_type == 'number' or val_type == 'boolean' then
+							v = tostring(v)
+						elseif val_type == 'userdata' then 
+							if type(v.x) == 'number' and type(v.y) == 'number' and type(v.z) == 'number' then -- vector?
+								v = '<vector>:'..string.format("x=%.3f:y=%.3f:z=%.3f", v.x, v.y, v.z)
+							end
+							v = '<<usedata>>'
+						else
+							v = '<<'..val_type..'>>'
+						end
+						if mode == nil then
+							out = out..string.format("%s [%s] = %s\n", level, key, v)
+						elseif mode then
+							out = out..string.format("%s key = %s\n", level, key)
+						else
+							out = out..string.format("%s value = %s\n", level, v)
+						end
+					end
+				end
+			else -- пустая таблица
+				return string.format("(%s:table.print) %s is empty table", SELF_NAME, title)
+			end
+		end
+		level = '' -- reset sub-table level indicator
+		--/ -----------------------------------------
+		prnt(tbl,title)
+		out = out.."----| end of table print |----"
+		return out
+	else
+		return string.format("(%s:table.print) [%s] is not a table", SELF_NAME, type(tbl))
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ MATH
+--/----------------------------------------------------------------------------
+math.inf = 1/0
+math.nan = -(0/0)
+--/ check if the number value is a NaN (not a number)
+function isnan(value)
+	return value ~= value
+end
+
+--/ check if the number value is positive or negative infinity
+function isinf(value)
+	if value == -inf then
+		return -1
+	elseif value == inf then
+		return 1
+	else
+		return 0
+	end
+end
+
+--/ check if the given number has finite value i.e. it is not infinite or NAN.
+function isfinite(value)
+	return value > -inf and value < inf
+end
+
+--/ rounds a value to the nearest integer or specified number of decimal places
+function round(value, decimals)
+	local mul = math.pow(10,decimals) --/ 10^count
+	return math.floor(value*mul +0.5)/mul
+end
+
+--/ generates random number. if no arguments given will generate between zero and one
+function rand(min_value, max_value)
+	math.randomseed(device():time_global())
+	if not min_value == nil and max_value == nil then
+		return math.random()
+	else
+		return math.random(min_value, max_value)
+	end
+end

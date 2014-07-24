@@ -1,0 +1,89 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_log
+	Description	: Logging functions
+	Credits			: aVo
+	Revision		: 0.2
+	Change Date	: 07.26.2013 (-init)
+--]] --------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ xray extensions replacement for non-functional log
+--/----------------------------------------------------------------------------
+function log(msg, ...)
+  if log1 then 
+		log1(msg)
+	else
+		get_console():execute("load ~:"..msg)
+	end
+end
+--/----------------------------------------------------------------------------
+--/ xray extensions replacement for non-functional flush
+--/----------------------------------------------------------------------------
+function flush()
+  if flush1 then 
+		flush1()
+	else
+		get_console():execute('flush')
+	end
+end
+--/----------------------------------------------------------------------------
+--/ Add debug information (script name, current line) if available
+--/----------------------------------------------------------------------------
+function dbg_format(...)
+	local msg = avo_lua.form(...)
+	
+	if not debug then return msg end -- lua debug (lua_debug.dll) not available
+
+	-- local arg = {...}
+	-- local stack_depth = 3 -- default stack depth
+	-- if type(arg[1]) == 'number' and avo_lua.size(arg) > 1 then -- stack depth override
+		-- stack_depth = table.remove(arg, 1) -- shift first value
+	-- end
+	local info_table = debug.getinfo(3)
+	-- if not info_table then return avo_lua.form(unpack(arg)) end
+	local fn_name = string.match(msg, '^%(.-:(.*)%)') or '' -- save function name
+	msg = msg:gsub('^%(.*%)', fn_name..' ', 1) -- remove script name when debug is on (already part of trace info_table)
+	local script = string.get_filename(info_table.short_src)
+	return string.format("(%s:%d) %s", script, info_table.currentline, msg)
+end
+--/----------------------------------------------------------------------------
+--/ Error log
+--/----------------------------------------------------------------------------
+function elog(...)
+  log(string.format("[ERROR] %s", dbg_format(...))) 
+end
+--/----------------------------------------------------------------------------
+--/ Debug (info) log
+--/----------------------------------------------------------------------------
+function dlog(...)
+	log(string.format("[DEBUG] %s", dbg_format(...)))
+end
+--/----------------------------------------------------------------------------
+--/ Warning log
+--/----------------------------------------------------------------------------
+function wlog(...)
+	log(string.format("[WARN] %s", dbg_format(...)))
+end
+--/----------------------------------------------------------------------------
+--/ printf (XRay) log
+--/----------------------------------------------------------------------------
+function printf(...)
+	log(string.format("[XRAY] %s", dbg_format(...)))
+end
+--/----------------------------------------------------------------------------
+--/ Visual log (show in-game message)
+--/----------------------------------------------------------------------------
+local bufferedmessages = {}
+function vlog(...)
+	local msg = dbg_format(...)
+	log(string.format("[VLOG] %s", msg)) --/ save to log as well
+	if msg then
+		table.insert(bufferedmessages, msg)
+	end
+	if db and db.actor and #bufferedmessages > 0 then
+		for _, msg in ipairs(bufferedmessages) do
+			db.actor:give_game_news("VLOG", msg, "ui_inGame2_PD_Lider", 0, 15000)
+		end
+		bufferedmessages={}
+	end
+end

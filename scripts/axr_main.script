@@ -98,6 +98,11 @@ local intercepts = {
 -- on_game_start()
 -------------------
 function on_game_start()
+
+	-- avo
+	if (avo_global and avo_global.on_game_start) then avo_global.on_game_start() end
+
+
 	-- AI Tweaks
 	if (xr_danger and xr_danger.on_game_start) then xr_danger.on_game_start() end
 	if (xr_gather_items and xr_gather_items.on_game_start) then xr_gather_items.on_game_start() end
