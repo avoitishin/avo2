@@ -1025,8 +1025,8 @@ function enemy_hud_show(hud)
 			if (st.script_combat_type) then
 				hud:add_msg("Script Combat",st.script_combat_type)
 			end
-
-			if (st.overrides and st.overrides.combat_ignore) then
+			
+			if (be and st.overrides and st.overrides.combat_ignore) then
 				hud:add_msg("CombatIgnoreCond",xr_logic.pick_section_from_condlist(be, near, st.overrides.combat_ignore.condlist))
 			end
 
@@ -1107,7 +1107,7 @@ function enemy_hud_show(hud)
 				end
 				--]]
 
-				if (xr_danger.has_danger(near)) then
+				if (xr_danger.has_danger and xr_danger.has_danger(near)) then
 					hud:add_msg("","---Danger Mode is Active---")
 					if (st.danger) then
 						local bd_type = st.danger.type
