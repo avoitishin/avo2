@@ -31,7 +31,7 @@ function crow_binder:update(delta)
 		local looted = xr_logic.pstor_retrieve(self.object,"looted",nil)
 		if not (looted) then
 			self.object:set_callback(callback.use_object, self.use_callback, self)
-			self.object:set_tip_text("Loot")
+			self.object:set_tip_text("Обыскать")
 		else
 			self.object:set_callback(callback.use_object, nil)
 			self.object:set_tip_text("")
