@@ -978,7 +978,7 @@ end
 -- weather
 local weather_list
 function cmd.weather(me,txt,owner,p)
-	local wrd,rest = first_word(me,txt,owner,"[list <page> | <weather_name> ]")
+	local wrd,rest = first_word(me,txt,owner,"[list <page> | set <weather_name> ]")
 	if not (wrd) then return end
 
 	if (wrd == "list") then
