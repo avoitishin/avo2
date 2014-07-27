@@ -437,6 +437,7 @@ end
 
 --/ unserialize table from string
 function unserialize(str)
+	if not str then return {} end
 	return loadstring("return " .. str)() or {}
 end
 
