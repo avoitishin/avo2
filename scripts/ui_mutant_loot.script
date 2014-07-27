@@ -170,9 +170,11 @@ end
 function loot_ui:FillList()
 	self.list_box:RemoveAll()
 
-	self.loot = {}
-	itms_manager.loot_mutant(nil,self.clsid,self.loot)
+	local mutant = level.object_by_id(self.id)
+	self.loot = table.unserialize(xr_logic.pstor_retrieve(mutant,"loot_list"))
 
+	if table.size(self.loot) == 0 then itms_manager.loot_mutant(nil,self.clsid,self.loot) end
+	
 	local is_there_loot
 	for sec,t in pairs(self.loot) do
 		self:AddItemToList(sec,t.count)
@@ -273,11 +275,18 @@ function loot_ui:OnKeyboard(dik, keyboard_action)
 			-- self:OnButton_ok()
 			-- avo: attempt to make ESC work. TODO: fix random loot spawn on each search
 			local mutant = level.object_by_id(self.id)
-			if not mutant then return end -- safety
-			xr_logic.pstor_store(mutant,"looted",false)
+			if mutant then -- safety
+				xr_logic.pstor_store(mutant,"looted",false)
+				xr_logic.pstor_store(mutant,"loot_list",table.serialize(self.loot))
+			else
+				dlog("mutant [%s] is nil: id = %s", mutant, self.id)
+			end 
+			
 			self:HideDialog()
-			db.actor:restore_weapon()
+			
 			level.enable_input()
+			actor_effects.use_weapon(1)
+			-- db.actor:restore_weapon() -- do NOT use: will cause wierd slot usability issues
 			--/ avo
 		end
 	end
