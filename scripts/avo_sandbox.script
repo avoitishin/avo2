@@ -1,0 +1,13 @@
+local t = time_global()
+
+
+function main()
+	dlog("HAHA")
+	xrs_debug_tools.debug_god = true
+	-- level.set_weather("af3_bright_rain",true)
+	-- db.actor:restore_weapon()
+	-- level.enable_input()
+	-- level.disable_input()
+	db.actor:disable_hit_marks(true)
+end
+

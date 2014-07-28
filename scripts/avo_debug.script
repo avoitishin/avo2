@@ -1,0 +1,80 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_debug
+	Description : Debug functions and callbacks for most game events
+	Credits		 	: aVo
+	Revision		: 1.1
+	Change Date : 24.07.2014
+--]]---------------------------------------------------------------------------
+--[[-- TODO -------------------------------------------------------------------
+	1. luacap debug functionality
+--]]---------------------------------------------------------------------------
+
+local keybind_sandbox_key = DIK_keys.DIK_INSERT
+local default_sandbox_file = "avo_sandbox"
+
+function on_game_start()
+	callback_register("actor_on_hit", actor_on_hit_callback)
+	callback_register("on_key_press", on_key_press_callback)
+end
+
+
+function actor_on_hit_callback(obj, amount, local_direction, who, bone_index)
+	-- if amount > 0.01 then dlog("actor is hit for %s", amount) end
+end
+
+function on_key_press_callback(key)
+	if key == keybind_sandbox_key then
+		sandbox(default_sandbox_file, 'main()')
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ Sandbox ( http://www.amk-team.ru/forum/index.php?showtopic=6458#entry258260 )
+--/----------------------------------------------------------------------------
+function sandbox(file_name, function_name, ...)
+  local status, result = pcall(exec, file_name, function_name, ...)
+  if status == false then
+		elog("(%s:sandbox) call failed, result = [%s]", self_name, result)
+		return
+  else
+    return result
+  end
+end
+
+--/ execute script in sandbox
+function exec(file_name, function_name, ...)
+  if file_name then
+		if not _G[file_name] then dlog("script %s is not found", file_name) return end -- script does not exist
+		-- dlog("full script name = %s", getFS():update_path('$game_scripts$', '')..file_name..'.script')
+    local result = assert(loadfile(getFS():update_path('$game_scripts$', '')..file_name..'.script'))
+    if type(result) == "function" then
+      if function_name then
+        result()
+        f = loadstring("return "..function_name)
+        f(...)
+      else
+        result()
+      end
+    else
+			elog("(%s:sandbox) exec failed. function is not available: result = [%s]", self_name, type(result))
+      return
+    end
+  else
+    local file_path = getFS():update_path('$game_scripts', default_sandbox_file..'.script')
+    local result = assert(loadfile(file_path))
+    if type(result) == "function" then
+      if function_name then
+        result()
+        f = loadstring("return "..function_name)
+        f(...)
+      else
+        result()
+      end
+    else
+      elog("(%s:sandbox) exec failed. function is not available: result = [%s]", self_name, type(result))
+      return
+    end
+  end
+end
+
+
