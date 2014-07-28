@@ -1253,6 +1253,13 @@ function isRifle(wpn,clsid)
 	return weapon_types_clslist.rifle[clsid]
 end
 
+function isKnife(wpn,clsid)
+	if not (clsid) then
+		clsid = wpn:clsid()
+	end
+	return weapon_types_clslist.knife[clsid]
+end
+
 --***************************************
 --* save_var(game_object,name,value)
 --* load_var(game_object,name,def_value)
