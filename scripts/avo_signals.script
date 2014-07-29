@@ -1,0 +1,254 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_signals
+	Description	: Slots and signals system
+	Credits			: malandrinus, OGSE team, aVo
+	Revision		: 1.2
+	Change Date	: 07.25.2013 (+auto-subscribe)
+--]]---------------------------------------------------------------------------
+--[[-- TODO -------------------------------------------------------------------
+	1. Refactor signals_mgr:unsubscribe
+	2. Remove subscribe_module as redundant
+--]]---------------------------------------------------------------------------
+--/----------------------------------------------------------------------------
+--/ Resturn signals manager singleton
+--/----------------------------------------------------------------------------
+local mgr
+function get_mgr()
+	mgr = mgr or signals_mgr()
+	return mgr
+end
+--/----------------------------------------------------------------------------
+--/ CLASS: signals manager
+--/----------------------------------------------------------------------------
+class "signals_mgr" -- менеджер сигналов
+--/----------------------------------------------------------------------------
+--/ initialize and check for hanging calls
+--/----------------------------------------------------------------------------
+function signals_mgr:__init()
+	self.signals = {}
+	self.unfinished_count = 0
+	local function hanged_calls_check()
+		if self.unfinished_count > 0 then --/ если есть незавершённые вызовы
+			abort("One of the calls hung! See stack dump for details.") --/ RIP
+		end
+	end
+	level.add_call(hanged_calls_check, function()end) --/ сторожевой таймер
+end
+--/----------------------------------------------------------------------------
+--/ check if two slots are identical
+--/----------------------------------------------------------------------------
+local function slots_equal(slot1, slot2)
+	return 
+		rawequal(slot1.self, slot2.self) and
+		rawequal(slot1.fun, slot2.fun)
+end
+--/----------------------------------------------------------------------------
+--/ check if slot is already subscribed
+--/----------------------------------------------------------------------------
+function signals_mgr:is_already_subscribed(slot_in_question)
+	local slots = self.signals[slot_in_question.signal]
+	if not slots then return false end
+	for _,slot in ipairs(slot_in_question.interval > 0 and slots.timed or slots.normal) do
+		if slots_equal(slot, slot_in_question) then
+			return true
+		end
+	end
+	return false
+end
+--/----------------------------------------------------------------------------
+--/ subscribe slot for events (sginals)
+--/----------------------------------------------------------------------------
+function signals_mgr:subscribe(slot_to_subscribe)
+	ASSERT(not self:is_already_subscribed(slot_to_subscribe),
+		"can't subscribe signal '"..slot_to_subscribe.signal.."', it's already subscribed")
+	local signal = slot_to_subscribe.signal
+	self.signals[signal] = self.signals[signal] or {normal = {}, timed = {}}
+	if slot_to_subscribe.interval > 0 then
+		table.insert(self.signals[signal].timed, slot_to_subscribe)
+	else
+		table.insert(self.signals[signal].normal, slot_to_subscribe)
+	end
+end
+--/----------------------------------------------------------------------------
+--/ unsubscribe slot from events (signals)
+--/----------------------------------------------------------------------------
+function signals_mgr:unsubscribe(slot_to_unsubscribe)
+	ASSERT(self:is_already_subscribed(slot_to_unsubscribe),
+		"can't unsubscribe slot '"..slot_to_unsubscribe.signal.."', id= "..(slot_to_unsubscribe.id or '')..", which is not previously subscribed")
+	if self.unfinished_count > 0 then
+		--[[
+			если находимся в процессе выполнения вызова, то физически удалять слоты из очередей нельзя, надо просто промаркировать их на удаление, чтобы не менять размер очереди в дальнейшем промаркированные на удаление слоты не будут вызываться, а при ближайшем выходе из рекурсивного цикла будут удалены физически
+		--]]
+		self.to_unsubscribe = self.to_unsubscribe or {}
+		self.to_unsubscribe[slot_to_unsubscribe.signal] = 
+		self.to_unsubscribe[slot_to_unsubscribe.signal] or {}
+		table.insert(self.to_unsubscribe[slot_to_unsubscribe.signal], slot_to_unsubscribe)
+		slot_to_unsubscribe.unsubscribed = true -- маркируем его, чтобы игнорировался при вызовах
+	else
+		--/ нет незавершённых вызовов, просто удаляем слот
+		local slots = self.signals[slot_to_unsubscribe.signal]
+		for i,slot in ipairs(slots.normal) do
+			if slots_equal(slot, slot_to_unsubscribe) then
+				table.remove(slots.normal, i)
+				return
+			end
+		end
+		for i,slot in ipairs(slots.timed) do
+			if slots_equal(slot, slot_to_unsubscribe) then
+				table.remove(slots.timed, i)
+				return
+			end
+		end
+	end
+end
+--/----------------------------------------------------------------------------
+--/ subscribe module for events. call attach() in each module. NOT used in aVo
+--/----------------------------------------------------------------------------
+-- function signals_mgr:subscribe_module(module_name)
+	-- prefetch(module_name)
+	-- local module = _G[module_name]
+	-- ASSERT(module, "failed to subscribe module '"..module_name.."'")
+	-- ASSERT(type(module) == "table", "failed to subscribe module '"..module_name.."', must be a table")
+	-- ASSERT(type(module.attach) == "function", "failed to subscribe module '"..module_name.."', has no 'attach' function")
+	-- module.attach()
+-- end
+--/----------------------------------------------------------------------------
+--/ call signal (trigger event)
+--/----------------------------------------------------------------------------
+function signals_mgr:call(signal_name, ...)
+	--/ first all normal signals are triggered
+	local slots = self.signals[signal_name]
+	if slots then
+		self.unfinished_count = self.unfinished_count + 1
+		for _,slot in ipairs(slots.normal) do
+			 --/ при рекурсивных вызовах отписанные, но ещё не удалённые слоты, необходимо пропустить
+			if not slot.unsubscribed then
+				local result
+				if slot.self then
+					result = slot.fun(slot.self, ...)
+				else
+					result = slot.fun(...)
+				end
+				if result then break end -- вызов заявил (функция вернула true), что он финальный в цепочке вызовов
+			end
+		end
+	--/ now all timed slots are evaluated and triggered
+		for _,slot in ipairs(slots.timed) do
+		--/ при рекурсивных вызовах отписанные, но ещё не удалённые слоты, необходимо пропустить
+		if not slot.unsubscribed then
+			local result
+				if time_global() - slot.last_call > slot.interval then
+					-- dlog("Timed slot triggered at: "..time_global())
+					if slot.self then
+						result = slot.fun(slot.self, ...)
+					else
+						result = slot.fun(...)
+					end
+					slot.last_call = time_global()
+				end
+				if result then break end -- вызов заявил (функция вернула true), что он финальный в цепочке вызовов
+			end
+		end
+		self.unfinished_count = self.unfinished_count - 1
+		if self.to_unsubscribe and self.unfinished_count == 0 then
+			--/ если  нет незавершённых вызовов, то можно
+			--/ по-настоящему удалять промаркированные для отписки слоты
+			for signal,slots in pairs(self.to_unsubscribe) do
+				for _,slot in ipairs(slots) do
+					self:unsubscribe(slot)
+				end
+			end
+			self.to_unsubscribe = nil
+		end
+	end
+end
+--/----------------------------------------------------------------------------
+--/ helper function - same as sm:call()
+--/----------------------------------------------------------------------------
+function signals_mgr:signal(name, ...)
+	self:call(name, ...)
+end
+--/----------------------------------------------------------------------------
+--/ dump subscribed slots and signals for print
+--/----------------------------------------------------------------------------
+function signals_mgr:dump()
+	local t = table.clone(self.signals)
+	if not debug then return t end --/ can only do it with debug enabled
+	for k,v in pairs(t) do --/ signals
+		for c, d in pairs(v) do	--/ normal, timed
+			for a,b in pairs(d) do	-- slots
+				local dbg = debug.getinfo(b.fun)
+				t[k][c][a] = string.get_filename(dbg.short_src)
+			end
+		end
+	end
+	return t
+end
+--/----------------------------------------------------------------------------
+--/ CLASS: slot
+--/----------------------------------------------------------------------------
+class "slot"
+--/----------------------------------------------------------------------------
+--/ initialize slot
+--/----------------------------------------------------------------------------
+function slot:__init(signal, fun, int)
+	self.signal     = signal	-- what signal are we expecting
+	self.self       = nil			
+	self.fun        = fun			-- what to do when signal received
+	self.last_call  = time_global()	-- time of last call for timed slots
+	self.interval   = int or 0				-- time interval for timed slots (in MIL)
+	sm:subscribe(self) -- auto-subscribe
+end
+
+--[[-- HOWTO ------------------------------------------------------------------
+	Можно подписывать на события глобальные функции, методы классов, "методы" таблиц, 
+	функциональные объекты.
+	------------===< Пример для глобальной функции: >===------------------------------
+	function some_global_function(arg1, arg2)
+	end
+	local slot_desc = {signal = "signal_name", fun = some_global_function, queued = true}
+	ogse_signals.get_mgr():subscribe(slot_desc) -- подписали в низкоприоритетную очередь
+	--...
+	ogse_signals.get_mgr():unsubscribe(slot_desc) -- отписали
+	вызвали сигнал
+	local sm = ogse_signals.get_mgr()
+	--...
+	sm.call("signal_name", arg1, arg2)
+	
+	------------===< Пример для функционального объекта: >===-------------------------
+	class "some_luabind_class"
+	function some_luabind_class:__init()
+		local mt = getmetatable(self)
+		mt.__call = self.method_to_call
+	end
+	function some_luabind_class:method_to_call()
+	end
+	
+	local slot_desc = {signal = "signal_name", fun = some_luabind_class()}
+	ogse_signals.get_mgr():subscribe(slot_desc) -- подписали в высокоприоритетную очередь
+	--...
+	ogse_signals.get_mgr():unsubscribe(slot_desc) -- отписали
+	
+	Функциональный класс на таблице строится немного сложнее
+	local t = {}
+	function t:method_to_call()
+	end
+	local mt = {}
+	mt.__call = t.method_to_call
+	getmetatable(t, mt)
+	end
+	
+	------------===< Пример для произвольного метода класса: >===----------------------
+	
+	class "some_luabind_class"
+	function some_luabind_class:__init()
+	end
+	function some_luabind_class:method_to_call()
+	end
+	
+	class obj = some_luabind_class()
+	local slot_desc = {signal = "signal_name", self = obj, fun = obj.method_to_call}
+	ogse_signals.get_mgr():subscribe(slot_desc) -- подписали в высокоприоритетную очередь
+	--...
+	ogse_signals.get_mgr():unsubscribe(slot_desc) -- отписали
+--]]---------------------------------------------------------------------------
