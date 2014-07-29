@@ -459,9 +459,15 @@ function npc_in_actor_frustrum(npc)
 end
 
 function start_game_callback()
+	-- avo
+	if avo_global then avo_global.on_game_start() end
+	--/ avo
+
 	-- Alundaio
 	if (axr_main) then axr_main.on_game_start() end
 	-- End Alundaio
+	
+	
 
 	aa = alife()
 

@@ -16,13 +16,12 @@ local mod_version = "unknown"
 --/ Note: some global constants and flags are registered in avo_netpk
 --/----------------------------------------------------------------------------
 function on_game_start()
-
 	local ini = ini_file(CFG_FILE)
 	
 	mod_version = this.read_ini(ini,"mod","version","string","unknown")
 	
 	-- lua debug
-	local lua_debug_on = read_ini(ini,"debug","lua_debug","bool",false)
+	local lua_debug_on = this.read_ini(ini,"debug","lua_debug","bool",false)
 	if lua_debug_on then require('lua_debug') end -- turn on lua debug by RvP (requires bin\lua_debug.dll)
 
 	_G["abort"] = this.abort	-- crash game
@@ -48,7 +47,7 @@ function on_game_start()
 	_G["avo"]["ext_namespace"] = this.ext_namespace -- protection against overriding lua functions
 	
 	require('lua_extensions') -- turn on RvP lua extensions (requires bin\lua_extensions.dll)
-	avo_lua.on_game_start() -- initialize avo lua extensions
+	avo_lua.on_game_start() -- initialize lua extensions
 	
 	_G["avo"]["read_ini"] = this.read_ini	-- read value from config file
 	_G["avo"]["read_ini_sect"] = this.read_ini_sect	-- read section from config file. returns table
@@ -67,7 +66,7 @@ function on_game_start()
 	
 	ini = nil -- help gc
 	
-	-- this.init_signals() -- initialize signals manager
+	this.init_signals() -- initialize signals manager
 	
 	-- avo_netpk._init() -- initialize netpacket manager
 	-- _G["get_netpk"] = avo_netpk.get
@@ -96,8 +95,11 @@ function on_game_start()
 	-- sr_light.clean_up() -- clear stalker lights (фонарики) table
 	-- pda.add_quick_slot_items_on_game_start() -- add default items (from config) to quick slots
 	
+	if avo_debug then avo_debug.on_game_start() end
+	
 	-- avo_controller._init() --/ initialize controller as last step
-	dlog("avo_global initialized")
+	
+	dlog("avo framework is initialized")
 end
 
 -- function on_actor_net_destroy()
@@ -148,11 +150,15 @@ end
 --/----------------------------------------------------------------------------
 --/ initialize signals manager
 --/----------------------------------------------------------------------------
--- function init_signals()
-  -- local sm = avo_signals.get_mgr()
-  -- if sm then _G["sm"] = sm else abort("(%s) falied to initialize signals manager", SELF_NAME) end
-  -- _G["slot"] = avo_signals.slot
--- end
+function init_signals()
+  local sm = avo_signals.get_mgr()
+	
+	if _G["sm"] then abort("(%s) _G.sm already taken", SELF_NAME) end -- safety
+	if _G["slot"] then abort("(%s) _G.slot already taken", SELF_NAME) end -- safety
+	
+  if sm then _G["sm"] = sm else abort("(%s) falied to initialize signals manager", SELF_NAME) end
+  _G["slot"] = avo_signals.slot
+end
 
 --/----------------------------------------------------------------------------
 --/ global functions

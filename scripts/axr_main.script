@@ -82,8 +82,8 @@ local intercepts = {
 	actor_on_torch_disabled		= {},
 	actor_on_info_callback		= {},
 	-- avo
-	actor_on_hit = {},
-	on_key_press = {},
+	-- actor_on_hit = {},
+	-- on_key_press = {},
 
 	-- bind_monster.script
 	monster_on_hit_callback			= {},
@@ -103,8 +103,8 @@ local intercepts = {
 function on_game_start()
 
 	-- avo
-	if (avo_global and avo_global.on_game_start) then avo_global.on_game_start() end
-	if (avo_debug and avo_debug.on_game_start) then avo_debug.on_game_start() end
+	-- if (avo_global and avo_global.on_game_start) then avo_global.on_game_start() end
+	-- if (avo_debug and avo_debug.on_game_start) then avo_debug.on_game_start() end
 
 
 	-- AI Tweaks
@@ -219,19 +219,19 @@ end
 -------------------
 -- bind_stalker.actor_on_hit(obj, amount, local_direction, who, bone_index)
 -------------------
-function actor_on_hit(obj, amount, local_direction, who, bone_index)
-	for i=1, #intercepts.actor_on_hit do
-		intercepts.actor_on_hit[i](obj, amount, local_direction, who, bone_index)
-	end
-end
+-- function actor_on_hit(obj, amount, local_direction, who, bone_index)
+	-- for i=1, #intercepts.actor_on_hit do
+		-- intercepts.actor_on_hit[i](obj, amount, local_direction, who, bone_index)
+	-- end
+-- end
 -------------------
 -- bind_stalker.on_key_press(key)
 -------------------
-function on_key_press(key)
-	for i=1, #intercepts.on_key_press do
-		intercepts.on_key_press[i](key)
-	end
-end
+-- function on_key_press(key)
+	-- for i=1, #intercepts.on_key_press do
+		-- intercepts.on_key_press[i](key)
+	-- end
+-- end
 --/ avo
 
 -------------------
