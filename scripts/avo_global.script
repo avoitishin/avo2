@@ -10,7 +10,8 @@
 --/----------------------------------------------------------------------------
 local CFG_FILE = "avo\\avo_global.ltx"
 local SELF_NAME = script_name()
-local mod_version = "unknown"
+local MOD_VERSION = "unknown"
+local AVO_SAVE_KEY, AVO_LOAD_KEY = nil, nil
 --/----------------------------------------------------------------------------
 --/ Initialization of avo modules and global variables
 --/ Note: some global constants and flags are registered in avo_netpk
@@ -18,7 +19,7 @@ local mod_version = "unknown"
 function on_game_start()
 	local ini = ini_file(CFG_FILE)
 	
-	mod_version = this.read_ini(ini,"mod","version","string","unknown")
+	MOD_VERSION = this.read_ini(ini,"mod","version","string","unknown")
 	
 	-- lua debug
 	local lua_debug_on = this.read_ini(ini,"debug","lua_debug","bool",false)
@@ -51,6 +52,7 @@ function on_game_start()
 	
 	_G["avo"]["read_ini"] = this.read_ini	-- read value from config file
 	_G["avo"]["read_ini_sect"] = this.read_ini_sect	-- read section from config file. returns table
+	_G["avo"]["get_mod_version"] = this.get_mod_version
 	
 	local dlog_on = this.read_ini(ini,"logging","debug","bool",false)
 	local elog_on = this.read_ini(ini,"logging","error","bool",false)
@@ -63,6 +65,10 @@ function on_game_start()
 	if wlog_on then _G["wlog"] = avo_log.wlog else _G["wlog"] = this.fn_empty end
 	if vlog_on then _G["vlog"] = avo_log.vlog else _G["vlog"] = this.fn_empty end
 	if printf_on then _G["printf"] = avo_log.printf else _G["printf"] = this.fn_empty end
+	
+	AVO_SAVE_KEY = DIK_keys["DIK_"..this.read_ini(ini, "keys", "avo_save", "string", "F6")] -- custom quick save/load
+	AVO_LOAD_KEY = DIK_keys["DIK_"..this.read_ini(ini, "keys", "avo_load", "string", "F10")]
+	
 	
 	ini = nil -- help gc
 	
@@ -77,7 +83,7 @@ function on_game_start()
 	
 	--/ initialize timers here
 	
-	-- this.init_callbacks() -- initialize custom (xray extensions) callbacks
+	this.init_callbacks() -- initialize custom callbacks
 	-- slot("actor_net_destroy", this.on_actor_net_destroy) -- subscribe for profiler
 	
 	-- avo_game_utils._init()	-- initialize game utilities
@@ -105,13 +111,33 @@ end
 -- function on_actor_net_destroy()
 	-- if profiler_on then profiler.stats() end -- log profiler statistics
 -- end
+
 --/----------------------------------------------------------------------------
 --/ initialize callbacks
 --/----------------------------------------------------------------------------
--- function init_callbacks()
+function init_callbacks()
+	slot("on_key_press", this.on_key_press_callback)
 	-- slot("actor_set_callbacks", this.set_actor_callbacks)
 	-- slot("actor_remove_callbacks", this.remove_actor_callbacks)
--- end
+end
+-- xray extensions
+function on_key_press_callback(key)
+	local console = get_console()
+	if not console then return end
+	
+	if key == AVO_SAVE_KEY then
+		if level.present() and (db.actor ~= nil) and db.actor:alive() then
+			local Y, M, D, h = game.get_game_time():get(Y, M, D, h) 
+			local m = level.get_time_minutes()
+			if tonumber(m) < 10 then m = "0"..m end
+			local s_level = level.name()
+			local actor_class = axr_misery.ActorClass
+			console:execute("save "..actor_class.." "..s_level.." "..string.format("%s.%s.%s %s.%s", D, M, Y, h, m))
+		end
+	elseif key == AVO_LOAD_KEY then
+		console:execute("load_last_save")
+	end
+end
 -- function set_actor_callbacks(actor_binder)
 	-- actor_binder.object:set_callback(callback.hit, this.on_actor_hit, actor_binder)
 	-- actor_binder.object:set_callback(123, this.on_key_press, actor_binder) -- key press
@@ -232,8 +258,7 @@ end
 
 --/ return mod version
 function get_mod_version()
-	-- local ini = ini_file(CFG_FILE)
-	return mod_version -- or this.read_ini(ini,"mod","version","string",'')
+	return MOD_VERSION
 end
 
 --/----------------------------------------------------------------------------
