@@ -1,0 +1,38 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_template
+	Description	: Template for avo scripts
+	Credits			: aVo
+	Revision		: 0.1
+	Change Date	: 08.01.2014
+--]] --------------------------------------------------------------------------
+
+--[[-- TODO -------------------------------------------------------------------
+	1. 
+--]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
+local CFG_FILE = "XXXX"		-- "avo\\avo_global.ltx"
+local SELF_NAME = script_name()
+
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local ini = ini_file(CFG_FILE)
+	if not ini then 
+		elog("Configuration file [%s] cannot be found or loaded", CFG_FILE)
+		return false
+	end
+	
+	local is_enabled = avo.read_ini(ini, "module", "enabled", "bool", false)
+	if not is_enabled then
+		dlog("%s module is disabled", SELF_NAME)
+		return false
+	end
+	
+	
+	
+	return true -- initialization successful
+end
