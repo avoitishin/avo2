@@ -69,7 +69,7 @@ function actor_binder:net_spawn(data)
 
 	-- alundaio
 	if (axr_main) then axr_main.on_game_load() end
-	if (xrs_debug_tools) then xrs_debug_tools.on_game_load() end
+	-- if (xrs_debug_tools) then xrs_debug_tools.on_game_load() end
 	-- end alundaio
 	
 	-- avo
@@ -759,8 +759,14 @@ function actor_binder:update(delta)
 
 	-- alundaio
 	if (axr_main) then axr_main.actor_on_update(self,delta) end
-	if (xrs_debug_tools) then xrs_debug_tools.on_actor_update(self,delta) end
+	-- if (xrs_debug_tools) then xrs_debug_tools.on_actor_update(self,delta) end
 	-- alundaio
+	
+	-- avo
+	if sm then sm:call("on_actor_update", self, delta) end
+	--/ avo
+	
+	
 	if spawn_music.load_variable("spawn_music_p_",false)==false then
 		spawn_music.spawn_music_01()
 		spawn_music.save_variable("spawn_music_p_",true)
@@ -835,6 +841,11 @@ function actor_binder:save(packet)
 	--alundaio
 	if (axr_main) then axr_main.actor_on_save(self,packet) end
 	-- alundaio end
+	
+	-- avo
+	if sm then sm:call("on_actor_save") end
+	--/ avo
+	
 	set_save_marker(packet, "save", true, "actor_binder")
 end
 
@@ -895,6 +906,11 @@ function actor_binder:load(reader)
 	--alundaio
 	if (axr_main) then axr_main.actor_on_load(self,reader) end
 	-- end alundaio
+	
+	-- avo
+	if sm then sm:call("on_actor_load") end
+	--/ avo
+	
 	set_save_marker(reader, "load", true, "actor_binder")
 end
 

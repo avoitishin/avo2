@@ -1,67 +1,26 @@
-local t = time_global()
-local fs = getFS()
-
-
+--/----------------------------------------------------------------------------
+--/ This function is called each time sandbox key (INSERT) is pressed
+--/----------------------------------------------------------------------------
 function main()
-	dlog("HAHA")
-	-- xrs_debug_tools.debug_god = true
-	-- level.set_weather("af3_bright_rain",true)
-	-- db.actor:restore_weapon()
-	-- level.enable_input()
-	-- level.disable_input()
-	-- db.actor:disable_hit_marks(true)
-	-- dlog("health: %s", db.actor.health)
-	-- local a = db.actor.health - 0.08
-	-- dlog("health: %s", db.actor.health)
-	-- level.add_cam_effector('camera_effects\\item_use_slow.anm', 8025, false, "")
-	-- level.add_pp_effector('snd_shock.ppe', 8012, false)
-	-- level.add_cam_effector("camera_effects\\earthquake_20.anm", 1975, false, "")
-	-- level.add_pp_effector('alcohol.ppe', 8013, false)
+	dlog("Sandbox main() started")
 	
-	local modules_root = lfs and "./gamedata/configs/"..string.gsub(avo.MOD_FOLDER,"\\","/").."modules" or "FAIL"
+	-- test_storage_load()
 	
-	-- vlog(modules_root)
-	
-  function attrdir(path)
-		vlog(type(path))
-    for file in lfs.dir(path) do
-      if file ~= "." and file ~= ".." then
-        local f = path..'/'..file
-        -- dlog("\t "..f)
-        local attr = lfs.attributes(f, "mode")
-        if attr == "file" and string.find(file,"^avo_%w+_mod") then
-					dlog(string.gsub(file,".ltx",""))
-				end
-      end
-    end
-  end
-	
-	function print_modules(enabled_or_disabled)
-		local t = {}
-		for k, v in pairs(avo.modules) do
-			for a, b in pairs(v) do
-				if enabled_or_disabled and b then
-					table.insert(t, k)
-				elseif not enabled_or_disabled and not b then
-					table.insert(t, k)
-				end
-			end
-		end
-		return table.print(t, enabled_or_disabled and "Enabled Modules" or "Disabled Modules")
-	end
-  
-  -- attrdir(modules_root)
-	dlog(print_modules(true))
-	dlog("HEHE")
-	-- vlog(avo.MOD_CONFIG_FOLDER)
-	-- if fs:path_exist(modules_root) then	
-		-- vlog("path [%s] exists", modules_root)
-	-- else
-		-- vlog("failed to get path %s", modules_root)
-	-- end
-	
-	-- level.add_cam_effector('camera_effects\\\\item_use_fast.anm', 8024, false,'')
+	dlog("Sandbox main() completed")
 end
+
+
+function test_storage_save()
+	local t = {["one"] = 1, ["two"] = "blah-blah", ["three"] = 2345.97774}
+	avo.save('storage_test', t)
+end
+
+function test_storage_load()
+	local t = avo.load('storage_test', {})
+	dlog(table.print(t, "Storage Test"))
+end
+
+
 
 function eff1()
 	level.add_pp_effector('inv_medkit.ppe', 8012, false)

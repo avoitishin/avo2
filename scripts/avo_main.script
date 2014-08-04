@@ -47,23 +47,17 @@ function on_game_start()
 	-- Define some mod functions
 	avo.fn_empty = this.fn_empty -- empty (plug) function
 	
-	--/ BEGIN FRAMEWORK INITIALIZATION
+	--/ BEGIN INITIALIZING FRAMEWORK COMPONENTS
 	
-	avo_log._init() -- Logging functions
-	avo_ini._init() -- Configuration file utilities
-	avo_lua._init() -- Lua extensions
-	avo_signals._init() -- Signals (events and callbacks) Manager
-	avo_netpk._init() -- Netpacket utilities
-	-- Custom storage
-		-- _G["save_astor"] = avo_storage.set
-		-- _G["load_astor"] = avo_storage.get
+	avo_log._init() 				-- Logging functions (initializes dlog, elog, wlog, vlog, etc)
+	avo_ini._init() 				-- Configuration file utilities (initializes avo.read_ini, avo.read_ini_sect)
+	avo_lua._init() 				-- Lua extensions
+	avo_signals._init() 		-- Signals (events and callbacks) Manager (initializes sm and slot)
+	avo_netpk._init() 			-- Netpacket utilities (initializes avo.get_netpk)
+	avo_storage._init() 		-- Custom storage (initializes avo.storage{}, avo.save() and avo.load())
 	-- Timers
-	-- Game utilities
-		-- avo_game_utils._init()	-- initialize game utilities
-		-- _G["agu"] = avo_game_utils -- alias
-		-- _G["save_pstor"] = xr_logic.pstor_store
-		-- _G["load_pstor"] = xr_logic.pstor_retrieve
-	avo_controller._init() -- Controller (handles module initializations)
+	avo_utils._init()				-- Game utilities
+	avo_controller._init()	-- Controller (handles module initializations)
 
 	
 	this.init_callbacks() -- callbacks
@@ -71,8 +65,6 @@ function on_game_start()
 	-- Custom quick save/load
 	AVO_SAVE_KEY = DIK_keys["DIK_"..avo_ini.read_ini(ini, "keys", "avo_save", "string", "F6")] 
 	AVO_LOAD_KEY = DIK_keys["DIK_"..avo_ini.read_ini(ini, "keys", "avo_load", "string", "F10")]
-	
-	-- this.load_default_settings() -- move to on_actor_spawn callback
 	
 	ini = nil
 	sm:call("avo_framework_ready") -- broadcast the signal

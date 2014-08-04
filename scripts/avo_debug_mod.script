@@ -29,8 +29,11 @@ function _init(CFG_FILE, module_name)
 		return false
 	end
 	
-	-- local use_xrs_debug = avo.read_ini(ini, "debug", "xrs_debug", "bool", false) -- dont use this yet
-	-- if use_xrs_debug and xrs_debug_tools then xrs_debug_tools.on_game_load() end -- load xrs_debug_tools by Alundaio (is this too early? Alun had this call in actor net_spawn)
+	local use_xrs_debug = avo.read_ini(ini, "debug", "xrs_debug", "bool", false)
+	if use_xrs_debug and xrs_debug_tools then
+		slot("on_actor_net_spawn", this.on_actor_net_spawn_callback)
+		slot("on_actor_update", this.on_actor_update_callback)
+	end
 	
 	slot("actor_on_hit", actor_on_hit_callback)
 	slot("on_key_press", on_key_press_callback)
@@ -50,6 +53,14 @@ function on_key_press_callback(key)
 	if key == DIK_keys.DIK_INSERT then
 		sandbox("avo_sandbox", 'main()')
 	end
+end
+
+function on_actor_net_spawn_callback()
+	xrs_debug_tools.on_game_load()
+end
+
+function on_actor_update_callback()
+	xrs_debug_tools.on_actor_update()
 end
 
 --/----------------------------------------------------------------------------

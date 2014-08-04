@@ -1,0 +1,404 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_storage
+	Description	: System of the universal storage
+	Credits			: aVo, Artos, xStream, malandrinus
+	Revision		: 1.1
+	Change Date	: 08.04.2014
+--]] --------------------------------------------------------------------------
+
+--[[-- TODO -------------------------------------------------------------------
+	1. Refactor
+	2. Add HOWTO
+--]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
+local MAX_PACKET_LENGHT = 16200
+local marker_to_type = { [1]='boolean',[2]='number',[3]='string',[4]='table',[5]='u16',[6]='s16',[7]='chunk' } -- [0]=nil is exluded!
+local type_to_marker = { ['nil']=0,['boolean']=1,['number']=2,['string']=3,['table']=4,['u16']=5,['s16']=6,['chunk']=7 }
+local stor_ids = {} -- таблица id создаваемых stor-объектов ( [id] = boolean )
+local byte_count = 0 -- счетчик (bytes). текущее кол-во считанных байт в хранилище (for statistic)
+local packet_chunks = {} -- таблица нет-пакетов с чанками внешних модулей (option for SIMBION mod)
+
+local SELF_NAME = script_name()
+local started, start_time = false, nil -- for benchmark
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
+
+	avo.storage = {} -- initialize storage
+	slot("on_actor_save", this.on_actor_load_callback)
+	slot("on_actor_save", this.on_actor_save_callback)
+	
+	avo.save = this.set
+	avo.load = this.get
+	
+	ini = nil
+	wlog("%s is ready", SELF_NAME)
+end
+
+
+--/----------------------------------------------------------------------------
+--/ PRIVATE functions
+--/----------------------------------------------------------------------------
+--/----------------------------------------------------------------------------
+--/ create: создание нового stor-объекта для сохранения данных
+--/----------------------------------------------------------------------------
+local function create_storage_element()
+	local sobj = alife():create("custom_storage", vector(), 0, 0)
+	local pk = avo.get_netpk(sobj,1) -- request of a packet (only 'state')
+	local data = pk:get() -- read data from packet
+	data.custom_data:setTable( { avo_storage = { dummy = 1 }} ) -- mark created obj
+	pk:set(data)
+	return sobj
+end
+--/----------------------------------------------------------------------------
+--/ cleanup: удаление stor-объектов из игры
+--/----------------------------------------------------------------------------
+local function cleanup()
+	if db.actor then -- синхронизируем по наличию актора в игре
+		local sim = alife()
+		for id,v in pairs(stor_ids) do
+			local sobj = sim:object(id)
+			if sobj then
+				sim:release(sobj,true)
+			end
+		end
+		stor_ids = {} -- clear
+		packet_chunks = {} -- clear
+		return true
+	end
+	return false
+end
+--/----------------------------------------------------------------------------
+--/ устанавливаем коллбэк на чистку (при появлении актора в игре и при продолженной игре после сэйва)
+--/----------------------------------------------------------------------------
+local function set_clear_callback()
+	level.add_call(cleanup, function() end)
+end
+--/----------------------------------------------------------------------------
+--/ saving: сохранение данных в технологические нет-пакеты (chunks)
+--/----------------------------------------------------------------------------
+local function save_chunk(chunk_name,func,binder)
+	if type(chunk_name) == 'string' and chunk_name ~= "" and type(func) == 'function' then
+		local pk = net_packet() -- технологический (chunk) нет-пакет
+		pk:w_begin(0) -- установка: позиции записи в начало нет-пакета (+2)
+		if type(binder) == 'userdata' then
+			func(binder,pk) -- save chunk to net_packet (class)
+		else
+			func(pk) -- save chunk to net_packet (script)
+		end
+		if pk:r_elapsed() > 2 then
+			pk:r_seek(2) -- установка: позиции чтения 'с начала +2' нет-пакета
+			packet_chunks[chunk_name] = pk -- storage in the table
+		else wlog("(%s:save_chunk) chunk_name = [%s] | size = [%s]", SELF_NAME, chunk_name, pk:r_elapsed())
+		end
+	else dlog("(%s:save_chunk) invalid chunk or function: chunk_name = [%s] | func = [%s]", SELF_NAME, chunk_name, type(func))
+	end
+end
+--/----------------------------------------------------------------------------
+--/ saving: сохранение данных в stor-объект(ы) хранилища
+--/----------------------------------------------------------------------------
+local function save_storage()
+	-- dlog("(%s:save_storage) size = [%s/%s]", SELF_NAME, table.size(avo.storage), next(avo.storage))
+	local stor_elm = create_storage_element() -- new stor-объект
+	local pk = stor_elm.tail_pk
+	local cnt_len = 0 -- счетчик limit'а (текущее кол-во байт для записи в stor-объект)
+	local cnt_elm,cnt_bytes = 1,0 -- счетчики кол-ва элементов хранилища и записанных в них байт (for statistic)
+	local marker,err,len = nil,nil,0
+	-- local function for check room to save
+	local check_free_space = function()
+		cnt_len = cnt_len + len
+		if cnt_len > MAX_PACKET_LENGHT then -- element is full of data -> change element
+			cnt_len = len -- начинаем отсчет заново
+			if pk then cnt_bytes = cnt_bytes + pk:w_tell() -2 end -- for statistic
+			stor_elm = create_storage_element() -- create new element to store variables
+			pk = stor_elm.tail_pk
+			cnt_elm = cnt_elm + 1
+		end
+	end
+	-- write chank-tables (опционально):
+	if packet_chunks and next(packet_chunks) then
+		marker = type_to_marker['chunk'] -- 7
+		for key,ch_pk in pairs(packet_chunks) do
+			local size = ch_pk:w_tell() -2
+			if size < MAX_PACKET_LENGHT then -- проверка: возможно переполнение?
+				len = key:len() + size + 5 -- +marker +NULL +count
+				check_free_space() -- check room to save
+				--/ write variable to stor-packet
+				pk:w_stringZ(key) -- name variable
+				pk:w_u8(marker)   -- type variable (7 - chunk!)
+				pk:w_u16(size)    -- write count
+				while not ch_pk:r_eof() do -- цикл (до конца читаемого пакета)
+					pk:w_u8( ch_pk:r_u8() )
+				end
+				-- dlog("(%s:save_storage) chunk_name = [%s] | chunk_size = [%s] | len = [%s]=>[%s]", SELF_NAME, key, size, len, cnt_len)
+			else
+				abort("(%s:save_storage) OVERFLOW chunk = [%s] | size = [%s]", SELF_NAME, key, size)
+			end
+		end
+	end
+	-- iterate variables:
+	for key,val in pairs(avo.storage) do
+		marker = type_to_marker[type(val)] -- маркировочный индекс (1...4, 0 - исключен)
+		err = not (marker and marker ~= 0 and type(key) == 'string') -- валидны типы ключа и значения?
+		if not err then -- опускаем все, что не годится для сохранения
+			--/ calculate variable 'cnt_len' for saving
+			len = key:len() + 2 -- +marker +NULL
+			if marker == 1 then -- lua_type == 'boolean'
+				len = len + 1
+			elseif marker == 2 then -- lua_type == 'number'
+				-- проверим: достаточно ли 2-х байт (16 бит)?
+				if val == math.modf(val) and val < 65536 and val > -32768 then -- без дробной части
+					if val >= 0 then -- не отрицательное
+						marker = 5 -- u16
+					else -- сохранять со знаком
+						marker = 6 -- s16
+					end
+					len = len + 2 -- u16|s16
+				else
+					len = len + 4 -- float
+				end
+			else -- lua_type == 'string'|'table'
+				if marker == 4 then -- lua_type == 'table'
+					val,err = table.compress(val) -- переводим в строку + сжимаем
+					if err then -- тип табличных данных недопустим для сохранения
+						abort("(%s:save_storage) cannot serialize table: var_name = [%s]", SELF_NAME, tostring(key))
+					end
+				end
+				if val:len() <= MAX_PACKET_LENGHT then -- проверка длины строки
+					len = len + val:len() + 1
+				else -- длина строки превышает лимит
+					abort("(%s:save_storage) length of [%s] is greater than limit [%s > %s]", SELF_NAME, tostring(key), val:len(), MAX_PACKET_LENGHT)
+				end
+			end
+			if not err then -- опускаем все, что не годится для сохранения
+				check_free_space() -- check room to save
+				-- write variable to stor-packet
+				pk:w_stringZ(key) -- name
+				pk:w_u8(marker)   -- type
+				if     marker == 1 then -- lua_type == 'boolean'
+					pk:w_bool(val)
+				elseif marker == 2 then -- lua_type == 'number'
+					pk:w_float(val)
+				elseif marker == 5 then -- 'u16'
+					pk:w_u16(val)
+				elseif marker == 6 then -- 's16'
+					pk:w_s16(val)
+				else -- lua_type == 'string'|'table'
+					pk:w_stringZ(val)
+				end
+			end
+		else
+			abort("(%s:save_storage) value was not saved: key = [%s] | key type = [%s] | value type = [%s]", SELF_NAME, key, type(key), type(val))
+		end
+	end
+	-- finalize:
+	if pk then
+		pk:w_stringZ("CStorages") -- записываем метку кол-ва элементов хранения
+		pk:w_u8(5)
+		pk:w_u16(cnt_elm)
+		cnt_bytes = cnt_bytes + pk:w_tell() - 2 -- for statistic
+	end
+	-- on after saving... (опционально):
+	set_clear_callback() -- set callback if game continues
+end
+--/----------------------------------------------------------------------------
+--/ read: чтение данных из нет-пакета в хранилище (from 'se_custom_storage')
+--/----------------------------------------------------------------------------
+local function read_tail_packet(pk)
+	if not started then -- start benchmark
+		start_time = os.clock()
+		started = true
+	end
+	local key,val,marker = nil,nil,nil
+	while not pk:r_eof() do -- цикл (до конца пакета)
+		key,val = pk:r_stringZ(),nil -- name & value
+		marker  = pk:r_u8() -- маркировочный индекс (1...6)
+		if marker_to_type[marker] then -- принимаем только валидные значения (1...6), 0 - исключен!
+			if     marker == 1 then -- lua_type == 'boolean'
+				avo.storage[key] = pk:r_bool()
+			elseif marker == 2 then -- lua_type == 'number'
+				avo.storage[key] = pk:r_float()
+			elseif marker == 5 then -- 'u16'
+				avo.storage[key] = pk:r_u16()
+			elseif marker == 6 then -- 's16'
+				avo.storage[key] = pk:r_s16()
+			elseif marker == 7 then -- 'chunk'
+				local bytes = pk:r_u16() -- размер chunk'а (байт)
+				local ch_pk = net_packet() -- технологический (chunk) нет-пакет
+				ch_pk:w_begin(0) -- установка: позиции записи в начало нет-пакета (+2)
+				ch_pk:r_seek(0) -- установка: позиции чтения 'в начало нет-пакета'
+				while bytes > 0 and not pk:r_eof() do -- цикл (до конца читаемого chunk'а или пакета)
+					ch_pk:w_u8( pk:r_u8() )
+					bytes = bytes -1
+				end
+				if ch_pk:r_elapsed() > 2 then
+					ch_pk:r_seek(2) -- установка: позиции чтения 'в начало данных' (+2)
+					packet_chunks[key] = ch_pk --/ запоминаем (chunk) net_packet
+				end
+			elseif marker ~= 0 then -- lua_type == 'string'|'table'
+				val = pk:r_stringZ()
+				if marker == 4 then -- lua_type == 'table'
+					val = table.uncompress(val)
+				end
+				avo.storage[key] = val
+			end
+		else
+			abort("(%s:read_tail_packet) failed to read from packet: elapsed = [%s] | key = [%s] | marker = [%s]", SELF_NAME, pk:r_elapsed(), key, marker)
+		end
+	end
+	byte_count = byte_count + pk:r_tell() -2 -- текущее кол-во считанных байт в хранилище
+	if avo.storage["CStorages"] ~= nil then -- загружен заключительный stor-элемент
+		avo.storage["CStorages"] = nil -- удаляем метку
+		set_clear_callback() -- устанавливаем коллбэк на очистку (при появлении актора в игре)
+		dlog("----| AVO STORAGE LOADED (in %.3f seconds) |----", os.clock() - start_time)
+		-- sm:call("avo_storage_ready") -- генерируем сигнал события: 'разрешено чтение из хранилища'
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ PUBLIC interface
+--/----------------------------------------------------------------------------
+--/----------------------------------------------------------------------------
+--/ вызов сохранения хранилища (from 'actor_binder:save')
+--/----------------------------------------------------------------------------
+function on_actor_save_callback()
+	if table.size(avo.storage) < 1 then return end -- nothing to save - storage is empty
+	cleanup() -- remove stor-elements after previous save (подстраховка)
+	save_storage() -- saving avo.storage storage
+end
+--/ вызов чтения хранилища (from 'actor_binder:load')
+function on_actor_load_callback()
+	packet_chunks = {}
+end
+
+--/----------------------------------------------------------------------------
+--/ запись в хранилище (с доп. проверкой). This is translated to avo.save
+--/----------------------------------------------------------------------------
+function set(var_name, value, f_check) -- имя переменной, ее значение и флаг необходимости проверки размера
+	local marker = type_to_marker[type(value)] -- маркировочный индекс (0...4)
+	if marker and type(var_name) == 'string' then
+		if marker == 4 then -- lua_type == 'table'
+			if f_check then -- доп.проверка валидности данных и объема таблицы
+				local val,err = table.compress(value) -- проверка сериализацией (переводом в строку)
+				if err or val:len() > MAX_PACKET_LENGHT then
+					abort("(%s:set) value of [%s] is too long [%s]", SELF_NAME, var_name, val:len())
+					-- return false -- тип данных или объем таблицы недопустимы
+				end
+			end
+			avo.storage[var_name] = table.clone(value)
+		else -- lua_type == 'nil'|'boolean'|'number'|'string'
+			if f_check and marker == 3 and value:len() > MAX_PACKET_LENGHT then -- lua_type == 'string'
+				abort("(%s:set) value of [%s] is too long [%s]", SELF_NAME, var_name, val:len())
+				-- return false -- длина строки превышает лимит
+			end
+			avo.storage[var_name] = value
+		end
+		return true -- записано
+	end
+	return false -- failed
+end
+
+--/----------------------------------------------------------------------------
+--/ чтение из хранилища: in: string, any | out: any. This is translated to avo.load
+--/----------------------------------------------------------------------------
+function get(var_name, default)
+	if type(var_name) == 'string' then
+		if type(avo.storage[var_name]) == 'table' then
+			return table.clone(avo.storage[var_name]) or default -- table
+		end
+		return avo.storage[var_name] or default
+	end
+	return default
+end
+
+--/ -----------------------------------------------------------------
+--/ in development
+--/ -----------------------------------------------------------------
+function chunk_to_table(var_name)
+	local tbl = {}
+	local pk = packet_chunks[tostring(var_name)] and packet_chunks[tostring(var_name)].ch_pk
+	if type(pk) == 'userdata' and type(pk.r_eof) == 'function' then
+		while not pk:r_eof() do -- цикл (до конца читаемого пакета)
+			table.insert( string.format("%0x", pk:r_u8()) )
+		end
+	end
+	return tbl
+end
+function chunk_to_string(var_name)
+	return table.concat(chunk_to_table(var_name), ' ')
+end
+
+function print_storage_info()
+	dlog("Total number of storage elements = %s", table.size(stor_ids))
+end
+
+--/----------------------------------------------------------------------------
+--/ класс серверных объектов: элементы для хранения данных хранилища 'storage'
+--/----------------------------------------------------------------------------
+class "se_custom_storage" (cse_alife_dynamic_object)
+
+function se_custom_storage:__init(section) super(section)
+	self.tail_pk = net_packet() -- технологический tail-пакет для перезаписи данных
+	self.tail_pk:w_begin(0) -- установка: начальная позиция записи 'наших' данных (+2)
+	self.tail_pk:r_seek(0) -- установка: читать 'с начальной позиции записи данных'
+end
+
+function se_custom_storage:on_register()
+	cse_alife_dynamic_object.on_register(self)
+
+	stor_ids[self.id] = true -- storage in the table IDs (for the postponed deleting)
+	local ini = self:spawn_ini()
+	if ini:section_exist("avo_storage") then -- stor-элемент хранилища? (загружен из сэйва)
+		-- загрузка: чтение tail-пакета в хранилище из объекта (элемента) хранения загруженного из сэйва
+		if self.tail_pk:r_elapsed() > 2 then
+			self.tail_pk:r_seek(2) -- (подстраховка) установка: читать 'с начальной позиции почитанных данных' (+2)
+			read_tail_packet(self.tail_pk) -- reading data from a packet into avo.storage storage
+		else
+			dlog("(%s:se_custom_storage:on_register) something is fishy with r_elapsed [%s]", SELF_NAME, self.tail_pk:r_elapsed())
+		end
+	else -- newly created stor-element
+		-- установки: всегда быть в оффлайне
+		self:can_switch_online(false)
+		self:can_switch_offline(true)
+	end
+end
+function se_custom_storage:can_save()
+	return true -- всегда сохраняться
+end
+function se_custom_storage:can_switch_online()
+	return false -- никогда не выходить в онлайн
+end
+function se_custom_storage:can_switch_offline()
+	return true -- всегда быть в оффлайне
+end
+
+function se_custom_storage:STATE_Read(packet, size)
+	cse_alife_dynamic_object.STATE_Read(self, packet, size)
+	
+	-- перезапись данных из нет-пакета объекта в tail-пакет
+	if self.id ~= 65535 and packet:r_elapsed() > 2 then
+		while not packet:r_eof() do -- цикл (до конца читаемого пакета)
+			self.tail_pk:w_u8(packet:r_u8())
+		end
+		self.tail_pk:r_seek(2) -- установка: позиции чтения 'в начало прочитанных данных' (+2)
+	end
+end
+
+function se_custom_storage:STATE_Write(packet)
+	cse_alife_dynamic_object.STATE_Write(self, packet)
+	-- перезапись данных из tail-пакета в нет-пакет объекта
+	if self.id ~= 65535 and self.tail_pk:r_elapsed() > 2 then
+		self.tail_pk:r_seek(2) -- установка: читать 'с начальной позиции записываемых данных' (+2)
+		while not self.tail_pk:r_eof() do -- цикл (до конца читаемого пакета)
+			packet:w_u8(self.tail_pk:r_u8())
+		end
+	end
+end
+--/ -----------------------------------------------------------------------------------------------
