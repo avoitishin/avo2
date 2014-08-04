@@ -55,7 +55,7 @@ function on_game_start()
 	avo_signals._init() 		-- Signals (events and callbacks) Manager (initializes sm and slot)
 	avo_netpk._init() 			-- Netpacket utilities (initializes avo.get_netpk)
 	avo_storage._init() 		-- Custom storage (initializes avo.storage{}, avo.save() and avo.load())
-	-- Timers
+	avo_timers._init()			-- Timers
 	avo_utils._init()				-- Game utilities
 	avo_controller._init()	-- Controller (handles module initializations)
 

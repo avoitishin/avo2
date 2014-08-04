@@ -5,6 +5,8 @@ function main()
 	dlog("Sandbox main() started")
 	
 	-- test_storage_load()
+	timers_test()
+	avo_timers.dump_timers()
 	
 	dlog("Sandbox main() completed")
 end
@@ -20,6 +22,25 @@ function test_storage_load()
 	dlog(table.print(t, "Storage Test"))
 end
 
+
+function timers_test()
+	-- skip second run
+	-- if get_max_id()>0 then
+		-- return
+	-- end
+	
+	local t = avo.timer()
+	t:setCallback("avo_sandbox.kill_npc")
+	t:setCallbackData({ id = db.actor:id() })
+	t:runReal(60*1000) -- actor dies in 1 min real time
+end
+
+function kill_npc(data)
+	local cobj = level.object_by_id(data.id or 0)
+	if cobj then
+		cobj:kill(cobj)
+	end
+end
 
 
 function eff1()
