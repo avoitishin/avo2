@@ -460,7 +460,7 @@ end
 
 function start_game_callback()
 	-- avo
-	if avo_global then avo_global.on_game_start() end
+	if avo_main then avo_main.on_game_start() end
 	--/ avo
 
 	-- Alundaio

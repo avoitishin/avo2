@@ -1,0 +1,78 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_ini
+	Description	: Utils for working with configuration (ini/ltx) files
+	Credits			: aVo
+	Revision		: 0.2
+	Change Date	: 08.03.2014
+--]] --------------------------------------------------------------------------
+
+--[[-- TODO -------------------------------------------------------------------
+	1. 
+--]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
+local SELF_NAME = script_name()
+
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
+	
+	avo.read_ini = this.read_ini
+	avo.read_ini_sect = this.read_ini_sect
+	
+	ini = nil
+	wlog("%s is ready", SELF_NAME)
+end
+
+--/----------------------------------------------------------------------------
+--/ Read single value from section
+--/ Returns: value from section key or default
+--/----------------------------------------------------------------------------
+function read_ini(ini,section,line,var_type,default)
+	if not ini then
+		ini = system_ini()
+	end
+	if section and line and ini:section_exist(section) and ini:line_exist(section,line) then
+		if (var_type == "bool") then
+			return ini:r_bool(section,line)
+		elseif (var_type == "string") then
+			return ini:r_string(section,line)
+		elseif (var_type == "float") then
+			return ini:r_float(section,line)
+		else
+			return ini:r_string_wq(section,line)
+		end
+	else
+		return default
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ Read entire section
+--/ Returns: table of section keys and values
+--/----------------------------------------------------------------------------
+function read_ini_sect(ini,section,keys_only)
+	local tmp = nil
+	local trim = string.trim
+	if ini and ini:section_exist(section) then
+		tmp = {}
+		local result, id, value = nil, nil, nil
+		for a = 0, ini:line_count(section) - 1 do
+			result, id, value = ini:r_line(section,a,'','')
+			if id ~= nil and trim(id) ~= '' then
+				if keys_only then
+					table.insert(tmp,id)
+				else
+					tmp[trim(id)] = trim(value)
+				end
+			end
+		end
+	end
+	return tmp
+end

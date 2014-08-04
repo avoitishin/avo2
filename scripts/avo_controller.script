@@ -1,0 +1,87 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_controller
+	Description	: Handles module initializations and tracking
+	Credits			: aVo
+	Revision		: 2.2
+	Change Date	: 08.03.2014
+--]] --------------------------------------------------------------------------
+
+--[[-- TODO -------------------------------------------------------------------
+	1. Implement init_modules with no lua_extensions (do I really need this?)
+--]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
+local SELF_NAME = script_name()
+-- local fs = getFS() -- file system manager -- not used yet
+
+local MODULES_FOLDER = nil
+local MODULES_FOLDER_FOR_INI = nil
+local MODULES_MASK = lfs and "^avo_%w+_mod" or "avo_*_m.ltx" -- module filename mask
+-- local MODULES_SECTION = "module" -- this section is required in each module's config file -- not used
+local modules = {} -- all modules (enabled and disabled) are stored here
+
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
+	
+	MODULES_FOLDER = lfs and "./gamedata/configs/"..string.gsub(avo.MOD_FOLDER,"\\","/").."modules" or "$avo_modules$" -- location of module configs. If lfs (lua_extensions.dll) is used then hardcode path else set in fsgame.ltx
+	MODULES_FOLDER_FOR_INI = avo.MOD_FOLDER.."modules\\" -- for ini_file parameter
+	init_modules() -- initialize modules
+	
+	avo.modules = modules
+	
+	ini = nil
+	wlog("%s is ready", SELF_NAME)
+end
+
+--/----------------------------------------------------------------------------
+--/ Initialize all modules that have config file in avo/modules
+--/----------------------------------------------------------------------------
+function init_modules()
+	if _G["lfs"]["dir"] then -- if lua_extensions available use lfs
+		for file in lfs.dir(MODULES_FOLDER) do
+			if string.find(file, MODULES_MASK) then -- if file name matches defined pattern
+				local ini = ini_file(MODULES_FOLDER_FOR_INI..file) -- get modules config file
+				if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, file) end -- safety
+				local module_name = string.gsub(file,".ltx","") -- module name from config file name
+				local script_name = avo.read_ini(ini, MODULES_SECTION, "script", "string", module_name) -- if script is specified in config use it, else default to module name. generally its better to use default
+				if _G[script_name] and type(_G[script_name]["_init"]) == "function" then -- script exists and have _init function
+					local is_enabled = _G[script_name]._init(MODULES_FOLDER_FOR_INI..file, module_name) -- initialize module and get status back
+					if is_enabled then
+						modules[module_name] = {enabled = true} -- catalog
+					else
+						modules[module_name] = {enabled = false} -- catalog
+					end
+				else
+					abort("[%s]: Failed to initialize module [%s]. Either script [%s] does not exist or _init() function is missing", SELF_NAME, module_name, script_name)
+				end
+				ini = nil
+			end
+		end
+	else -- use GSC FS class (needs $avo_modules$ set in fsgame.ltx)
+		abort("[%s].init_modules() GSC FS version is not implemented yet", SELF_NAME)		
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ Print modules. Parameters true = enabled or false = disabled. Returns string
+--/----------------------------------------------------------------------------
+function print_modules(enabled_or_disabled) 
+	local t = {}
+	for k, v in pairs(modules) do
+		for a, b in pairs(v) do
+			if enabled_or_disabled and b then
+				table.insert(t, k)
+			elseif not enabled_or_disabled and not b then
+				table.insert(t, k)
+			end
+		end
+	end
+	return table.print(t, enabled_or_disabled and "Enabled Modules" or "Disabled Modules")
+end

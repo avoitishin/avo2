@@ -2,15 +2,40 @@
 	File				: avo_signals
 	Description	: Slots and signals system
 	Credits			: malandrinus, OGSE team, aVo
-	Revision		: 1.2
-	Change Date	: 07.25.2013 (+auto-subscribe)
+	Revision		: 1.4
+	Change Date	: 08.03.2014
 --]]---------------------------------------------------------------------------
+
 --[[-- TODO -------------------------------------------------------------------
 	1. Refactor signals_mgr:unsubscribe
 	2. Remove subscribe_module as redundant
+	3. Update HOWTO
 --]]---------------------------------------------------------------------------
+local SELF_NAME = script_name()
+
 --/----------------------------------------------------------------------------
---/ Resturn signals manager singleton
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
+	
+	local sm = this.get_mgr()
+	if not sm then abort("[%s]: Falied to initialize signals manager", SELF_NAME) end
+	
+	if _G["sm"] then abort("[%s]: _G.sm already taken", SELF_NAME) end -- safety
+	if _G["slot"] then abort("[%s]: _G.slot already taken", SELF_NAME) end -- safety
+	
+  _G["sm"] = sm
+  _G["slot"] = this.slot
+	
+	ini = nil
+	wlog("%s is ready", SELF_NAME)
+end
+
+--/----------------------------------------------------------------------------
+--/ Returns signals manager singleton
 --/----------------------------------------------------------------------------
 local mgr
 function get_mgr()
@@ -28,11 +53,11 @@ function signals_mgr:__init()
 	self.signals = {}
 	self.unfinished_count = 0
 	local function hanged_calls_check()
-		if self.unfinished_count > 0 then --/ если есть незавершённые вызовы
-			abort("One of the calls hung! See stack dump for details.") --/ RIP
+		if self.unfinished_count > 0 then -- если есть незавершённые вызовы
+			abort("One of the calls hung! See stack dump for details.") -- RIP
 		end
 	end
-	level.add_call(hanged_calls_check, function()end) --/ сторожевой таймер
+	level.add_call(hanged_calls_check, function()end) -- сторожевой таймер
 end
 --/----------------------------------------------------------------------------
 --/ check if two slots are identical
@@ -85,7 +110,7 @@ function signals_mgr:unsubscribe(slot_to_unsubscribe)
 		table.insert(self.to_unsubscribe[slot_to_unsubscribe.signal], slot_to_unsubscribe)
 		slot_to_unsubscribe.unsubscribed = true -- маркируем его, чтобы игнорировался при вызовах
 	else
-		--/ нет незавершённых вызовов, просто удаляем слот
+		-- нет незавершённых вызовов, просто удаляем слот
 		local slots = self.signals[slot_to_unsubscribe.signal]
 		for i,slot in ipairs(slots.normal) do
 			if slots_equal(slot, slot_to_unsubscribe) then
@@ -101,6 +126,7 @@ function signals_mgr:unsubscribe(slot_to_unsubscribe)
 		end
 	end
 end
+
 --/----------------------------------------------------------------------------
 --/ subscribe module for events. call attach() in each module. NOT used in aVo
 --/----------------------------------------------------------------------------
@@ -112,16 +138,17 @@ end
 	-- ASSERT(type(module.attach) == "function", "failed to subscribe module '"..module_name.."', has no 'attach' function")
 	-- module.attach()
 -- end
+
 --/----------------------------------------------------------------------------
 --/ call signal (trigger event)
 --/----------------------------------------------------------------------------
 function signals_mgr:call(signal_name, ...)
-	--/ first all normal signals are triggered
+	-- first all normal signals are triggered
 	local slots = self.signals[signal_name]
 	if slots then
 		self.unfinished_count = self.unfinished_count + 1
 		for _,slot in ipairs(slots.normal) do
-			 --/ при рекурсивных вызовах отписанные, но ещё не удалённые слоты, необходимо пропустить
+			 -- при рекурсивных вызовах отписанные, но ещё не удалённые слоты, необходимо пропустить
 			if not slot.unsubscribed then
 				local result
 				if slot.self then
@@ -132,9 +159,9 @@ function signals_mgr:call(signal_name, ...)
 				if result then break end -- вызов заявил (функция вернула true), что он финальный в цепочке вызовов
 			end
 		end
-	--/ now all timed slots are evaluated and triggered
+	-- now all timed slots are evaluated and triggered
 		for _,slot in ipairs(slots.timed) do
-		--/ при рекурсивных вызовах отписанные, но ещё не удалённые слоты, необходимо пропустить
+		-- при рекурсивных вызовах отписанные, но ещё не удалённые слоты, необходимо пропустить
 		if not slot.unsubscribed then
 			local result
 				if time_global() - slot.last_call > slot.interval then
@@ -151,8 +178,8 @@ function signals_mgr:call(signal_name, ...)
 		end
 		self.unfinished_count = self.unfinished_count - 1
 		if self.to_unsubscribe and self.unfinished_count == 0 then
-			--/ если  нет незавершённых вызовов, то можно
-			--/ по-настоящему удалять промаркированные для отписки слоты
+			-- если  нет незавершённых вызовов, то можно
+			-- по-настоящему удалять промаркированные для отписки слоты
 			for signal,slots in pairs(self.to_unsubscribe) do
 				for _,slot in ipairs(slots) do
 					self:unsubscribe(slot)
@@ -173,9 +200,9 @@ end
 --/----------------------------------------------------------------------------
 function signals_mgr:dump()
 	local t = table.clone(self.signals)
-	if not debug then return t end --/ can only do it with debug enabled
-	for k,v in pairs(t) do --/ signals
-		for c, d in pairs(v) do	--/ normal, timed
+	if not debug then return t end -- can only do it with debug enabled
+	for k,v in pairs(t) do -- signals
+		for c, d in pairs(v) do	-- normal, timed
 			for a,b in pairs(d) do	-- slots
 				local dbg = debug.getinfo(b.fun)
 				t[k][c][a] = string.get_filename(dbg.short_src)
@@ -184,6 +211,7 @@ function signals_mgr:dump()
 	end
 	return t
 end
+
 --/----------------------------------------------------------------------------
 --/ CLASS: slot
 --/----------------------------------------------------------------------------
@@ -199,6 +227,8 @@ function slot:__init(signal, fun, int)
 	self.interval   = int or 0				-- time interval for timed slots (in MIL)
 	sm:subscribe(self) -- auto-subscribe
 end
+
+
 
 --[[-- HOWTO ------------------------------------------------------------------
 	Можно подписывать на события глобальные функции, методы классов, "методы" таблиц, 

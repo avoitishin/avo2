@@ -71,6 +71,10 @@ function actor_binder:net_spawn(data)
 	if (axr_main) then axr_main.on_game_load() end
 	if (xrs_debug_tools) then xrs_debug_tools.on_game_load() end
 	-- end alundaio
+	
+	-- avo
+	if sm then sm:call("on_actor_net_spawn") end
+	--/ avo
 
 	return true
 end

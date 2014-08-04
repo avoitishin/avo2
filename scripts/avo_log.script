@@ -2,9 +2,43 @@
 	File				: avo_log
 	Description	: Logging functions
 	Credits			: aVo
-	Revision		: 0.2
-	Change Date	: 07.26.2013 (-init)
+	Revision		: 0.3
+	Change Date	: 08.03.2014
 --]] --------------------------------------------------------------------------
+
+--[[-- TODO -------------------------------------------------------------------
+	1. 
+--]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
+local SELF_NAME = script_name()
+
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
+	
+	local dlog_on = avo_ini.read_ini(ini,"logging","debug","bool",false)
+	local elog_on = avo_ini.read_ini(ini,"logging","error","bool",false)
+	local wlog_on = avo_ini.read_ini(ini,"logging","warning","bool",false)
+	local vlog_on = avo_ini.read_ini(ini,"logging","visual","bool",false)
+	local printf_on = avo_ini.read_ini(ini,"logging","printf","bool",false)
+	
+	if dlog_on then _G["dlog"] = dlog else _G["dlog"] = avo.fn_empty end
+	if elog_on then _G["elog"] = elog else _G["elog"] = avo.fn_empty end
+	if wlog_on then _G["wlog"] = wlog else _G["wlog"] = avo.fn_empty end
+	if vlog_on then _G["vlog"] = vlog else _G["vlog"] = avo.fn_empty end
+	if printf_on then _G["printf"] = printf else _G["printf"] = avo.fn_empty end
+	
+	ini = nil
+	wlog("%s is ready", SELF_NAME)
+end
+
 
 --/----------------------------------------------------------------------------
 --/ xray extensions replacement for non-functional log
@@ -43,7 +77,8 @@ function dbg_format(...)
 	-- if not info_table then return avo_lua.form(unpack(arg)) end
 	local fn_name = string.match(msg, '^%(.-:(.*)%)') or '' -- save function name
 	msg = msg:gsub('^%(.*%)', fn_name..' ', 1) -- remove script name when debug is on (already part of trace info_table)
-	local script = string.get_filename(info_table.short_src)
+	-- local script = string.get_filename(info_table.short_src)
+	local script = avo_lua.get_filename(info_table.short_src) -- avo_lua is loaded after this so string.get_filename is not available yet
 	return string.format("(%s:%d) %s", script, info_table.currentline, msg)
 end
 --/----------------------------------------------------------------------------
@@ -62,10 +97,10 @@ end
 --/ Warning log
 --/----------------------------------------------------------------------------
 function wlog(...)
-	log(string.format("[WARN] %s", dbg_format(...)))
+	log(string.format("[INFO] %s", dbg_format(...)))
 end
 --/----------------------------------------------------------------------------
---/ printf (XRay) log
+--/ printf (GSC function)
 --/----------------------------------------------------------------------------
 function printf(...)
 	log(string.format("[XRAY] %s", dbg_format(...)))

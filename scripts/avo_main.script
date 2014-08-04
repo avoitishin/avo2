@@ -1,0 +1,200 @@
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_main
+	Description	: avo framework
+	Credits			: aVo
+	Revision		: 2.0
+	Change Date	: 08.03.2014
+--]] --------------------------------------------------------------------------
+
+--[[-- TODO -------------------------------------------------------------------
+	1. 
+--]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
+local MOD_FOLDER = "avo\\"
+local SELF_NAME = script_name()
+local AVO_SAVE_KEY, AVO_LOAD_KEY = nil, nil
+
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function on_game_start()
+	local CFG_FILE = MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	if not ini then this.abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
+	
+	-- Load LUA Debug DLL by RVP
+	local lua_debug_on = avo_ini.read_ini(ini, "debug", "lua_debug", "bool", false)
+	if lua_debug_on then require('lua_debug') end -- requires bin/lua_debug.dll
+
+	-- Define global functions
+	_G["abort"] = this.abort	-- crash game
+	_G["ASSERT"] = this.ASSERT -- game specific assert
+	_G["callstack"] = this.callstack -- format stack trace
+	
+	-- Define mod namespace
+	_G["avo"] = {}
+	
+	-- Define mod constants
+	avo.MOD_VERSION = avo_ini.read_ini(ini, "mod", "version", "string", "Unknown")
+	avo.MOD_FOLDER = MOD_FOLDER
+	
+	-- Define dedicated database for mod objects
+	avo.db = {} 
+
+	-- Define some mod functions
+	avo.fn_empty = this.fn_empty -- empty (plug) function
+	
+	--/ BEGIN FRAMEWORK INITIALIZATION
+	
+	avo_log._init() -- Logging functions
+	avo_ini._init() -- Configuration file utilities
+	avo_lua._init() -- Lua extensions
+	avo_signals._init() -- Signals (events and callbacks) Manager
+	avo_netpk._init() -- Netpacket utilities
+	-- Custom storage
+		-- _G["save_astor"] = avo_storage.set
+		-- _G["load_astor"] = avo_storage.get
+	-- Timers
+	-- Game utilities
+		-- avo_game_utils._init()	-- initialize game utilities
+		-- _G["agu"] = avo_game_utils -- alias
+		-- _G["save_pstor"] = xr_logic.pstor_store
+		-- _G["load_pstor"] = xr_logic.pstor_retrieve
+	avo_controller._init() -- Controller (handles module initializations)
+
+	
+	this.init_callbacks() -- callbacks
+	
+	-- Custom quick save/load
+	AVO_SAVE_KEY = DIK_keys["DIK_"..avo_ini.read_ini(ini, "keys", "avo_save", "string", "F6")] 
+	AVO_LOAD_KEY = DIK_keys["DIK_"..avo_ini.read_ini(ini, "keys", "avo_load", "string", "F10")]
+	
+	-- this.load_default_settings() -- move to on_actor_spawn callback
+	
+	ini = nil
+	sm:call("avo_framework_ready") -- broadcast the signal
+	wlog("avo framework is now initialized")
+end
+
+--/----------------------------------------------------------------------------
+--/ Define callbacks
+--/----------------------------------------------------------------------------
+function init_callbacks()
+	slot("on_key_press", this.on_key_press_callback)
+	slot("on_actor_net_spawn", this.on_actor_net_spawn_callback)
+end
+
+--/----------------------------------------------------------------------------
+--/ Called from bind_stalker.actor_binder:key_press(key)
+--/----------------------------------------------------------------------------
+function on_key_press_callback(key)
+	local console = get_console()
+	if not console then return end
+	
+	if key == AVO_SAVE_KEY then
+		if level.present() and (db.actor ~= nil) and db.actor:alive() then
+			local Y, M, D, h = game.get_game_time():get(Y, M, D, h) 
+			local m = level.get_time_minutes()
+			if tonumber(m) < 10 then m = "0"..m end
+			local s_level = level.name()
+			local actor_class = axr_misery.ActorClass
+			console:execute("save "..actor_class.." "..s_level.." "..string.format("%s.%s.%s %s.%s", D, M, Y, h, m))
+		end
+	elseif key == AVO_LOAD_KEY then
+		console:execute("load_last_save")
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ Called from bind_stalker.actor_binder:net_spawn(data)
+--/----------------------------------------------------------------------------
+function on_actor_net_spawn_callback()
+	load_default_settings()
+end
+
+--/----------------------------------------------------------------------------
+--/ Load default game settings
+--/----------------------------------------------------------------------------
+function load_default_settings()
+	local console = get_console()
+	if not console then abort("[%s]: Falied to get console", SELF_NAME) end
+	--/ difficulty
+	-- console:execute("ai_aim_max_angle 25.0") -- these are defined in misery
+	-- console:execute("ai_aim_min_angle 20.0")
+	-- console:execute("ai_aim_min_speed 2.50")
+	-- console:execute("ai_aim_predict_time 0.28")
+	console:execute("hud_info off")
+	console:execute("hud_crosshair_dist off")
+	console:execute("hud_crosshair off")
+	console:execute("hud_draw off")
+	db.actor:disable_hit_marks(true)
+	--/ misc
+	console:execute("snd_volume_music 0.0")
+	console:execute("cam_inert 0.0")
+	console:execute("cam_slide_inert 0.0")
+end
+
+--/----------------------------------------------------------------------------
+--/ Abort game and log error details
+--/----------------------------------------------------------------------------
+function abort(msg,...)
+	local function log(msg, ...)
+		if log1 then
+			log1("[ABORT] "..string.format(msg, ...))
+		else
+			console:execute("load ~:[ABORT] "..string.format(msg, ...))
+		end
+	end
+	local function flush()
+		if flush1 then
+			flush1()
+		else
+			console:execute('flush')
+		end
+	end
+	
+	log(msg, ...)
+	if debug then log(callstack(2)) end -- print stack trace (remove 'abort' and 'callstack')
+  flush()
+	os.exit(666)
+  -- local fail = avo_abort_game/0
+end
+
+--/----------------------------------------------------------------------------
+--/ Stack trace
+--/ Returns: table
+--/----------------------------------------------------------------------------
+function callstack(lines_to_remove)
+	local	dbg_stack = avo_lua.split(debug.traceback(), '\n', true) -- dependent on avo_lua
+	if lines_to_remove and type(lines_to_remove) == 'number' then
+		for i=1, lines_to_remove do
+			table.remove(dbg_stack, 2) -- remove callstack
+			-- table.remove(dbg_stack, 2) -- remove abort
+		end
+	end
+	for k,v in pairs(dbg_stack) do
+		if string.match(v, "stack traceback") then next(dbg_stack)
+		else dbg_stack[k] = string.format("[%d] %s", k-1, string.gsub(string.gsub(v, ".+\\", ""), ">", ""))
+		end
+	end
+	return table.concat(dbg_stack, '\n')
+end
+
+--/----------------------------------------------------------------------------
+--/ Game specific assert. Will crash game if cond is false
+--/----------------------------------------------------------------------------
+function ASSERT(cond, msg, ...)
+	if not cond then
+    this.abort(msg,...)
+  end
+end
+
+--/----------------------------------------------------------------------------
+--/ Empty function used as plug
+--/----------------------------------------------------------------------------
+function fn_empty(...)
+	return
+end
