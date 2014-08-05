@@ -2,14 +2,15 @@
 	File				: avo_signals
 	Description	: Slots and signals system
 	Credits			: malandrinus, OGSE team, aVo
-	Revision		: 1.4
-	Change Date	: 08.03.2014
+	Revision		: 1.5
+	Change Date	: 08.04.2014
 --]]---------------------------------------------------------------------------
 
 --[[-- TODO -------------------------------------------------------------------
 	1. Refactor signals_mgr:unsubscribe
 	2. Remove subscribe_module as redundant
 	3. Update HOWTO
+	4. dump needs some rework as its only showing userdata after moving slots to class
 --]]---------------------------------------------------------------------------
 local SELF_NAME = script_name()
 
@@ -196,7 +197,7 @@ function signals_mgr:signal(name, ...)
 	self:call(name, ...)
 end
 --/----------------------------------------------------------------------------
---/ dump subscribed slots and signals for print
+--/ dump subscribed slots and signals for print. Needs rework
 --/----------------------------------------------------------------------------
 function signals_mgr:dump()
 	local t = table.clone(self.signals)
