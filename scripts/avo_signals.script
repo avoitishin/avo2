@@ -217,15 +217,26 @@ end
 --/----------------------------------------------------------------------------
 class "slot"
 --/----------------------------------------------------------------------------
---/ initialize slot
+--/ Initialize slot --
+--/ Parameters:
+--/ signal - name of the signal (event) to subscribe for [string]. Required
+--/ fun - callback function that will be called when event fires [function]. Required
+--/ int - event fire interval in milliseconds. Optional (defaults to 0, meaning every actor update)
+--/ auto - auto-subscribe. Optional (defaults to yes)
+--/ self_ref - reference to class object. Optional (only needed when subscribing from within custom class)
+--/ Returns:
+--/ self - this slot reference. Used in unsubscribe
 --/----------------------------------------------------------------------------
-function slot:__init(signal, fun, int)
+function slot:__init(signal, fun, int, auto, self_ref)
 	self.signal     = signal	-- what signal are we expecting
-	self.self       = nil			
+	self.self       = self_ref			
 	self.fun        = fun			-- what to do when signal received
 	self.last_call  = time_global()	-- time of last call for timed slots
 	self.interval   = int or 0				-- time interval for timed slots (in MIL)
-	sm:subscribe(self) -- auto-subscribe
+	if auto == nil or auto == true then
+		sm:subscribe(self) -- auto-subscribe
+	end
+	return self
 end
 
 
