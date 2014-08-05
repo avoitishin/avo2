@@ -6,7 +6,8 @@ function main()
 	
 	-- qt_test(3000)
 	-- dlog(table.print(sm:dump()))
-	avo_timers_persistent.start_timer("test_timer1", 20, "avo_sandbox.avo_lua_test", 123)
+	avo_timers_savable.start_timer("test_timer1", 20, "avo_sandbox.avo_lua_test", 123)
+	-- test_storage_load()
 	
 	dlog("Sandbox main() completed")
 end
@@ -34,7 +35,7 @@ end
 
 function test_storage_load()
 	local t = avo.load('storage_test', {})
-	dlog(table.print(t, "Storage Test"))
+	vlog(table.print(t, "Storage Test"))
 end
 
 
@@ -67,9 +68,10 @@ function eff1()
 end
 
 
-function avo_lua_test()
-	local t1 = {["str"] = "this is a test table with      some random values", ["large_num"] = "hehe bleee bleeeh hdfasjh jahhdhhahdhjahjhjh hdhdhhjsh dahhh hh ah ah dhahh dh jhjhds", ["small_num"] = "weeeee"}
-	vlog("table.serialize length: %s", string.len(table.serialize(t1)))
-	vlog("table.compress length: %s", string.len(table.compress(t1)))
+function avo_lua_test(param)
+	-- local t1 = {["str"] = "this is a test table with      some random values", ["large_num"] = "hehe bleee bleeeh hdfasjh jahhdhhahdhjahjhjh hdhdhhjsh dahhh hh ah ah dhahh dh jhjhds", ["small_num"] = "weeeee"}
+	-- vlog("table.serialize length: %s", string.len(table.serialize(t1)))
+	-- vlog("table.compress length: %s", string.len(table.compress(t1)))
+	vlog("Saveable timer triggered with param = %s", param)
 end
 
