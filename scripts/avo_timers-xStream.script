@@ -82,7 +82,6 @@ local function get_real_function_by_name(cb_name)
 	for _, tok in ipairs(tokens) do
 		if obj[tok] then
 			obj = obj[tok]
-			dlog(tok)
 		else -- something gone wrong
 			return
 		end
@@ -97,7 +96,6 @@ end
 --/ Helper: triggers timer by ID
 --/----------------------------------------------------------------------------
 local function _trigger(idx)
-	dlog("about to trigger [%s]", idx)
 	if not idx then
 		return
 	end
@@ -131,23 +129,20 @@ local function trigger_timer(idx)
 	
 	for k,t in pairs(timers_holder) do
 		if t.__type==timer_type.real_time then -- find realtime timers
-			dlog("t.__trigger_time = %s, current_time = %s", t.__trigger_time, current_time)
-			dlog(type(t.__trigger_time))
-			dlog(type(current_time))
 			if t.__trigger_time <= current_time then -- may be this timer should trigger too?
 				table.insert(timers_to_trigger, t.id)
-			else -- find at last closest...
+			else -- find at least closest...
 				if closest_real_time==0 or closest_real_time > t.__trigger_time then
 					closest_real_time = t.__trigger_time
 					closest_real = t.id
 				end
 			end
-			
 		else -- find game timers
-		
+			dlog("trigger_timer: current_game_time = %s, trigger_time = %s", current_game_time, t.__trigger_time)
 			if t.__trigger_time <= current_game_time then -- may be this timer should trigger too?
+				dlog("trigger_time is less: %s <= %s", t.__trigger_time, current_game_time)
 				table.insert(timers_to_trigger, t.id)
-			else -- find at last closest...
+			else -- find at least closest...
 				if closest_game_time==0 or closest_game_time > t.__trigger_time then
 					closest_game_time = t.__trigger_time
 					closest_game = t.id
@@ -166,16 +161,20 @@ end
 local prev_game_time = 0
 -- events 
 function check_timers()
+	if table.size(timers_holder) == 0 then return end
+	
 	local current_time = time_global()
 	local current_game_time = game.time()
 	
 	--check for date overflow
 	if current_time < prev_game_time then
-		local diff = prev_game_time - current_time
+		-- local diff = prev_game_time - current_time
+		local diff = prev_game_time - current_game_time
+		dlog("diff = %s", diff)
 		--find all game timers and reduce trigger time
 		for k,t in pairs(timers_holder) do
 			if t.__type==timer_type.game_time then -- find realtime timers
-				t.__trigger_time = __trigger_time - diff
+				t.__trigger_time = t.__trigger_time - diff
 				t:__save()
 			end
 		end	
@@ -185,6 +184,7 @@ function check_timers()
 		trigger_timer(closest_real)
 	end
 	if timers_holder[closest_game] and timers_holder[closest_game].__trigger_time <= current_game_time then
+		dlog("about to trigger game time from check_timers")
 		trigger_timer(closest_game)
 	end
 	prev_game_time = current_game_time
@@ -192,12 +192,10 @@ end
 
 function on_load()
 	local collected_timers = {}
-	-- local max_id, timer_desc, t = xs_stor.get("timers_last_id", 0)
 	local max_id, timer_desc, t = avo.load("timers_last_id", 0)
 	
 	-- collect timers
 	for k = 1, max_id do
-		-- timer_desc = xs_stor.get("timers_timer_"..k)
 		timer_desc = avo.load("timers_timer_"..k)
 		dlog(table.print(timer_desc))
 		if timer_desc then
@@ -212,13 +210,11 @@ function on_load()
 			table.insert(collected_timers, t)
 			
 			-- remove description
-			-- xs_stor.set("timers_timer_"..k)
 			avo.save("timers_timer_"..k, nil)
 		end
 	end
 	
 	-- clear info
-	-- xs_stor.set("timers_last_id")
 	avo.save("timers_last_id", nil)
 	
 	-- run them all!
@@ -315,12 +311,9 @@ function timer:__run()
 	if self.__trigger_time then
 		self.id = get_new_id()
 		timers_holder[self.id] = self
-		
 		self:__save()
-		
 		--rebuild tables
 		trigger_timer()
-		dlog("timer:__run() passed")
 	end
 end
 
@@ -329,6 +322,8 @@ function timer:runGame(seconds)
 		self.__type = timer_type.game_time
 		self.__interval = seconds
 		self.__trigger_time = game.time() + seconds
+		dlog("timer:runGame(seconds) game.time() [%s]", game.time())
+		dlog("timer:runGame(seconds) [%s]", self.__trigger_time)
 		self:__run()
 	end
 	return self
@@ -340,7 +335,6 @@ function timer:runReal(milliseconds)
 		self.__interval = milliseconds
 		self.__trigger_time = time_global() + milliseconds
 		self:__run()
-		dlog("timer:runReal(milliseconds) passed")
 	end
 	return self
 end
@@ -348,9 +342,7 @@ end
 function timer:stop()
 
 	timers_holder[self.id] = nil
-	-- xs_stor.set("timers_timer_"..self.id)
 	avo.save("timers_timer_"..self.id)
-	-- xs_stor.set("timers_last_id", get_max_id())
 	avo.save("timers_last_id", get_max_id())
 
 	return self
@@ -377,7 +369,6 @@ function timer:trigger()
 	end
 	
 	local fn = get_real_function_by_name(self.__callback)
-	dlog("timer:trigger() fn = %s", type(fn))
 	if fn then
 		fn(self.__callbackData, self)	-- pass timer object to manipulate with it inside callback
 	end
