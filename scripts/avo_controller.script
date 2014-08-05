@@ -28,7 +28,6 @@ local modules = {} -- all modules (enabled and disabled) are stored here
 function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
-	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
 	
 	MODULES_FOLDER = lfs and "./gamedata/configs/"..string.gsub(avo.MOD_FOLDER,"\\","/").."modules" or "$avo_modules$" -- location of module configs. If lfs (lua_extensions.dll) is used then hardcode path else set in fsgame.ltx
 	MODULES_FOLDER_FOR_INI = avo.MOD_FOLDER.."modules\\" -- for ini_file parameter
@@ -48,7 +47,6 @@ function init_modules()
 		for file in lfs.dir(MODULES_FOLDER) do
 			if string.find(file, MODULES_MASK) then -- if file name matches defined pattern
 				local ini = ini_file(MODULES_FOLDER_FOR_INI..file) -- get modules config file
-				if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, file) end -- safety
 				local module_name = string.gsub(file,".ltx","") -- module name from config file name
 				local script_name = avo.read_ini(ini, MODULES_SECTION, "script", "string", module_name) -- if script is specified in config use it, else default to module name. generally its better to use default
 				if _G[script_name] and type(_G[script_name]["_init"]) == "function" then -- script exists and have _init function

@@ -1,3 +1,4 @@
+--[[-- HOWTO ------------------------------------------------------------------
 -------------------------------------------------------------------------------
 --| ogse_st_mgr.script                                                      |--
 --| Serializable Timers Manager                                             |--
@@ -17,7 +18,7 @@
 --
 -- Пример создания и использования простого таймера, использующего только
 -- временнОе условие:
---[[
+
 class "test_timer" (ogse_st_mgr.savable_timer)
 function test_timer:__init() super()
 	-- обязательная строка с именем класса таймера
@@ -50,11 +51,11 @@ t:set_delay(600) -- сработает через 10 минут реального времени
 t:start() -- запустить с низким приоритетом (по умолчанию)
 -- или
 --t:start(true) -- запустить с высоким приоритетом (проверка на каждом апдейте)
-]]
+
 
 -- Пример таймера с произвольным условием. Следит за неким неписем, который
 -- когда-то может быть выйдет в онлайн:
---[[
+
 class "conditional_timer" (ogse_st_mgr.savable_timer)
 function conditional_timer:__init(timer_id) super(timer_id)
 	self._class = script_name()..".conditional_timer"
@@ -84,14 +85,40 @@ conditional_timer("my_timer"):init(12345):start()
 get_timer("my_timer"):stop() -- передумали и остановили
 ]]
 
+--[[-- INFO -------------------------------------------------------------------
+	File				: avo_timers_persistent
+	Description	: Persistent timers
+	Credits			: malandrinus, aVo
+	Revision		: 0.1
+	Change Date	: 08.04.2014
+--]] --------------------------------------------------------------------------
 
+--[[-- TODO -------------------------------------------------------------------
+	1. Update HOWTO
+	2. Change from high_priority to interval
+--]]---------------------------------------------------------------------------
+local SELF_NAME = script_name()
 
-
-
-function attach(sm)
-	sm:subscribe({signal = "on_load", fun = this.on_load})
-	sm:subscribe({signal = "on_save", fun = this.on_save})
+--/----------------------------------------------------------------------------
+--/ Initialization
+--/----------------------------------------------------------------------------
+function _init()
+	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
+	local ini = ini_file(CFG_FILE)
+	
+	slot("on_actor_load", this.on_actor_load)
+	slot("on_actor_save", this.on_actor_save)
+	
+	avo.start_timer = this.start_timer
+	
+	ini = nil
+	wlog("%s is ready", SELF_NAME)
 end
+
+-- function attach(sm)
+	-- sm:subscribe({signal = "on_load", fun = on_actor_load})
+	-- sm:subscribe({signal = "on_save", fun = on_actor_save})
+-- end
 
 -- уникальный идентификатор для переменной со списком таймеров. НЕ МЕНЯТЬ!
 local root_guid = "{663A0135-0A8F-41D9-91BA-FCCBFD59B146}_root"
@@ -111,12 +138,12 @@ local function get_free_id()
 		local id = tostring(i)
 		if not registry[id] then return id end
 	end
-	abort("ogse_st_mgr.get_free_id: Can't find free id for timer!")
+	abort("[%s] Can't find free id for timer!", SELF_NAME)
 end
 -- получить таймер по идентификатору
 function get_timer(id)
 	local timer = registry[id]
-	ASSERT(timer, "ogse_st_mgr.get_timer: timer with id'"..id.."' doesn't exist")
+	ASSERT(timer, "[%s] timer with id'"..id.."' doesn't exist", SELF_NAME)
 	return timer
 end
 -- проверка существования таймера
@@ -124,27 +151,31 @@ function timer_exists(id)
 	return registry[id] ~= nil
 end
 -- загрузка всех таймеров
-function on_load()
-	local timers_list = ogse.load_variable(root_guid, {}, "array")
+function on_actor_load()
+	-- local timers_list = ogse.load_variable(root_guid, {}, "array")
+	local timers_list = avo.load(root_guid, {})
 	for _,timer_id in ipairs(timers_list) do
-		local timer_chunk = ogse.load_variable(storage_guid.."_"..timer_id)
+		-- local timer_chunk = ogse.load_variable(storage_guid.."_"..timer_id)
+		local timer_chunk = avo.load(storage_guid.."_"..timer_id)
 		local timer_class = timer_chunk:r_stringZ()
 		
 		local f, msg = loadstring("return "..timer_class.."(...)")
 		ASSERT(f, msg)
 		local timer = f(timer_id)
 		timer:_aux_load(timer_chunk)
-		timer:start(timer._high_priority)
-		ogse.delete_variable(storage_guid.."_"..timer_id)
+		timer:start(timer._interval)
+		-- ogse.delete_variable(storage_guid.."_"..timer_id)
+		avo.save(storage_guid.."_"..timer_id, nil)
 	end
 end
 -- сохранение состояния всех таймеров
-function on_save()
+function on_actor_save()
 	local timers_list = {}
 	for timer_id,timer in pairs(registry) do
 		table.insert(timers_list, timer_id)
 	end
-	ogse.save_variable(root_guid, timers_list, "array")
+	-- ogse.save_variable(root_guid, timers_list, "array")
+	avo.save(root_guid, timers_list)
 end
 
 ---------------------------------------------------------------------------------
@@ -155,7 +186,7 @@ class "savable_timer"
 
 -- конструктор таймера в базовом классе
 function savable_timer:__init(timer_id)
-	self._class = "error: it is forbidden to create instances of a base savable timer class!"
+	self._class = "Error: it is forbidden to create instances of a base savable timer class!"
 	if timer_id then
 		ASSERT(tostring(timer_id),
 			"savable_timer:__init: custom id assigned to timer must be a string or be convertible to a string")
@@ -166,7 +197,8 @@ function savable_timer:__init(timer_id)
 	end
 end
 function savable_timer:_aux_load(packet)
-	self._high_priority = packet:r_bool()
+	-- self._high_priority = packet:r_bool()
+	self._interval = packet:r_u32()
 	-- загружаем сохранённое время срабатывания по шкале реальных и игровых секунд
 	local res_time = packet:r_float()
 	if res_time ~= 0 then
@@ -188,10 +220,11 @@ function savable_timer:_aux_load(packet)
 end
 function savable_timer:_aux_save()
 	local timer_chunk = net_packet()
-	timer_chunk:w_begin(123)
+	-- timer_chunk:w_begin(123)
+	timer_chunk:w_begin(0) -- avo based on Artos's code. For some reason w_begin(123) does not work in COP
 	timer_chunk:r_seek(2)
 	timer_chunk:w_stringZ(self._class)
-	timer_chunk:w_bool(self._high_priority)
+	timer_chunk:w_u32(self._interval)
 	-- сохранение времени срабатывания по шкале реального и игрового времени
 	-- включено в состав заголовка таймера.
 	-- сохраняем время до срабатывания по шкале реальных секунд
@@ -211,7 +244,8 @@ function savable_timer:_aux_save()
 	timer_chunk:w_u32(a2)
 	-- теперь сохраняем данные пользователя, если есть
 	self:save(timer_chunk)
-	ogse.save_variable(storage_guid.."_"..self._id, timer_chunk, "chunk")
+	-- ogse.save_variable(storage_guid.."_"..self._id, timer_chunk, "chunk")
+	avo.save(storage_guid.."_"..self._id, timer_chunk)
 end
 -- задать точное время срабатывания в терминах игрового времени
 function savable_timer:set_gtime(t) -- аргумент - объект типа game.CTime
@@ -237,24 +271,31 @@ function savable_timer:set_delay(delay)
 end
 -- запустить таймер с указанием, в какую очередь поместить проверку
 -- в отличие от "быстрых" таймеров приоритет по умолчанию - низкий
-function savable_timer:start(high_priority)
-	self._high_priority = high_priority
-	self._cond_slot_desc = {signal = "on_update", self = self, fun = self._aux_cond, queued = not high_priority}
-	self._save_slot_desc = {signal = "on_save", self = self, fun = self._aux_save}
-	local sm = ogse_signals.get_mgr()
-	sm:subscribe(self._cond_slot_desc)
-	sm:subscribe(self._save_slot_desc)
+function savable_timer:start(interval)
+	self._interval = interval -- TODO: change to interval
+	-- self._cond_slot_desc = {signal = "on_update", self = self, fun = self._aux_cond, queued = not high_priority}
+	-- self._save_slot_desc = {signal = "on_save", self = self, fun = self._aux_save}
+	-- local sm = ogse_signals.get_mgr()
+	-- sm:subscribe(self._cond_slot_desc)
+	-- sm:subscribe(self._save_slot_desc)
+	
+	self._cond_slot_desc = slot("on_actor_update", self._aux_cond, interval, true, self)
+	self._save_slot_desc = slot("on_actor_save", self._aux_save, 0, true, self)
+	
 	registry[self._id] = self
 end
 -- останов таймера
 function savable_timer:stop()
-	ogse_signals.get_mgr():unsubscribe(self._cond_slot_desc)
-	ogse_signals.get_mgr():unsubscribe(self._save_slot_desc)
+	-- ogse_signals.get_mgr():unsubscribe(self._cond_slot_desc)
+	-- ogse_signals.get_mgr():unsubscribe(self._save_slot_desc)
+	sm:unsubscribe(self._cond_slot_desc)
+	sm:unsubscribe(self._save_slot_desc)
 	registry[self._id] = nil
 	local timer_storage_name = storage_guid.."_"..self._id
-	if ogse.variable_exists(timer_storage_name) then
-		ogse.delete_variable(timer_storage_name)
-	end
+	-- if ogse.variable_exists(timer_storage_name) then
+		-- ogse.delete_variable(timer_storage_name)
+	-- end
+	avo.save(timer_storage_name, nil)
 end
 -- метод для внутреннего использования таймером
 function savable_timer:_aux_cond()

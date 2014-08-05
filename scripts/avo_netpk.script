@@ -34,8 +34,8 @@ function _init()
 
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
-	if not ini or not ini:section_exist("clsid_to_class") then
-		abort("[%s]: Falied to load configuration file [%s] or section clsid_to_class does not exist", SELF_NAME, CFG_FILE)
+	if not ini:section_exist("clsid_to_class") then
+		abort("[%s]: Section clsid_to_class does not exist", SELF_NAME, CFG_FILE)
 	end
 	
 	sim = alife()

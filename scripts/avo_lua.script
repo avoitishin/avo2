@@ -40,7 +40,6 @@ local SELF_NAME = script_name()
 function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
-	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
 	
 	local IS_LUA_EXT = avo.read_ini(ini,"lua_extensions","enabled","bool",true) -- is lua_enxtesions.dll being used. Change to true|false in config file
 	

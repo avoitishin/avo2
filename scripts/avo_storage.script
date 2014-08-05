@@ -29,7 +29,6 @@ local started, start_time = false, nil -- for benchmark
 function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
-	if not ini then abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
 
 	avo.storage = {} -- initialize storage
 	slot("on_actor_save", this.on_actor_load_callback)

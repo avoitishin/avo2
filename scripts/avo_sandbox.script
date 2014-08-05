@@ -4,13 +4,28 @@
 function main()
 	dlog("Sandbox main() started")
 	
-	-- test_storage_load()
-	timers_test()
-	avo_timers.dump_timers()
+	-- qt_test(3000)
+	-- dlog(table.print(sm:dump()))
+	avo_timers_persistent.start_timer("test_timer1", 20, "avo_sandbox.avo_lua_test", 123)
 	
 	dlog("Sandbox main() completed")
 end
 
+
+class "simple_timer" (avo.timer)
+function simple_timer:__init(time) super(time)
+end
+function simple_timer:taction() -- наше действие по таймауту
+   vlog("QT Worked!!!")
+end
+ --Использование:
+ --simple_timer(3000):start() -- сработает через три секунды
+ --simple_timer(3000):start(true) -- сработает через три секунды, но проверяться будет реже
+
+
+function qt_test(time)
+	simple_timer(time):start()
+end
 
 function test_storage_save()
 	local t = {["one"] = 1, ["two"] = "blah-blah", ["three"] = 2345.97774}
@@ -32,14 +47,16 @@ function timers_test()
 	local t = avo.timer()
 	t:setCallback("avo_sandbox.kill_npc")
 	t:setCallbackData({ id = db.actor:id() })
-	t:runReal(60*1000) -- actor dies in 1 min real time
+	t:runGame(120)
 end
 
 function kill_npc(data)
-	local cobj = level.object_by_id(data.id or 0)
-	if cobj then
-		cobj:kill(cobj)
-	end
+	-- local cobj = level.object_by_id(data.id or 0)
+	-- if cobj then
+		-- cobj:kill(cobj)
+	-- end
+	vlog("timer worked")
+	-- vlog(avo_timers.dump_timers())
 end
 
 
@@ -47,5 +64,12 @@ function eff1()
 	level.add_pp_effector('inv_medkit.ppe', 8012, false)
 	-- level.add_cam_effector("camera_effects\\wake_up.anm", 1975, false, "")
 	level.add_pp_effector('alcohol.ppe', 8013, false)
+end
+
+
+function avo_lua_test()
+	local t1 = {["str"] = "this is a test table with      some random values", ["large_num"] = "hehe bleee bleeeh hdfasjh jahhdhhahdhjahjhjh hdhdhhjsh dahhh hh ah ah dhahh dh jhjhds", ["small_num"] = "weeeee"}
+	vlog("table.serialize length: %s", string.len(table.serialize(t1)))
+	vlog("table.compress length: %s", string.len(table.compress(t1)))
 end
 

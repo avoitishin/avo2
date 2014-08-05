@@ -23,7 +23,6 @@ local AVO_SAVE_KEY, AVO_LOAD_KEY = nil, nil
 function on_game_start()
 	local CFG_FILE = MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
-	if not ini then this.abort("[%s]: Falied to load configuration file [%s]", SELF_NAME, CFG_FILE) end
 	
 	-- Load LUA Debug DLL by RVP
 	local lua_debug_on = avo_ini.read_ini(ini, "debug", "lua_debug", "bool", false)
@@ -56,6 +55,7 @@ function on_game_start()
 	avo_netpk._init() 			-- Netpacket utilities (initializes avo.get_netpk)
 	avo_storage._init() 		-- Custom storage (initializes avo.storage{}, avo.save() and avo.load())
 	avo_timers._init()			-- Timers
+	avo_timers_persistent._init()			-- Timers
 	avo_utils._init()				-- Game utilities
 	avo_controller._init()	-- Controller (handles module initializations)
 
