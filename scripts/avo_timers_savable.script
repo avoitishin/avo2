@@ -86,18 +86,24 @@ get_timer("my_timer"):stop() -- передумали и остановили
 ]]
 
 --[[-- INFO -------------------------------------------------------------------
-	File				: avo_timers_persistent
+	File				: avo_timers_savable
 	Description	: Persistent timers
 	Credits			: malandrinus, aVo
-	Revision		: 0.1
+	Revision		: 0.2
 	Change Date	: 08.04.2014
 --]] --------------------------------------------------------------------------
 
 --[[-- TODO -------------------------------------------------------------------
 	1. Update HOWTO
-	2. Change from high_priority to interval
 --]]---------------------------------------------------------------------------
+
+--/----------------------------------------------------------------------------
+--/ Variables & Constants
+--/----------------------------------------------------------------------------
 local SELF_NAME = script_name()
+local root_guid = "{663A0135-0A8F-41D9-91BA-FCCBFD59B146}_root" -- уникальный идентификатор дл€ переменной со списком таймеров. Ќ≈ ћ≈Ќя“№!
+local storage_guid = "{36881905-5863-4D7C-BB12-0ECAC401FE1A}" -- уникальна€ базова€ часть идентификатора таймеров. Ќ≈ ћ≈Ќя“№!
+local registry = {} -- хранилище таймеров в пам€ти
 
 --/----------------------------------------------------------------------------
 --/ Initialization
@@ -115,17 +121,7 @@ function _init()
 	wlog("%s is ready", SELF_NAME)
 end
 
--- function attach(sm)
-	-- sm:subscribe({signal = "on_load", fun = on_actor_load})
-	-- sm:subscribe({signal = "on_save", fun = on_actor_save})
--- end
 
--- уникальный идентификатор дл€ переменной со списком таймеров. Ќ≈ ћ≈Ќя“№!
-local root_guid = "{663A0135-0A8F-41D9-91BA-FCCBFD59B146}_root"
--- уникальна€ базова€ часть идентификатора таймеров. Ќ≈ ћ≈Ќя“№!
-local storage_guid = "{36881905-5863-4D7C-BB12-0ECAC401FE1A}"
-
-local registry = {} -- хранилище таймеров в пам€ти.
 -- 
 function delete_all_timers()
 	for id,timer in pairs(registry) do
