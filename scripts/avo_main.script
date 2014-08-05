@@ -46,7 +46,7 @@ function on_game_start()
 	-- Define some mod functions
 	avo.fn_empty = this.fn_empty -- empty (plug) function
 	
-	--/ BEGIN INITIALIZING FRAMEWORK COMPONENTS
+	--/ BEGIN FRAMEWORK COMPONENTS INITIALIZATION
 	
 	avo_log._init() 				-- Logging functions (initializes dlog, elog, wlog, vlog, etc)
 	avo_ini._init() 				-- Configuration file utilities (initializes avo.read_ini, avo.read_ini_sect)
@@ -54,8 +54,8 @@ function on_game_start()
 	avo_signals._init() 		-- Signals (events and callbacks) Manager (initializes sm and slot)
 	avo_netpk._init() 			-- Netpacket utilities (initializes avo.get_netpk)
 	avo_storage._init() 		-- Custom storage (initializes avo.storage{}, avo.save() and avo.load())
-	avo_timers._init()			-- Timers
-	avo_timers_persistent._init()			-- Timers
+	avo_timers_quick._init()			-- Quick Timers
+	avo_timers_savable._init()		-- Persistent Timers
 	avo_utils._init()				-- Game utilities
 	avo_controller._init()	-- Controller (handles module initializations)
 
