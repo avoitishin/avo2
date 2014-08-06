@@ -3,14 +3,13 @@
 	Description	: Slots and signals system
 	Credits			: malandrinus, OGSE team, aVo
 	Revision		: 1.5
-	Change Date	: 08.04.2014
+	Change Date	: 08.05.2014
 --]]---------------------------------------------------------------------------
 
 --[[-- TODO -------------------------------------------------------------------
 	1. Refactor signals_mgr:unsubscribe
 	2. Remove subscribe_module as redundant
 	3. Update HOWTO
-	4. dump needs some rework as its only showing userdata after moving slots to class
 --]]---------------------------------------------------------------------------
 
 --/----------------------------------------------------------------------------
@@ -200,15 +199,17 @@ function signals_mgr:signal(name, ...)
 	self:call(name, ...)
 end
 --/----------------------------------------------------------------------------
---/ dump subscribed slots and signals for print. Needs rework
+--/ dump subscribed slots and signals for print.
 --/----------------------------------------------------------------------------
 function signals_mgr:dump()
 	local t = table.clone(self.signals)
 	if not debug then return t end -- can only do it with debug enabled
 	for k,v in pairs(t) do -- signals
+		dlog("Signal: [%s] ---------------------------", k)
 		for c, d in pairs(v) do	-- normal, timed
 			for a,b in pairs(d) do	-- slots
 				local dbg = debug.getinfo(b.fun)
+				dlog("-- Slot: %s@%s", string.get_filename(dbg.short_src), dbg.linedefined)
 				t[k][c][a] = string.get_filename(dbg.short_src)
 			end
 		end
