@@ -66,6 +66,10 @@ function on_game_start()
 	AVO_SAVE_KEY = DIK_keys["DIK_"..avo_ini.read_ini(ini, "keys", "avo_save", "string", "F6")] 
 	AVO_LOAD_KEY = DIK_keys["DIK_"..avo_ini.read_ini(ini, "keys", "avo_load", "string", "F10")]
 	
+	if avo_ini.read_ini(ini, "debug", "unit_test", "bool", false) then
+		avo_unit_test._init() -- Initialize unit tests
+	end
+	
 	ini = nil
 	sm:call("avo_framework_ready") -- broadcast the signal
 	wlog("avo framework is now initialized")
@@ -75,14 +79,14 @@ end
 --/ Define callbacks
 --/----------------------------------------------------------------------------
 function init_callbacks()
-	slot("on_key_press", this.on_key_press_callback)
-	slot("on_actor_net_spawn", this.on_actor_net_spawn_callback)
+	slot("key_press", this.on_key_press)
+	slot("actor_net_spawn", this.on_actor_net_spawn)
 end
 
 --/----------------------------------------------------------------------------
 --/ Called from bind_stalker.actor_binder:key_press(key)
 --/----------------------------------------------------------------------------
-function on_key_press_callback(key)
+function on_key_press(key)
 	local console = get_console()
 	if not console then return end
 	
@@ -103,7 +107,7 @@ end
 --/----------------------------------------------------------------------------
 --/ Called from bind_stalker.actor_binder:net_spawn(data)
 --/----------------------------------------------------------------------------
-function on_actor_net_spawn_callback()
+function on_actor_net_spawn()
 	load_default_settings()
 end
 
