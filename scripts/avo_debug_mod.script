@@ -37,6 +37,7 @@ function _init(CFG_FILE, module_name)
 	
 	slot("actor_hit", this.on_actor_hit)
 	slot("key_press", this.on_key_press)
+	slot("npc_hit", this.on_npc_hit)
 	
 	is_initialized = true -- mark as initialized
 	ini = nil
@@ -47,6 +48,12 @@ end
 
 function on_actor_hit(obj, amount, local_direction, who, bone_index)
 	-- if amount > 0.01 then dlog("actor is hit for %s", amount) end
+end
+
+function on_npc_hit(obj, amount, local_direction, who, bone_index)
+	-- if amount > 0 and who:id() == db.actor:id() then
+		-- vlog("NPC hit: npc [%s], amount [%s], who [%s], bone_index [%s]", obj:name(), amount, bone_index)
+	-- end
 end
 
 function on_key_press(key)

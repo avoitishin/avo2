@@ -317,6 +317,10 @@ function motivator_binder:hit_callback(obj, amount, local_direction, who, bone_i
 	-- start [Alundaio]
 	if (axr_main) then axr_main.npc_on_hit_callback(obj,amount,local_direction,who,bone_index) end
 	-- end [Alundaio]
+	
+	----| aVo Insert |--------------------------------------------------------------------
+	sm:call("npc_hit", obj, amount, local_direction, who, bone_index)
+	----| end:aVo |----------------------------------------------------------------
 end
 
 function motivator_binder:death_callback(victim, who)
