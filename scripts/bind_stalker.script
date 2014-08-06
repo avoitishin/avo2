@@ -1,6 +1,5 @@
 --[[-- TODO -------------------------------------------------------------------
 	1. Cleanup
-	2. Use avo_signals instead of axr_main
 --]]---------------------------------------------------------------------------
 
 function init    (obj)
@@ -72,9 +71,9 @@ function actor_binder:net_spawn(data)
 	-- if (xrs_debug_tools) then xrs_debug_tools.on_game_load() end
 	-- end alundaio
 	
-	-- avo
-	if sm then sm:call("on_actor_net_spawn") end
-	--/ avo
+	----| aVo |--------------------------------------------------------------------
+	sm:call("actor_net_spawn")
+	----| end:aVo |----------------------------------------------------------------
 
 	return true
 end
@@ -102,10 +101,10 @@ function actor_binder:net_destroy()
 	self.object:set_callback(callback.take_item_from_box, nil)
 	self.object:set_callback(callback.use_object, nil)
 	
-	-- avo
+	----| aVo |--------------------------------------------------------------------
 	self.object:set_callback(callback.hit, nil)
 	self.object:set_callback(123, nil)
-		--/ avo
+	----| end:aVo |----------------------------------------------------------------
 
 	log("--------->"..tostring(_G.amb_vol))
 	log("--------->"..tostring(_G.mus_vol))
@@ -144,25 +143,25 @@ function actor_binder:reinit()
 	self.object:set_callback(callback.take_item_from_box, self.take_item_from_box, self)
 	self.object:set_callback(callback.use_object, self.use_inventory_item, self)
 	
-	-- avo
-	self.object:set_callback(callback.hit, self.hit_callback, self)
+	----| aVo |--------------------------------------------------------------------
+	self.object:set_callback(callback.hit, self.actor_hit, self)
 	self.object:set_callback(123, self.key_press, self)
-	--/ avo
+	----| end:aVo |----------------------------------------------------------------
 end
 ---------------------------------------------------------------------------------------------------------------------
 
--- avo: x-ray extensions actor hit callback
-function actor_binder:hit_callback(obj, amount, local_direction, who, bone_index)
-	if sm then sm:call("on_actor_hit", obj, amount, local_direction, who, bone_index) end
-	-- if (axr_main and axr_main.actor_on_hit) then axr_main.actor_on_hit(obj, amount, local_direction, who, bone_index) end
-end
 
--- avo: x-ray extensions key press callback
-function actor_binder:key_press(key)
-	-- avo_log.dlog("actor_binder:on_key "..key.." "..dik_to_bind(key))
-	if sm then sm:call("on_key_press", key) end
-	-- if (axr_main and axr_main.on_key_press) then axr_main.on_key_press(key) end
+----| aVo |--------------------------------------------------------------------
+-- x-ray extensions actor hit callback
+function actor_binder:actor_hit(obj, amount, local_direction, who, bone_index)
+	sm:call("actor_hit", obj, amount, local_direction, who, bone_index)
 end
+-- x-ray extensions key press callback
+function actor_binder:key_press(key)
+	sm:call("key_press", key)
+end
+----| end:aVo |----------------------------------------------------------------
+
 
 ---------------------------------------------------------------------------------------------------------------------
 function actor_binder:take_item_from_box(box, item)
@@ -762,9 +761,9 @@ function actor_binder:update(delta)
 	-- if (xrs_debug_tools) then xrs_debug_tools.on_actor_update(self,delta) end
 	-- alundaio
 	
-	-- avo
-	if sm then sm:call("on_actor_update", self, delta) end
-	--/ avo
+	----| aVo |--------------------------------------------------------------------
+	sm:call("actor_update", self, delta)
+	----| end:aVo |----------------------------------------------------------------
 	
 	
 	if spawn_music.load_variable("spawn_music_p_",false)==false then
@@ -842,9 +841,9 @@ function actor_binder:save(packet)
 	if (axr_main) then axr_main.actor_on_save(self,packet) end
 	-- alundaio end
 	
-	-- avo
-	if sm then sm:call("on_actor_save") end
-	--/ avo
+	----| aVo |--------------------------------------------------------------------
+	sm:call("actor_save")
+	----| end:aVo |----------------------------------------------------------------
 	
 	set_save_marker(packet, "save", true, "actor_binder")
 end
@@ -907,9 +906,9 @@ function actor_binder:load(reader)
 	if (axr_main) then axr_main.actor_on_load(self,reader) end
 	-- end alundaio
 	
-	-- avo
-	if sm then sm:call("on_actor_load") end
-	--/ avo
+	----| aVo |--------------------------------------------------------------------
+	sm:call("actor_load")
+	----| end:aVo |----------------------------------------------------------------
 	
 	set_save_marker(reader, "load", true, "actor_binder")
 end

@@ -114,8 +114,8 @@ function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
 	
-	slot("on_actor_load", this.on_actor_load)
-	slot("on_avo_storage_save", this.on_storage_save)
+	slot("actor_load", this.on_actor_load)
+	slot("avo_storage_save", this.on_storage_save)
 	
 	-- avo.start_timer = this.start_timer
 	
@@ -194,7 +194,9 @@ function on_storage_save()
 	for timer_id,timer in pairs(registry) do
 		table.insert(timers_list, timer_id)
 	end
-	avo.save(root_guid, timers_list)
+	if table.size(timers_list) > 0 then 
+		avo.save(root_guid, timers_list)
+	end
 end
 
 --/----------------------------------------------------------------------------
@@ -303,8 +305,8 @@ end
 function savable_timer:start(interval)
 	self._interval = interval
 	
-	self._cond_slot_desc = slot("on_actor_update", self._aux_cond, interval, true, self)
-	self._save_slot_desc = slot("on_avo_storage_save", self._aux_save, 0, true, self)
+	self._cond_slot_desc = slot("actor_update", self._aux_cond, interval, true, self)
+	self._save_slot_desc = slot("avo_storage_save", self._aux_save, 0, true, self)
 	
 	registry[self._id] = self
 end

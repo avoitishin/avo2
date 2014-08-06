@@ -232,10 +232,10 @@ function test_netpk()
 			data.direction = vector():set(1,1,1) --/ изменение параметра в 'cse_abstract'
 		end
 		local status = pk:setCallback(func)
-		--[[ --/ var-2: table
-		local params = { ["direction"] = vector():set(1,1,1) }
-		local status = pk:setCallback(params)
-		--]]
+		--/ var-2: table
+		--local params = { ["direction"] = vector():set(1,1,1) }
+		--local status = pk:setCallback(params)
+		
 	end
 end
 
@@ -249,12 +249,11 @@ function test_abstract()
 			local vDir = vector():set(0,3.14,0) --/ направление: 'лопастями от стены'
 			--/ var-1: установка колбэка с таблицей
 			local status = pk:setCallback( { position = vPos, direction = vDir } )
-			--[[ --/ var-2: установка колбэка с функцией
-			local status = pk:setCallback( function(data)
-				data.position  = vPos --/ change property 'position' in 'cse_abstract'
-				data.direction = vDir --/ change property 'direction' in 'cse_abstract'
-			end )
-			--]]
+			--/ var-2: установка колбэка с функцией
+			--local status = pk:setCallback( function(data)
+				--data.position  = vPos --/ change property 'position' in 'cse_abstract'
+				--data.direction = vDir --/ change property 'direction' in 'cse_abstract'
+			--end )
 		end
 	end
 end

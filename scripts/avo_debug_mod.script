@@ -3,11 +3,11 @@
 	Description : Debug functions and callbacks for most game events
 	Credits		 	: aVo
 	Revision		: 1.2
-	Change Date : 08.03.2014
+	Change Date : 08.05.2014
 --]]---------------------------------------------------------------------------
 
 --[[-- TODO -------------------------------------------------------------------
-	1. Do I need to control xrs_debug_tools from here?
+	1. 
 --]]---------------------------------------------------------------------------
 
 --/----------------------------------------------------------------------------
@@ -19,7 +19,7 @@ local is_initialized = false
 --/ Initialization
 --/----------------------------------------------------------------------------
 function _init(CFG_FILE, module_name)
-	if is_initialized then return true end -- already initialized
+	if is_initialized then return true end -- already initialized, return true
 
 	local ini = ini_file(CFG_FILE)
 	
@@ -31,12 +31,12 @@ function _init(CFG_FILE, module_name)
 	
 	local use_xrs_debug = avo.read_ini(ini, "debug", "xrs_debug", "bool", false)
 	if use_xrs_debug and xrs_debug_tools then
-		slot("on_actor_net_spawn", this.on_actor_net_spawn_callback)
-		slot("on_actor_update", this.on_actor_update_callback)
+		slot("actor_net_spawn", this.on_actor_net_spawn)
+		slot("actor_update", this.on_actor_update)
 	end
 	
-	slot("actor_on_hit", actor_on_hit_callback)
-	slot("on_key_press", on_key_press_callback)
+	slot("actor_hit", this.on_actor_hit)
+	slot("key_press", this.on_key_press)
 	
 	is_initialized = true -- mark as initialized
 	ini = nil
@@ -45,21 +45,21 @@ function _init(CFG_FILE, module_name)
 end
 
 
-function actor_on_hit_callback(obj, amount, local_direction, who, bone_index)
+function on_actor_hit(obj, amount, local_direction, who, bone_index)
 	-- if amount > 0.01 then dlog("actor is hit for %s", amount) end
 end
 
-function on_key_press_callback(key)
+function on_key_press(key)
 	if key == DIK_keys.DIK_INSERT then
 		sandbox("avo_sandbox", 'main()')
 	end
 end
 
-function on_actor_net_spawn_callback()
+function on_actor_net_spawn()
 	xrs_debug_tools.on_game_load()
 end
 
-function on_actor_update_callback()
+function on_actor_update()
 	xrs_debug_tools.on_actor_update()
 end
 
@@ -85,7 +85,7 @@ function exec(file_name, function_name, ...)
     if type(result) == "function" then
       if function_name then
         result()
-        f = loadstring("return "..function_name)
+        local f = loadstring("return "..function_name)
         f(...)
       else
         result()
@@ -100,7 +100,7 @@ function exec(file_name, function_name, ...)
     if type(result) == "function" then
       if function_name then
         result()
-        f = loadstring("return "..function_name)
+        local f = loadstring("return "..function_name)
         f(...)
       else
         result()

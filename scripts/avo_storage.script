@@ -32,8 +32,8 @@ function _init()
 	local ini = ini_file(CFG_FILE)
 
 	avo.storage = {} -- initialize storage
-	slot("on_actor_save", this.on_actor_load_callback)
-	slot("on_actor_save", this.on_actor_save_callback)
+	slot("actor_load", this.on_actor_load)
+	slot("actor_save", this.on_actor_save)
 	
 	avo.save = this.set
 	avo.load = this.get
@@ -266,7 +266,7 @@ local function read_tail_packet(pk)
 		set_clear_callback() -- устанавливаем коллбэк на очистку (при по€влении актора в игре)
 		dlog("----| AVO STORAGE LOADED (in %.3f seconds) |----", os.clock() - start_time_load)
 		dlog("Number of items in storage = %s", table.size(avo.storage))
-		-- sm:call("avo_storage_ready") -- генерируем сигнал событи€: 'разрешено чтение из хранилища'
+		sm:call("avo_storage_ready") -- генерируем сигнал событи€: 'разрешено чтение из хранилища'
 	end
 end
 
@@ -276,14 +276,14 @@ end
 --/----------------------------------------------------------------------------
 --/ вызов сохранени€ хранилища (from 'actor_binder:save')
 --/----------------------------------------------------------------------------
-function on_actor_save_callback()
-	sm:call("on_avo_storage_save") -- last chance for modules to write their data to storage before its saved into packets. All modules that use storage (and they all SHOULD be using it) should listen to this event instead of on_actor_save
+function on_actor_save()
+	sm:call("avo_storage_save") -- last chance for modules to write their data to storage before its saved into packets. All modules that use storage (and they all SHOULD be using it) should listen to this event instead of on_actor_save
 	if table.size(avo.storage) < 1 then return end -- nothing to save - storage is empty
 	cleanup() -- remove stor-elements after previous save (подстраховка)
 	save_storage() -- saving avo.storage storage
 end
 --/ вызов чтени€ хранилища (from 'actor_binder:load')
-function on_actor_load_callback()
+function on_actor_load()
 	packet_chunks = {}
 end
 
