@@ -8,13 +8,16 @@
 
 --[[-- TODO -------------------------------------------------------------------
 	1. Implement tests
+	2. Add option for not crashing the game by using assert instead of ASSERT
+	3. Add action test for quick timers
 --]]---------------------------------------------------------------------------
 
 --/----------------------------------------------------------------------------
 --/ Variables & Constants
 --/----------------------------------------------------------------------------
 local SELF_NAME = script_name()
-
+local can_run_unsafe = false
+local upd_slot = nil
 --/----------------------------------------------------------------------------
 --/ Initialization
 --/----------------------------------------------------------------------------
@@ -33,6 +36,24 @@ end
 --/----------------------------------------------------------------------------
 function on_avo_storage_ready()
 	storage_test_load() -- loading stage of storage test
+end
+function on_actor_update()
+	if can_run_unsafe then
+		sm:unsubscribe(upd_slot)
+		storage_test() 
+	end
+end
+--/----------------------------------------------------------------------------
+--/ Run test cases
+--/ Parameters:
+--/ safe - do not run tests that reload the game
+--/----------------------------------------------------------------------------
+function run_tests(safe)
+	-- note: timer that has "can_run_unsafe = true" has to run longest time to allow for all to fisnish before executing unsafe tests
+	timers_quick_test(3000) -- 3 seconds
+	if not safe then
+		upd_slot = slot("actor_update", this.on_actor_update, 1000) -- start monitoring for when all safe executions are done
+	end
 end
 
 --/----------------------------------------------------------------------------
@@ -59,7 +80,6 @@ end
 --/ avo_storage unit tests
 --/----------------------------------------------------------------------------
 function storage_test()
-	-- slot("avo_storage_ready", this.on_avo_storage_ready)
 	local t = {["one"] = 1, ["two"] = "blah-blah", ["three"] = 2345.97774, [4] = "four"}
 	local s = avo.save('storage_unit_test', t)
 	ASSERT(avo.storage, "Storage unit test FAILED avo.storage does not exist")
@@ -76,6 +96,22 @@ end
 --/----------------------------------------------------------------------------
 --/ avo_timers_quick unit tests
 --/----------------------------------------------------------------------------
+local time_before_qt, time_after_qt = 0, 0
+class "simple_timer" (avo.timer)
+function simple_timer:__init(time) super(time)
+end
+function simple_timer:taction() -- наше действие по таймауту
+	time_after_qt = os.clock()
+	local time_diff = time_after_qt - time_before_qt
+  dlog("Quick timer unit test PASSED. Expected timeout = 3 seconds. Actual timeout = %.3f seconds", time_diff)
+	can_run_unsafe = true
+end
+
+function timers_quick_test(time)
+	ASSERT(avo.timer, "Quick timer unit test FAILED. avo.timers does not exist")
+	time_before_qt = os.clock()
+	simple_timer(time):start()
+end
 
 --/----------------------------------------------------------------------------
 --/ avo_timers_savable unit tests
