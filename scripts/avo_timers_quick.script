@@ -42,8 +42,6 @@ function quick_timer:start(check_interval)
 	if self.timeout then -- если при создании задавали таймаут
 		self.termination_time = time_global() + self.timeout -- то запоминаем время останова
 	end
-	-- self.slot_desc = {signal = "on_update", self = self, fun = self.aux_cond, queued = low_priority}
-	-- ogse_signals.get_mgr():subscribe(self.slot_desc)
 	self.slot = slot("actor_update", self.aux_cond, check_interval, true, self)
 end
 

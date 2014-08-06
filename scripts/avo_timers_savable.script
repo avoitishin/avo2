@@ -380,14 +380,10 @@ function delayed_fun_start:init(fun_name, ...)
 end
 function delayed_fun_start:load(timer_data)
 	self.fun_name = timer_data._fun_name
-	-- local array_item = ogse_unist.read_item_from_packet(packet)
-	-- ASSERT(array_item.type == ogse_unist.types.array, "delayed_fun_start:load: wrong parameters readed")
 	self.fun_params = timer_data._fun_params
 end
 function delayed_fun_start:save(timer_data)
 	timer_data._fun_name = self.fun_name
-	-- local array_item = ogse_unist.create_item("", self.fun_params, "array")
-	-- ogse_unist.write_item_to_packet(packet, array_item)
 	timer_data._fun_params = self.fun_params
 end
 function delayed_fun_start:condition()
