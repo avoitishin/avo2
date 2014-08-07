@@ -46,6 +46,8 @@ function read_ini(ini,section,line,var_type,default)
 			return ini:r_string(section,line)
 		elseif (var_type == "float") then
 			return ini:r_float(section,line)
+		elseif (var_type == "int") then
+			return ini:r_s32(section,line)
 		else
 			return ini:r_string_wq(section,line)
 		end
