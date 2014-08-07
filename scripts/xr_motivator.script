@@ -319,7 +319,9 @@ function motivator_binder:hit_callback(obj, amount, local_direction, who, bone_i
 	-- end [Alundaio]
 	
 	----| aVo Insert |--------------------------------------------------------------------
-	sm:call("npc_hit", obj, amount, local_direction, who, bone_index)
+	if amount > 0 then
+		sm:call("npc_hit", obj, amount, local_direction, who, bone_index)
+	end
 	----| end:aVo |----------------------------------------------------------------
 end
 

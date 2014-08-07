@@ -51,7 +51,7 @@ function on_actor_hit(obj, amount, local_direction, who, bone_index)
 end
 
 function on_npc_hit(obj, amount, local_direction, who, bone_index)
-	-- if amount > 0 and who:id() == db.actor:id() then
+	-- who:id() == db.actor:id() then
 		-- vlog("NPC hit: npc [%s], amount [%s], who [%s], bone_index [%s]", obj:name(), amount, bone_index)
 	-- end
 end
