@@ -35,8 +35,9 @@
 --/ Variables	& Constants	
 --/----------------------------------------------------------------------------
 local SELF_NAME = script_name()
+
 --/----------------------------------------------------------------------------
---/ initialization. extend lua types with cutom functions
+--/ Initialization
 --/----------------------------------------------------------------------------
 function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
@@ -44,13 +45,15 @@ function _init()
 	
 	local IS_LUA_EXT = avo.read_ini(ini,"lua_extensions","enabled","bool",true) -- is lua_enxtesions.dll being used. Change to true|false in config file
 	
-	avo.ext_namespace = this.ext_namespace
+	-- avo.ext_namespace = this.ext_namespace
+	ext_namespace("avo","ext_namespace", this.ext_namespace, SELF_NAME, "Protection against overrides when extending existing namespaces with new functions, tables, and classes (userdata)")
 	-- avo.IS_LUA_EXT = IS_LUA_EXT
 	
 	
 	if IS_LUA_EXT then
 		require('lua_extensions') -- turn on RvP lua extensions (requires bin\lua_extensions.dll)
 		if not lfs.dir then abort("[%s]: Failed to load lua_enxtesions", SELF_NAME) end
+		--/ STRING:
 		local tmp = string.trim
 		string.trim = nil
 		avo.ext_namespace("string","trim", tmp, SELF_NAME, "Trim whitespaces on both sides of the string (LUA Extensions)")
@@ -69,7 +72,7 @@ function _init()
 		tmp = string.unpack
 		string.unpack = nil
 		avo.ext_namespace("string","unpack", tmp, SELF_NAME, "Unpack binary data from a string (LUA Extensions)")
-		
+		--/ TABLE:
 		tmp = table.size
 		table.size = nil
 		avo.ext_namespace("table","size", tmp, SELF_NAME, "Get array/dictionary size (LUA Extensions)")
@@ -82,14 +85,14 @@ function _init()
 		tmp = table.random
 		table.random = nil
 		avo.ext_namespace("table","random", tmp, SELF_NAME, "Returns random key from table (LUA Extensions)")
-		
+		--/ MATH:
 		tmp = math.random
 		math.random = nil
 		avo.ext_namespace("math","random", tmp, SELF_NAME, "Improved implementation of LUA version (LUA Extensions)")
 		tmp = math.randomseed
 		math.randomseed = nil
 		avo.ext_namespace("math","randomseed", tmp, SELF_NAME, "Improved implementation of LUA version (LUA Extensions)")
-		
+		--/ LUA FILE SYSTEM:
 		tmp = lfs.dir
 		lfs.dir = nil
 		avo.ext_namespace("lfs","dir", tmp, SELF_NAME, "Lua File System library (LUA Extensions)")
@@ -133,7 +136,7 @@ function _init()
 end
 
 --/----------------------------------------------------------------------------
---/ Protection against overrides when extending existing namespaces with new functions
+--/ Protection against overrides when extending existing namespaces with new functions, tables, and classes (userdata)
 --/ Also adds optional information that can be used to generate help file (CSV format)
 --/ Parameters:
 --/ ns - namespace (table, string, avo, etc..). Do NOT pass _G
