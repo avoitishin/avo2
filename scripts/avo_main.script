@@ -41,10 +41,12 @@ function on_game_start()
 	avo.MOD_FOLDER = MOD_FOLDER
 	
 	-- Define dedicated database for mod objects
-	avo.db = {} 
+	-- avo.db = {}
+	avo_lua.ext_namespace("avo","db",{},SELF_NAME,"TABLE: Dedicated database for avo mod objects")
 
 	-- Define some mod functions
-	avo.fn_empty = this.fn_empty -- empty (plug) function
+	-- avo.fn_empty = this.fn_empty -- empty (plug) function
+	avo_lua.ext_namespace("avo","fn_empty",this.fn_empty,SELF_NAME,"Empty 'plug' function")
 	
 	--/ BEGIN FRAMEWORK COMPONENTS INITIALIZATION
 	
@@ -125,7 +127,7 @@ function load_default_settings()
 	console:execute("hud_info off")
 	console:execute("hud_crosshair_dist off")
 	console:execute("hud_crosshair off")
-	console:execute("hud_draw off")
+	-- console:execute("hud_draw off")
 	db.actor:disable_hit_marks(true)
 	--/ misc
 	console:execute("snd_volume_music 0.0")

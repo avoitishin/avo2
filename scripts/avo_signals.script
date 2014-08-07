@@ -226,9 +226,9 @@ class "slot"
 --/ Parameters:
 --/ signal - name of the signal (event) to subscribe for [string]. Required
 --/ fun - callback function that will be called when event fires [function]. Required
---/ int - event fire interval in milliseconds. Optional (defaults to 0, meaning every actor update)
---/ auto - auto-subscribe. Optional (defaults to yes)
---/ self_ref - reference to class object. Optional (only needed when subscribing from within custom class)
+--/ int - event fire interval in milliseconds [integer]. Optional (defaults to 0, meaning every actor update)
+--/ auto - auto-subscribe [bool]. Optional (defaults to yes)
+--/ self_ref - reference to class object [object]. Optional (only needed when subscribing from within custom class)
 --/ Returns:
 --/ self - this slot reference. Used in unsubscribe
 --/----------------------------------------------------------------------------

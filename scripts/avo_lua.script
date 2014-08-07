@@ -10,7 +10,7 @@
 		string.trim		-- trim on both sides
 		string.trim_l	-- trim left
 		string.trim_r	-- trim right
-		string.trim_w	-- trim word?
+		string.trim_w	-- get first word
 		string.pack 	-- pack binary into string (similar to perl)
 		string.unpack -- unpack binary from string (similar to perl)
 		
@@ -28,6 +28,7 @@
 --[[-- TODO -------------------------------------------------------------------
 	1. Resolve clashed with alun_util's string.split declaration
 	2. Refactor table functions
+	3. Add ability to use multilevel namespaces (avo.gu.test) in ext_namespace
 --]]---------------------------------------------------------------------------
 
 --/----------------------------------------------------------------------------
@@ -44,36 +45,87 @@ function _init()
 	local IS_LUA_EXT = avo.read_ini(ini,"lua_extensions","enabled","bool",true) -- is lua_enxtesions.dll being used. Change to true|false in config file
 	
 	avo.ext_namespace = this.ext_namespace
-	avo.IS_LUA_EXT = IS_LUA_EXT
+	-- avo.IS_LUA_EXT = IS_LUA_EXT
+	
 	
 	if IS_LUA_EXT then
 		require('lua_extensions') -- turn on RvP lua extensions (requires bin\lua_extensions.dll)
 		if not lfs.dir then abort("[%s]: Failed to load lua_enxtesions", SELF_NAME) end
+		local tmp = string.trim
+		string.trim = nil
+		avo.ext_namespace("string","trim", tmp, SELF_NAME, "Trim whitespaces on both sides of the string (LUA Extensions)")
+		tmp = string.trim_l
+		string.trim_l = nil
+		avo.ext_namespace("string","trim_l", tmp, SELF_NAME, "Trim whitespaces on left side of the string (LUA Extensions)")
+		tmp = string.trim_r
+		string.trim_r = nil
+		avo.ext_namespace("string","trim_r", tmp, SELF_NAME, "Trim whitespaces on right side of the string (LUA Extensions)")
+		tmp = string.trim_w
+		string.trim_w = nil
+		avo.ext_namespace("string","trim_w", tmp, SELF_NAME, "Get first word from a string (LUA Extensions)")
+		tmp = string.pack
+		string.pack = nil
+		avo.ext_namespace("string","pack", tmp, SELF_NAME, "Pack binary data into a string (LUA Extensions)")
+		tmp = string.unpack
+		string.unpack = nil
+		avo.ext_namespace("string","unpack", tmp, SELF_NAME, "Unpack binary data from a string (LUA Extensions)")
+		
+		tmp = table.size
+		table.size = nil
+		avo.ext_namespace("table","size", tmp, SELF_NAME, "Get array/dictionary size (LUA Extensions)")
+		tmp = table.keys
+		table.keys = nil
+		avo.ext_namespace("table","keys", tmp, SELF_NAME, "Returns list of table keys (LUA Extensions)")
+		tmp = table.values
+		table.values = nil
+		avo.ext_namespace("table","values", tmp, SELF_NAME, "Returns list of table values (LUA Extensions)")
+		tmp = table.random
+		table.random = nil
+		avo.ext_namespace("table","random", tmp, SELF_NAME, "Returns random key from table (LUA Extensions)")
+		
+		tmp = math.random
+		math.random = nil
+		avo.ext_namespace("math","random", tmp, SELF_NAME, "Improved implementation of LUA version (LUA Extensions)")
+		tmp = math.randomseed
+		math.randomseed = nil
+		avo.ext_namespace("math","randomseed", tmp, SELF_NAME, "Improved implementation of LUA version (LUA Extensions)")
+		
+		tmp = lfs.dir
+		lfs.dir = nil
+		avo.ext_namespace("lfs","dir", tmp, SELF_NAME, "Lua File System library (LUA Extensions)")
+		
+		tmp = nil
 	else
-		avo.ext_namespace("string","trim",this.trim) --  trim spaces
-		avo.ext_namespace("table","size",this.size) -- get size of hash table
+		avo.ext_namespace("string","trim", this.trim, SELF_NAME, "Trim whitespaces on both sides of the string") --  trim spaces
+		avo.ext_namespace("table","size", this.size, SELF_NAME, "Get array/dictionary size") -- get size of hash table
 	end
 	
 	-- STRING:
-	avo.ext_namespace("string","split",this.split)	-- split into table by delim
-	avo.ext_namespace("string","form",this.form) -- custom version of string.format
-	avo.ext_namespace("string","get_filename",this.get_filename) -- get filename from path
+	avo.ext_namespace("string","split",this.split, SELF_NAME, "Split string into table by delimiter")	-- split into table by delim
+	avo.ext_namespace("string","form",this.form, SELF_NAME, "Custom (safer) version of string.format. Will not choke on userdata; vector; nil; etc") -- custom version of string.format
+	avo.ext_namespace("string","get_filename",this.get_filename, SELF_NAME, "Get filename from path") -- get filename from path
 	
 	-- TABLE:
-	avo.ext_namespace("table","find",this.find)	-- check if value exists in table
-	avo.ext_namespace("table","clone",this.clone)	-- clone table
-	avo.ext_namespace("table","compress",this.compress) -- compress table into string
-	avo.ext_namespace("table","uncompress",this.uncompress) -- uncompress table from string
-	avo.ext_namespace("table","serialize",this.serialize) -- serialize table into string
-	avo.ext_namespace("table","unserialize",this.unserialize) -- unserialize table from string
-	avo.ext_namespace("table","print",this.print) -- format table data for print
+	if avo.read_ini(ini,"table_inspect","enabled","bool",true) then
+		local inspect = require('gamedata.scripts.inspect') -- awesome table formatter from https://github.com/kikito/inspect.lua 
+		avo.ext_namespace("table","print",inspect.inspect,SELF_NAME,"Human-readable representations of tables by Enrique Garcia Cota") -- format table data for print
+	else
+		avo.ext_namespace("table","print",this.print,SELF_NAME,"Human-readable representations of tables by Artos and avo") -- format table data for print
+	end
+	avo.ext_namespace("table","find",this.find,SELF_NAME,"Returns true if passed value exists in table")	-- check if value exists in table
+	avo.ext_namespace("table","clone",this.clone,SELF_NAME,"Clone table with optional include for metatable. Userdata cannot be cloned")	-- clone table
+	avo.ext_namespace("table","compress",this.compress,SELF_NAME,"Compresses table into string by converting some values to hex. By Artos") -- compress table into string
+	avo.ext_namespace("table","uncompress",this.uncompress,SELF_NAME,"UnCompresses table from string. By Artos") -- uncompress table from string
+	avo.ext_namespace("table","serialize",this.serialize,SELF_NAME,"Serialize table to string") -- serialize table into string
+	avo.ext_namespace("table","unserialize",this.unserialize,SELF_NAME,"UnSerialize table from string") -- unserialize table from string
+	
 	
 	-- MATH:
-	avo.ext_namespace("math","isnan",this.isnan)
-	avo.ext_namespace("math","isinf",this.isinf)
-	avo.ext_namespace("math","isfinite",this.isfinite)
-	avo.ext_namespace("math","round",this.round) -- round to decimal or integer
-	avo.ext_namespace("math","rand",this.rand) -- better random number generator
+	avo.ext_namespace("math","isnan",this.isnan,SELF_NAME,"Check if the number value is a NaN (not a number)")
+	avo.ext_namespace("math","isinf",this.isinf,SELF_NAME,"Check if the number value is positive or negative infinity")
+	avo.ext_namespace("math","isfinite",this.isfinite,SELF_NAME,"Check if the given number has finite value i.e. it is not infinite or NAN")
+	avo.ext_namespace("math","round",this.round,SELF_NAME,"Rounds value to the nearest integer or specified number of decimal places") -- round to decimal or integer
+	avo.ext_namespace("math","rand",this.rand,SELF_NAME,"Better random number generator. If no arguments given will generate between zero and one") -- better random number generator
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)
@@ -82,15 +134,66 @@ end
 
 --/----------------------------------------------------------------------------
 --/ Protection against overrides when extending existing namespaces with new functions
+--/ Also adds optional information that can be used to generate help file (CSV format)
+--/ Parameters:
+--/ ns - namespace (table, string, avo, etc..). Do NOT pass _G
+--/ name - name of the function
+--/ fn - function or table
+--/ script - file where function is defined (optional). Used for help file
+--/ descr - function description (optional). Used for help file. IMPORTANT: do NOT use commas in description!!!
 --/----------------------------------------------------------------------------
-function ext_namespace(ns, name, fn)
-	if type(ns) ~= 'string' or type(name) ~= 'string' or type(fn) ~= 'function' then 
-		abort("Invalid parameter types passed to ext_namespace(string, string, function): %s, %s, %s", type(ns),type(name), type(fn)) 
+function ext_namespace(ns, name, fn, script, descr)
+	if type(ns) ~= 'string' or type(name) ~= 'string' or (type(fn) ~= 'function' and type(fn) ~= 'table' and type(fn) ~= 'userdata') then 
+		abort("Invalid parameter types passed to ext_namespace(string, string, function/table/userdata): %s, %s, %s", type(ns),type(name), type(fn)) 
 	end
 	if _G[ns][name] then 
 		abort("Function [%s] is already registered in [%s]", name, ns)
 	else
 		_G[ns][name] = fn
+		if not _G[ns]["help"] then _G[ns]["help"] = {} end
+		_G[ns]["help"][name] = {}
+		_G[ns]["help"][name][1] = script or 'not available'
+		_G[ns]["help"][name][2] = ns
+		_G[ns]["help"][name][3] = name
+		_G[ns]["help"][name][4] = descr or 'not available'
+	end
+end
+
+--/----------------------------------------------------------------------------
+--/ Generates CSV help file
+--/ ns - namespace to generate help for or 'all' for all namespaces in _G that have help table
+--/----------------------------------------------------------------------------
+function generate_help(ns)
+	local print_header = true
+	local function write_data(namespace, file)
+		if print_header then file:write("File,Namespace,Function,Description\n") end
+		local tt = {}
+		for _, v in pairs(_G[namespace]["help"]) do
+			local s = ""
+			for _, t in pairs(v) do
+					s = s .. "," .. t
+			end
+			table.insert(tt, string.sub(s, 2))
+		end
+		for _, v in ipairs(tt) do
+			file:write(v.."\n")
+		end
+		print_header = false
+	end
+
+	if ns == 'all' then
+		local file = io.open("avo_functions.csv", "w+")
+		for _, v in ipairs(table.keys(_G)) do
+			if type(_G[v]) == 'table' and type(_G[v]["help"]) == 'table' then
+				write_data(v, file)
+			end
+		end
+		file:close()
+	else
+		local file = io.open("avo_functions.csv", "w+")
+		if not _G[ns] or not _G[ns]["help"] then return end
+		write_data(ns, file)
+		file:close()
 	end
 end
 
@@ -101,6 +204,7 @@ end
 --/ Split string by delimiter. do_trim = true by default
 --/----------------------------------------------------------------------------
 function split(str, delim, do_trim)
+	if do_trim == nil then do_trim = true end
 	local t = {}
 	if not delim then delim = ',' end
 	if type(str) ~= 'string' then
@@ -190,7 +294,7 @@ function find(val, tbl)
 end
 
 --/----------------------------------------------------------------------------
---/ Clone table (usedata is not cloned). with_meta - clone metatables, false by default
+--/ Clone table (userdata is not cloned). with_meta - clone metatables, false by default
 --/----------------------------------------------------------------------------
 function clone(tbl, with_meta)
   local lookup_table = {}

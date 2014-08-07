@@ -2,8 +2,8 @@
 	File				: avo_netpk
 	Description	: Интерфейс чтения/записи net-пакетов (SHoC:6/7(118),CS:8(124),SCoP:12(128))
 	Credits			: Artos (по материалам: bardak, Red75, Sokol_jack, KD87 (uACDC), xStream (xs_netpk)), aVo
-	Revision		: 0.1
-	Change Date	: 08.02.2014
+	Revision		: 0.2
+	Change Date	: 08.06.2014
 --]] --------------------------------------------------------------------------
 
 --[[-- HOWTO -------------------------------------------------------------------
@@ -299,7 +299,8 @@ function _init()
 	this.build_tables(ini) -- read config-file
 	-- this.translate_funcs() -- refactor this function
 	
-	avo.get_netpk = this.get -- add function to namespace
+	-- avo.get_netpk = this.get -- add function to namespace
+	avo_lua.ext_namespace("avo","get_netpk",this.get,SELF_NAME,"Universal function to get net packet for passed object")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)

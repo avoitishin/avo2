@@ -22,8 +22,10 @@ function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
 	
-	avo.read_ini = this.read_ini
-	avo.read_ini_sect = this.read_ini_sect
+	-- avo.read_ini = this.read_ini
+	avo_lua.ext_namespace("avo","read_ini",this.read_ini,SELF_NAME,"Read single value from section. Returns value from section key or default")
+	avo_lua.ext_namespace("avo","read_ini_sect",this.read_ini_sect,SELF_NAME,"Read entire section. Returns table of section keys and values")
+	-- avo.read_ini_sect = this.read_ini_sect
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)

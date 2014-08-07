@@ -22,7 +22,8 @@ function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
 	
-	avo.timer = this.quick_timer
+	-- avo.timer = this.quick_timer
+	avo.ext_namespace("avo","timer",this.quick_timer,SELF_NAME,"Low footprint non persistent timer class")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)

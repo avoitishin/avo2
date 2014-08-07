@@ -33,7 +33,8 @@ function _init()
 	MODULES_FOLDER_FOR_INI = avo.MOD_FOLDER.."modules\\" -- for ini_file parameter
 	init_modules() -- initialize modules
 	
-	avo.modules = modules
+	-- avo.modules = modules
+	avo_lua.ext_namespace("avo","modules",{},SELF_NAME,"TABLE: Holds modules loaded by avo_controller (both enabled and disabled)")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)
@@ -70,16 +71,17 @@ end
 --/----------------------------------------------------------------------------
 --/ Print modules. Parameters true = enabled or false = disabled. Returns string
 --/----------------------------------------------------------------------------
-function print_modules(enabled_or_disabled) 
-	local t = {}
-	for k, v in pairs(modules) do
-		for a, b in pairs(v) do
-			if enabled_or_disabled and b then
-				table.insert(t, k)
-			elseif not enabled_or_disabled and not b then
-				table.insert(t, k)
-			end
-		end
-	end
-	return table.print(t, enabled_or_disabled and "Enabled Modules" or "Disabled Modules")
+function print_modules() 
+	-- local t = {}
+	-- for k, v in pairs(modules) do
+		-- for a, b in pairs(v) do
+			-- if enabled_or_disabled and b then
+				-- table.insert(t, k)
+			-- elseif not enabled_or_disabled and not b then
+				-- table.insert(t, k)
+			-- end
+		-- end
+	-- end
+	-- return table.print(t, enabled_or_disabled and "Enabled Modules" or "Disabled Modules")
+	return table.print(modules)
 end

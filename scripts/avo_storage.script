@@ -2,8 +2,8 @@
 	File				: avo_storage
 	Description	: System of the universal storage
 	Credits			: aVo, Artos, xStream, malandrinus
-	Revision		: 1.1
-	Change Date	: 08.04.2014
+	Revision		: 1.2
+	Change Date	: 08.06.2014
 --]] --------------------------------------------------------------------------
 
 --[[-- TODO -------------------------------------------------------------------
@@ -31,12 +31,16 @@ function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
 
-	avo.storage = {} -- initialize storage
+	-- avo.storage = {} -- initialize storage
+	avo_lua.ext_namespace("avo","storage",{},SELF_NAME,"TABLE: Custom storage that will be persisted on saves and restored on load. More advanced and safer version of pstore")
+	
 	slot("actor_load", this.on_actor_load)
 	slot("actor_save", this.on_actor_save)
 	
-	avo.save = this.set
-	avo.load = this.get
+	-- avo.save = this.set
+	avo.ext_namespace("avo","save",this.set,SELF_NAME,"Save variable to storage (will be persisted across saves and loads)")
+	-- avo.load = this.get
+	avo.ext_namespace("avo","load",this.get,SELF_NAME,"Load variable from storage")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)
