@@ -113,7 +113,8 @@ local function monster_on_net_spawn(obj)
 	if (obj:alive()) then
 		return
 	end
-
+	
+	-- avo: for mosters that are spawned dead?
 	local se_obj = alife():object(obj:id())
 	HasValuableLoot[obj:id()] = se_obj and not se_obj.looted
 end
