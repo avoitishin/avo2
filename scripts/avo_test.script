@@ -1,0 +1,44 @@
+--[[
+
+	ID: $Id$
+	DATE: $Date$
+	FILE: $File$
+	AUTHOR: $Author$
+	REV $Revision$
+	SRC: $Source$
+
+
+]]
+
+-- baa
+-- ahhaaa
+
+local tl = nil
+
+local function build_t(size)
+	tl = {}
+	for i=1, size or 10000 do
+		tl[i] = {"..hello..world....hello..world....hello..world..", 25366738838, [8] = "test..test", ["haha"] = {1234, ["one"] = "balh blah", ["two"] = 63637377}}
+	end
+end
+
+
+function get_t(size)
+	avo.tmp = {} -- TODO: REMOVE!!!
+	if not tl then 
+		build_t(size)
+		return tl
+	else 
+		return tl 
+	end
+end
+
+function destroy_t()
+	for k,_ in pairs(tl) do
+		tl[k] = nil
+	end
+	tl = nil
+end
+
+
+
