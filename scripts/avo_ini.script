@@ -23,8 +23,8 @@ function _init()
 	local ini = ini_file(CFG_FILE)
 	
 	-- avo.read_ini = this.read_ini
-	avo_lua.ext_namespace("avo","read_ini",this.read_ini,SELF_NAME,"Read single value from section. Returns value from section key or default")
-	avo_lua.ext_namespace("avo","read_ini_sect",this.read_ini_sect,SELF_NAME,"Read entire section. Returns table of section keys and values")
+	avo_lua.ext_ns("avo","read_ini",this.read_ini,SELF_NAME,"Read single value from section. Returns value from section key or default")
+	avo_lua.ext_ns("avo","read_ini_sect",this.read_ini_sect,SELF_NAME,"Read entire section. Returns table of section keys and values")
 	-- avo.read_ini_sect = this.read_ini_sect
 	
 	ini = nil

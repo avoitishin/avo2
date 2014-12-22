@@ -23,7 +23,7 @@ function _init()
 	local ini = ini_file(CFG_FILE)
 	
 	-- avo.timer = this.quick_timer
-	avo.ext_namespace("avo","timer",this.quick_timer,SELF_NAME,"Low footprint non persistent timer class")
+	avo_lua.ext_ns("avo","timer",this.quick_timer,SELF_NAME,"Low footprint non persistent timer class")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)

@@ -18,7 +18,7 @@ local SELF_NAME = script_name()
 
 local MODULES_FOLDER = nil
 local MODULES_FOLDER_FOR_INI = nil
-local MODULES_MASK = lfs and "^avo_%w+_mod" or "avo_*_m.ltx" -- module filename mask
+local MODULES_MASK = lfs and "^avo_.+_mod" or "avo_*_m.ltx" -- module filename mask
 -- local MODULES_SECTION = "module" -- this section is required in each module's config file -- not used
 local modules = {} -- all modules (enabled and disabled) are stored here
 
@@ -34,7 +34,7 @@ function _init()
 	init_modules() -- initialize modules
 	
 	-- avo.modules = modules
-	avo_lua.ext_namespace("avo","modules",{},SELF_NAME,"TABLE: Holds modules loaded by avo_controller (both enabled and disabled)")
+	avo_lua.ext_ns("avo","modules",{},SELF_NAME,"TABLE: Holds modules loaded by avo_controller (both enabled and disabled)")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)

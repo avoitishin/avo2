@@ -84,7 +84,7 @@ end
 --/ Error log
 --/----------------------------------------------------------------------------
 function elog(...)
-  log(string.format("[ERROR] %s", dbg_format(...))) 
+  log(string.format("!![ERROR] %s", dbg_format(...))) 
 end
 --/----------------------------------------------------------------------------
 --/ Debug (info) log
@@ -96,13 +96,13 @@ end
 --/ Warning log
 --/----------------------------------------------------------------------------
 function wlog(...)
-	log(string.format("[INFO] %s", dbg_format(...)))
+	log(string.format("~~[INFO] %s", dbg_format(...)))
 end
 --/----------------------------------------------------------------------------
 --/ printf (GSC function)
 --/----------------------------------------------------------------------------
 function printf(...)
-	log(string.format("[XRAY] %s", dbg_format(...)))
+	log(string.format("##[XRAY] %s", dbg_format(...)))
 end
 --/----------------------------------------------------------------------------
 --/ Visual log (show in-game message)

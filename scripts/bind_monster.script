@@ -48,21 +48,23 @@ function generic_object_binder:update(delta)
 	local object_alive = self.object:alive()
 	--' printf("_bp: generic_object_binder: UPDATE [name='%s' time=%d]",
 	--'	self.object:name(), time_global())
+	----| aVo Insert |--------------------------------------------------------------------
 	-- fluffy22
-	if not object_alive then
-		local looted = xr_logic.pstor_retrieve(self.object,"looted",nil)
-		if not (looted) then
+	-- if not object_alive then
+		-- local looted = xr_logic.pstor_retrieve(self.object,"looted",nil)
+		-- if not (looted) then
 			-- credits to ARS and TGZ teams for this - mutant looting
-			self.object:set_callback(callback.use_object, self.use_callback, self)
-			self.object:set_tip_text("Обыскать")
-		else
-			self.object:set_callback(callback.use_object, nil)
-			self.object:set_tip_text("")
-		end
-		return
-	end
+			-- self.object:set_callback(callback.use_object, self.use_callback, self)
+			-- self.object:set_tip_text("Обыскать")
+		-- else
+			-- self.object:set_callback(callback.use_object, nil)
+			-- self.object:set_tip_text("")
+		-- end
+		-- return
+	-- end
 	-- fluffy22
-
+	----| end:aVo |----------------------------------------------------------------\
+	
   -- Swartz
 	if object_alive then
     if (m_mines) then m_mines.chek_target(self.object) end	
@@ -181,16 +183,34 @@ function generic_object_binder:waypoint_callback(obj, action_type, index)
 end
 
 function generic_object_binder:death_callback(victim, who)
+
+	----| aVo Insert |--------------------------------------------------------------------
+	sm:call("monster_death", self, who)
+	----| end:aVo |----------------------------------------------------------------
+
 	printf("stop_dead_id"..self.object:id())
+	
+	----| aVo Insert |--------------------------------------------------------------------
+	-- local looted = xr_logic.pstor_retrieve(self.object,"looted",nil)
+	-- if not (looted) then
+		-- self.object:set_callback(callback.use_object, self.use_callback, self)
+		-- self.object:set_tip_text("Обыскать")
+	-- else
+		-- self.object:set_callback(callback.use_object, nil)
+		-- self.object:set_tip_text("")
+	-- end
+	----| end:aVo |----------------------------------------------------------------
 
-	xr_combat_ignore.fighting_with_actor_npcs[self.object:id()] = nil
+	xr_combat_ignore.fighting_with_actor_npcs[self.object:id()] = nil -- move to scheme
 
-	self:hit_callback(victim, 1, vector():set(0,0,0), who, "from_death_callback")
-	if who:id() == db.actor:id() then
+	self:hit_callback(victim, 1, vector():set(0,0,0), who, "from_death_callback") -- avo: usless?
+	
+	if who:id() == db.actor:id() then -- avo: usless? need rewrite statistics
 		xr_statistic.inc_killed_monsters_counter()
 		xr_statistic.set_best_monster(self.object)
 	end
-
+	
+	-- move all scheme specific callbacks to scheme
 	if self.st.mob_death then
 		xr_logic.issue_event(self.object, self.st.mob_death, "death_callback", victim, who)
 	end
@@ -198,7 +218,8 @@ function generic_object_binder:death_callback(victim, who)
 	if self.st.active_section then
 		xr_logic.issue_event(self.object, self.st[self.st.active_scheme], "death_callback", victim, who)
 	end
-
+	
+	-- immediately removing poltergeists for some reason
 	local obj_clsid = self.object:clsid()
 	if obj_clsid == clsid.poltergeist_s then
 		printf("releasing object ["..self.object:name().."]")

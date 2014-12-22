@@ -1,156 +1,146 @@
 --[[-- INFO -------------------------------------------------------------------
-	File				: avo_lua
-	Description	: Various LUA extensions (string, table, math, etc)
-	Credits			: aVo, Artos, xStream, malandrinus, RVP
-	Revision		: 0.3
-	Change Date	: 08.03.2014
+-- Custom functions to extend and enchance default Lua libraries (string, table, math) with
+-- additonal capability also some convenience functions and wrappers. Dependent on bin\lua_extensions.dll
+-- @author: avo
+-- @credits: Artos, xStream, malandrinus, RvP
+-- @revision: 0.3
 --]] --------------------------------------------------------------------------
 
 --[[-- TODO -------------------------------------------------------------------
-	1. Resolve clashed with alun_util's string.split declaration
-	2. Refactor table functions
-	3. Add ability to use multilevel namespaces (avo.gu.test) in ext_namespace
+-- Resolve clashed with alun_util's string.split declaration
+-- Refactor table functions
+-- Ability to safely extend _G in ext_ns
 --]]---------------------------------------------------------------------------
 
---/----------------------------------------------------------------------------
---/ Variables	& Constants	
---/----------------------------------------------------------------------------
 local SELF_NAME = script_name()
 
---/----------------------------------------------------------------------------
---/ Initialization
---/----------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Initialize avo_lua component and extend default libraries. Called from avo_main 
 function _init()
-	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
-	local ini = ini_file(CFG_FILE)
+	-- local ini = ini_file(avo.MOD_FOLDER..SELF_NAME..".ltx") -- no need for it yet for this component
 	
-	local IS_LUA_EXT = avo.read_ini(ini,"lua_extensions","enabled","bool",true) -- is lua_enxtesions.dll being used. Change to true|false in config file
-	
-	-- avo.ext_namespace = this.ext_namespace
-	ext_namespace("avo","ext_namespace", this.ext_namespace, SELF_NAME, "Protection against overrides when extending existing namespaces with new functions, tables, and classes (userdata)")
-	-- avo.IS_LUA_EXT = IS_LUA_EXT
-	
-	
-	if IS_LUA_EXT then
-		require('lua_extensions') -- turn on RvP lua extensions (requires bin\lua_extensions.dll)
-		if not lfs.dir then abort("[%s]: Failed to load lua_enxtesions", SELF_NAME) end
-		--/ STRING:
-		local tmp = string.trim
-		string.trim = nil
-		avo.ext_namespace("string","trim", tmp, SELF_NAME, "Trim whitespaces on both sides of the string (LUA Extensions)")
-		tmp = string.trim_l
-		string.trim_l = nil
-		avo.ext_namespace("string","trim_l", tmp, SELF_NAME, "Trim whitespaces on left side of the string (LUA Extensions)")
-		tmp = string.trim_r
-		string.trim_r = nil
-		avo.ext_namespace("string","trim_r", tmp, SELF_NAME, "Trim whitespaces on right side of the string (LUA Extensions)")
-		tmp = string.trim_w
-		string.trim_w = nil
-		avo.ext_namespace("string","trim_w", tmp, SELF_NAME, "Get first word from a string (LUA Extensions)")
-		tmp = string.pack
-		string.pack = nil
-		avo.ext_namespace("string","pack", tmp, SELF_NAME, "Pack binary data into a string (LUA Extensions)")
-		tmp = string.unpack
-		string.unpack = nil
-		avo.ext_namespace("string","unpack", tmp, SELF_NAME, "Unpack binary data from a string (LUA Extensions)")
-		--/ TABLE:
-		tmp = table.size
-		table.size = nil
-		avo.ext_namespace("table","size", tmp, SELF_NAME, "Get array/dictionary size (LUA Extensions)")
-		tmp = table.keys
-		table.keys = nil
-		avo.ext_namespace("table","keys", tmp, SELF_NAME, "Returns list of table keys (LUA Extensions)")
-		tmp = table.values
-		table.values = nil
-		avo.ext_namespace("table","values", tmp, SELF_NAME, "Returns list of table values (LUA Extensions)")
-		tmp = table.random
-		table.random = nil
-		avo.ext_namespace("table","random", tmp, SELF_NAME, "Returns random key from table (LUA Extensions)")
-		--/ MATH:
-		tmp = math.random
-		math.random = nil
-		avo.ext_namespace("math","random", tmp, SELF_NAME, "Improved implementation of LUA version (LUA Extensions)")
-		tmp = math.randomseed
-		math.randomseed = nil
-		avo.ext_namespace("math","randomseed", tmp, SELF_NAME, "Improved implementation of LUA version (LUA Extensions)")
-		--/ LUA FILE SYSTEM:
-		tmp = lfs.dir
-		lfs.dir = nil
-		avo.ext_namespace("lfs","dir", tmp, SELF_NAME, "Lua File System library (LUA Extensions)")
-		--/ LUA MARSHAL: Fast serialization for Lua by Richard Hundt (https://github.com/richardhundt/lua-marshal)
-		tmp = marshal.encode
-		marshal.encode = nil
-		avo.ext_namespace("marshal","encode", tmp, SELF_NAME, "Serializes a value to a byte stream (LUA Extensions)")
-		tmp = marshal.decode
-		marshal.decode = nil
-		avo.ext_namespace("marshal","decode", tmp, SELF_NAME, "Deserializes a byte stream to a value (LUA Extensions)")
-		tmp = marshal.clone
-		marshal.clone = nil
-		avo.ext_namespace("marshal","clone", tmp, SELF_NAME, "Deep clone a value (deep for tables and functions) (LUA Extensions)")
+	require('lua_extensions') -- turn on RvP lua extensions (requires bin\lua_extensions.dll)
 		
-		tmp = nil
-	else
-		avo.ext_namespace("string","trim", this.trim, SELF_NAME, "Trim whitespaces on both sides of the string") --  trim spaces
-		avo.ext_namespace("table","size", this.size, SELF_NAME, "Get array/dictionary size") -- get size of hash table
-	end
+	if not lfs.dir then abort("[%s]: Failed to load lua_extesions", SELF_NAME) end -- safety	
+		
+	--/ STRING:
+	-- from lua_extensions
+		-- string.trim - Trim whitespaces on both sides of the string
+		-- string.trim_l - Trim whitespaces on left side of the string
+		-- string.trim_r - Trim whitespaces on right side of the string
+		-- string.trim_w - Get first word from a string
+		-- string.pack -- Pack binary data
+		-- string.unpack -- Unpack binary data
+	-- custom
+	-- ext_ns("string","split",this.split, SELF_NAME, "Split string into table by delimiter")	-- split into table by delim
+	ext_ns("string","form",this.form) -- Custom (safer) version of string.format. Will not choke on userdata; vector; nil; etc
+	ext_ns("string","get_filename",this.get_filename) -- get filename from path
 	
-	-- STRING:
-	avo.ext_namespace("string","split",this.split, SELF_NAME, "Split string into table by delimiter")	-- split into table by delim
-	avo.ext_namespace("string","form",this.form, SELF_NAME, "Custom (safer) version of string.format. Will not choke on userdata; vector; nil; etc") -- custom version of string.format
-	avo.ext_namespace("string","get_filename",this.get_filename, SELF_NAME, "Get filename from path") -- get filename from path
+	--/ TABLE:
+	-- from lua_extensions
+		-- table.size - Get array/dictionary size
+		-- table.keys - Returns list of table keys
+		-- table.values - Returns list of table values
+		-- table.random - Returns random key from table
+	-- custom
+	ext_ns("table","find",this.find)	-- Returns true if passed value exists in table
+	ext_ns("table","clone",this.clone)	-- Clone table with optional include for metatable. Userdata cannot be cloned
+	ext_ns("table","compress",this.compress) -- Compresses table into string by converting some values to hex. By Artos
+	ext_ns("table","uncompress",this.uncompress) -- Uncompresses table from string. By Artos
+	ext_ns("table","serialize",this.serialize) -- Serialize table to string. By xStream
+	ext_ns("table","unserialize",this.unserialize) -- Unserialize table from string. By xStream
+	ext_ns("table","print",inspect.inspect) -- Human-readable representations of tables by Enrique Garcia Cota
+	
+	--/ MARSHAL: Fast serialization for Lua by Richard Hundt (https://github.com/richardhundt/lua-marshal)
+	-- from lua_extensions
+		-- marshal.encode - Serializes a value to a byte stream
+		-- marshal.decode - Deserializes a byte stream to a value
+		-- marshal.clone - Deep clone a value (deep for tables and functions)
+		
+	--/ LFS: (Lua File System)
+	-- from lua_extensions
+		-- standard lfs functions (http://keplerproject.github.io/luafilesystem/manual.html)
+	
+	--/ MATH:
+	-- from lua_extensions
+		-- math.random - Improved implementation of standard version
+		-- math.randomseed - Improved implementation of standard version
+	ext_ns("math","is_nan",this.is_nan) -- Check if the number value is a NaN (not a number)
+	ext_ns("math","is_inf",this.is_inf) -- Check if the number value is positive or negative infinity
+	ext_ns("math","is_finite",this.is_finite) -- Check if the given number has finite value i.e. it is not infinite or NAN
+	ext_ns("math","round",this.round) -- Rounds value to the nearest integer or specified number of decimal places
+	ext_ns("math","rand",this.rand) -- Better random number generator. If no arguments given will generate between zero and one
+	
 	
 	-- TABLE:
-	if avo.read_ini(ini,"table_inspect","enabled","bool",true) then
-		local inspect = require('gamedata.scripts.inspect') -- awesome table formatter from https://github.com/kikito/inspect.lua 
-		avo.ext_namespace("table","print",inspect.inspect,SELF_NAME,"Human-readable representations of tables by Enrique Garcia Cota") -- format table data for print
-	else
-		avo.ext_namespace("table","print",this.print,SELF_NAME,"Human-readable representations of tables by Artos and avo") -- format table data for print
-	end
-	avo.ext_namespace("table","find",this.find,SELF_NAME,"Returns true if passed value exists in table")	-- check if value exists in table
-	avo.ext_namespace("table","clone",this.clone,SELF_NAME,"Clone table with optional include for metatable. Userdata cannot be cloned")	-- clone table
-	avo.ext_namespace("table","compress",this.compress,SELF_NAME,"Compresses table into string by converting some values to hex. By Artos") -- compress table into string
-	avo.ext_namespace("table","uncompress",this.uncompress,SELF_NAME,"UnCompresses table from string. By Artos") -- uncompress table from string
-	avo.ext_namespace("table","serialize",this.serialize,SELF_NAME,"Serialize table to string") -- serialize table into string
-	avo.ext_namespace("table","unserialize",this.unserialize,SELF_NAME,"UnSerialize table from string") -- unserialize table from string
+	-- if avo.read_ini(ini,"table_inspect","enabled","bool",true) then
+		-- local inspect = require('gamedata.scripts.inspect') -- awesome table formatter from https://github.com/kikito/inspect.lua 
+		-- ext_ns("table","print",inspect.inspect,SELF_NAME,"Human-readable representations of tables by Enrique Garcia Cota") -- format table data for print
+	-- else
+		-- ext_ns("table","print",this.print,SELF_NAME,"Human-readable representations of tables by Artos and avo") -- format table data for print
+	-- end
+	-- ext_ns("table","find",this.find,SELF_NAME,"Returns true if passed value exists in table")	-- check if value exists in table
+	-- ext_ns("table","clone",this.clone,SELF_NAME,"Clone table with optional include for metatable. Userdata cannot be cloned")	-- clone table
+	-- ext_ns("table","compress",this.compress,SELF_NAME,"Compresses table into string by converting some values to hex. By Artos") -- compress table into string
+	-- ext_ns("table","uncompress",this.uncompress,SELF_NAME,"UnCompresses table from string. By Artos") -- uncompress table from string
+	-- ext_ns("table","serialize",this.serialize,SELF_NAME,"Serialize table to string") -- serialize table into string
+	-- ext_ns("table","unserialize",this.unserialize,SELF_NAME,"UnSerialize table from string") -- unserialize table from string
 	
 	-- MATH:
-	avo.ext_namespace("math","isnan",this.isnan,SELF_NAME,"Check if the number value is a NaN (not a number)")
-	avo.ext_namespace("math","isinf",this.isinf,SELF_NAME,"Check if the number value is positive or negative infinity")
-	avo.ext_namespace("math","isfinite",this.isfinite,SELF_NAME,"Check if the given number has finite value i.e. it is not infinite or NAN")
-	avo.ext_namespace("math","round",this.round,SELF_NAME,"Rounds value to the nearest integer or specified number of decimal places") -- round to decimal or integer
-	avo.ext_namespace("math","rand",this.rand,SELF_NAME,"Better random number generator. If no arguments given will generate between zero and one") -- better random number generator
+	-- ext_ns("math","isnan",this.isnan,SELF_NAME,"Check if the number value is a NaN (not a number)")
+	-- ext_ns("math","isinf",this.isinf,SELF_NAME,"Check if the number value is positive or negative infinity")
+	-- ext_ns("math","isfinite",this.isfinite,SELF_NAME,"Check if the given number has finite value i.e. it is not infinite or NAN")
+	-- ext_ns("math","round",this.round,SELF_NAME,"Rounds value to the nearest integer or specified number of decimal places") -- round to decimal or integer
+	-- ext_ns("math","rand",this.rand,SELF_NAME,"Better random number generator. If no arguments given will generate between zero and one") -- better random number generator
 	
-	-- _G["serpent"] = require("serpent")
+	-- _G["serpent"] = require("gamedata.scripts.serpent")
 	
-	ini = nil
+	-- ini = nil
 	wlog("%s is ready", SELF_NAME)
-	return true	
+	-- return true	
 end
 
---/----------------------------------------------------------------------------
---/ Protection against overrides when extending existing namespaces with new functions, tables, and classes (userdata)
---/ Also adds optional information that can be used to generate help file (CSV format)
---/ Parameters:
---/ ns - namespace (table, string, avo, etc..). Do NOT pass _G
---/ name - name of the function
---/ fn - function or table
---/ script - file where function is defined (optional). Used for help file
---/ descr - function description (optional). Used for help file. IMPORTANT: do NOT use commas in description!!!
---/----------------------------------------------------------------------------
-function ext_namespace(ns, name, fn, script, descr)
+-------------------------------------------------------------------------------
+-- Prevents overrides when extending existing namespaces with new functions, tables, and classes (userdata)
+-- @param ns namespace (table, string, avo, etc..)
+-- @param name name of the function
+-- @param fn function, table, userdata
+-- @param script file where function is defined (optional). Used for help file. 08122014 - turned off
+-- @param descr function description (optional). Used for help file. WARNING: do NOT use commas in description. 08122014 - turned off
+
+function ext_ns(ns, name, fn, script, descr)
+	-- if type(ns) ~= 'string' or type(name) ~= 'string' or (type(fn) ~= 'function' and type(fn) ~= 'table' and type(fn) ~= 'userdata') then 
+		-- abort("Invalid parameter types passed to ext_ns(string, string, function/table/userdata): %s, %s, %s", type(ns),type(name), type(fn)) 
+	-- end
+	-- if _G[ns][name] then 
+		-- abort("Function [%s] is already registered in [%s]", name, ns)
+	-- else
+		-- _G[ns][name] = fn
+		-- if not _G[ns]["help"] then _G[ns]["help"] = {} end
+		-- _G[ns]["help"][name] = {}
+		-- _G[ns]["help"][name][1] = script or 'not available'
+		-- _G[ns]["help"][name][2] = ns
+		-- _G[ns]["help"][name][3] = name
+		-- _G[ns]["help"][name][4] = descr or 'not available'
+	-- end
+	
+	
 	if type(ns) ~= 'string' or type(name) ~= 'string' or (type(fn) ~= 'function' and type(fn) ~= 'table' and type(fn) ~= 'userdata') then 
-		abort("Invalid parameter types passed to ext_namespace(string, string, function/table/userdata): %s, %s, %s", type(ns),type(name), type(fn)) 
+		abort("Invalid parameter types passed to ext_ns(string, string, function/table/userdata): %s, %s, %s", type(ns),type(name), type(fn)) 
 	end
-	if _G[ns][name] then 
-		abort("Function [%s] is already registered in [%s]", name, ns)
+	
+	if ns == "_G" then
+		if _G[name] then abort("[%s] Function [%s] is already registered in [%s]", SELF_NAME, name, ns) end
+		_G[name] = fn
 	else
+		if _G[ns][name] then abort("[%s] Function [%s] is already registered in [%s]", SELF_NAME, name, ns) end
 		_G[ns][name] = fn
-		if not _G[ns]["help"] then _G[ns]["help"] = {} end
-		_G[ns]["help"][name] = {}
-		_G[ns]["help"][name][1] = script or 'not available'
-		_G[ns]["help"][name][2] = ns
-		_G[ns]["help"][name][3] = name
-		_G[ns]["help"][name][4] = descr or 'not available'
+		-- if not _G[ns]["help"] then _G[ns]["help"] = {} end
+		-- _G[ns]["help"][name] = {}
+		-- _G[ns]["help"][name][1] = script or 'not available'
+		-- _G[ns]["help"][name][2] = ns
+		-- _G[ns]["help"][name][3] = name
+		-- _G[ns]["help"][name][4] = descr or 'not available'
 	end
 end
 
@@ -594,6 +584,7 @@ function unserialize(str)
 	return loadstring("return " .. str)() or {}
 end
 
+--[[ obsolete --
 --/----------------------------------------------------------------------------
 --/ Format table as string suitable for printing
 --/----------------------------------------------------------------------------
@@ -675,24 +666,29 @@ function print(tbl, title, mode) -- mode: key=true, value=false
 		return string.format("(%s) [%s] is not a table", SELF_NAME, type(tbl))
 	end
 end
+]]
 
---/----------------------------------------------------------------------------
---/ MATH FUNCTIONS
---/----------------------------------------------------------------------------
-local inf = 1/0
-local nan = -(0/0)
+-------------------------------------------------------------------------------
+-- MATH:
 
---/----------------------------------------------------------------------------
---/ Check if the number value is a NaN (not a number)
---/----------------------------------------------------------------------------
-function isnan(value)
+local inf = 1/0 -- infinity
+local nan = -(0/0) -- not a number. Can be used instead of nil to preserve table keys
+
+-------------------------------------------------------------------------------
+-- Check if the number value is a NaN (not a number)
+-- @param value what to check
+-- @return true/false
+
+function is_nan(value)
 	return value ~= value
 end
 
---/----------------------------------------------------------------------------
---/ Check if the number value is positive or negative infinity
---/----------------------------------------------------------------------------
-function isinf(value)
+-------------------------------------------------------------------------------
+-- Check if the number value is positive or negative infinity
+-- @param value what to check
+-- @return -1 = negative inf, 1 = positive inf, 0 not an inf
+
+function is_inf(value)
 	if value == -inf then
 		return -1
 	elseif value == inf then
@@ -702,28 +698,40 @@ function isinf(value)
 	end
 end
 
---/----------------------------------------------------------------------------
---/ Check if the given number has finite value i.e. it is not infinite or NAN
---/----------------------------------------------------------------------------
-function isfinite(value)
+-------------------------------------------------------------------------------
+-- Check if the given number has finite value i.e. it is not infinite or NAN
+-- @param value what to check
+-- @return true/false
+
+function is_finite(value)
 	return value > -inf and value < inf
 end
 
---/----------------------------------------------------------------------------
---/ Rounds value to the nearest integer or specified number of decimal places
---/----------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Round decimal to nearest integer or specified number of decimal places
+-- @param value number to round
+-- @param decimals number of decimal places
+-- @return rounded number
+
 function round(value, decimals)
 	local mul = math.pow(10, decimals) -- 10^count
 	return math.floor(value*mul + 0.5)/mul
 end
 
---/----------------------------------------------------------------------------
---/ Better random number generator. If no arguments given will generate between zero and one
---/----------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Improved random generator. If single argument is passed will generate between 1 and argument
+-- else if no arguments passed, between 0 and 1
+-- @param min_value lower limit for generation. Optional
+-- @param max_value upper limit for generation. Optional
+-- @return random value
+
 function rand(min_value, max_value)
-	math.randomseed(device():time_global())
-	if not min_value == nil and max_value == nil then
-		return math.random()
+	math.randomseed(os.time()) -- seed the randomizer
+	
+	if min_value == nil and max_value == nil then
+		return math.random() -- between 0 and 1
+	elseif tonumber(min_value) > 1 and max_value == nil then
+		return math.random(min_value) -- between 1 and min_value
 	else
 		return math.random(min_value, max_value)
 	end

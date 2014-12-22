@@ -39,3 +39,5 @@ class_diversity/recon/gamedata/sounds/
 *.jpg
 *.rtf
 /anims/
+/scripts/script_docs
+

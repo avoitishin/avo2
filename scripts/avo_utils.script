@@ -22,9 +22,45 @@ function _init()
 	local CFG_FILE = avo.MOD_FOLDER..SELF_NAME..".ltx"
 	local ini = ini_file(CFG_FILE)
 	
-	
+	avo_lua.ext_ns('avo', 'is_knife', this.is_knife, SELF_NAME, "Check if passed object is a knife")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)
 end
 
+--/----------------------------------------------------------------------------
+--/ Count object IDs used in game. Max is 65534
+--/----------------------------------------------------------------------------
+function count_object_ids(prnt)
+	count = 0
+	local sim = alife()
+	for i=1,65534 do
+		if (sim:object(i)) then
+			count = count + 1
+		end
+	end
+	if prnt then
+		dlog("There are %s object ids in use.",count)
+	end
+	return count
+end
+
+--/----------------------------------------------------------------------------
+--/ Check object type
+--/----------------------------------------------------------------------------
+local weapon_types_clslist = {
+pistol = {[clsid.wpn_pm_s] = true,[clsid.wpn_walther_s] = true,[clsid.wpn_usp45_s] = true,[clsid.wpn_hpsa_s] = true,[clsid.wpn_lr300_s] = true},
+sniper = {[clsid.wpn_svu_s] = true,[clsid.wpn_svd_s] = true,[clsid.wpn_vintorez_s] = true},
+launcher = {[clsid.wpn_rg6_s] = true,[clsid.wpn_rpg7_s] = true},
+shotgun = {[clsid.wpn_shotgun_s] = true,[clsid.wpn_auto_shotgun_s] = true},
+rifle = {[clsid.wpn_ak74_s] = true,[clsid.wpn_groza_s] = true,[clsid.wpn_val_s] = true},
+double_barreled = {[clsid.wpn_bm16_s] = true},
+knife = {[clsid.wpn_knife_s] = true}}
+
+function is_knife(object)
+	if object and object:clsid() then
+		return weapon_types_clslist.knife[object:clsid()]
+	else
+		return false
+	end
+end

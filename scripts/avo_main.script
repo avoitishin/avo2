@@ -42,11 +42,11 @@ function on_game_start()
 	
 	-- Define dedicated database for mod objects
 	-- avo.db = {}
-	avo_lua.ext_namespace("avo","db",{},SELF_NAME,"TABLE: Dedicated database for avo mod objects")
+	avo_lua.ext_ns("avo","db",{},SELF_NAME,"TABLE: Dedicated database for avo mod objects")
 
 	-- Define some mod functions
 	-- avo.fn_empty = this.fn_empty -- empty (plug) function
-	avo_lua.ext_namespace("avo","fn_empty",this.fn_empty,SELF_NAME,"Empty 'plug' function")
+	avo_lua.ext_ns("avo","fn_empty",this.fn_empty,SELF_NAME,"Empty 'plug' function")
 	
 	--/ BEGIN FRAMEWORK COMPONENTS INITIALIZATION
 	

@@ -300,7 +300,7 @@ function _init()
 	-- this.translate_funcs() -- refactor this function
 	
 	-- avo.get_netpk = this.get -- add function to namespace
-	avo_lua.ext_namespace("avo","get_netpk",this.get,SELF_NAME,"Universal function to get net packet for passed object")
+	avo_lua.ext_ns("avo","get_netpk",this.get,SELF_NAME,"Universal function to get net packet for passed object")
 	
 	ini = nil
 	wlog("%s is ready", SELF_NAME)

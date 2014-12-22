@@ -153,7 +153,8 @@ local function makePath(path, key)
 end
 
 -------------------------------------------------------------------
-function inspect.inspect(rootObject, options)
+-- function inspect.inspect(rootObject, options)
+function inspect(rootObject, options)
   options       = options or {}
   local depth   = options.depth or math.huge
   local filter  = parse_filter(options.filter or {})
@@ -291,7 +292,7 @@ function inspect.inspect(rootObject, options)
   return table.concat(buffer)
 end
 
-setmetatable(inspect, { __call = function(_, ...) return inspect.inspect(...) end })
+-- setmetatable(inspect, { __call = function(_, ...) return inspect.inspect(...) end })
 
-return inspect
+-- return inspect
 
